@@ -175,7 +175,7 @@ class SBIBankParser : BankParser() {
 
         // Pattern 6b: debit of Rs 500
         val debitOfPattern =
-            Regex("""debit\s+of\s+(?:Rs\.?|INR)\s*([0-9,]+(?:\.\d{2})?)""", RegexOption.IGNORE_CASE)
+            Regex("""debit\s+(?:of|for)\s+(?:Rs\.?|INR)\s*([0-9,]+(?:\.\d{2})?)""", RegexOption.IGNORE_CASE)
         debitOfPattern.find(message)?.let { match ->
             val amount = match.groupValues[1].replace(",", "")
             return try {
@@ -350,6 +350,10 @@ class SBIBankParser : BankParser() {
 
         // SBI-specific patterns
         return when {
+            // Priority 1: Check for explicit debit indicators first, especially if followed by "credited" (transfers)
+            lowerMessage.contains("debited for") -> TransactionType.EXPENSE
+            lowerMessage.contains("is debited") -> TransactionType.EXPENSE
+            
             lowerMessage.contains("withdrawn") -> TransactionType.EXPENSE
             lowerMessage.contains("transferred") -> TransactionType.EXPENSE
             lowerMessage.contains("transfer") -> TransactionType.EXPENSE
@@ -489,7 +493,7 @@ class SBIBankParser : BankParser() {
         }
 
         // Pattern 1: A/c XNNNN or A/c XXNNNN - extract everything after A/c
-        val pattern1 = Regex("""A/c\s+([X\*]*\d+)""", RegexOption.IGNORE_CASE)
+        val pattern1 = Regex("""A/c\s+(?:no\.?\s+)?([X\*]*\d+)""", RegexOption.IGNORE_CASE)
         pattern1.find(message)?.let { match ->
             val accountStr = match.groupValues[1]
             // Extract just the digits and take last 4
@@ -519,8 +523,15 @@ class SBIBankParser : BankParser() {
         }
 
         // Pattern 3: a/c no. XX1234
-        val pattern3 = Regex("""a/c\s+no\.?\s+(?:XX|X\*+)?(\d{4})""", RegexOption.IGNORE_CASE)
+        val pattern3 = Regex("""a/c\s+no\.?\s+([X\*]+\d{4})""", RegexOption.IGNORE_CASE)
         pattern3.find(message)?.let { match ->
+            val accountStr = match.groupValues[1]
+            return accountStr.takeLast(4)
+        }
+
+        // Pattern 4: a/c XXXXXXX1234 (greedy X)
+        val pattern4 = Regex("""a/c\s+[X\*]*(\d{4})""", RegexOption.IGNORE_CASE)
+        pattern4.find(message)?.let { match ->
             return match.groupValues[1]
         }
 

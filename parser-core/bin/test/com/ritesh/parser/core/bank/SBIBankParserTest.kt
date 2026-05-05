@@ -121,6 +121,17 @@ class SBIBankParserTest {
                     balance = BigDecimal("1340000.00"),
                     merchant = "AOFS1112345677890BHPL"
                 )
+            ),
+            ParserTestCase(
+                name = "Issue #35: Debit with credited destination",
+                message = "Dear Customer, Your a/c no. XXXXXXXX5045 is debited for Rs.500.00 on 31-03-26 and a/c XXXXXXX418 credited (IMPS Ref no ---------------). -SBI",
+                sender = "VA-SBIPSG-T",
+                expected = ExpectedTransaction(
+                    amount = BigDecimal("500.00"),
+                    currency = "INR",
+                    type = TransactionType.EXPENSE,
+                    accountLast4 = "5045"
+                )
             )
         )
 

@@ -13,7 +13,7 @@ import java.math.BigDecimal
  *
  * Sender patterns: XX-AUBANK-S/T, AUSFB, AU-BANK, etc.
  */
-class AUBankParser : BankParser() {
+class AUBankParser : BaseIndianBankParser() {
 
     override fun getBankName() = "AU Small Finance Bank"
 
@@ -84,7 +84,31 @@ class AUBankParser : BankParser() {
     }
 
     override fun extractMerchant(message: String, sender: String): String? {
-        // Pattern 1: UPI transactions - extract name from Ref UPI/.../.../.../name(account)
+        // Pattern 0: Credit card format - "spent at MERCHANT on"
+        val spentAtPattern = Regex(
+            """spent\s+at\s+(.+?)\s+on\s+(?:AU\s+Bank|$)""",
+            RegexOption.IGNORE_CASE
+        )
+        spentAtPattern.find(message)?.let { match ->
+            val merchant = cleanMerchantName(match.groupValues[1].trim())
+            if (isValidMerchantName(merchant)) {
+                return merchant
+            }
+        }
+
+        // Pattern 1: UPI/DR or UPI/CR format without Ref prefix: UPI/DR/ref/MERCHANT/IFSC/acct
+        val upiDrCrPattern = Regex(
+            """UPI/(?:DR|CR)/\d+/([^/]+)/[A-Z]{4}\d*/\d+""",
+            RegexOption.IGNORE_CASE
+        )
+        upiDrCrPattern.find(message)?.let { match ->
+            val merchant = cleanMerchantName(match.groupValues[1].trim())
+            if (isValidMerchantName(merchant)) {
+                return merchant
+            }
+        }
+
+        // Pattern 2: UPI transactions - extract name from Ref UPI/.../.../.../name(account)
         val upiPattern = Regex(
             """Ref\s+UPI/[^/]+/[^/]+/[^/]+\s+([^(]+)\([^)]+\)""",
             RegexOption.IGNORE_CASE
@@ -96,7 +120,7 @@ class AUBankParser : BankParser() {
             }
         }
 
-        // Pattern 2: Alternative UPI format - name in parentheses
+        // Pattern 3: Alternative UPI format - name in parentheses
         val upiParenPattern = Regex(
             """UPI/[^/]+/[^/]+/[^/]+\s+[^(]*\(([^)]+)\)""",
             RegexOption.IGNORE_CASE
@@ -108,14 +132,14 @@ class AUBankParser : BankParser() {
             }
         }
 
-        // Pattern 3: ATM transactions
+        // Pattern 4: ATM transactions
         if (message.contains("ATM", ignoreCase = true) ||
             message.contains("withdrawn", ignoreCase = true)
         ) {
             return "ATM Withdrawal"
         }
 
-        // Pattern 4: General "to/from" patterns
+        // Pattern 5: General "to/from" patterns
         val toPattern = Regex(
             """(?:to|from)\s+([^.\n]+?)(?:\.\s*|$)""",
             RegexOption.IGNORE_CASE
@@ -135,6 +159,9 @@ class AUBankParser : BankParser() {
         val lowerMessage = message.lowercase()
 
         return when {
+            // Credit card transactions (must be checked before generic "spent" keyword)
+            lowerMessage.contains("credit card") -> TransactionType.CREDIT
+
             // Income keywords
             lowerMessage.contains("credited") -> TransactionType.INCOME
             lowerMessage.contains("received") -> TransactionType.INCOME
@@ -147,30 +174,24 @@ class AUBankParser : BankParser() {
             lowerMessage.contains("spent") -> TransactionType.EXPENSE
             lowerMessage.contains("paid") -> TransactionType.EXPENSE
 
-            // Credit card transactions
-            lowerMessage.contains("credit card") && lowerMessage.contains("spent") -> TransactionType.CREDIT
-
             else -> super.extractTransactionType(message)
         }
     }
 
     override fun extractAccountLast4(message: String): String? {
-        // Pattern for account number: "A/c XXXXX"
-        val accountPattern = Regex(
-            """A/c\s+(\d+)""",
+        // Try base patterns first (handles A/c 1234, Card x1234, etc.)
+        super.extractAccountLast4(message)?.let { return it }
+
+        // AU Bank specific patterns if base didn't match
+        val auSpecificAccPattern = Regex(
+            """(?:A/c|Card)\s*[A-Za-z]*[Xx\*]*(\d+)""",
             RegexOption.IGNORE_CASE
         )
-        accountPattern.find(message)?.let { match ->
-            val accountNumber = match.groupValues[1]
-            return if (accountNumber.length >= 4) {
-                accountNumber.takeLast(4)
-            } else {
-                accountNumber
-            }
+        auSpecificAccPattern.find(message)?.let { match ->
+            return extractLast4Digits(match.groupValues[1])
         }
 
-        // Fall back to base class patterns
-        return super.extractAccountLast4(message)
+        return null
     }
 
     override fun extractBalance(message: String): BigDecimal? {
@@ -209,7 +230,8 @@ class AUBankParser : BankParser() {
             "debited inr",
             "withdrawn inr",
             "bal inr",
-            "ref upi"
+            "ref upi",
+            "spent"
         )
 
         // If any AU Bank specific pattern is found, it's likely a transaction

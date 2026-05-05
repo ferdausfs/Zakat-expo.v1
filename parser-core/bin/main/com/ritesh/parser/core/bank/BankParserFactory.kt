@@ -15,6 +15,7 @@ object BankParserFactory {
         FederalBankParser(),
         JuspayParser(),
         SliceParser(),
+        CredParser(),
         LazyPayParser(),
         UtkarshBankParser(),
         ICICIBankParser(),
@@ -63,6 +64,7 @@ object BankParserFactory {
         CharlesSchwabParser(),  // Charles Schwab (USA)
         NavyFederalParser(),  // Navy Federal Credit Union (USA)
         AdelFiParser(),  // AdelFi Credit Union (USA)
+        AlecuBankParser(),  // ALECU Credit Union (USA)
         PriorbankParser(),  // Priorbank (Belarus)
         AlinmaBankParser(),  // Alinma Bank (Saudi Arabia)
         NMBBankParser(),  // NMB Bank / Nabil Bank (Nepal)
@@ -93,7 +95,13 @@ object BankParserFactory {
         BAACBankParser(),  // BAAC (Thailand)
         UOBThailandParser(),  // UOB Thailand
         CIMBThaiParser(),  // CIMB Thai (Thailand)
-        KTCCreditCardParser()  // KTC Credit Card (Thailand)
+        KTCCreditCardParser(),  // KTC Credit Card (Thailand)
+        MBankCZParser(),  // mBank CZ (Czech Republic)
+        AlRajhiBankParser(),  // Al Rajhi Bank (Saudi Arabia)
+        ChaseBankParser(),  // Chase Bank (USA)
+        TBankParser(),  // T-Bank / Tinkoff (Russia)
+        BankMuscatParser(),  // Bank Muscat (Oman)
+        BPCEParser()      // BPCE (France)
         // Add more bank parsers here as we implement them
     )
 

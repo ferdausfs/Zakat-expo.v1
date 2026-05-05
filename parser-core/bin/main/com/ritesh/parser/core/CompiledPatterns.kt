@@ -20,12 +20,12 @@ object CompiledPatterns {
 
     object Account {
         val AC_WITH_MASK = Regex(
-            """(?:A/c|Account|Acct)(?:\s+No)?\.?\s+(?:XX+)?(\d{4})""",
+            """(?:A/c|Account|Acct)(?:\s+No)?\.?\s+(?:[Xx\*]*\**)?(\d+)""",
             RegexOption.IGNORE_CASE
         )
-        val CARD_WITH_MASK = Regex("""Card\s+(?:XX+)?(\d{4})""", RegexOption.IGNORE_CASE)
+        val CARD_WITH_MASK = Regex("""Card\s+(?:[Xx\*]*\**)?(\d+)""", RegexOption.IGNORE_CASE)
         val GENERIC_ACCOUNT =
-            Regex("""(?:A/c|Account).*?(\d{4})(?:\s|$)""", RegexOption.IGNORE_CASE)
+            Regex("""(?:A/c|Account).*?(\d+)(?:\s|$)""", RegexOption.IGNORE_CASE)
         val ALL_PATTERNS = listOf(AC_WITH_MASK, CARD_WITH_MASK, GENERIC_ACCOUNT)
     }
 
