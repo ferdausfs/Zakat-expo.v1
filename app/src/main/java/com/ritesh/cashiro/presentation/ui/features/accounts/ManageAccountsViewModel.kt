@@ -87,6 +87,7 @@ constructor(
         viewModelScope.launch {
             val wallet = accountBalanceRepository.getLatestBalance("Cash", "wallet")
             if (wallet == null) {
+                val baseCurrency = userPreferencesRepository.userPreferences.first().baseCurrency
                 accountBalanceRepository.insertBalance(
                     AccountBalanceEntity(
                         bankName = "Cash",
@@ -97,7 +98,8 @@ constructor(
                         isWallet = true,
                         iconResId = R.drawable.type_finance_dollar_banknote,
                         iconName = "type_finance_dollar_banknote",
-                        color = "#4CAF50"
+                        color = "#4CAF50",
+                        currency = baseCurrency
                     )
                 )
             }
@@ -157,6 +159,19 @@ constructor(
             }
             if (account != null) {
                 userPreferencesRepository.updateBaseCurrency(account.currency)
+                
+                // Also update the in-built Cash wallet to match the main account's currency
+                val cashWallet = accountBalanceRepository.getLatestBalance("Cash", "wallet")
+                if (cashWallet != null && cashWallet.currency != account.currency) {
+                    accountBalanceRepository.insertBalance(
+                        cashWallet.copy(
+                            id = 0,
+                            currency = account.currency,
+                            timestamp = LocalDateTime.now(),
+                            sourceType = "MAIN_ACCOUNT_SYNC"
+                        )
+                    )
+                }
             }
             delay(3000)
             _uiState.update { it.copy(successMessage = null) }

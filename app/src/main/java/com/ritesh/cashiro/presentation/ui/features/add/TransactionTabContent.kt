@@ -860,7 +860,8 @@ fun TransactionTabContent(
                             viewModel.updateTransactionAccount(it)
                             showAccountSheet = false
                         },
-                        isTransitioning = isTransitioning
+                        isTransitioning = isTransitioning,
+                        showNoneOption = false
                     )
                 }
             }
@@ -882,7 +883,8 @@ fun TransactionTabContent(
                             viewModel.updateTransactionTargetAccount(it)
                             showTargetAccountSheet = false
                         },
-                        isTransitioning = isTransitioning
+                        isTransitioning = isTransitioning,
+                        showNoneOption = false
                     )
                 }
             }

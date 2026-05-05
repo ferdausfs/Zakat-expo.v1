@@ -570,7 +570,8 @@ fun SharedTransitionScope.TransactionDetailScreen(
                 onAccountSelected = {
                     transactionDetailViewModel.updateTransactionAccount(it)
                     showAccountSheet = false
-                }
+                },
+                showNoneOption = false
             )
         }
     }
@@ -590,7 +591,8 @@ fun SharedTransitionScope.TransactionDetailScreen(
                 onAccountSelected = {
                     transactionDetailViewModel.updateTransactionTargetAccount(it)
                     showTargetAccountSheet = false
-                }
+                },
+                showNoneOption = false
             )
         }
     }

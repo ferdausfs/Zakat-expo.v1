@@ -69,8 +69,9 @@ class AccountDetailViewModel @Inject constructor(
             combine(
                 selectedDateRange,
                 transactionRepository.getTransactionsByAccount(bankName, accountLast4),
-                currencyRepository.baseCurrencyCode
-            ) { dateRange, allTransactions, mainCurrency ->
+                currencyRepository.baseCurrencyCode,
+                accountBalanceRepository.getLatestBalanceFlow(bankName, accountLast4)
+            ) { dateRange, allTransactions, mainCurrency, latestBalance ->
                 val (startDate, endDate) = getDateRangeValues(dateRange)
 
                 val filteredTransactions = if (dateRange == DateRange.ALL_TIME) {
@@ -82,7 +83,7 @@ class AccountDetailViewModel @Inject constructor(
                     }
                 }
 
-                val accountPrimaryCurrency = getPrimaryCurrencyForAccount(bankName)
+                val accountPrimaryCurrency = latestBalance?.currency ?: getPrimaryCurrencyForAccount(bankName)
                 val hasMultipleCurrencies = filteredTransactions
                     .map { it.currency }
                     .distinct()

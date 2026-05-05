@@ -141,7 +141,11 @@ class TransactionDetailViewModel @Inject constructor(
 
     private suspend fun determinePrimaryCurrency(transaction: TransactionEntity) {
         val bankName = transaction.bankName
-        val primaryCurrency = if (!bankName.isNullOrEmpty()) {
+        val accountNumber = transaction.accountNumber
+        val primaryCurrency = if (!bankName.isNullOrEmpty() && !accountNumber.isNullOrEmpty()) {
+            accountBalanceRepository.getLatestBalance(bankName, accountNumber)?.currency
+                ?: CurrencyFormatter.getBankBaseCurrency(bankName)
+        } else if (!bankName.isNullOrEmpty()) {
             CurrencyFormatter.getBankBaseCurrency(bankName)
         } else {
             transaction.currency.takeIf { it.isNotEmpty() } ?: "INR"

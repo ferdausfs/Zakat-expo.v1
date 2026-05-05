@@ -97,8 +97,7 @@ fun SharedTransitionScope.AccountDetailScreen(
     val scrollBehaviorLarge = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
     val hazeState = remember { HazeState() }
     val lazyListState = rememberLazyListState()
-    
-    
+
     Box(
         modifier = Modifier
             .fillMaxSize()

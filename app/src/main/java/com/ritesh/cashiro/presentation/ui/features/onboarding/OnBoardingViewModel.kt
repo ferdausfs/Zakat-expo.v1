@@ -230,6 +230,19 @@ constructor(
                 setAsMainAccount(account.bankName, account.accountLast4)
                 // Persist this account's currency as the app-wide base currency
                 userPreferencesRepository.updateBaseCurrency(account.currency)
+                
+                // Also update the in-built Cash wallet to match the main account's currency
+                val cashWallet = accountBalanceRepository.getLatestBalance("Cash", "wallet")
+                if (cashWallet != null && cashWallet.currency != account.currency) {
+                    accountBalanceRepository.insertBalance(
+                        cashWallet.copy(
+                            id = 0,
+                            currency = account.currency,
+                            timestamp = LocalDateTime.now(),
+                            sourceType = "MAIN_ACCOUNT_SYNC"
+                        )
+                    )
+                }
                 nextStep()
             } else if (accounts.size > 1) {
                 // If multiple accounts, move to next step (handled in OnBoardingScreen based on results)
@@ -288,6 +301,19 @@ constructor(
             setAsMainAccount(state.manualAccountName, state.manualAccountLast4)
             // Persist the user-selected currency as the app-wide base currency
             userPreferencesRepository.updateBaseCurrency(state.selectedCurrency)
+            
+            // Also update the in-built Cash wallet to match the manual account's currency
+            val cashWallet = accountBalanceRepository.getLatestBalance("Cash", "wallet")
+            if (cashWallet != null && cashWallet.currency != state.selectedCurrency) {
+                accountBalanceRepository.insertBalance(
+                    cashWallet.copy(
+                        id = 0,
+                        currency = state.selectedCurrency,
+                        timestamp = LocalDateTime.now(),
+                        sourceType = "MAIN_ACCOUNT_SYNC"
+                    )
+                )
+            }
             nextStep()
             _uiState.update { it.copy(isLoading = false) }
         }

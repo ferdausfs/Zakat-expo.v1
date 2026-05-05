@@ -581,7 +581,8 @@ fun SubscriptionTabContent(
                             viewModel.updateSubscriptionAccount(account)
                             showAccountSheet = false
                         },
-                        isTransitioning = isTransitioning
+                        isTransitioning = isTransitioning,
+                        showNoneOption = false
                     )
                 }
             }

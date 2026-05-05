@@ -25,7 +25,8 @@ fun AccountSelectionSheet(
     selectedAccount: AccountBalanceEntity?,
     title: String = "Select Account",
     onAccountSelected: (AccountBalanceEntity?) -> Unit,
-    isTransitioning: Boolean = false
+    isTransitioning: Boolean = false,
+    showNoneOption: Boolean = true
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
@@ -60,30 +61,32 @@ fun AccountSelectionSheet(
                 item {
                     Spacer(modifier = Modifier.height(Spacing.md))
                 }
-                item {
-                    // Option to deselect/None
-                    Surface(
-                        onClick = { onAccountSelected(null) },
-                        shape = RoundedCornerShape(24.dp),
-                        color = if (selectedAccount == null) MaterialTheme.colorScheme.primaryContainer
-                        else MaterialTheme.colorScheme.surface,
-                        border = if (selectedAccount == null) null
-                        else BorderStroke(
-                            1.dp,
-                            MaterialTheme.colorScheme.outlineVariant
-                        ),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(16.dp),
-                            verticalAlignment = Alignment.CenterVertically
+                if (showNoneOption) {
+                    item {
+                        // Option to deselect/None
+                        Surface(
+                            onClick = { onAccountSelected(null) },
+                            shape = RoundedCornerShape(24.dp),
+                            color = if (selectedAccount == null) MaterialTheme.colorScheme.primaryContainer
+                            else MaterialTheme.colorScheme.surface,
+                            border = if (selectedAccount == null) null
+                            else BorderStroke(
+                                1.dp,
+                                MaterialTheme.colorScheme.outlineVariant
+                            ),
+                            modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text(
-                                text = "None (Manual Entry)",
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontWeight = FontWeight.SemiBold,
-                                color = MaterialTheme.colorScheme.onSurface
-                            )
+                            Row(
+                                modifier = Modifier.padding(16.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = "None (Manual Entry)",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                            }
                         }
                     }
                 }

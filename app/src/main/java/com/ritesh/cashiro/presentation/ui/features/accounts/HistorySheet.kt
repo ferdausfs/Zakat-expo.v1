@@ -80,8 +80,8 @@ fun HistorySheet(
     onUpdateBalance: (Long, BigDecimal) -> Unit
 ) {
     // Get the primary currency for this account
-    val accountPrimaryCurrency = remember(bankName) {
-        CurrencyFormatter.getBankBaseCurrency(bankName)
+    val accountPrimaryCurrency = remember(balanceHistory, bankName) {
+        balanceHistory.firstOrNull()?.currency ?: CurrencyFormatter.getBankBaseCurrency(bankName)
     }
     var editingId by remember { mutableStateOf<Long?>(null) }
     var editingValue by remember { mutableStateOf("") }
