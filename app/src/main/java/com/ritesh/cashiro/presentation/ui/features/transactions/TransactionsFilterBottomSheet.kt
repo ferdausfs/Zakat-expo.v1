@@ -322,7 +322,8 @@ fun TransactionsFilterBottomSheet(
                                                 BigDecimal(sliderPosition.start.toDouble()).setScale(
                                                     0,
                                                     RoundingMode.HALF_UP
-                                                )
+                                                ),
+                                                viewModel.baseCurrency.collectAsState().value
                                             )
                                         }",
                                         style = MaterialTheme.typography.labelLarge
@@ -362,7 +363,8 @@ fun TransactionsFilterBottomSheet(
                                                 BigDecimal(sliderPosition.endInclusive.toDouble()).setScale(
                                                     0,
                                                     RoundingMode.HALF_UP
-                                                )
+                                                ),
+                                                viewModel.baseCurrency.collectAsState().value
                                             )
                                         }",
                                         style = MaterialTheme.typography.labelLarge
