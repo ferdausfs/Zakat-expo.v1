@@ -398,7 +398,7 @@ fun TransactionTabContent(
                                         merchantName = uiState.selectedAccount?.bankName ?: "",
                                         accountIconResId = uiState.selectedAccount?.iconResId ?: 0,
                                         accountIconName = uiState.selectedAccount?.iconName,
-                                        size = 24.dp,
+                                        size = 26.dp,
                                         showBackground = false
                                     )
 
@@ -453,7 +453,7 @@ fun TransactionTabContent(
                                         merchantName = uiState.targetAccount?.bankName ?: "",
                                         accountIconResId = uiState.targetAccount?.iconResId ?: 0,
                                         accountIconName = uiState.targetAccount?.iconName,
-                                        size = 24.dp,
+                                        size = 26.dp,
                                         showBackground = false
                                     )
 
@@ -605,7 +605,7 @@ fun TransactionTabContent(
                                 merchantName = uiState.selectedAccount?.bankName ?: "",
                                 accountIconResId = uiState.selectedAccount?.iconResId ?: 0,
                                 accountIconName = uiState.selectedAccount?.iconName,
-                                size = 24.dp,
+                                size = 26.dp,
                                 showBackground = false
                             )
 

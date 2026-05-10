@@ -15,8 +15,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
-import com.ritesh.cashiro.presentation.effects.overScrollVertical
-import com.ritesh.cashiro.presentation.effects.rememberOverscrollFlingBehavior
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
 
 @Composable
@@ -28,7 +26,7 @@ fun AccountSelectionSheet(
     isTransitioning: Boolean = false,
     showNoneOption: Boolean = true
 ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier.fillMaxWidth().navigationBarsPadding()) {
         Text(
             text = title,
             style = MaterialTheme.typography.titleLarge,
@@ -51,10 +49,8 @@ fun AccountSelectionSheet(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .overScrollVertical()
                     .padding(top = 8.dp)
-                    .padding(horizontal = 16.dp)
-                    .clip(RoundedCornerShape(28.dp)),
+                    .padding(horizontal = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 userScrollEnabled = !isTransitioning
             ) {
@@ -109,7 +105,7 @@ fun AccountSelectionSheet(
                     }
                 }
                 item {
-                    Spacer(modifier = Modifier.height(64.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
                 }
             }
         }

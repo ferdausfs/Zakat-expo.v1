@@ -67,8 +67,10 @@ fun BrandIcon(
         )
     }
     
-    val internalPadding = remember(iconResource) {
-        if (iconResource is IconResource.DrawableResource) 0.dp else 8.dp
+    val internalPadding = remember(iconResource, showBackground) {
+        // Only pad inward when there is a background circle to inset from.
+        // Without a background, padding just shrinks the visible icon.
+        if (!showBackground || iconResource is IconResource.DrawableResource) 0.dp else 8.dp
     }
 
     Box(

@@ -965,7 +965,7 @@ private fun EditableTransactionHeader(
                     leadingIcon = {
                         BrandIcon(
                             merchantName = transaction.merchantName,
-                            size = 24.dp,
+                            size = 26.dp,
                             showBackground = false,
                             categoryEntity = categoryEntity,
                             subcategoryEntity = subcategoryEntity,
@@ -1116,7 +1116,7 @@ private fun EditableExtractedInfoCard(
                                         merchantName = selectedAccount?.bankName ?: "",
                                         accountIconResId = selectedAccount?.iconResId ?: 0,
                                         accountIconName = selectedAccount?.iconName,
-                                        size = 24.dp,
+                                        size = 26.dp,
                                         showBackground = false
                                     )
 
@@ -1171,7 +1171,7 @@ private fun EditableExtractedInfoCard(
                                         merchantName = targetAccount?.bankName ?: "",
                                         accountIconResId = targetAccount?.iconResId ?: 0,
                                         accountIconName = targetAccount?.iconName,
-                                        size = 24.dp,
+                                        size = 26.dp,
                                         showBackground = false
                                     )
 
@@ -1278,7 +1278,7 @@ private fun EditableExtractedInfoCard(
                                     merchantName = selectedAccount?.bankName ?: "",
                                     accountIconResId = selectedAccount?.iconResId ?: 0,
                                     accountIconName = selectedAccount?.iconName,
-                                    size = 24.dp,
+                                    size = 26.dp,
                                     showBackground = false
                                 )
 
@@ -2065,7 +2065,7 @@ private fun TransactionReceipt(
                         icon = {
                             BrandIcon(
                                 merchantName = fromBankName,
-                                size = 20.dp,
+                                size = 26.dp,
                                 showBackground = false,
                                 accountIconResId = fromAccountEntity?.iconResId ?: 0,
                                 accountIconName = fromAccountEntity?.iconName,
@@ -2076,7 +2076,7 @@ private fun TransactionReceipt(
                             if (toBankName != null) {
                                 BrandIcon(
                                     merchantName = toBankName,
-                                    size = 20.dp,
+                                    size = 26.dp,
                                     showBackground = false,
                                     accountIconResId = toAccountEntity?.iconResId ?: 0,
                                     accountIconName = toAccountEntity?.iconName,
@@ -2383,7 +2383,7 @@ private fun ReceiptBadge(
         ) {
             BrandIcon(
                 merchantName = merchantName,
-                size = 32.dp,
+                size = 26.dp,
                 showBackground = true,
                 categoryEntity = categoryEntity,
                 subcategoryEntity = subcategoryEntity,
