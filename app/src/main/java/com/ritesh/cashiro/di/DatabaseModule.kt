@@ -5,6 +5,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ritesh.cashiro.data.database.CashiroDatabase
+import com.ritesh.cashiro.data.database.MIGRATION_48_49
+import com.ritesh.cashiro.data.database.MIGRATION_49_50
+import com.ritesh.cashiro.data.database.MIGRATION_50_51
 import com.ritesh.cashiro.data.database.dao.AccountBalanceDao
 import com.ritesh.cashiro.data.database.dao.BudgetDao
 import com.ritesh.cashiro.data.database.dao.CardDao
@@ -18,6 +21,9 @@ import com.ritesh.cashiro.data.database.dao.SubcategoryDao
 import com.ritesh.cashiro.data.database.dao.SubscriptionDao
 import com.ritesh.cashiro.data.database.dao.TransactionDao
 import com.ritesh.cashiro.data.database.dao.UnrecognizedSmsDao
+import com.ritesh.cashiro.data.database.dao.WebhookCursorDao
+import com.ritesh.cashiro.data.database.dao.WebhookLogDao
+import com.ritesh.cashiro.data.database.dao.WebhookProfileDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -57,7 +63,10 @@ object DatabaseModule {
                     CashiroDatabase.MIGRATION_14_15,
                     CashiroDatabase.MIGRATION_20_21,
                     CashiroDatabase.MIGRATION_21_22,
-                    CashiroDatabase.MIGRATION_22_23
+                    CashiroDatabase.MIGRATION_22_23,
+                    MIGRATION_48_49,
+                    MIGRATION_49_50,
+                    MIGRATION_50_51
                 )
 
                 // Enable auto-migrations
@@ -215,6 +224,24 @@ object DatabaseModule {
     @Singleton
     fun provideBudgetDao(database: CashiroDatabase): BudgetDao {
         return database.budgetDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideWebhookProfileDao(database: CashiroDatabase): WebhookProfileDao {
+        return database.webhookProfileDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideWebhookLogDao(database: CashiroDatabase): WebhookLogDao {
+        return database.webhookLogDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideWebhookCursorDao(database: CashiroDatabase): WebhookCursorDao {
+        return database.webhookCursorDao()
     }
 }
 /** Database callback to seed initial data when database is first created */
