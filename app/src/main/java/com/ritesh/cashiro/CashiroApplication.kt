@@ -3,10 +3,13 @@ package com.ritesh.cashiro
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import android.util.Log
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.ritesh.cashiro.data.repository.AppLockRepository
+import com.ritesh.cashiro.data.webhook.WebhookSyncScheduler
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -22,7 +25,18 @@ class CashiroApplication : Application(), Configuration.Provider {
     @Inject
     lateinit var appLockRepository: AppLockRepository
 
-    private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    @Inject
+    lateinit var webhookSyncScheduler: WebhookSyncScheduler
+
+    // SupervisorJob alone swallows uncaught exceptions; without an explicit handler a DataStore
+    // read failure or a SecurityException from AlarmManager inside applyScheduling() would
+    // disappear silently and webhook scheduling would never set up.
+    private val applicationExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        Log.e("CashiroApplication", "Unhandled error in application scope", throwable)
+    }
+    private val applicationScope = CoroutineScope(
+        SupervisorJob() + Dispatchers.Main + applicationExceptionHandler
+    )
     private var activityReferences = 0
     private var isInForeground = false
 
@@ -42,6 +56,9 @@ class CashiroApplication : Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
         registerActivityLifecycleCallbacks(AppLockLifecycleObserver())
+        applicationScope.launch {
+            webhookSyncScheduler.applyScheduling()
+        }
     }
 
     /**

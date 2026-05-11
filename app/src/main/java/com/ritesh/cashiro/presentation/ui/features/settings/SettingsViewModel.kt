@@ -33,6 +33,7 @@ import com.ritesh.cashiro.data.backup.ExportResult
 import com.ritesh.cashiro.data.backup.ImportResult
 import com.ritesh.cashiro.data.backup.ImportStrategy
 import com.ritesh.cashiro.data.repository.MerchantMappingRepository
+import com.ritesh.cashiro.data.webhook.WebhookSyncScheduler
 import com.ritesh.cashiro.domain.repository.RuleRepository
 import android.content.Intent
 import androidx.core.content.FileProvider
@@ -82,7 +83,8 @@ class SettingsViewModel @Inject constructor(
     private val merchantMappingRepository: MerchantMappingRepository,
     private val backupExporter: BackupExporter,
     private val backupImporter: BackupImporter,
-    private val database: CashiroDatabase
+    private val database: CashiroDatabase,
+    private val webhookSyncScheduler: WebhookSyncScheduler
 ) : ViewModel() {
 
     val databaseVersion: Int
@@ -422,6 +424,19 @@ class SettingsViewModel @Inject constructor(
     fun toggleDeveloperMode(enabled: Boolean) {
         viewModelScope.launch {
             userPreferencesRepository.setDeveloperModeEnabled(enabled)
+            // The Webhooks feature is gated behind dev mode. Reconcile any in-flight WorkManager
+            // work / AlarmManager alarms so toggling the gate immediately stops or resumes sync.
+            // applyScheduling() can throw on DataStore / AlarmManager failures; isolate that
+            // failure mode so the toggle itself doesn't crash this coroutine. Explicit try/catch
+            // (not runCatching) so structured concurrency's CancellationException still propagates
+            // when viewModelScope is cleared.
+            try {
+                webhookSyncScheduler.applyScheduling()
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
+            } catch (t: Throwable) {
+                Log.e("SettingsViewModel", "Failed to apply webhook scheduling", t)
+            }
         }
     }
 

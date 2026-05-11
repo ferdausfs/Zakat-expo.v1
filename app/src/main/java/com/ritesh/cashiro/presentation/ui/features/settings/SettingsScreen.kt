@@ -23,6 +23,7 @@ import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Error
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material.icons.rounded.Webhook
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
@@ -110,6 +111,7 @@ fun SettingsScreen(
     onNavigateToProfile: () -> Unit = {},
     onNavigateToSms: () -> Unit = {},
     onNavigateToNotifications: () -> Unit = {},
+    onNavigateToWebhooks: () -> Unit = {},
     onNavigateToBudgets: () -> Unit = {},
     onNavigateToDataPrivacy: () -> Unit = {},
     onNavigateToAbout: () -> Unit = {},
@@ -121,6 +123,7 @@ fun SettingsScreen(
     val downloadProgress = uiState.downloadProgress
     val totalTransactionsCount by settingsViewModel.totalTransactions.collectAsStateWithLifecycle()
     val userPreferences by settingsViewModel.userPreferences.collectAsStateWithLifecycle(initialValue = null)
+    val isDeveloperModeEnabled = userPreferences?.isDeveloperModeEnabled == true
     var showDeleteModelDialog by remember { mutableStateOf(false) }
 
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
@@ -680,9 +683,55 @@ fun SettingsScreen(
                             )
                         },
                         onClick = { onNavigateToSms() },
-                        shape = ListItemPosition.Bottom.toShape(),
+                        shape = if (isDeveloperModeEnabled) ListItemPosition.Middle.toShape()
+                            else ListItemPosition.Bottom.toShape(),
                         padding = PaddingValues(0.dp)
                     )
+                    if (isDeveloperModeEnabled) {
+                        ListItem(
+                            headline = {
+                                Text(
+                                    text = "Webhooks",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    fontWeight = FontWeight.Medium
+                                )
+                            },
+                            supporting = {
+                                Text(
+                                    text = "BYOAPI finance sync",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            },
+                            leading = {
+                                Box(
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .background(
+                                            color = purple_light,
+                                            shape = CircleShape
+                                        ),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        Icons.Rounded.Webhook,
+                                        contentDescription = null,
+                                        tint = purple_dark
+                                    )
+                                }
+                            },
+                            trailing = {
+                                Icon(
+                                    Icons.Rounded.ChevronRight,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            },
+                            onClick = { onNavigateToWebhooks() },
+                            shape = ListItemPosition.Bottom.toShape(),
+                            padding = PaddingValues(0.dp)
+                        )
+                    }
                 }
 
                 Spacer( modifier = Modifier.height(Spacing.md))
@@ -746,4 +795,3 @@ fun SettingsScreen(
         }
     }
 }
-

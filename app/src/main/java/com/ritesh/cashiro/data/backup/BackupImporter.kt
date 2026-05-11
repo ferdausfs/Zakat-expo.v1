@@ -8,6 +8,7 @@ import androidx.room.withTransaction
 import com.ritesh.cashiro.data.database.CashiroDatabase
 import com.ritesh.cashiro.data.database.entity.*
 import com.ritesh.cashiro.data.preferences.UserPreferencesRepository
+import com.ritesh.cashiro.data.repository.WebhookRepository
 import com.ritesh.cashiro.data.preferences.NavigationBarStyle
 import com.ritesh.cashiro.data.preferences.AppFont
 import com.ritesh.cashiro.data.preferences.ThemeStyle
@@ -32,7 +33,8 @@ import javax.inject.Singleton
 class BackupImporter @Inject constructor(
     @ApplicationContext private val context: Context,
     private val database: CashiroDatabase,
-    private val userPreferencesRepository: UserPreferencesRepository
+    private val userPreferencesRepository: UserPreferencesRepository,
+    private val webhookRepository: WebhookRepository
 ) {
     
     private val gson = GsonBuilder()
@@ -225,6 +227,13 @@ class BackupImporter @Inject constructor(
                 backup.database.ruleApplications.forEach { app ->
                     database.ruleApplicationDao().insertApplication(app)
                 }
+
+                if (backup.database.webhookProfiles.isNotEmpty()) {
+                    val baseCurrency = userPreferencesRepository.baseCurrency.first()
+                    backup.database.webhookProfiles.forEach { profile ->
+                        webhookRepository.saveProfile(profile.toDraft(baseCurrency))
+                    }
+                }
                 
                 // Import preferences
                 importPreferences(backup.preferences)
@@ -356,6 +365,7 @@ class BackupImporter @Inject constructor(
                 importSubscriptionsWithMerge(backup.database.subscriptions)
                 importMerchantMappingsWithMerge(backup.database.merchantMappings)
                 importBudgetsWithMerge(backup.database.budgets, backup.database.budgetCategoryLimits)
+                importWebhookProfilesWithMerge(backup.database.webhookProfiles)
                 
                 // Import preferences (merge with existing)
                 importPreferences(backup.preferences)
@@ -465,6 +475,47 @@ class BackupImporter @Inject constructor(
             }
         }
     }
+
+    private suspend fun importWebhookProfilesWithMerge(profiles: List<WebhookProfileBackup>) {
+        if (profiles.isEmpty()) return
+        val baseCurrency = userPreferencesRepository.baseCurrency.first()
+        profiles.forEach { profile ->
+            val existing = database.webhookProfileDao().getProfileById(profile.id)
+            if (existing == null) {
+                webhookRepository.saveProfile(profile.toDraft(baseCurrency))
+            }
+        }
+    }
+
+    private fun parseRangePreset(value: String): WebhookRangePreset =
+        runCatching { WebhookRangePreset.valueOf(value) }
+            .getOrElse { WebhookRangePreset.SINCE_LAST_SUCCESS }
+
+    private fun parseLocalDateTime(value: String?): java.time.LocalDateTime? =
+        value?.let { runCatching { java.time.LocalDateTime.parse(it) }.getOrNull() }
+
+    // Currency is no longer part of the backup model — derive from the importing user's own
+    // baseCurrency preference, same as the runtime sync path does. Caller passes it in so we
+    // don't re-read DataStore once per profile when restoring multiple webhooks.
+    private fun WebhookProfileBackup.toDraft(currency: String): com.ritesh.cashiro.data.webhook.WebhookProfileDraft =
+        com.ritesh.cashiro.data.webhook.WebhookProfileDraft(
+            id = id,
+            name = name,
+            url = url,
+            enabled = enabled,
+            dataTypes = dataTypes
+                .mapNotNull {
+                    runCatching {
+                        com.ritesh.cashiro.data.database.entity.WebhookDataType.valueOf(it)
+                    }.getOrNull()
+                }
+                .toSet(),
+            rangePreset = parseRangePreset(rangePreset),
+            customStart = parseLocalDateTime(customStart),
+            customEnd = parseLocalDateTime(customEnd),
+            currency = currency,
+            headers = headers
+        )
     
     /**
      * Import user preferences
