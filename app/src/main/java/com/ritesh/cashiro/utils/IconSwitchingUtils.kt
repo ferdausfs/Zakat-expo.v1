@@ -13,25 +13,26 @@ object IconSwitchingUtils {
         val iconComponents = mapOf(
             AppIcon.ORIGINAL to "$packageName.MainActivityOriginal",
             AppIcon.ANARCHY to "$packageName.MainActivityAnarchy",
-            AppIcon.ZENITH to "$packageName.MainActivityZenith"
+            AppIcon.ZENITH to "$packageName.MainActivityZenith",
+            AppIcon.MONOCHROME to "$packageName.MainActivityMonochrome"
         )
 
-        // Enable new icon first
-        iconComponents[targetIcon]?.let { componentName ->
-            packageManager.setComponentEnabledSetting(
-                ComponentName(context, componentName),
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                0 // Hard kill to apply changes
-            )
-        }
-
-        // Disable others
-        iconComponents.filter { it.key != targetIcon }.forEach { (_, componentName) ->
-            packageManager.setComponentEnabledSetting(
-                ComponentName(context, componentName),
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                0 // Hard kill to apply changes
-            )
+        iconComponents.forEach { (icon, componentName) ->
+            val component = ComponentName(context, componentName)
+            val newState = if (icon == targetIcon) {
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+            } else {
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+            }
+            
+            // Only update if state is different to avoid system overhead and potential lag
+            if (packageManager.getComponentEnabledSetting(component) != newState) {
+                packageManager.setComponentEnabledSetting(
+                    component,
+                    newState,
+                    PackageManager.DONT_KILL_APP
+                )
+            }
         }
     }
 }

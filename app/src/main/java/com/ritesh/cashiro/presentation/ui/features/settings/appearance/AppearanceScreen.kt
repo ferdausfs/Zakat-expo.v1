@@ -471,9 +471,8 @@ fun AppearanceScreen(
                             drawableResId = R.drawable.cashiro_original,
                             isSelected = themeUiState.currentAppIcon == AppIcon.ORIGINAL,
                             onClick = {
-                                themeViewModel.updateAppIcon(AppIcon.ORIGINAL).invokeOnCompletion {
-                                    IconSwitchingUtils.switchAppIcon(context, AppIcon.ORIGINAL)
-                                }
+                                IconSwitchingUtils.switchAppIcon(context, AppIcon.ORIGINAL)
+                                themeViewModel.updateAppIcon(AppIcon.ORIGINAL)
                             }
                         )
                     }
@@ -485,9 +484,8 @@ fun AppearanceScreen(
                             drawableResId = R.drawable.cashiro_anarchy,
                             isSelected = themeUiState.currentAppIcon == AppIcon.ANARCHY,
                             onClick = {
-                                themeViewModel.updateAppIcon(AppIcon.ANARCHY).invokeOnCompletion {
-                                    IconSwitchingUtils.switchAppIcon(context, AppIcon.ANARCHY)
-                                }
+                                IconSwitchingUtils.switchAppIcon(context, AppIcon.ANARCHY)
+                                themeViewModel.updateAppIcon(AppIcon.ANARCHY)
                             }
                         )
                     }
@@ -499,9 +497,22 @@ fun AppearanceScreen(
                             drawableResId = R.drawable.cashiro_zenith,
                             isSelected = themeUiState.currentAppIcon == AppIcon.ZENITH,
                             onClick = {
-                                themeViewModel.updateAppIcon(AppIcon.ZENITH).invokeOnCompletion {
-                                    IconSwitchingUtils.switchAppIcon(context, AppIcon.ZENITH)
-                                }
+                                IconSwitchingUtils.switchAppIcon(context, AppIcon.ZENITH)
+                                themeViewModel.updateAppIcon(AppIcon.ZENITH)
+                            }
+                        )
+                    }
+                    item {
+                        AppLogoOption(
+                            name = "Monochrome",
+                            icon = AppIcon.MONOCHROME,
+                            backgroundColor = MaterialTheme.colorScheme.primaryContainer,
+                            drawableResId = R.drawable.cashiro_monochrome,
+                            iconTint = MaterialTheme.colorScheme.onPrimaryContainer,
+                            isSelected = themeUiState.currentAppIcon == AppIcon.MONOCHROME,
+                            onClick = {
+                                IconSwitchingUtils.switchAppIcon(context, AppIcon.MONOCHROME)
+                                themeViewModel.updateAppIcon(AppIcon.MONOCHROME)
                             }
                         )
                     }
@@ -999,6 +1010,7 @@ fun AppLogoOption(
     backgroundColor: Color,
     drawableResId: Int,
     isSelected: Boolean,
+    iconTint: Color? = null,
     onClick: () -> Unit
 ) {
     Column(
@@ -1022,7 +1034,8 @@ fun AppLogoOption(
             Image(
                 painter = painterResource(id = drawableResId),
                 contentDescription = null,
-                modifier = Modifier.size(84.dp)
+                modifier = Modifier.size(84.dp),
+                colorFilter = iconTint?.let { androidx.compose.ui.graphics.ColorFilter.tint(it) }
             )
             
             if (isSelected) {

@@ -96,6 +96,24 @@
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity-alias>
+
+        <activity-alias
+            android:name=".MainActivityMonochrome"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_monochrome"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_monochrome_round"
+            android:targetActivity=".MainActivity"
+            android:theme="@style/Theme.Cashiro.SplashScreen.Monochrome">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
         
         <!-- Disable default WorkManager initialization -->
         <provider
