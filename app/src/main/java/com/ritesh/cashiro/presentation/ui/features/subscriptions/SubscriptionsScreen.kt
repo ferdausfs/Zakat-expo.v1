@@ -99,6 +99,7 @@ import com.ritesh.cashiro.presentation.ui.theme.Spacing
 import com.ritesh.cashiro.presentation.ui.theme.expense_dark
 import com.ritesh.cashiro.presentation.ui.theme.expense_light
 import com.ritesh.cashiro.utils.CurrencyFormatter
+import com.ritesh.cashiro.utils.SubscriptionUtils
 import com.ritesh.cashiro.utils.formatAmount
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeSource
@@ -210,6 +211,8 @@ fun SubscriptionsScreen(
                 subscription = selectedSubscription,
                 categoryEntity = categoriesMap[selectedSubscription.category],
                 subcategoryEntity = subcategoriesMap[selectedSubscription.subcategory],
+                convertedAmount = uiState.convertedAmounts[selectedSubscription.id],
+                targetCurrency = uiState.targetCurrency,
                 onDismiss = { subscriptionsViewModel.selectSubscription(null) },
                 onMarkAsPaid = { subscriptionsViewModel.markAsPaid(selectedSubscription) },
                 onEdit = {
@@ -239,7 +242,8 @@ fun SubscriptionsScreen(
                     monthlyAmount = uiState.totalMonthlyAmount,
                     yearlyAmount = uiState.totalYearlyAmount,
                     activeCount = uiState.activeSubscriptions.size,
-                    currency = uiState.targetCurrency
+                    currency = uiState.targetCurrency,
+                    conversionFailureCount = uiState.conversionFailureCount
                 )
             }
             
@@ -299,7 +303,8 @@ private fun TotalSubscriptionsSummary(
     monthlyAmount: BigDecimal,
     yearlyAmount: BigDecimal,
     activeCount: Int,
-    currency: String
+    currency: String,
+    conversionFailureCount: Int = 0
 ) {
     CashiroCard(
         modifier = Modifier.fillMaxWidth(),
@@ -415,6 +420,16 @@ private fun TotalSubscriptionsSummary(
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
+            }
+            if (conversionFailureCount > 0) {
+                Spacer(modifier = Modifier.height(Spacing.sm))
+                Text(
+                    text = "$conversionFailureCount subscription(s) couldn't be converted to $currency, totals may be incomplete.",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.error,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
     }
@@ -596,6 +611,12 @@ private fun SwipeableSubscriptionItem(
                                     )
                                 }
 
+                                // Billing Cycle Tag
+                                SubtitleTag(
+                                    text = SubscriptionUtils.formatBillingCycle(subscription.billingCycle),
+                                    color = MaterialTheme.colorScheme.tertiary
+                                )
+
                                 // Category Tag
                                 categoryEntity?.let { category ->
                                     SubtitleTag(
@@ -703,6 +724,8 @@ private fun PaymentStatusBottomSheet(
     subscription: SubscriptionEntity,
     categoryEntity: CategoryEntity? = null,
     subcategoryEntity: SubcategoryEntity? = null,
+    convertedAmount: BigDecimal? = null,
+    targetCurrency: String? = null,
     onDismiss: () -> Unit,
     onMarkAsPaid: () -> Unit,
     onEdit: () -> Unit
@@ -721,8 +744,8 @@ private fun PaymentStatusBottomSheet(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp)
-                .padding(bottom = 40.dp),
+                .padding(horizontal = Spacing.lg)
+                .padding(bottom = Spacing.xl + Spacing.sm),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
@@ -741,7 +764,7 @@ private fun PaymentStatusBottomSheet(
                         .clip(CircleShape)
                         .background(MaterialTheme.colorScheme.surfaceVariant.copy(0.5f))
                         .clickable { onEdit() }
-                        .padding(8.dp)
+                        .padding(Spacing.sm)
                 ) {
                     Icon(
                         imageVector =Iconax.Edit2,
@@ -752,8 +775,8 @@ private fun PaymentStatusBottomSheet(
                 }
             }
             
-            Spacer(modifier = Modifier.height(16.dp))
-            
+            Spacer(modifier = Modifier.height(Spacing.md))
+
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(
@@ -762,8 +785,8 @@ private fun PaymentStatusBottomSheet(
                 shape = MaterialTheme.shapes.large
             ) {
                 Row(
-                    modifier = Modifier.padding(16.dp).fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    modifier = Modifier.padding(Spacing.md).fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.md),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     BrandIcon(
@@ -792,6 +815,23 @@ private fun PaymentStatusBottomSheet(
                             fontWeight = FontWeight.Bold,
                             color = if (isOverdue) MaterialTheme.colorScheme.onErrorContainer else MaterialTheme.colorScheme.onSecondaryContainer
                         )
+                        val displayAmount = convertedAmount ?: subscription.amount
+                        val displayCurrency = if (convertedAmount != null) {
+                            targetCurrency ?: subscription.currency
+                        } else {
+                            subscription.currency
+                        }
+                        val cycleSubtitle = SubscriptionUtils.cycleSubtitle(
+                            amount = displayAmount,
+                            currency = displayCurrency,
+                            billingCycle = subscription.billingCycle
+                        )
+                        Text(
+                            text = cycleSubtitle,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = if (isOverdue) MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.8f)
+                                    else MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.8f)
+                        )
                         if (subscription.nextPaymentDate != null) {
                             Text(
                                 text = if (isOverdue) "Overdue since ${subscription.nextPaymentDate.format(DateTimeFormatter.ofPattern("MMM d, yyyy"))}"
@@ -805,19 +845,19 @@ private fun PaymentStatusBottomSheet(
                 }
             }
             
-            Spacer(modifier = Modifier.height(24.dp))
-            
+            Spacer(modifier = Modifier.height(Spacing.lg))
+
             Text(
                 text = "Is this subscription paid?",
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center
             )
-            
-            Spacer(modifier = Modifier.height(24.dp))
-            
+
+            Spacer(modifier = Modifier.height(Spacing.lg))
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.md)
             ) {
                 OutlinedButton(
                     onClick = onDismiss,
@@ -835,8 +875,8 @@ private fun PaymentStatusBottomSheet(
             }
             
             if (!subscription.smsBody.isNullOrBlank()) {
-                Spacer(modifier = Modifier.height(24.dp))
-                
+                Spacer(modifier = Modifier.height(Spacing.lg))
+
                 TextButton(
                     onClick = { showSmsBody = !showSmsBody }
                 ) {
@@ -845,13 +885,13 @@ private fun PaymentStatusBottomSheet(
                             imageVector = if (showSmsBody) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore,
                             contentDescription = null
                         )
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(modifier = Modifier.width(Spacing.sm))
                         Text(if (showSmsBody) "Hide Original Message" else "Show Original Message")
                     }
                 }
-                
+
                 if (showSmsBody) {
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(Spacing.sm))
                     Surface(
                         modifier = Modifier.fillMaxWidth(),
                         color = MaterialTheme.colorScheme.surfaceVariant,
