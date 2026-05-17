@@ -90,6 +90,19 @@ interface TransactionDao {
     )
     fun searchTransactions(searchQuery: String): Flow<List<TransactionEntity>>
 
+    @Query(
+            """
+        SELECT * FROM transactions 
+        WHERE is_deleted = 0 
+        AND (merchant_name LIKE '%' || :searchQuery || '%' 
+        OR description LIKE '%' || :searchQuery || '%'
+        OR sms_body LIKE '%' || :searchQuery || '%') 
+        ORDER BY date_time DESC
+        LIMIT 20
+    """
+    )
+    suspend fun searchTransactionsList(searchQuery: String): List<TransactionEntity>
+
     @Query("SELECT DISTINCT category FROM transactions WHERE is_deleted = 0 ORDER BY category ASC")
     fun getAllCategories(): Flow<List<String>>
 
@@ -144,10 +157,29 @@ interface TransactionDao {
     @Query("UPDATE transactions SET category = :newCategory WHERE merchant_name = :merchantName")
     suspend fun updateCategoryForMerchant(merchantName: String, newCategory: String)
 
+    /** Updates category and subcategory for all non-deleted transactions whose merchant name CONTAINS the keyword */
+    @Query("UPDATE transactions SET category = :newCategory, subcategory = :newSubcategory WHERE is_deleted = 0 AND merchant_name LIKE '%' || :merchantName || '%'")
+    suspend fun updateCategoryAndSubcategoryForMerchantContains(merchantName: String, newCategory: String, newSubcategory: String?)
+
     @Query(
             "SELECT COUNT(*) FROM transactions WHERE merchant_name = :merchantName AND id != :excludeId"
     )
     suspend fun getTransactionCountForMerchant(merchantName: String, excludeId: Long): Int
+
+    /** Returns all non-deleted transactions whose merchant name CONTAINS the keyword, excluding one id */
+    @Query(
+        """
+        SELECT * FROM transactions
+        WHERE is_deleted = 0
+        AND merchant_name LIKE '%' || :merchantName || '%'
+        AND id != :excludeId
+        ORDER BY date_time DESC
+        """
+    )
+    suspend fun getTransactionsByMerchantContains(
+        merchantName: String,
+        excludeId: Long
+    ): List<TransactionEntity>
 
     @Query("SELECT DISTINCT currency FROM transactions WHERE is_deleted = 0 ORDER BY currency")
     fun getAllCurrencies(): Flow<List<String>>

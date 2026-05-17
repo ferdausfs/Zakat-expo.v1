@@ -508,7 +508,13 @@ fun CreateRuleScreen(
                                                     text = { Text(label) },
                                                     onClick = {
                                                         conditions = conditions.toMutableList().apply {
-                                                            this[index] = this[index].copy(field = field)
+                                                            val defaultOperator = if (field == TransactionField.AMOUNT) ConditionOperator.LESS_THAN else ConditionOperator.CONTAINS
+                                                            val defaultValue = if (field == TransactionField.TYPE) "EXPENSE" else ""
+                                                            this[index] = this[index].copy(
+                                                                field = field,
+                                                                operator = defaultOperator,
+                                                                value = defaultValue
+                                                            )
                                                         }
                                                         fieldDropdownsExpanded = fieldDropdownsExpanded.toMutableList().apply {
                                                             this[index] = false

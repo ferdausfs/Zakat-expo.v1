@@ -19,6 +19,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -39,23 +41,38 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ShowChart
 import androidx.compose.material.icons.automirrored.filled.TrendingDown
 import androidx.compose.material.icons.automirrored.filled.TrendingUp
 import androidx.compose.material.icons.filled.SubdirectoryArrowRight
 import androidx.compose.material.icons.rounded.BugReport
+import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.ExpandLess
 import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.SwapHoriz
 import androidx.compose.material.icons.rounded.SwapVert
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Deselect
+import androidx.compose.material.icons.rounded.MoreHoriz
+import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.rounded.SelectAll
 import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import com.ritesh.cashiro.presentation.ui.components.CashiroCheckbox
+import com.ritesh.cashiro.presentation.ui.components.TransactionItem
+import com.ritesh.cashiro.presentation.ui.components.ListItem
+import com.ritesh.cashiro.presentation.ui.components.ListItemPosition
+import com.ritesh.cashiro.presentation.ui.components.toShape
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -72,6 +89,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -97,6 +116,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
@@ -111,8 +131,10 @@ import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Density
@@ -147,6 +169,7 @@ import com.ritesh.cashiro.presentation.ui.components.DatePicker
 import com.ritesh.cashiro.presentation.ui.components.DeleteTransactionDialog
 import com.ritesh.cashiro.presentation.ui.components.LoadingCircle
 import com.ritesh.cashiro.presentation.ui.components.PreferenceSwitch
+import com.ritesh.cashiro.presentation.ui.components.SearchBarBox
 import com.ritesh.cashiro.presentation.ui.components.TimePicker
 import com.ritesh.cashiro.presentation.ui.features.accounts.NumberPad
 import com.ritesh.cashiro.presentation.ui.features.add.AmountInput
@@ -155,15 +178,29 @@ import com.ritesh.cashiro.presentation.ui.icons.Bag
 import com.ritesh.cashiro.presentation.ui.icons.Box2
 import com.ritesh.cashiro.presentation.ui.icons.Calendar
 import com.ritesh.cashiro.presentation.ui.icons.Card
+import com.ritesh.cashiro.presentation.ui.icons.CloseCircle
 import com.ritesh.cashiro.presentation.ui.icons.DocumentText2
 import com.ritesh.cashiro.presentation.ui.icons.Edit2
+import com.ritesh.cashiro.presentation.ui.icons.Folder2
 import com.ritesh.cashiro.presentation.ui.icons.Iconax
+import com.ritesh.cashiro.presentation.ui.icons.Menu
 import com.ritesh.cashiro.presentation.ui.icons.Messages
 import com.ritesh.cashiro.presentation.ui.icons.RefreshCircle
+import com.ritesh.cashiro.presentation.ui.icons.Search
 import com.ritesh.cashiro.presentation.ui.icons.VideoTime
 import com.ritesh.cashiro.presentation.ui.icons.Wallet3
 import com.ritesh.cashiro.presentation.ui.theme.Dimensions
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
+import com.ritesh.cashiro.presentation.ui.theme.credit_dark
+import com.ritesh.cashiro.presentation.ui.theme.credit_light
+import com.ritesh.cashiro.presentation.ui.theme.expense_dark
+import com.ritesh.cashiro.presentation.ui.theme.expense_light
+import com.ritesh.cashiro.presentation.ui.theme.income_dark
+import com.ritesh.cashiro.presentation.ui.theme.income_light
+import com.ritesh.cashiro.presentation.ui.theme.investment_dark
+import com.ritesh.cashiro.presentation.ui.theme.investment_light
+import com.ritesh.cashiro.presentation.ui.theme.transfer_dark
+import com.ritesh.cashiro.presentation.ui.theme.transfer_light
 import com.ritesh.cashiro.utils.CurrencyFormatter
 import com.ritesh.cashiro.utils.IconResolutionUtils
 import com.ritesh.cashiro.utils.SubscriptionUtils
@@ -202,6 +239,9 @@ fun SharedTransitionScope.TransactionDetailScreen(
     val applyToAllFromMerchant = uiState.applyToAllFromMerchant
     val updateExistingTransactions = uiState.updateExistingTransactions
     val existingTransactionCount = uiState.existingTransactionCount
+    val showMatchPreviewSheet = uiState.showMatchPreviewSheet
+    val matchedTransactions = uiState.matchedTransactions
+    val selectedMatchIds = uiState.selectedMatchIds
     val showDeleteDialog = uiState.showDeleteDialog
     val isDeleting = uiState.isDeleting
     val deleteSuccess = uiState.deleteSuccess
@@ -593,6 +633,35 @@ fun SharedTransitionScope.TransactionDetailScreen(
                     showTargetAccountSheet = false
                 },
                 showNoneOption = false
+            )
+        }
+    }
+
+    // Match Preview Sheet — allows granular per-transaction selection before applying
+    if (showMatchPreviewSheet) {
+        val previewSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+        ModalBottomSheet(
+            onDismissRequest = { transactionDetailViewModel.hideMatchPreviewSheet() },
+            sheetState = previewSheetState,
+            containerColor = MaterialTheme.colorScheme.surface,
+            dragHandle = { BottomSheetDefaults.DragHandle() }
+        ) {
+            MatchPreviewSheetContent(
+                matchedTransactions = matchedTransactions,
+                selectedMatchIds = selectedMatchIds,
+                searchQuery = uiState.matchSearchQuery,
+                searchResults = uiState.matchSearchResults,
+                onSearchQueryChange = { transactionDetailViewModel.updateMatchSearchQuery(it) },
+                onAddSearchResult = { transactionDetailViewModel.addTransactionToMatchList(it) },
+                onToggleSelection = { transactionDetailViewModel.toggleMatchSelection(it) },
+                onSelectAll = { transactionDetailViewModel.selectAllMatches() },
+                onDeselectAll = { transactionDetailViewModel.deselectAllMatches() },
+                onApply = {
+                    transactionDetailViewModel.applyToSelectedMatches()
+                    scope.launch { snackbarHostState.showSnackbar("Updated ${selectedMatchIds.size} transactions") }
+                },
+                onDismiss = { transactionDetailViewModel.hideMatchPreviewSheet() },
+                newCategory = editableTransaction?.category ?: ""
             )
         }
     }
@@ -1318,12 +1387,24 @@ private fun EditableExtractedInfoCard(
                 }
             }
 
-            if (!transaction.smsBody.isNullOrBlank()) {
-                Spacer(modifier = Modifier.height(Spacing.sm))
+            // ── Merchant category helpers ─────────────────────────────────
+            Spacer(modifier = Modifier.height(Spacing.sm))
 
-                // Apply to all from merchant checkbox
+            // Option 1: Apply this category to all FUTURE transactions
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .animateContentSize(MaterialTheme.motionScheme.fastSpatialSpec())
+            ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = Spacing.sm),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable(
+                            onClick = {viewModel.toggleApplyToAllFromMerchant()},
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        )
+                        .padding(horizontal = Spacing.sm, vertical = Spacing.xs),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     CashiroCheckbox(
@@ -1332,17 +1413,65 @@ private fun EditableExtractedInfoCard(
                     )
                     Spacer(modifier = Modifier.width(Spacing.sm))
                     Text(
-                        text = "Apply this category to all future transactions from ${transaction.merchantName}",
+                        text = "Apply this category to all future transactions from \"${transaction.merchantName}\"",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                 }
 
-                // Update existing transactions checkbox (only show if there are other transactions)
-                if (existingTransactionCount > 0) {
-                    Spacer(modifier = Modifier.height(Spacing.xs))
+                AnimatedVisibility(visible = applyToAllFromMerchant) {
                     Row(
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = Spacing.sm),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = Spacing.sm, end = Spacing.sm, bottom = Spacing.xs),
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        Surface(
+                            shape = MaterialTheme.shapes.small,
+                            color = MaterialTheme.colorScheme.secondaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(
+                                    horizontal = Spacing.md,
+                                    vertical = Spacing.sm
+                                ),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Info,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(14.dp)
+                                )
+                                Text(
+                                    text = "This doesn't work on manually entered transactions",
+                                    style = MaterialTheme.typography.labelSmall,
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Option 2: Update EXISTING transactions (only shown when there are matches)
+            if (existingTransactionCount > 0) {
+                Spacer(modifier = Modifier.height(Spacing.xs))
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .animateContentSize(MaterialTheme.motionScheme.fastSpatialSpec())
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable(
+                                onClick = {viewModel.toggleUpdateExistingTransactions()},
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() }
+                            )
+                            .padding(horizontal = Spacing.sm, vertical = Spacing.xs),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         CashiroCheckbox(
@@ -1351,15 +1480,52 @@ private fun EditableExtractedInfoCard(
                         )
                         Spacer(modifier = Modifier.width(Spacing.sm))
                         Text(
-                            text = "Also update $existingTransactionCount existing ${if (existingTransactionCount == 1) "transaction" else "transactions"} from ${transaction.merchantName}",
+                            text = "Update $existingTransactionCount existing ${if (existingTransactionCount == 1) "transaction" else "transactions"} from \"${transaction.merchantName}\"",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurface
                         )
                     }
+                    // Preview button — only visible when checkbox is ON
+                    AnimatedVisibility(visible = updateExistingTransactions) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = Spacing.sm, end = Spacing.sm, bottom = Spacing.xs),
+                            horizontalArrangement = Arrangement.Start
+                        ) {
+                            Surface(
+                                onClick = { viewModel.showMatchPreviewSheet() },
+                                shape = MaterialTheme.shapes.medium,
+                                color = MaterialTheme.colorScheme.primaryContainer,
+                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                modifier = Modifier.wrapContentSize()
+                            ) {
+                                Row(
+                                    modifier = Modifier.padding(
+                                        horizontal = Spacing.md,
+                                        vertical = Spacing.sm
+                                    ),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.ExpandMore,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(16.dp)
+                                    )
+                                    Text(
+                                        text = "Preview transaction matches",
+                                        style = MaterialTheme.typography.labelMedium,
+                                        fontWeight = FontWeight.SemiBold
+                                    )
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
-            Spacer(modifier = Modifier.height(Spacing.sm))
+            Spacer(modifier = Modifier.height(Spacing.xs))
 
             // Recurring Switch and Billing Cycle
             PreferenceSwitch(
@@ -2799,5 +2965,382 @@ private class ReceiptShape(
             close()
         }
         return Outline.Generic(path)
+    }
+}
+
+// Match Preview Sheet
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+private fun MatchPreviewSheetContent(
+    matchedTransactions: List<TransactionEntity>,
+    selectedMatchIds: Set<Long>,
+    searchQuery: String,
+    searchResults: List<TransactionEntity>,
+    onSearchQueryChange: (String) -> Unit,
+    onAddSearchResult: (TransactionEntity) -> Unit,
+    onToggleSelection: (Long) -> Unit,
+    onSelectAll: () -> Unit,
+    onDeselectAll: () -> Unit,
+    onApply: () -> Unit,
+    onDismiss: () -> Unit,
+    newCategory: String
+) {
+
+    val isDark = isSystemInDarkTheme()
+    Box( modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .animateContentSize()
+                .fillMaxWidth()
+                .navigationBarsPadding()
+        ) {
+            // Sheet header
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Dimensions.Padding.content, vertical = Spacing.sm),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = "Matches Preview",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Text(
+                        text = "${selectedMatchIds.size} of ${matchedTransactions.size} selected • will be set to \"$newCategory\"",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
+                    )
+                }
+                // Select all / deselect all
+                val allSelected =
+                    selectedMatchIds.size == matchedTransactions.size && matchedTransactions.isNotEmpty()
+
+                IconButton(
+                    onClick = {
+                        if (allSelected) onDeselectAll() else onSelectAll()
+                    },
+                    colors = IconButtonDefaults.iconButtonColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                        contentColor = MaterialTheme.colorScheme.onBackground
+                    ),
+                    shapes = IconButtonDefaults.shapes(),
+                ) {
+                    Icon(
+                        imageVector = if (allSelected) Icons.Rounded.Deselect else Icons.Rounded.SelectAll,
+                        contentDescription = if (allSelected) "Deselect All" else "Select All",
+                        modifier = Modifier.size(18.dp)
+                    )
+                }
+            }
+
+            var searchTextFieldValue by remember(searchQuery) {
+                mutableStateOf(
+                    TextFieldValue(
+                        text = searchQuery,
+                        selection = TextRange(searchQuery.length)
+                    )
+                )
+            }
+            // Search Bar
+            SearchBarBox(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Dimensions.Padding.content, vertical = Spacing.xs),
+                searchQuery = searchTextFieldValue,
+                onSearchQueryChange = {
+                    searchTextFieldValue = it
+                    onSearchQueryChange(it.text)
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Iconax.Search,
+                        contentDescription = "Search",
+                        tint = MaterialTheme.colorScheme.onSurface.copy(0.5f)
+                    )
+                },
+                trailingIcon = {
+                    BlurredAnimatedVisibility(searchTextFieldValue.text.isNotEmpty()) {
+                        IconButton(onClick = {
+                            searchTextFieldValue = TextFieldValue("")
+                            onSearchQueryChange("")
+                        }) {
+                            Icon(
+                                imageVector = Iconax.CloseCircle,
+                                contentDescription = "Clear search",
+                                tint = MaterialTheme.colorScheme.onSurface.copy(0.5f)
+                            )
+                        }
+                    }
+                },
+                label = {
+                    Text(
+                        text = "Search transactions to add...",
+                        maxLines = 1,
+                        textAlign = TextAlign.Center,
+                        overflow = TextOverflow.Ellipsis,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.5f)
+                    )
+                }
+            )
+
+            // Show Search Results if available
+            if (searchQuery.isNotEmpty()) {
+                BlurredAnimatedVisibility(searchResults.isEmpty()) {
+                    Box(
+                        modifier = Modifier.fillMaxWidth().height(100.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "No additional transactions found",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+                BlurredAnimatedVisibility(
+                    visible = searchResults.isNotEmpty(),
+                    enter = fadeIn() + slideInVertically { it },
+                    exit = fadeOut() + slideOutVertically { it }
+                ) {
+                    LazyColumn(
+                        modifier = Modifier
+                            .padding(horizontal = Dimensions.Padding.content, vertical = Spacing.sm)
+                            .clip(RoundedCornerShape(Dimensions.Padding.content))
+                            .fillMaxWidth()
+                            .weight(1f, fill = false)
+                            .heightIn(max = 460.dp),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.xs)
+                    ) {
+                        item {
+                            Text(
+                                text = "Search Results",
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.padding(top = Spacing.md, bottom = Spacing.xs)
+                            )
+                        }
+                        itemsIndexed(searchResults, key = { _, txn -> "search_${txn.id}" }) { index, txn ->
+                            val position = ListItemPosition.from(index, searchResults.size)
+                            ListItem(
+                                headline = {
+                                    Text(
+                                        text = txn.merchantName,
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        fontWeight = FontWeight.SemiBold,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis
+                                    )
+                                },
+                                supporting = {
+                                    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                                        Text(
+                                            text = txn.dateTime.format(DateTimeFormatter.ofPattern("d MMM yyyy")),
+                                            style = MaterialTheme.typography.bodySmall
+                                        )
+                                        if (!txn.category.isNullOrBlank()) {
+                                            Text(
+                                                text = txn.category ?: "",
+                                                style = MaterialTheme.typography.labelSmall,
+                                                color = MaterialTheme.colorScheme.primary
+                                            )
+                                        }
+                                    }
+                                },
+                                leading = {
+                                    BrandIcon(
+                                        merchantName = txn.merchantName,
+                                        category = txn.category,
+                                        subcategory = txn.subcategory,
+                                        size = 32.dp,
+                                        showBackground = true
+                                    )
+                                },
+                                trailing = {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
+                                    ) {
+                                        Text(
+                                            text = CurrencyFormatter.formatCurrency(
+                                                txn.amount,
+                                                txn.currency
+                                            ),
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            fontWeight = FontWeight.SemiBold,
+                                            color = when (txn.transactionType) {
+                                                TransactionType.INCOME -> MaterialTheme.colorScheme.tertiary
+                                                else -> MaterialTheme.colorScheme.error
+                                            }
+                                        )
+                                        Icon(
+                                            imageVector = Icons.Rounded.Add,
+                                            contentDescription = "Add transaction",
+                                            tint = MaterialTheme.colorScheme.primary
+                                        )
+                                    }
+                                },
+                                onClick = { onAddSearchResult(txn) },
+                                shape = position.toShape(),
+                                padding = PaddingValues(0.dp)
+                            )
+                        }
+                        item{
+                            Spacer(modifier = Modifier.height(150.dp))
+                        }
+                    }
+                }
+            } else if (matchedTransactions.isEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(160.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "No matching transactions found",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            } else {
+                val listState = rememberLazyListState()
+                LazyColumn(
+                    state = listState,
+                    modifier = Modifier
+                        .padding(horizontal = Dimensions.Padding.content, vertical = Spacing.sm)
+                        .clip(RoundedCornerShape(Dimensions.Padding.content))
+                        .fillMaxWidth()
+                        .weight(1f, fill = false)
+                        .heightIn(max = 460.dp),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xs)
+                ) {
+                    itemsIndexed(
+                        items = matchedTransactions,
+                        key = { _, txn -> txn.id }
+                    ) { index, txn ->
+                        val isSelected = selectedMatchIds.contains(txn.id)
+                        val position = ListItemPosition.from(index, matchedTransactions.size)
+                        ListItem(
+                            headline = {
+                                Text(
+                                    text = txn.merchantName,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.SemiBold,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                            },
+                            supporting = {
+                                Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                                    Text(
+                                        text = txn.dateTime.format(
+                                            DateTimeFormatter.ofPattern("d MMM yyyy")
+                                        ),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurface.copy(0.5f)
+                                    )
+                                    if (!txn.category.isNullOrBlank()) {
+                                        Text(
+                                            text = txn.category ?: "",
+                                            style = MaterialTheme.typography.labelSmall,
+                                            color = MaterialTheme.colorScheme.secondary
+                                        )
+                                    }
+                                }
+                            },
+                            leading = {
+                                BrandIcon(
+                                    merchantName = txn.merchantName,
+                                    category = txn.category,
+                                    subcategory = txn.subcategory,
+                                    size = 32.dp,
+                                    showBackground = true
+                                )
+                            },
+                            trailing = {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
+                                ) {
+                                    Text(
+                                        text = CurrencyFormatter.formatCurrency(
+                                            txn.amount,
+                                            txn.currency
+                                        ),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        fontWeight = FontWeight.SemiBold,
+                                        color = when (txn.transactionType) {
+                                            TransactionType.INCOME -> if (!isDark) income_light else income_dark
+                                            TransactionType.EXPENSE -> if (!isDark) expense_light else expense_dark
+                                            TransactionType.CREDIT -> if (!isDark) credit_light else credit_dark
+                                            TransactionType.TRANSFER -> if (!isDark) transfer_light else transfer_dark
+                                            TransactionType.INVESTMENT -> if (!isDark) investment_light else investment_dark
+                                        }
+                                    )
+
+                                    CashiroCheckbox(
+                                        checked = isSelected,
+                                        onCheckedChange = { onToggleSelection(txn.id) },
+                                    )
+
+                                }
+                            },
+                            selected = isSelected,
+                            onClick = { onToggleSelection(txn.id) },
+                            shape = position.toShape(),
+                            padding = PaddingValues(0.dp),
+                            selectedListColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
+                        )
+                    }
+                    item{
+                        Spacer(modifier = Modifier.height(150.dp))
+                    }
+                }
+            }
+        }
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            Color.Transparent,
+                            MaterialTheme.colorScheme.surface,
+                            MaterialTheme.colorScheme.surface
+                        )
+                    )
+                )
+                .padding(horizontal = 16.dp, vertical = 16.dp),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            // Save button
+            Button(
+                onClick = onApply,
+                enabled = selectedMatchIds.isNotEmpty(),
+                modifier = Modifier
+                    .height(52.dp)
+                    .fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                ),
+                shapes = ButtonDefaults.shapes()
+            ) {
+                Text(
+                    text = if (selectedMatchIds.isEmpty()) "Select transactions to update"
+                    else "Apply to ${selectedMatchIds.size} ${if (selectedMatchIds.size == 1) "transaction" else "transactions"}",
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
     }
 }

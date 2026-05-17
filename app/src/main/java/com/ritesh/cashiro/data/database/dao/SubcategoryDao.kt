@@ -25,6 +25,9 @@ interface SubcategoryDao {
     @Query("SELECT * FROM subcategories WHERE id = :subcategoryId")
     suspend fun getSubcategoryById(subcategoryId: Long): SubcategoryEntity?
 
+    @Query("SELECT * FROM subcategories WHERE name = :subcategoryName LIMIT 1")
+    suspend fun getSubcategoryByName(subcategoryName: String): SubcategoryEntity?
+
     @Query("DELETE FROM subcategories WHERE id = :subcategoryId")
     suspend fun deleteSubcategoryById(subcategoryId: Long)
 

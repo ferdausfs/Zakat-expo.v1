@@ -3,20 +3,25 @@ package com.ritesh.cashiro.domain.service
 import com.ritesh.cashiro.data.database.entity.TransactionEntity
 import com.ritesh.cashiro.data.database.entity.TransactionType
 import com.ritesh.cashiro.domain.model.rule.*
+import com.ritesh.cashiro.data.repository.CategoryRepository
+import com.ritesh.cashiro.data.repository.SubcategoryRepository
 import kotlinx.serialization.json.Json
 import java.math.BigDecimal
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RuleEngine @Inject constructor() {
+class RuleEngine @Inject constructor(
+    private val subcategoryRepository: SubcategoryRepository,
+    private val categoryRepository: CategoryRepository
+) {
 
     private val json = Json {
         ignoreUnknownKeys = true
         isLenient = true
     }
 
-    fun evaluateRules(
+    suspend fun evaluateRules(
         transaction: TransactionEntity,
         smsText: String?,
         rules: List<TransactionRule>
@@ -54,7 +59,7 @@ class RuleEngine @Inject constructor() {
      * Evaluates rules for a specific transaction type.
      * This is a convenience method that pre-filters rules based on transaction type.
      */
-    fun evaluateRulesForType(
+    suspend fun evaluateRulesForType(
         transaction: TransactionEntity,
         smsText: String?,
         rules: List<TransactionRule>,
@@ -119,7 +124,8 @@ class RuleEngine @Inject constructor() {
         smsText: String?,
         conditions: List<RuleCondition>
     ): Boolean {
-        if (conditions.isEmpty()) return false
+        // An empty conditions list means "match all transactions" (catch-all rule)
+        if (conditions.isEmpty()) return true
 
         // KISS: Simply AND all conditions together
         // Each condition must be true for the rule to apply
@@ -186,7 +192,7 @@ class RuleEngine @Inject constructor() {
         }
     }
 
-    private fun applyActions(
+    private suspend fun applyActions(
         transaction: TransactionEntity,
         actions: List<RuleAction>
     ): Pair<TransactionEntity, List<FieldModification>> {
@@ -218,7 +224,7 @@ class RuleEngine @Inject constructor() {
         return modifiedTransaction to modifications
     }
 
-    private fun applyAction(
+    private suspend fun applyAction(
         transaction: TransactionEntity,
         action: RuleAction
     ): Pair<TransactionEntity, String> {
@@ -237,7 +243,21 @@ class RuleEngine @Inject constructor() {
                     ActionType.CLEAR -> ""
                     else -> transaction.subcategory ?: ""
                 }
-                transaction.copy(subcategory = newValue) to newValue
+                
+                var modifiedTransaction = transaction.copy(subcategory = newValue)
+                
+                // If subcategory was set to a new value, automatically resolve and set the parent Category
+                if (newValue.isNotBlank() && newValue != transaction.subcategory) {
+                    val subcategory = subcategoryRepository.getSubcategoryByName(newValue)
+                    if (subcategory != null) {
+                        val category = categoryRepository.getCategoryById(subcategory.categoryId)
+                        if (category != null) {
+                            modifiedTransaction = modifiedTransaction.copy(category = category.name)
+                        }
+                    }
+                }
+                
+                modifiedTransaction to newValue
             }
             TransactionField.MERCHANT -> {
                 val newValue = when (action.actionType) {

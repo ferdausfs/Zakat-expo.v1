@@ -209,14 +209,18 @@ class TransactionDetailViewModel @Inject constructor(
             _editableAttachments.value = attachmentService.parseAttachments(txn.attachments)
         }
 
-        // Load count of other transactions from same merchant
+        // Load count of other transactions from same merchant (always, not just for SMS)
         _uiState.value.transaction?.let { txn ->
             viewModelScope.launch {
-                val count = transactionRepository.getOtherTransactionCountForMerchant(
+                val matches = transactionRepository.getTransactionsByMerchantContains(
                     txn.merchantName,
                     txn.id
                 )
-                _uiState.update { it.copy(existingTransactionCount = count) }
+                _uiState.update { it.copy(
+                    existingTransactionCount = matches.size,
+                    matchedTransactions = matches,
+                    selectedMatchIds = matches.map { m -> m.id }.toSet()
+                ) }
             }
         }
     }
@@ -241,6 +245,83 @@ class TransactionDetailViewModel @Inject constructor(
 
     fun toggleUpdateExistingTransactions() {
         _uiState.update { it.copy(updateExistingTransactions = !it.updateExistingTransactions) }
+    }
+
+    fun showMatchPreviewSheet() {
+        _uiState.update { it.copy(showMatchPreviewSheet = true) }
+    }
+
+    fun hideMatchPreviewSheet() {
+        _uiState.update { it.copy(showMatchPreviewSheet = false) }
+    }
+
+    fun toggleMatchSelection(transactionId: Long) {
+        val current = _uiState.value.selectedMatchIds
+        val updated = if (current.contains(transactionId)) current - transactionId
+                      else current + transactionId
+        _uiState.update { it.copy(selectedMatchIds = updated) }
+    }
+
+    fun selectAllMatches() {
+        val allIds = _uiState.value.matchedTransactions.map { it.id }.toSet()
+        _uiState.update { it.copy(selectedMatchIds = allIds) }
+    }
+
+    fun deselectAllMatches() {
+        _uiState.update { it.copy(selectedMatchIds = emptySet()) }
+    }
+
+    /** Adds a transaction found via the Transactions search screen to the match preview list. */
+    fun addTransactionToMatchList(transaction: TransactionEntity) {
+        val current = _uiState.value.matchedTransactions
+        if (current.any { it.id == transaction.id }) return
+        _uiState.update { state ->
+            state.copy(
+                matchedTransactions = current + transaction,
+                selectedMatchIds = state.selectedMatchIds + transaction.id,
+                matchSearchQuery = "",
+                matchSearchResults = emptyList()
+            )
+        }
+    }
+
+    fun updateMatchSearchQuery(query: String) {
+        _uiState.update { it.copy(matchSearchQuery = query) }
+        if (query.isBlank()) {
+            _uiState.update { it.copy(matchSearchResults = emptyList()) }
+            return
+        }
+        viewModelScope.launch {
+            try {
+                val results = transactionRepository.searchTransactionsList(query)
+                val existingIds = _uiState.value.matchedTransactions.map { it.id }.toSet()
+                val currentId = _uiState.value.transaction?.id ?: -1L
+                val filtered = results.filter { it.id !in existingIds && it.id != currentId }
+                _uiState.update { it.copy(matchSearchResults = filtered) }
+            } catch (e: Exception) {
+                // Ignore search errors
+            }
+        }
+    }
+
+    /** Applies the current editable category to only the user-selected transactions. */
+    fun applyToSelectedMatches() {
+        val state = _uiState.value
+        val category = state.editableTransaction?.category ?: return
+        val ids = state.selectedMatchIds
+        if (ids.isEmpty()) return
+
+        viewModelScope.launch {
+            try {
+                val toUpdate = state.matchedTransactions
+                    .filter { it.id in ids }
+                    .map { it.copy(category = category) }
+                toUpdate.forEach { transactionRepository.updateTransaction(it) }
+                _uiState.update { it.copy(showMatchPreviewSheet = false) }
+            } catch (e: Exception) {
+                _uiState.update { it.copy(errorMessage = "Failed to update transactions: ${e.message}") }
+            }
+        }
     }
 
     fun updateMerchantName(name: String) {
@@ -436,11 +517,12 @@ class TransactionDetailViewModel @Inject constructor(
                     )
                 }
 
-                // Update existing transactions if checkbox is checked
+                // Update existing transactions if checkbox is checked (fuzzy/contains match)
                 if (state.updateExistingTransactions) {
-                    transactionRepository.updateCategoryForMerchant(
+                    transactionRepository.updateCategoryAndSubcategoryForMerchantContains(
                         normalizedTransaction.merchantName,
-                        normalizedTransaction.category
+                        normalizedTransaction.category,
+                        normalizedTransaction.subcategory
                     )
                 }
 
@@ -453,7 +535,10 @@ class TransactionDetailViewModel @Inject constructor(
                         errorMessage = null,
                         applyToAllFromMerchant = false,
                         updateExistingTransactions = false,
-                        existingTransactionCount = 0
+                        existingTransactionCount = 0,
+                        matchedTransactions = emptyList(),
+                        selectedMatchIds = emptySet(),
+                        showMatchPreviewSheet = false
                     )
                 }
                 findLinkedSubscription(normalizedTransaction) // Refresh linked subscription

@@ -25,6 +25,12 @@ data class TransactionDetailUiState(
     val isCustomCycle: Boolean = false,
     val customCycleCount: Int = 1,
     val customCycleUnit: String = "month",
-    val customCycleEndDate: LocalDate? = null
+    val customCycleEndDate: LocalDate? = null,
+    // Preview match sheet state
+    val showMatchPreviewSheet: Boolean = false,
+    val matchedTransactions: List<TransactionEntity> = emptyList(),
+    val selectedMatchIds: Set<Long> = emptySet(),
+    val isLoadingMatches: Boolean = false,
+    val matchSearchQuery: String = "",
+    val matchSearchResults: List<TransactionEntity> = emptyList(),
 )
-

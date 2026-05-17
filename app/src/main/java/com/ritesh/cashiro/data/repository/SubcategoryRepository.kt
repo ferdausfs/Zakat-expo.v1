@@ -40,6 +40,10 @@ class SubcategoryRepository @Inject constructor(
         return subcategoryDao.getAllSubcategories()
     }
 
+    suspend fun getSubcategoryByName(name: String): SubcategoryEntity? {
+        return subcategoryDao.getSubcategoryByName(name)
+    }
+
     suspend fun createSubcategory(
         categoryId: Long,
         name: String,

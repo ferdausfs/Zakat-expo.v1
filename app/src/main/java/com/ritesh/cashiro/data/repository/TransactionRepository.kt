@@ -165,8 +165,24 @@ class TransactionRepository @Inject constructor(private val transactionDao: Tran
         transactionDao.updateCategoryForMerchant(merchantName, newCategory)
     }
 
+    suspend fun updateCategoryAndSubcategoryForMerchantContains(merchantName: String, newCategory: String, newSubcategory: String?) {
+        transactionDao.updateCategoryAndSubcategoryForMerchantContains(merchantName, newCategory, newSubcategory)
+    }
+
     suspend fun getOtherTransactionCountForMerchant(merchantName: String, excludeId: Long): Int {
         return transactionDao.getTransactionCountForMerchant(merchantName, excludeId)
+    }
+
+    /** Returns non-deleted transactions whose merchant name contains the given keyword, excluding one id. */
+    suspend fun getTransactionsByMerchantContains(
+        merchantName: String,
+        excludeId: Long
+    ): List<TransactionEntity> {
+        return transactionDao.getTransactionsByMerchantContains(merchantName, excludeId)
+    }
+
+    suspend fun searchTransactionsList(searchQuery: String): List<TransactionEntity> {
+        return transactionDao.searchTransactionsList(searchQuery)
     }
 
     // Additional methods for Home screen
