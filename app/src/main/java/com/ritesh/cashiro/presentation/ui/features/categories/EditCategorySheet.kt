@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
@@ -181,13 +182,13 @@ fun EditCategorySheet(
                             verticalArrangement = Arrangement.spacedBy(4.dp)
                         ) {
                             Text(
-                                text = name.ifEmpty { "Category Name" },
+                                text = name.ifEmpty { stringResource(R.string.category_name) },
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colorScheme.onBackground
                             )
                             Text(
-                                text = description.ifEmpty { "description about the category" },
+                                text = description.ifEmpty { stringResource(R.string.category_description_placeholder) },
                                 style = MaterialTheme.typography.bodySmall,
                                 fontWeight = FontWeight.Normal,
                                 color = MaterialTheme.colorScheme.onBackground.copy(0.6f)
@@ -205,7 +206,7 @@ fun EditCategorySheet(
                         ) {
                             Icon(
                                 Icons.Default.AddCircle,
-                                contentDescription = "Add Subcategory",
+                                contentDescription = stringResource(R.string.add_subcategory),
                                 tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(14.dp)
                             )
@@ -213,7 +214,7 @@ fun EditCategorySheet(
                     }
                 }
                 Text(
-                    text = "Preview",
+                    text = stringResource(R.string.preview),
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onBackground.copy(0.6f)
@@ -229,7 +230,7 @@ fun EditCategorySheet(
             GenericTypeSwitcher(
                 selectedIndex = if (isIncome) 1 else 0,
                 onIndexChange = { index -> isIncome = index == 1 },
-                options = listOf("Expense", "Income"),
+                options = listOf(stringResource(R.string.expense), stringResource(R.string.income)),
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -242,7 +243,7 @@ fun EditCategorySheet(
                     value = name,
                     onValueChange = { name = it },
                     label = { Text(
-                        text= "Name",
+                        text= stringResource(R.string.name_label),
                         fontWeight = FontWeight.SemiBold
                     ) },
                     modifier = Modifier.fillMaxWidth(),
@@ -272,10 +273,10 @@ fun EditCategorySheet(
                     value = description,
                     onValueChange = { description = it },
                     label = { Text(
-                        text= "Description",
+                        text= stringResource(R.string.description_label),
                         fontWeight = FontWeight.SemiBold
                     ) },
-                    placeholder = { Text("e.g., Eating out, Swiggy, Zomato etc.") },
+                    placeholder = { Text(stringResource(R.string.description_hint)) },
                     modifier = Modifier.fillMaxWidth(),
                     textStyle = TextStyle(
                         lineHeight = 18.sp,
@@ -368,7 +369,7 @@ fun EditCategorySheet(
                     ) {
                         Icon(
                             imageVector = Iconax.Bag,
-                            contentDescription = "Delete category"
+                            contentDescription = stringResource(R.string.delete_category)
                         )
                     }
                 }
@@ -383,7 +384,7 @@ fun EditCategorySheet(
                     shape = MaterialTheme.shapes.extraExtraLarge
                 ) {
                     Text(
-                        text = if (category == null) "Create Category" else "Update Category",
+                        text = if (category == null) stringResource(R.string.create_category) else stringResource(R.string.update_category),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -409,7 +410,7 @@ fun EditCategorySheet(
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.RestartAlt,
-                            contentDescription = "Reset to default",
+                            contentDescription = stringResource(R.string.reset_to_default),
                             tint = MaterialTheme.colorScheme.onSecondaryContainer
                         )
                     }

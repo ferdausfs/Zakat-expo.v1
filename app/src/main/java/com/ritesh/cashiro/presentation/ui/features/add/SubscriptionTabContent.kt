@@ -59,6 +59,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -136,7 +138,7 @@ fun SubscriptionTabContent(
         subcategories.find { it.name == uiState.subcategory }
     }
 
-    val billingCycles = listOf("Monthly", "Quarterly", "Semi-Annual", "Annual", "Weekly", "Custom")
+    val billingCycles = listOf(stringResource(R.string.cycle_monthly), stringResource(R.string.cycle_quarterly), stringResource(R.string.cycle_semi_annual), stringResource(R.string.cycle_annual), stringResource(R.string.cycle_weekly), stringResource(R.string.cycle_custom))
     val scrollState = rememberScrollState()
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -197,8 +199,7 @@ fun SubscriptionTabContent(
                         modifier = Modifier.size(20.dp)
                     )
                     Text(
-                        text =
-                            "Track recurring expenses. You'll need to add transactions manually each month.",
+                        text = stringResource(R.string.subscription_info),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
@@ -238,7 +239,7 @@ fun SubscriptionTabContent(
                             value = uiState.billingCycle,
                             onValueChange = {},
                             readOnly = true,
-                            label = { Text("Billing Cycle") },
+                            label = { Text(stringResource(R.string.billing_cycle_label)) },
                             leadingIcon = {
                                 Icon(
                                     Iconax.VideoTime,
@@ -313,7 +314,7 @@ fun SubscriptionTabContent(
                             val themeColors = MaterialTheme.colorScheme
                             Icon(
                                 imageVector = Iconax.Calendar,
-                                contentDescription = "Date Picker",
+                                contentDescription = stringResource(R.string.date_picker_desc),
                                 tint = themeColors.onSurface
                             )
                             Spacer(Modifier.size(8.dp))
@@ -401,7 +402,7 @@ fun SubscriptionTabContent(
 
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
-                                text = uiState.selectedAccount?.bankName ?: "Select Account",
+                                text = uiState.selectedAccount?.bankName ?: stringResource(R.string.select_account),
                                 style = MaterialTheme.typography.bodyLarge,
                                 color =
                                     if (uiState.selectedAccount != null)
@@ -430,7 +431,7 @@ fun SubscriptionTabContent(
                 TextField(
                     value = uiState.category,
                     onValueChange = {},
-                    label = { Text("Category", fontWeight = FontWeight.SemiBold) },
+                    label = { Text(stringResource(R.string.category_label), fontWeight = FontWeight.SemiBold) },
                     readOnly = true,
                     singleLine = true,
                     modifier =
@@ -496,10 +497,10 @@ fun SubscriptionTabContent(
                 if (uiState.subcategory != null) {
                     Spacer(modifier = Modifier.height(Spacing.md))
                     TextField(
-                        value = uiState.subcategory ?: "None",
+                        value = uiState.subcategory ?: stringResource(R.string.none_label),
                         onValueChange = {},
                         readOnly = true,
-                        label = { Text("Subcategory") },
+                        label = { Text(stringResource(R.string.subcategory_label)) },
                         leadingIcon = {
                                 val context = LocalContext.current
                                 val resolvedResId = remember(selectedSubcategoryObj2) {
@@ -601,7 +602,7 @@ fun SubscriptionTabContent(
                             viewModel.updateSubscriptionAmount(newAmount)
                             showNumberPad = false
                         },
-                        title = "Enter Amount"
+                        title = stringResource(R.string.enter_amount)
                     )
                 }
             }
@@ -620,7 +621,7 @@ fun SubscriptionTabContent(
                             viewModel.updateSubscriptionCustomCycleCount(newCount.toIntOrNull() ?: 1)
                             showCustomCountPad = false
                         },
-                        title = "Enter Interval"
+                        title = stringResource(R.string.enter_interval_title)
                     )
                 }
             }
@@ -654,8 +655,8 @@ fun SubscriptionTabContent(
                 TextField(
                     value = uiState.serviceName,
                     onValueChange = viewModel::updateSubscriptionService,
-                    label = { Text("Service Name *") },
-                    placeholder = { Text("e.g., Netflix, Spotify") },
+                    label = { Text(stringResource(R.string.service_name_required)) },
+                    placeholder = { Text(stringResource(R.string.service_name_placeholder)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     shape =
@@ -683,9 +684,9 @@ fun SubscriptionTabContent(
                 TextField(
                     value = uiState.notes,
                     onValueChange = viewModel::updateSubscriptionNotes,
-                    label = { Text("Notes (Optional)") },
+                    label = { Text(stringResource(R.string.notes_optional)) },
                     leadingIcon = { Icon(Iconax.DocumentText2, contentDescription = null) },
-                    placeholder = { Text("Add any additional information...") },
+                    placeholder = { Text(stringResource(R.string.notes_placeholder)) },
                     modifier = Modifier.fillMaxWidth(),
                     shape =
                         RoundedCornerShape(
@@ -750,7 +751,7 @@ fun SubscriptionTabContent(
                 } else {
                     Icon(Icons.Default.Done, contentDescription = null)
                     Spacer(Modifier.width(Spacing.sm))
-                    Text("Save", style = MaterialTheme.typography.titleMedium)
+                    Text(stringResource(R.string.action_save), style = MaterialTheme.typography.titleMedium)
                 }
             }
         }

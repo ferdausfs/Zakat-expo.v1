@@ -52,6 +52,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -92,7 +93,7 @@ fun IconSelector(
                 }
             }
 
-    val labels = listOf("Search Fruits", "Search Shopping", "Search Fitness", "Search Sports")
+    val labels = listOf(stringResource(R.string.search_fruits), stringResource(R.string.search_shopping), stringResource(R.string.search_fitness), stringResource(R.string.search_sports))
     var currentLabelIndex by remember { mutableIntStateOf(0) }
 
     LaunchedEffect(Unit) {

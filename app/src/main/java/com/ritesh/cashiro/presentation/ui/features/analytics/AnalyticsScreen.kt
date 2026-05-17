@@ -102,11 +102,14 @@ import com.ritesh.cashiro.utils.DateRangeUtils
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeSource
 import java.math.BigDecimal
+import androidx.annotation.StringRes
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 
-enum class ChartType(val icon: ImageVector, val label: String) {
-    LINE(Iconax.StatusUp, "Line"),
-    BAR(Iconax.Chart2, "Bar"),
-    HEATMAP(Iconax.Grid2, "Heatmap")
+enum class ChartType(val icon: ImageVector, @StringRes val labelRes: Int) {
+    LINE(Iconax.StatusUp, R.string.chart_type_line),
+    BAR(Iconax.Chart2, R.string.chart_type_bar),
+    HEATMAP(Iconax.Grid2, R.string.chart_type_heatmap)
 }
 
 enum class BreakdownType {
@@ -155,7 +158,7 @@ fun SharedTransitionScope.AnalyticsScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CustomTitleTopAppBar(
-                title = "Analytics",
+                title = stringResource(R.string.analytics),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
                 hazeState = hazeState,
@@ -339,7 +342,7 @@ fun SharedTransitionScope.AnalyticsScreen(
                             verticalArrangement = Arrangement.Center
                         ) {
                             SectionHeader(
-                                title = "Trends",
+                                title = stringResource(R.string.trends),
                                 action = {
                                     Button(
                                         onClick = {
@@ -361,7 +364,7 @@ fun SharedTransitionScope.AnalyticsScreen(
                                             )
                                             Spacer(modifier = Modifier.width(Spacing.sm))
                                             Text(
-                                                text = "${selectedChartType.label} Chart",
+                                                text = stringResource(R.string.chart_format, stringResource(selectedChartType.labelRes)),
                                                 style = MaterialTheme.typography.bodySmall,
                                                 fontWeight = FontWeight.Medium,
                                             )
@@ -422,7 +425,7 @@ fun SharedTransitionScope.AnalyticsScreen(
                                                         )
                                                         Spacer(modifier = Modifier.width(12.dp))
                                                         Text(
-                                                            text = type.label,
+                                                            text = stringResource(type.labelRes),
                                                             style = MaterialTheme.typography.bodyMedium,
                                                             color = if (selectedChartType == type) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                                                             fontWeight = if (selectedChartType == type) FontWeight.Bold else FontWeight.Normal
@@ -505,7 +508,7 @@ fun SharedTransitionScope.AnalyticsScreen(
                 if (uiState.categoryBreakdown.isNotEmpty()) {
                     item {
                         SectionHeader(
-                            title = "Top Categories",
+                            title = stringResource(R.string.top_categories),
                             action = {
                                 IconButton(onClick = {
                                     selectedBreakdownType = if (selectedBreakdownType == BreakdownType.PIE) {
@@ -520,7 +523,7 @@ fun SharedTransitionScope.AnalyticsScreen(
                                         } else {
                                             Iconax.Status
                                         },
-                                        contentDescription = "Toggle View",
+                                        contentDescription = stringResource(R.string.toggle_view),
                                         tint = MaterialTheme.colorScheme.primary
                                     )
                                 }
@@ -598,7 +601,7 @@ fun SharedTransitionScope.AnalyticsScreen(
                 if (uiState.topMerchants.isNotEmpty()) {
                     item {
                         SectionHeader(
-                            title = "Top Merchants",
+                            title = stringResource(R.string.top_merchants),
                             modifier = Modifier.padding(
                                 start = Spacing.lg,
                                 end = Spacing.lg,

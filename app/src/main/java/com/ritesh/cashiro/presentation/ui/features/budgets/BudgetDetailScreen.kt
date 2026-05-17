@@ -67,6 +67,8 @@ import com.ritesh.cashiro.presentation.ui.theme.Spacing
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeSource
 import java.time.format.DateTimeFormatter
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class,
     ExperimentalMaterial3ExpressiveApi::class
@@ -183,7 +185,7 @@ fun SharedTransitionScope.BudgetDetailScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CustomTitleTopAppBar(
-                title = budgetWithSpending?.budget?.name ?: "Budget Details",
+                title = budgetWithSpending?.budget?.name ?: stringResource(R.string.budget_details),
                 hazeState = hazeState,
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
@@ -212,7 +214,7 @@ fun SharedTransitionScope.BudgetDetailScreen(
                         ) {
                             Icon(
                                 imageVector = Iconax.Edit2,
-                                contentDescription = "Edit Budget",
+                                contentDescription = stringResource(R.string.edit_budget),
                                 modifier = Modifier.size(18.dp)
                             )
                         }
@@ -322,7 +324,7 @@ fun SharedTransitionScope.BudgetDetailScreen(
                     // Transactions List
                     item {
                         SectionHeader(
-                            title = "Transactions",
+                            title = stringResource(R.string.transactions),
                             modifier = Modifier.padding(horizontal = Spacing.lg)
                         )
                         Spacer(modifier = Modifier.height(Spacing.sm))
@@ -354,7 +356,7 @@ fun SharedTransitionScope.BudgetDetailScreen(
                                     )
                                     Spacer(modifier = Modifier.height(Spacing.md))
                                     Text(
-                                        text = "No transactions yet",
+                                        text = stringResource(R.string.no_transactions_yet),
                                         style = MaterialTheme.typography.bodyLarge,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.7f)
                                     )

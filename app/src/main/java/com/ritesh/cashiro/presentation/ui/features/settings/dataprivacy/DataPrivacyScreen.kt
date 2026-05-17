@@ -39,6 +39,8 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -157,7 +159,7 @@ fun DataPrivacyScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CustomTitleTopAppBar(
-                title = "Data Privacy",
+                title = stringResource(R.string.data_privacy_title),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
                 hazeState = hazeState,
@@ -194,17 +196,17 @@ fun DataPrivacyScreen(
             ) {
                 // Security Section
                 SectionHeader(
-                    title = "Security",
+                    title = stringResource(R.string.security_section),
                     modifier = Modifier.padding(start = Spacing.md, top = Spacing.md))
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(1.5.dp)
                 ) {
                     PreferenceSwitch(
-                        title = "App Lock",
+                        title = stringResource(R.string.app_lock),
                         subtitle =
                         if (appLockUiState.canUseBiometric) {
-                            "Protect your data with biometric authentication"
+                            stringResource(R.string.app_lock_biometric_sub)
                         } else {
                             appLockUiState.biometricCapability.getErrorMessage()
                         },
@@ -237,13 +239,13 @@ fun DataPrivacyScreen(
                     // Lock Timeout Setting
                     AnimatedVisibility(visible = appLockUiState.isLockEnabled) {
                         ListItem(
-                            headline = { Text("Lock Timeout") },
+                            headline = { Text(stringResource(R.string.lock_timeout)) },
                             supporting = {
                                 Text(
                                     when (appLockUiState.timeoutMinutes) {
-                                        0 -> "Lock immediately when app goes to background"
-                                        1 -> "Lock after 1 minute in background"
-                                        else -> "Lock after ${appLockUiState.timeoutMinutes} minutes in background"
+                                        0 -> stringResource(R.string.lock_timeout_immediate)
+                                        1 -> stringResource(R.string.lock_timeout_1min)
+                                        else -> stringResource(R.string.lock_timeout_minutes, appLockUiState.timeoutMinutes)
                                     }
                                 )
                             },
@@ -263,7 +265,7 @@ fun DataPrivacyScreen(
 
                 // Data Management Section
                 SectionHeader(
-                    title = "Data Management",
+                    title = stringResource(R.string.data_management_section),
                     modifier = Modifier.padding(start = Spacing.md)
                 )
                 Column(
@@ -272,8 +274,8 @@ fun DataPrivacyScreen(
                 ) {
                     // Export Data
                     ListItem(
-                        headline = { Text("Export Data") },
-                        supporting = { Text("Backup your data to a file") },
+                        headline = { Text(stringResource(R.string.export_data)) },
+                        supporting = { Text(stringResource(R.string.export_data_sub)) },
                         leading = {
                             Box(
                                 modifier = Modifier
@@ -302,8 +304,8 @@ fun DataPrivacyScreen(
 
                     // Import Data
                     ListItem(
-                        headline = { Text("Import Data") },
-                        supporting = { Text("Restore data from backup") },
+                        headline = { Text(stringResource(R.string.import_data)) },
+                        supporting = { Text(stringResource(R.string.import_data_sub)) },
                         leading = {
                             Box(
                                 modifier = Modifier
@@ -332,8 +334,8 @@ fun DataPrivacyScreen(
 
                     // Import PDF Statement
                     ListItem(
-                        headline = { Text("Import PDF Statement") },
-                        supporting = { Text("Scan GPay or PhonePe PDF statements") },
+                        headline = { Text(stringResource(R.string.import_pdf_statement)) },
+                        supporting = { Text(stringResource(R.string.import_pdf_statement_sub)) },
                         leading = {
                             Box(
                                 modifier = Modifier
@@ -383,13 +385,13 @@ fun DataPrivacyScreen(
                                 verticalArrangement = Arrangement.spacedBy(Spacing.xs)
                             ) {
                                 Text(
-                                    text = "Only PDFs from GPay and PhonePe are currently supported.",
+                                    text = stringResource(R.string.pdf_support_warning_title),
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onErrorContainer,
                                     fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold
                                 )
                                 Text(
-                                    text = "Balance chart won't add any bank balance information from PDFs as it isn't available in the statement data.",
+                                    text = stringResource(R.string.pdf_support_warning_sub),
                                     style = MaterialTheme.typography.labelMedium,
                                     color = MaterialTheme.colorScheme.onErrorContainer.copy(0.8f)
                                 )
@@ -423,7 +425,7 @@ fun DataPrivacyScreen(
         val containerColor = MaterialTheme.colorScheme.surfaceContainerLow
         AlertDialog(
             onDismissRequest = { showTimeoutDialog = false },
-            title = { Text("Lock Timeout") },
+            title = { Text(stringResource(R.string.lock_timeout)) },
             text = {
                 Column {
                     options.forEach { minutes ->
@@ -446,9 +448,9 @@ fun DataPrivacyScreen(
                             )
                             Text(
                                 text = when (minutes) {
-                                    0 -> "Immediately"
-                                    1 -> "1 minute"
-                                    else -> "$minutes minutes"
+                                    0 -> stringResource(R.string.immediately)
+                                    1 -> stringResource(R.string.one_minute)
+                                    else -> stringResource(R.string.minutes_format, minutes)
                                 },
                                 modifier = Modifier.padding(start = 8.dp)
                             )
@@ -469,7 +471,7 @@ fun DataPrivacyScreen(
                         .fillMaxWidth()
                 ) {
                     Text(
-                        text = "Cancel",
+                        text = stringResource(R.string.cancel),
                         style = MaterialTheme.typography.titleMedium
                     )
                 }
@@ -536,20 +538,20 @@ fun ExportOptionsDialog(
     
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Export Data") },
+        title = { Text(stringResource(R.string.export_data)) },
         text = {
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(
-                    "Select data to backup:",
+                    stringResource(R.string.select_data_to_backup),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                ExportCheckbox("Transactional Data", includeTransactional) { includeTransactional = it }
-                ExportCheckbox("Profile Data", includeProfile) { includeProfile = it }
-                ExportCheckbox("Budgets", includeBudgets) { includeBudgets = it }
-                ExportCheckbox("App Preferences", includePreferences) { includePreferences = it }
+                ExportCheckbox(stringResource(R.string.transactional_data), includeTransactional) { includeTransactional = it }
+                ExportCheckbox(stringResource(R.string.profile_data), includeProfile) { includeProfile = it }
+                ExportCheckbox(stringResource(R.string.budgets), includeBudgets) { includeBudgets = it }
+                ExportCheckbox(stringResource(R.string.app_preferences), includePreferences) { includePreferences = it }
             }
         },
         confirmButton = {
@@ -578,7 +580,7 @@ fun ExportOptionsDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Cancel",
+                            text = stringResource(R.string.cancel),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
@@ -607,7 +609,7 @@ fun ExportOptionsDialog(
                             .fillMaxWidth()
                     ) {
                             Text(
-                                text = "Export",
+                                text = stringResource(R.string.export),
                                 style = MaterialTheme.typography.titleMedium
                             )
 

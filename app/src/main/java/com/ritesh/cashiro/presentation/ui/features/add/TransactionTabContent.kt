@@ -66,6 +66,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
@@ -127,7 +129,7 @@ fun TransactionTabContent(
         transactionSubcategories.find { it.name == uiState.subcategory }
     }
 
-    val labels = listOf("Search Fruits", "Search Shopping", "Search Fitness", "Search Sports")
+    val labels = listOf(stringResource(R.string.search_fruits), stringResource(R.string.search_shopping), stringResource(R.string.search_fitness), stringResource(R.string.search_sports))
     var currentLabelIndex by remember { mutableIntStateOf(0) }
 
     LaunchedEffect(Unit) {
@@ -173,7 +175,7 @@ fun TransactionTabContent(
             // Transaction Type Selection
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = "Transaction Type *",
+                    text = stringResource(R.string.transaction_type_required),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(bottom = 8.dp)
@@ -249,7 +251,7 @@ fun TransactionTabContent(
                         val themeColors = MaterialTheme.colorScheme
                         Icon(
                             imageVector = Iconax.Calendar,
-                            contentDescription = "Date Picker",
+                            contentDescription = stringResource(R.string.date_picker_desc),
                             tint = themeColors.onSurface
                         )
                         Spacer(Modifier.size(8.dp))
@@ -404,8 +406,7 @@ fun TransactionTabContent(
 
                                     Column(modifier = Modifier.weight(1f)) {
                                         Text(
-                                            text = uiState.selectedAccount?.bankName
-                                                ?: "Select Source Account",
+                                            text = uiState.selectedAccount?.bankName ?: stringResource(R.string.select_source_account),
                                             style = MaterialTheme.typography.bodyLarge,
                                             color =
                                                 if (uiState.selectedAccount != null)
@@ -459,8 +460,7 @@ fun TransactionTabContent(
 
                                     Column(modifier = Modifier.weight(1f)) {
                                         Text(
-                                            text = uiState.targetAccount?.bankName
-                                                ?: "Select Target Account",
+                                            text = uiState.targetAccount?.bankName ?: stringResource(R.string.select_target_account),
                                             style = MaterialTheme.typography.bodyLarge,
                                             color =
                                                 if (uiState.targetAccount != null)
@@ -502,7 +502,7 @@ fun TransactionTabContent(
                             ) {
                                 Icon(
                                     imageVector = Icons.Rounded.SwapVert,
-                                    contentDescription = "Transfer",
+                                    contentDescription = stringResource(R.string.transfer_desc),
                                     tint = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier.size(16.dp)
                                 )
@@ -517,7 +517,7 @@ fun TransactionTabContent(
                     TextField(
                         value = uiState.category,
                         onValueChange = {},
-                        label = { Text("Category", fontWeight = FontWeight.SemiBold) },
+                        label = { Text(stringResource(R.string.category_label), fontWeight = FontWeight.SemiBold) },
                         readOnly = true,
                         singleLine = true,
                         modifier =
@@ -611,7 +611,7 @@ fun TransactionTabContent(
 
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
-                                    text = uiState.selectedAccount?.bankName ?: "Select Account",
+                                    text = uiState.selectedAccount?.bankName ?: stringResource(R.string.select_account),
                                     style = MaterialTheme.typography.bodyLarge,
                                     color =
                                         if (uiState.selectedAccount != null)
@@ -640,7 +640,7 @@ fun TransactionTabContent(
                     TextField(
                         value = uiState.category,
                         onValueChange = {},
-                        label = { Text("Category", fontWeight = FontWeight.SemiBold) },
+                        label = { Text(stringResource(R.string.category_label), fontWeight = FontWeight.SemiBold) },
                         readOnly = true,
                         singleLine = true,
                         modifier =
@@ -706,10 +706,10 @@ fun TransactionTabContent(
                     if (uiState.subcategory != null) {
                         Spacer(modifier = Modifier.height(Spacing.md))
                         TextField(
-                            value = uiState.subcategory ?: "None",
+                            value = uiState.subcategory ?: stringResource(R.string.none_label),
                             onValueChange = {},
                             readOnly = true,
-                            label = { Text("Subcategory") },
+                            label = { Text(stringResource(R.string.subcategory_label)) },
                             leadingIcon = {
                                 val context = LocalContext.current
                                 val resolvedResId = remember(selectedSubcategoryObj) {
@@ -779,10 +779,10 @@ fun TransactionTabContent(
             if (uiState.transactionType == TransactionType.TRANSFER && uiState.subcategory != null) {
                 Spacer(modifier = Modifier.height(Spacing.md))
                 TextField(
-                    value = uiState.subcategory ?: "None",
+                    value = uiState.subcategory ?: stringResource(R.string.none_label),
                     onValueChange = {},
                     readOnly = true,
-                    label = { Text("Subcategory") },
+                    label = { Text(stringResource(R.string.subcategory_label)) },
                     leadingIcon = {
                         val context = LocalContext.current
                         val resolvedResId = remember(selectedSubcategoryObj) {
@@ -1034,7 +1034,7 @@ fun TransactionTabContent(
                 } else {
                     Icon(Icons.Default.Done, contentDescription = null)
                     Spacer(Modifier.width(Spacing.sm))
-                    Text("Save", style = MaterialTheme.typography.titleMedium)
+                    Text(stringResource(R.string.action_save), style = MaterialTheme.typography.titleMedium)
                 }
             }
         }

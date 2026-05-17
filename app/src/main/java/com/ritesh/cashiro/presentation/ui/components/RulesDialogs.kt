@@ -32,8 +32,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.domain.model.rule.TransactionRule
 import com.ritesh.cashiro.domain.usecase.BatchApplyResult
 import com.ritesh.cashiro.presentation.ui.theme.Dimensions
@@ -57,8 +59,8 @@ fun RulesResetDialog(
     val containerColor = MaterialTheme.colorScheme.surfaceContainerLow
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Reset Rules") },
-        text = { Text("Reset all rules to default settings? Your custom settings will be lost.") },
+        title = { Text(stringResource(R.string.reset_rules_title)) },
+        text = { Text(stringResource(R.string.reset_rules_confirm)) },
         confirmButton = {
             Box(
                 modifier = Modifier.fillMaxWidth(),
@@ -85,7 +87,7 @@ fun RulesResetDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Cancel",
+                            text = stringResource(R.string.cancel),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
@@ -107,7 +109,7 @@ fun RulesResetDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Reset",
+                            text = stringResource(R.string.reset),
                             style = MaterialTheme.typography.titleMedium)
                     }
                 }
@@ -148,8 +150,8 @@ fun RulesDeleteDialog(
     val containerColor = MaterialTheme.colorScheme.surfaceContainerLow
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Delete Rule") },
-        text = { Text("Delete \"${rule.name}\"? This action cannot be undone.") },
+        title = { Text(stringResource(R.string.delete_rule_title)) },
+        text = { Text(stringResource(R.string.delete_rule_confirm, rule.name)) },
         confirmButton = {
             Box(
                 modifier = Modifier.fillMaxWidth(),
@@ -176,7 +178,7 @@ fun RulesDeleteDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Cancel",
+                            text = stringResource(R.string.cancel),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
@@ -198,7 +200,7 @@ fun RulesDeleteDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Delete",
+                            text = stringResource(R.string.delete),
                             style = MaterialTheme.typography.titleMedium)
                     }
                 }
@@ -248,7 +250,13 @@ fun RulesBatchApplyDialog(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(if (progress != null) "Applying Rule..." else "Apply Rule to Past Transactions")
+                Text(
+                    text = if (progress != null) {
+                        stringResource(R.string.applying_rule)
+                    } else {
+                        stringResource(R.string.apply_rule_past_transactions_title)
+                    }
+                )
                 if(progress == null && result == null) {
                     IconButton(
                         onClick = onDismiss,
@@ -259,7 +267,7 @@ fun RulesBatchApplyDialog(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Close,
-                            contentDescription = "Cancel",
+                            contentDescription = stringResource(R.string.cancel),
                             modifier = Modifier.size(18.dp)
                         )
                     }
@@ -273,7 +281,7 @@ fun RulesBatchApplyDialog(
                 if (progress == null && result == null) {
                     // Initial state - show options
                     Text(
-                        text = "Apply \"${rule.name}\" to existing transactions?",
+                        text = stringResource(R.string.apply_rule_to_existing_confirm, rule.name),
                         style = MaterialTheme.typography.bodyMedium
                     )
 
@@ -288,18 +296,18 @@ fun RulesBatchApplyDialog(
                             verticalArrangement = Arrangement.spacedBy(Spacing.xs),
                         ) {
                             Text(
-                                text = "Choose how to apply this rule:",
+                                text = stringResource(R.string.apply_rule_instruction),
                                 style = MaterialTheme.typography.bodySmall,
                                 fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colorScheme.primary
                             )
                             Text(
-                                text = "• All - Apply to every transaction",
+                                text = stringResource(R.string.apply_rule_option_all),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurface.copy(0.8f)
                             )
                             Text(
-                                text = "• Uncategorized - Skip already categorized transactions (Recommended)",
+                                text = stringResource(R.string.apply_rule_option_uncategorized),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurface.copy(0.8f)
                             )
@@ -315,7 +323,7 @@ fun RulesBatchApplyDialog(
                             modifier = Modifier.fillMaxWidth()
                         )
                         Text(
-                            text = "Processing ${progress.first} of ${progress.second} transactions",
+                            text = stringResource(R.string.processing_transactions_format, progress.first, progress.second),
                             style = MaterialTheme.typography.bodySmall
                         )
                     }
@@ -337,7 +345,7 @@ fun RulesBatchApplyDialog(
                                     MaterialTheme.colorScheme.error
                             )
                             Text(
-                                text = "Completed",
+                                text = stringResource(R.string.completed),
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Medium
                             )
@@ -346,11 +354,11 @@ fun RulesBatchApplyDialog(
                         HorizontalDivider()
 
                         Text(
-                            text = "Transactions processed: ${result.totalProcessed}",
+                            text = stringResource(R.string.transactions_processed_format, result.totalProcessed),
                             style = MaterialTheme.typography.bodySmall
                         )
                         Text(
-                            text = "Transactions updated: ${result.totalUpdated}",
+                            text = stringResource(R.string.transactions_updated_format, result.totalUpdated),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Medium
@@ -358,7 +366,7 @@ fun RulesBatchApplyDialog(
 
                         if (result.totalDeleted > 0) {
                             Text(
-                                text = "Transactions blocked (soft deleted): ${result.totalDeleted}",
+                                text = stringResource(R.string.transactions_blocked_format, result.totalDeleted),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.tertiary,
                                 fontWeight = FontWeight.Medium
@@ -367,7 +375,7 @@ fun RulesBatchApplyDialog(
 
                         if (result.errors.isNotEmpty()) {
                             Text(
-                                text = "Errors: ${result.errors.size}",
+                                text = stringResource(R.string.errors_count_format, result.errors.size),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.error
                             )
@@ -392,17 +400,17 @@ fun RulesBatchApplyDialog(
                                 contentColor = MaterialTheme.colorScheme.onTertiaryContainer
                             ),
                             shape = RoundedCornerShape(
-                                topStart = Dimensions.Radius.xxl,
-                                topEnd = Dimensions.Radius.xs,
-                                bottomStart = Dimensions.Radius.xxl,
-                                bottomEnd = Dimensions.Radius.xs
+                                    topStart = Dimensions.Radius.xxl,
+                                    topEnd = Dimensions.Radius.xs,
+                                    bottomStart = Dimensions.Radius.xxl,
+                                    bottomEnd = Dimensions.Radius.xs
                             ),
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxWidth()
                         ) {
                             Text(
-                                text = "Uncategorized",
+                                text = stringResource(R.string.uncategorized),
                                 style = MaterialTheme.typography.titleMedium
                             )
                         }
@@ -423,7 +431,7 @@ fun RulesBatchApplyDialog(
                                 .fillMaxWidth()
                         ) {
                             Text(
-                                text = "All",
+                                text = stringResource(R.string.all),
                                 style = MaterialTheme.typography.titleMedium)
                         }
                     }
@@ -442,7 +450,7 @@ fun RulesBatchApplyDialog(
                         .fillMaxWidth()
                 ) {
                     Text(
-                        text = "Close",
+                        text = stringResource(R.string.close),
                         style = MaterialTheme.typography.titleMedium
                     )
                 }

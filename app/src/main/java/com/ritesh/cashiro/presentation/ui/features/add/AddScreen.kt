@@ -27,6 +27,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.presentation.ui.components.CustomTitleTopAppBar
 import com.ritesh.cashiro.presentation.ui.components.GenericTypeSwitcher
 import com.ritesh.cashiro.presentation.ui.features.categories.NavigationContent
@@ -83,7 +85,10 @@ fun SharedTransitionScope.AddScreen(
         it.currentState != it.targetState
     }
 
-    val tabs = listOf("Transaction", "Subscription")
+    val tabs = listOf(
+        stringResource(R.string.transaction),
+        stringResource(R.string.subscription)
+    )
 
     Box(
         modifier =
@@ -110,7 +115,7 @@ fun SharedTransitionScope.AddScreen(
                 CustomTitleTopAppBar(
                     scrollBehaviorSmall = scrollBehaviorSmall,
                     scrollBehaviorLarge = scrollBehavior,
-                    title = "Add New",
+                    title = stringResource(R.string.add_new),
                     hazeState = hazeState,
                     hasBackButton = true,
                     navigationContent = { NavigationContent { if (!isTransitioning) onNavigateBack() } }

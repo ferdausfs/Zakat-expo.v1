@@ -21,6 +21,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -64,14 +66,14 @@ fun GreetingCard(
             if (profileImageUri != null) {
                 AsyncImage(
                     model = profileImageUri,
-                    contentDescription = "Profile",
+                    contentDescription = stringResource(R.string.profile_desc),
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
             } else {
                 Image(
                     painter = painterResource(id = R.drawable.avatar_1),
-                    contentDescription = "Profile",
+                    contentDescription = stringResource(R.string.profile_desc),
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
@@ -94,30 +96,44 @@ fun GreetingCard(
                 color = MaterialTheme.colorScheme.onBackground
             )
             
-            val greeting = remember {
+            val greetingRes = remember {
                 val hour = LocalTime.now().hour
                 when (hour) {
-                    in 5..11 -> "Good morning"
-                    in 12..16 -> "Good afternoon"
-                    in 17..21 -> "Good evening"
-                    else -> "Good night"
+                    in 5..11 -> R.string.greeting_morning
+                    in 12..16 -> R.string.greeting_afternoon
+                    in 17..21 -> R.string.greeting_evening
+                    else -> R.string.greeting_night
                 }
             }
 
-            val monthStatus = remember {
+            val locale = java.util.Locale.getDefault()
+            val monthStatus = remember(locale) {
                 val now = LocalDate.now()
                 val lastDay = now.withDayOfMonth(now.lengthOfMonth())
                 val daysLeft = ChronoUnit.DAYS.between(now, lastDay)
-                val monthName = now.month.name.lowercase().replaceFirstChar { it.uppercase() }
+                val monthName = now.month.getDisplayName(java.time.format.TextStyle.FULL, locale)
                 
                 when {
-                    daysLeft == 0L -> "Last day of $monthName"
-                    daysLeft <= 7 -> "$daysLeft days left in $monthName"
+                    daysLeft == 0L -> R.string.month_status_last_day to listOf(monthName)
+                    daysLeft <= 7 -> R.plurals.month_status_days_left_format to listOf(daysLeft.toInt(), monthName)
                     else -> null
                 }
             }
+
+            val subtitleText = when {
+                monthStatus != null -> {
+                    val (resId, args) = monthStatus
+                    if (resId == R.string.month_status_last_day) {
+                        stringResource(resId, *args.toTypedArray())
+                    } else {
+                        pluralStringResource(resId, args[0] as Int, *args.toTypedArray())
+                    }
+                }
+                else -> stringResource(greetingRes)
+            }
+
             Text(
-                text = monthStatus ?: greeting,
+                text = subtitleText,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
             )
@@ -168,7 +184,7 @@ fun GreetingCard(
         ) {
             Icon(
                 imageVector = Iconax.NotificationOutline,
-                contentDescription = "Notifications",
+                contentDescription = stringResource(R.string.notification),
                 tint = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .size(28.dp)
@@ -176,7 +192,7 @@ fun GreetingCard(
             )
             Icon(
                 imageVector = Icons.Rounded.MoreHoriz,
-                contentDescription = "More",
+                contentDescription = stringResource(R.string.more_options),
                 tint = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .size(28.dp)

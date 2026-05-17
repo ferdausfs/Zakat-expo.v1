@@ -57,6 +57,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.presentation.ui.icons.Bag
 import com.ritesh.cashiro.presentation.ui.icons.Card
 import com.ritesh.cashiro.presentation.ui.icons.Clock
@@ -97,7 +99,7 @@ fun HistorySheet(
         // Header
         Column {
             Text(
-                text = "Balance History",
+                text = stringResource(R.string.balance_history_title),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
@@ -131,7 +133,7 @@ fun HistorySheet(
                     modifier = Modifier.size(20.dp)
                 )
                 Text(
-                    text = "${balanceHistory.size} records • Latest balance is shown in accounts",
+                    text = stringResource(R.string.records_count_latest_balance_note, balanceHistory.size),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -148,7 +150,7 @@ fun HistorySheet(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "No balance history available",
+                    text = stringResource(R.string.no_balance_history_available),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -214,8 +216,8 @@ fun HistorySheet(
     showDeleteConfirmation?.let { balanceId ->
         AlertDialog(
             onDismissRequest = { showDeleteConfirmation = null },
-            title = { Text("Delete Balance Record") },
-            text = { Text("Are you sure you want to delete this balance record? This action cannot be undone.") },
+            title = { Text(stringResource(R.string.delete_balance_record_title)) },
+            text = { Text(stringResource(R.string.delete_balance_record_confirm)) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -223,12 +225,12 @@ fun HistorySheet(
                         showDeleteConfirmation = null
                     }
                 ) {
-                    Text("Delete", color = MaterialTheme.colorScheme.error)
+                    Text(stringResource(R.string.delete), color = MaterialTheme.colorScheme.error)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDeleteConfirmation = null }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             }
         )
@@ -307,7 +309,7 @@ private fun HistoryRecordItem(
                         ) {
                             Icon(
                                 Iconax.Edit2,
-                                contentDescription = "Edit",
+                                contentDescription = stringResource(R.string.edit),
                                 tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(18.dp)
                             )
@@ -318,7 +320,7 @@ private fun HistoryRecordItem(
                         ) {
                             Icon(
                                 Iconax.Bag,
-                                contentDescription = "Delete",
+                                contentDescription = stringResource(R.string.delete),
                                 tint = MaterialTheme.colorScheme.error,
                                 modifier = Modifier.size(18.dp)
                             )
@@ -340,7 +342,7 @@ private fun HistoryRecordItem(
                         ),
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
-                        label = { Text("New Balance") },
+                        label = { Text(stringResource(R.string.new_balance_label)) },
                         prefix = {
                             Text(
                                 text = CurrencyFormatter.getCurrencySymbol(accountPrimaryCurrency) + " ",
@@ -360,13 +362,13 @@ private fun HistoryRecordItem(
                         ) {
                             Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text("Save")
+                            Text(stringResource(R.string.save))
                         }
                         OutlinedButton(
                             onClick = onCancelEdit,
                             modifier = Modifier.weight(1f)
                         ) {
-                            Text("Cancel")
+                            Text(stringResource(R.string.cancel))
                         }
                     }
                 }
@@ -389,11 +391,11 @@ private fun HistoryRecordItem(
 
                     // Source Badge
                     val (sourceIcon, sourceText, sourceColor) = when (balance.sourceType) {
-                        "TRANSACTION" -> Triple(Icons.Rounded.SwapHoriz, "Transaction", MaterialTheme.colorScheme.tertiary)
-                        "SMS_BALANCE" -> Triple(Iconax.Messages, "SMS", MaterialTheme.colorScheme.secondary)
-                        "CARD_LINK" -> Triple(Iconax.Card, "Card Link", MaterialTheme.colorScheme.primary)
-                        "MANUAL" -> Triple(Iconax.Edit2, "Manual", MaterialTheme.colorScheme.onSurfaceVariant)
-                        else -> Triple(Iconax.Information, "System", MaterialTheme.colorScheme.onSurfaceVariant)
+                        "TRANSACTION" -> Triple(Icons.Rounded.SwapHoriz, stringResource(R.string.source_transaction), MaterialTheme.colorScheme.tertiary)
+                        "SMS_BALANCE" -> Triple(Iconax.Messages, stringResource(R.string.source_sms), MaterialTheme.colorScheme.secondary)
+                        "CARD_LINK" -> Triple(Iconax.Card, stringResource(R.string.source_card_link), MaterialTheme.colorScheme.primary)
+                        "MANUAL" -> Triple(Iconax.Edit2, stringResource(R.string.source_manual), MaterialTheme.colorScheme.onSurfaceVariant)
+                        else -> Triple(Iconax.Information, stringResource(R.string.source_system), MaterialTheme.colorScheme.onSurfaceVariant)
                     }
 
                     Surface(
@@ -441,7 +443,7 @@ private fun HistoryRecordItem(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                text = "SMS Source",
+                                text = stringResource(R.string.sms_source),
                                 style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 fontWeight = FontWeight.Medium
@@ -469,7 +471,7 @@ private fun HistoryRecordItem(
                             ) {
                                 Icon(
                                     Icons.Rounded.ContentCopy,
-                                    contentDescription = "Copy",
+                                    contentDescription = stringResource(R.string.copy),
                                     modifier = Modifier.size(14.dp),
                                     tint = MaterialTheme.colorScheme.primary
                                 )

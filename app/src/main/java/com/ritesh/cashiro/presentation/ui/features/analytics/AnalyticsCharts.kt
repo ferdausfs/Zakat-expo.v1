@@ -36,6 +36,8 @@ import com.ritesh.cashiro.presentation.ui.components.CategoryIcon
 import com.ritesh.cashiro.presentation.effects.BlurredAnimatedVisibility
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
 import com.ritesh.cashiro.presentation.common.icons.CategoryMapping
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import ir.ehsannarmani.compose_charts.ColumnChart
 import ir.ehsannarmani.compose_charts.LineChart
 import ir.ehsannarmani.compose_charts.PieChart
@@ -69,6 +71,9 @@ fun SpendingLineChart(
 ) {
     if (data.isEmpty()) return
     val themeColors = MaterialTheme.colorScheme
+    val suffixMillion = stringResource(R.string.suffix_million)
+    val suffixThousand = stringResource(R.string.suffix_thousand)
+    val totalLabel = stringResource(R.string.total)
 
     val cashFlowData = remember(data) { data.map { it.balance.toDouble() } }
     val labels = remember(data) {
@@ -97,7 +102,7 @@ fun SpendingLineChart(
         data = listOf(
             Line(
                 label = if (typeFilters.contains(TransactionTypeFilter.ALL) || typeFilters.size > 2) {
-                    "Total"
+                    totalLabel
                 } else {
                     typeFilters.joinToString(" & ") { it.label }
                 },
@@ -136,7 +141,7 @@ fun SpendingLineChart(
                 color = themeColors.onSurfaceVariant.copy(0.6f),
                 textAlign = TextAlign.Center
             ),
-            contentBuilder = { value -> formatPremiumCurrency(value, currency) }
+            contentBuilder = { value -> formatPremiumCurrency(value, currency, suffixMillion, suffixThousand) }
         ),
         labelHelperProperties = LabelHelperProperties(
             enabled = true,
@@ -190,6 +195,9 @@ fun SpendingBarChart(
 ) {
     if (data.isEmpty()) return
     val themeColors = MaterialTheme.colorScheme
+    val suffixMillion = stringResource(R.string.suffix_million)
+    val suffixThousand = stringResource(R.string.suffix_thousand)
+    val totalLabel = stringResource(R.string.total)
 
     val columnData = remember(data) {
         val isYearly = data.size > 1 && data.all { it.timestamp.dayOfYear == 1 }
@@ -210,7 +218,7 @@ fun SpendingBarChart(
                 values = listOf(
                     Bars.Data(
                         label = if (typeFilters.contains(TransactionTypeFilter.ALL) || typeFilters.size > 2) {
-                            "Total"
+                            totalLabel
                         } else {
                             typeFilters.joinToString(" & ") { it.label }
                         },
@@ -259,7 +267,7 @@ fun SpendingBarChart(
                 color = themeColors.onSurfaceVariant.copy(0.6f),
                 textAlign = TextAlign.Center
             ),
-            contentBuilder = { value -> formatPremiumCurrency(value, currency) }
+            contentBuilder = { value -> formatPremiumCurrency(value, currency, suffixMillion, suffixThousand) }
         ),
         labelHelperProperties = LabelHelperProperties(
             enabled = true,
@@ -452,12 +460,12 @@ fun LegendItem(
             )
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(
-                    text = formatPremiumCurrency(value, currency),
+                    text = formatPremiumCurrency(value, currency, stringResource(R.string.suffix_million), stringResource(R.string.suffix_thousand)),
                     style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp),
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
-                    text = "($percentage%)",
+                    text = stringResource(R.string.percentage_format, percentage),
                     style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp),
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -585,19 +593,19 @@ fun SpendingHeatmap(
     }
 }
 
-fun formatPremiumCurrency(value: Double, currency: String): String {
+fun formatPremiumCurrency(value: Double, currency: String, suffixMillion: String, suffixThousand: String): String {
     val absValue = abs(value)
     val symbol = CurrencyFormatter.getCurrencySymbol(currency)
     
     return when {
         absValue >= 1_000_000 -> {
             val millions = absValue / 1_000_000
-            val suffix = "M"
+            val suffix = suffixMillion
             "${symbol}${String.format("%.1f", millions)}${suffix}"
         }
         absValue >= 1_000 -> {
             val thousands = absValue / 1_000
-            val suffix = "k"
+            val suffix = suffixThousand
             "${symbol}${String.format("%.1f", thousands)}${suffix}"
         }
         else -> "${symbol}${absValue.toInt()}"

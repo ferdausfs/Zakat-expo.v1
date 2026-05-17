@@ -108,6 +108,9 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import androidx.core.graphics.toColorInt
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.presentation.ui.components.SubtitleTag
 import com.ritesh.cashiro.presentation.ui.theme.credit_dark
 import com.ritesh.cashiro.presentation.ui.theme.credit_light
@@ -127,6 +130,7 @@ fun SubscriptionsScreen(
     sharedTransitionScope: SharedTransitionScope? = null,
     animatedContentScope: AnimatedVisibilityScope? = null
 ) {
+    val context = LocalContext.current
     val uiState by subscriptionsViewModel.uiState.collectAsState()
     val categoriesMap by subscriptionsViewModel.categoriesMap.collectAsState()
     val subcategoriesMap by subscriptionsViewModel.subcategoriesMap.collectAsState()
@@ -135,8 +139,8 @@ fun SubscriptionsScreen(
     LaunchedEffect(uiState.lastHiddenSubscription) {
         uiState.lastHiddenSubscription?.let { subscription ->
             val result = snackbarHostState.showSnackbar(
-                message = "${subscription.merchantName} hidden",
-                actionLabel = "Undo",
+                message = context.getString(R.string.subscription_hidden_format, subscription.merchantName),
+                actionLabel = context.getString(R.string.undo),
                 duration = SnackbarDuration.Short
             )
             if (result == SnackbarResult.ActionPerformed) {
@@ -181,7 +185,7 @@ fun SubscriptionsScreen(
             CustomTitleTopAppBar(
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehaviorLarge,
-                title = "Subscriptions",
+                title = stringResource(R.string.subscriptions),
                 hasBackButton = true,
                 hazeState = hazeState,
                 navigationContent = { NavigationContent(onNavigateBack) }
@@ -323,13 +327,13 @@ private fun TotalSubscriptionsSummary(
             ) {
                 Column {
                     Text(
-                        text = "Total Subscriptions",
+                        text = stringResource(R.string.total_subscriptions),
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     Text(
-                        text = "$activeCount active",
+                        text = stringResource(R.string.active_count_format, activeCount),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                     )
@@ -371,7 +375,7 @@ private fun TotalSubscriptionsSummary(
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "MONTHLY",
+                        text = stringResource(R.string.monthly),
                         style = MaterialTheme.typography.labelSmall,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.8f),
@@ -401,7 +405,7 @@ private fun TotalSubscriptionsSummary(
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "YEARLY",
+                        text = stringResource(R.string.yearly),
                         style = MaterialTheme.typography.labelSmall,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
@@ -424,7 +428,7 @@ private fun TotalSubscriptionsSummary(
             if (conversionFailureCount > 0) {
                 Spacer(modifier = Modifier.height(Spacing.sm))
                 Text(
-                    text = "$conversionFailureCount subscription(s) couldn't be converted to $currency, totals may be incomplete.",
+                    text = stringResource(R.string.conversion_failure_message_format, conversionFailureCount, currency),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.error,
                     textAlign = TextAlign.Center,
@@ -501,8 +505,8 @@ private fun SwipeableSubscriptionItem(
                 else -> Iconax.Edit2
             }
             val label = when (direction) {
-                SwipeToDismissBoxValue.StartToEnd -> "Delete"
-                SwipeToDismissBoxValue.EndToStart -> "Edit"
+                SwipeToDismissBoxValue.StartToEnd -> stringResource(R.string.delete)
+                SwipeToDismissBoxValue.EndToStart -> stringResource(R.string.edit)
                 else -> ""
             }
 
@@ -601,10 +605,10 @@ private fun SwipeableSubscriptionItem(
                                             )
                                         },
                                         text = when {
-                                            isOverdue -> "Overdue"
-                                            daysUntilNext == 0L -> "Due today"
-                                            daysUntilNext == 1L -> "Due tomorrow"
-                                            daysUntilNext in 2..7 -> "Due in $daysUntilNext days"
+                                            isOverdue -> stringResource(R.string.overdue)
+                                            daysUntilNext == 0L -> stringResource(R.string.due_today)
+                                            daysUntilNext == 1L -> stringResource(R.string.due_tomorrow)
+                                            daysUntilNext in 2..7 -> stringResource(R.string.due_in_days_format, daysUntilNext)
                                             else -> subscriptionDate.format(DateTimeFormatter.ofPattern("MMM d"))
                                         },
                                         color = if (isOverdue || daysUntilNext <= 3) MaterialTheme.colorScheme.error else dateTagColor
@@ -633,7 +637,7 @@ private fun SwipeableSubscriptionItem(
                                 if (!subscription.smsBody.isNullOrBlank()) {
                                     Icon(
                                         imageVector = Icons.AutoMirrored.Filled.Chat,
-                                        contentDescription = "SMS available",
+                                        contentDescription = stringResource(R.string.sms_available),
                                         modifier = Modifier.size(12.dp),
                                         tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.7f)
                                     )
@@ -688,7 +692,7 @@ private fun SwipeableSubscriptionItem(
                                 )
                                 Spacer(modifier = Modifier.width(Spacing.sm))
                                 Text(
-                                    text = if (subscription.bankName == "Manual Entry") "Notes" else "Original SMS",
+                                    text = if (subscription.bankName == "Manual Entry") stringResource(R.string.notes) else stringResource(R.string.original_sms),
                                     style = MaterialTheme.typography.titleSmall,
                                     fontWeight = FontWeight.Bold
                                 )
@@ -753,7 +757,7 @@ private fun PaymentStatusBottomSheet(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Track Payment",
+                    text = stringResource(R.string.track_payment),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold
                 )
@@ -768,7 +772,7 @@ private fun PaymentStatusBottomSheet(
                 ) {
                     Icon(
                         imageVector =Iconax.Edit2,
-                        contentDescription = "Edit Subscription",
+                        contentDescription = stringResource(R.string.edit_subscription),
                         modifier = Modifier.size(20.dp),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -802,7 +806,7 @@ private fun PaymentStatusBottomSheet(
                         horizontalAlignment = Alignment.Start
                     ) {
                         Text(
-                            text = "Payment for ${subscription.merchantName}",
+                            text = stringResource(R.string.payment_for_format, subscription.merchantName),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.SemiBold,
                             color = if (isOverdue) MaterialTheme.colorScheme.onErrorContainer else MaterialTheme.colorScheme.onSecondaryContainer,
@@ -834,8 +838,8 @@ private fun PaymentStatusBottomSheet(
                         )
                         if (subscription.nextPaymentDate != null) {
                             Text(
-                                text = if (isOverdue) "Overdue since ${subscription.nextPaymentDate.format(DateTimeFormatter.ofPattern("MMM d, yyyy"))}"
-                                       else "Due on ${subscription.nextPaymentDate.format(DateTimeFormatter.ofPattern("MMM d, yyyy"))}",
+                                text = if (isOverdue) stringResource(R.string.overdue_since_format, subscription.nextPaymentDate.format(DateTimeFormatter.ofPattern("MMM d, yyyy")))
+                                       else stringResource(R.string.due_on_format, subscription.nextPaymentDate.format(DateTimeFormatter.ofPattern("MMM d, yyyy"))),
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = if (isOverdue) MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.8f) 
                                        else MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.8f)
@@ -848,7 +852,7 @@ private fun PaymentStatusBottomSheet(
             Spacer(modifier = Modifier.height(Spacing.lg))
 
             Text(
-                text = "Is this subscription paid?",
+                text = stringResource(R.string.is_subscription_paid),
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center
             )
@@ -863,14 +867,14 @@ private fun PaymentStatusBottomSheet(
                     onClick = onDismiss,
                     modifier = Modifier.weight(1f).height(56.dp)
                 ) {
-                    Text("No", style = MaterialTheme.typography.titleMedium)
+                    Text(stringResource(R.string.no), style = MaterialTheme.typography.titleMedium)
                 }
                 
                 Button(
                     onClick = onMarkAsPaid,
                     modifier = Modifier.weight(1f).height(56.dp)
                 ) {
-                    Text("Yes, it's paid", style = MaterialTheme.typography.titleMedium)
+                    Text(stringResource(R.string.yes_its_paid), style = MaterialTheme.typography.titleMedium)
                 }
             }
             
@@ -886,7 +890,7 @@ private fun PaymentStatusBottomSheet(
                             contentDescription = null
                         )
                         Spacer(modifier = Modifier.width(Spacing.sm))
-                        Text(if (showSmsBody) "Hide Original Message" else "Show Original Message")
+                        Text(if (showSmsBody) stringResource(R.string.hide_original_message) else stringResource(R.string.show_original_message))
                     }
                 }
 
@@ -930,13 +934,13 @@ private fun EmptySubscriptionsState() {
             )
             Spacer(modifier = Modifier.height(Spacing.md))
             Text(
-                text = "No subscriptions detected yet",
+                text = stringResource(R.string.no_subscriptions_detected_yet),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Spacer(modifier = Modifier.height(Spacing.xs))
             Text(
-                text = "Sync your SMS to detect subscriptions",
+                text = stringResource(R.string.sync_sms_to_detect_subscriptions),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

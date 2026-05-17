@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -46,6 +47,7 @@ import com.ritesh.cashiro.presentation.ui.icons.Category2
 import com.ritesh.cashiro.presentation.ui.icons.Iconax
 import com.ritesh.cashiro.presentation.ui.icons.ReceiptEdit
 import com.ritesh.cashiro.utils.IconResolutionUtils
+import com.ritesh.cashiro.R
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -147,7 +149,7 @@ fun TransactionsFilterBottomSheet(
                     // Categories
                     if (categoryList.isNotEmpty()) {
                         Text(
-                            text = "Categories",
+                            text = stringResource(R.string.categories),
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.SemiBold,
                             modifier = Modifier.padding(
@@ -204,7 +206,7 @@ fun TransactionsFilterBottomSheet(
                     ) {
                         Column {
                             Text(
-                                text = if (categoryFilter.size == 1) categoryFilter.first() else "Subcategories",
+                                text = if (categoryFilter.size == 1) categoryFilter.first() else stringResource(R.string.subcategories),
                                 style = MaterialTheme.typography.titleSmall,
                                 fontWeight = FontWeight.SemiBold,
                                 modifier = Modifier.padding(
@@ -254,7 +256,7 @@ fun TransactionsFilterBottomSheet(
 
                     // Amount Range
                     Text(
-                        text = "Amount Range",
+                        text = stringResource(R.string.amount_range),
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(horizontal = Dimensions.Padding.content),
@@ -338,7 +340,7 @@ fun TransactionsFilterBottomSheet(
                             }
 
                             Text(
-                                "Min - Max",
+                                stringResource(R.string.min_max),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.outline
                             )
@@ -385,7 +387,7 @@ fun TransactionsFilterBottomSheet(
                     // Accounts
                     if (accountsMap.isNotEmpty()) {
                         Text(
-                            text = "Accounts",
+                            text = stringResource(R.string.accounts),
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.SemiBold,
                             modifier = Modifier.padding(horizontal = Dimensions.Padding.content),
@@ -417,7 +419,7 @@ fun TransactionsFilterBottomSheet(
                     if (availableCurrencies.isNotEmpty()) {
                         Spacer(modifier = Modifier.height(Spacing.sm))
                         Text(
-                            text = "Currencies",
+                            text = stringResource(R.string.currencies),
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.SemiBold,
                             modifier = Modifier.padding(horizontal = Dimensions.Padding.content),
@@ -478,7 +480,7 @@ fun TransactionsFilterBottomSheet(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Filters",
+                    text = stringResource(R.string.filters),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface,
@@ -520,7 +522,7 @@ fun TransactionsFilterBottomSheet(
                         shape = MaterialTheme.shapes.extraExtraLarge
                     ) {
                         Text(
-                            text = "Apply",
+                            text = stringResource(R.string.apply),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold
                         )
@@ -559,8 +561,8 @@ fun TransactionsFilterBottomSheet(
         ) {
             NumberPad(
                 initialValue = tempAmountInput.ifEmpty { "0" },
-                title = if (isMin) "Set Minimum Amount" else "Set Maximum Amount",
-                doneButtonLabel = "Confirm",
+                title = if (isMin) stringResource(R.string.set_minimum_amount) else stringResource(R.string.set_maximum_amount),
+                doneButtonLabel = stringResource(R.string.confirm),
                 onDone = { resultString ->
                     // Remove any trailing periods or whitespace and parse safely
                     val cleanString = resultString.trim().replace(Regex("\\.+\$"), "")

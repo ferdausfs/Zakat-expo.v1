@@ -22,7 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.presentation.ui.theme.Dimensions
 import com.ritesh.cashiro.presentation.ui.theme.LocalBlurEffects
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
@@ -45,7 +47,7 @@ fun TimePicker(
     val containerColor = MaterialTheme.colorScheme.surfaceContainerLow
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Select Time") },
+        title = { Text(stringResource(R.string.select_time)) },
         text = {
             Box(
                 modifier = Modifier
@@ -87,7 +89,7 @@ fun TimePicker(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Cancel",
+                            text = stringResource(R.string.cancel),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
@@ -109,7 +111,7 @@ fun TimePicker(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "OK",
+                            text = stringResource(R.string.ok),
                             style = MaterialTheme.typography.titleMedium)
                     }
 

@@ -1,6 +1,8 @@
 package com.ritesh.cashiro.presentation.ui.features.accounts
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -26,10 +28,10 @@ import java.math.RoundingMode
 fun NumberPad(
     initialValue: String = "0",
     onDone: (String) -> Unit,
-    title: String = "Enter Amount",
+    title: String = stringResource(R.string.enter_amount),
     bankName: String? = null,
     accountLast4: String? = null,
-    doneButtonLabel: String = "Done"
+    doneButtonLabel: String = stringResource(R.string.done)
 ) {
     var expression by remember { mutableStateOf(if (initialValue == "0") "" else initialValue) }
     var result by remember { mutableStateOf(initialValue) }
@@ -59,7 +61,7 @@ fun NumberPad(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(if (doneButtonLabel == "Update Balance") 0.9f else 0.8f)
+            .fillMaxHeight(if (doneButtonLabel == stringResource(R.string.update_balance)) 0.9f else 0.8f)
     ) {
         Column(
             modifier = Modifier.fillMaxSize().padding(Spacing.md),
@@ -267,7 +269,7 @@ fun NumberPadButton(
             if (text == "⌫") {
                 Icon(
                     Icons.AutoMirrored.Filled.Backspace,
-                    contentDescription = "Backspace",
+                    contentDescription = stringResource(R.string.backspace),
                     modifier = Modifier.size(24.dp)
                 )
             } else {

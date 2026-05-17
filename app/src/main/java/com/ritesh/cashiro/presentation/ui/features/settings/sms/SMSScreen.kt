@@ -38,6 +38,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.pluralStringResource
+import com.ritesh.cashiro.R
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -99,7 +102,7 @@ fun SMSScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CustomTitleTopAppBar(
-                title = "SMS",
+                title = stringResource(R.string.sms_title),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
                 hazeState = hazeState,
@@ -136,15 +139,15 @@ fun SMSScreen(
                     ListItem(
                         headline = {
                             Text(
-                                text = "SMS Scan Period",
+                                text = stringResource(R.string.sms_scan_period),
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Medium
                             )
                         },
                         supporting = {
                             Text(
-                                text = if (smsScanAllTime) "Scan all SMS messages"
-                                else "Scan last $smsScanMonths months of messages",
+                                text = if (smsScanAllTime) stringResource(R.string.scan_all_sms)
+                                else stringResource(R.string.scan_months_format, smsScanMonths),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -183,8 +186,8 @@ fun SMSScreen(
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    text = if (smsScanAllTime) "All Time"
-                                    else "$smsScanMonths months",
+                                    text = if (smsScanAllTime) stringResource(R.string.range_all_time)
+                                    else stringResource(R.string.months_count_format, smsScanMonths),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onPrimary
                                 )
@@ -199,7 +202,7 @@ fun SMSScreen(
                     ListItem(
                         headline = {
                             Text(
-                                text = "Unrecognized Bank Messages",
+                                text = stringResource(R.string.unrecognized_bank_messages),
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Medium
                             )
@@ -207,8 +210,8 @@ fun SMSScreen(
                         supporting = {
                             Text(
                                 text = if (unreportedCount > 0)
-                                    "$unreportedCount message${if (unreportedCount > 1) "s" else ""} from potential banks"
-                                else "No unrecognized messages",
+                                    pluralStringResource(R.plurals.unrecognized_messages_count, unreportedCount, unreportedCount)
+                                else stringResource(R.string.no_unrecognized_messages),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -263,11 +266,11 @@ fun SMSScreen(
             val containerColor = MaterialTheme.colorScheme.surfaceContainerLow
             AlertDialog(
                 onDismissRequest = { showSmsScanDialog = false },
-                title = { Text("SMS Scan Period") },
+                title = { Text(stringResource(R.string.sms_scan_period)) },
                 text = {
                     Column(verticalArrangement = Arrangement.spacedBy(1.5.dp)) {
                         Text(
-                            text = "Choose how many months of SMS history to scan for transactions",
+                            text = stringResource(R.string.sms_scan_period_desc),
                             style = MaterialTheme.typography.bodyMedium
                         )
                         Spacer(modifier = Modifier.height(Spacing.md))
@@ -281,10 +284,10 @@ fun SMSScreen(
                                 headline = {
                                     Text(
                                         text = when (months) {
-                                            -1 -> "All Time"
-                                            1 -> "1 month"
-                                            24 -> "2 years"
-                                            else -> "$months months"
+                                            -1 -> stringResource(R.string.range_all_time)
+                                            1 -> stringResource(R.string.one_month)
+                                            24 -> stringResource(R.string.two_years)
+                                            else -> stringResource(R.string.months_count_format, months)
                                         }
                                     )
                                 },
@@ -325,7 +328,7 @@ fun SMSScreen(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Cancel",
+                            text = stringResource(R.string.cancel),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }

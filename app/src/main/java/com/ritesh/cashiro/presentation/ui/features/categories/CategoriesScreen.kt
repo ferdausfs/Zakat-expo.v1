@@ -76,6 +76,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.ui.res.stringResource
 import com.ritesh.cashiro.R
 import com.ritesh.cashiro.data.database.entity.CategoryEntity
 import com.ritesh.cashiro.data.database.entity.SubcategoryEntity
@@ -146,7 +147,7 @@ fun CategoriesScreen(
     var showFloatingLabel by remember { mutableStateOf(true) }
     var showFilterMenu by remember { mutableStateOf(false) }
     var selectedFilter by remember { mutableStateOf("All") }
-    val labels = listOf("Search Fruits", "Search Shopping", "Search Fitness", "Search Sports")
+    val labels = listOf(stringResource(R.string.search_fruits), stringResource(R.string.search_shopping), stringResource(R.string.search_fitness), stringResource(R.string.search_sports))
     var currentLabelIndex by remember { mutableIntStateOf(0) }
 
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -178,7 +179,7 @@ fun CategoriesScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CustomTitleTopAppBar(
-                title = "Categories",
+                title = stringResource(R.string.categories),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
                 hazeState = hazeState,
@@ -204,8 +205,8 @@ fun CategoriesScreen(
             ExtendedFloatingActionButton(
                 onClick = { categoriesViewModel.showAddDialog() },
                 expanded = showFloatingLabel,
-                icon = { Icon(Icons.Rounded.Add, contentDescription = "Add Category") },
-                text = { Text(text = "Add Category") },
+                icon = { Icon(Icons.Rounded.Add, contentDescription = stringResource(R.string.add_category)) },
+                text = { Text(text = stringResource(R.string.add_category)) },
                 shape = if (showFloatingLabel) MaterialTheme.shapes.extraLargeIncreased else MaterialTheme.shapes.large,
                 modifier = Modifier
                     .then(
@@ -305,7 +306,7 @@ fun CategoriesScreen(
                             }) {
                                 Icon(
                                     Iconax.CloseCircle,
-                                    contentDescription = "Clear search"
+                                    contentDescription = stringResource(R.string.clear_search)
                                 )
                             }
                         }
@@ -364,7 +365,7 @@ fun CategoriesScreen(
                     if (dispExpenseCategories.isNotEmpty()) {
                         item {
                             SectionHeader(
-                                title = "Expense Categories",
+                                title = stringResource(R.string.expense_categories),
                                 modifier = Modifier.padding(start = 8.dp)
                             )
                         }
@@ -401,7 +402,7 @@ fun CategoriesScreen(
                     if (dispIncomeCategories.isNotEmpty()) {
                         item {
                             SectionHeader(
-                                title = "Income Categories",
+                                title = stringResource(R.string.income_categories),
                                 modifier = Modifier.padding(start = 8.dp)
                             )
                         }
@@ -672,7 +673,7 @@ fun ActionContent(
             shape = MaterialTheme.shapes.large,
         ) {
             DropdownMenuItem(
-                text = { Text("All") },
+                text = { Text(stringResource(R.string.all)) },
                 onClick = { onFilterSelected("All") },
             )
             HorizontalDivider(
@@ -680,7 +681,7 @@ fun ActionContent(
                 color = MaterialTheme.colorScheme.surface
             )
             DropdownMenuItem(
-                text = { Text("Expense") },
+                text = { Text(stringResource(R.string.expense)) },
                 onClick = { onFilterSelected("Expense") },
             )
             HorizontalDivider(
@@ -688,7 +689,7 @@ fun ActionContent(
                 color = MaterialTheme.colorScheme.surface
             )
             DropdownMenuItem(
-                text = { Text("Income") },
+                text = { Text(stringResource(R.string.income)) },
                 onClick = { onFilterSelected("Income") },
             )
         }

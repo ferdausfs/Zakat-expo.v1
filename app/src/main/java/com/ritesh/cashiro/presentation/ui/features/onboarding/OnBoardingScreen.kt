@@ -140,9 +140,10 @@ import com.ritesh.cashiro.presentation.ui.icons.Notification
 import com.ritesh.cashiro.presentation.ui.icons.Wallet3
 import com.ritesh.cashiro.presentation.ui.theme.Dimensions
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
-import java.math.BigDecimal
 import java.time.LocalDateTime
+import java.math.BigDecimal
 import kotlinx.coroutines.delay
+import androidx.compose.ui.res.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -480,7 +481,7 @@ fun WelcomeStep() {
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.cashiro),
-                        contentDescription = "App Logo",
+                        contentDescription = stringResource(R.string.app_logo),
                         modifier = Modifier
                             .size(90.dp)
                             .scale(scale),
@@ -508,7 +509,7 @@ fun WelcomeStep() {
             Spacer(modifier = Modifier.height(40.dp))
             BlurredAnimatedVisibility(visible = true) {
                 Text(
-                    text = "Cashiro",
+                    text = "Cashiro", // Product name, usually kept as is, but can be localized
                     style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
@@ -517,8 +518,7 @@ fun WelcomeStep() {
 
             BlurredAnimatedVisibility(visible = true) {
                 Text(
-                    text = "Experience a seamless way to track your money, " +
-                            "categorize your spending, and hit your savings goals faster.",
+                    text = stringResource(R.string.onboarding_subtitle),
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -546,7 +546,7 @@ fun ProfileStep(
         verticalArrangement = Arrangement.spacedBy(Spacing.lg)
     ) {
         Text(
-            text = "Set Up Your Profile",
+            text = stringResource(R.string.set_up_your_profile),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(horizontal = Spacing.md)
@@ -562,7 +562,7 @@ fun ProfileStep(
         TextField(
             value = state.editedUserName,
             onValueChange = onNameChange,
-            label = { Text("What should we call you?") },
+            label = { Text(stringResource(R.string.what_should_we_call_you)) },
             singleLine = true,
             modifier = Modifier.fillMaxWidth().padding(horizontal = Spacing.md),
             shape = RoundedCornerShape(Dimensions.Radius.md),
@@ -682,7 +682,7 @@ fun PermissionsStep(
         ) {
             Spacer(modifier = Modifier.height(60.dp))
             Text(
-                text = if (isNotification) "Stay Updated" else "Automatic Tracking",
+                text = if (isNotification) stringResource(R.string.stay_updated) else stringResource(R.string.automatic_tracking),
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
@@ -690,8 +690,8 @@ fun PermissionsStep(
 
             Text(
                 text = if (isNotification) 
-                    "Allow notifications to receive bill reminders and daily summaries." 
-                    else "Cashiro can automatically scan your transaction SMS to keep your accounts up to date.",
+                    stringResource(R.string.allow_notifications_desc)
+                    else stringResource(R.string.automatic_tracking_desc),
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -706,7 +706,7 @@ fun PermissionsStep(
                     ),
                     modifier = Modifier.padding(bottom = Spacing.sm)
                 ) {
-                    Text("Skip for now", color = MaterialTheme.colorScheme.primary)
+                    Text(stringResource(R.string.skip_for_now), color = MaterialTheme.colorScheme.primary)
                 }
             }
         }
@@ -746,7 +746,7 @@ fun SyncStep(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Verify Accounts",
+                    text = stringResource(R.string.verify_accounts),
                     style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
@@ -819,7 +819,7 @@ fun SyncStep(
             Spacer(modifier = Modifier.height(40.dp))
             if (isScanning || accounts.isEmpty()) {
                 Text(
-                    text = if (isScanning) "Scanning Messages" else "Ready to Sync",
+                    text = if (isScanning) stringResource(R.string.scanning_messages) else stringResource(R.string.ready_to_sync),
                     style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
@@ -827,9 +827,9 @@ fun SyncStep(
             }
 
             Text(
-                text = if (isScanning) "This will only take a moment..." 
-                       else if (accounts.isNotEmpty()) "We found ${accounts.size} accounts. Select your primary one." 
-                       else "Start scanning to find your bank accounts and credit cards automatically.",
+                text = if (isScanning) stringResource(R.string.this_will_only_take_a_moment)
+                       else if (accounts.isNotEmpty()) stringResource(R.string.found_accounts_select_primary_format, accounts.size)
+                       else stringResource(R.string.start_scanning_desc),
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -844,7 +844,7 @@ fun SyncStep(
                     ),
                     modifier = Modifier.padding(bottom = Spacing.sm)
                 ) {
-                    Text("Skip for now", color = MaterialTheme.colorScheme.primary)
+                    Text(stringResource(R.string.skip_for_now), color = MaterialTheme.colorScheme.primary)
                 }
             }
         }
@@ -904,7 +904,7 @@ fun AccountSetupStep(
                                         )
                                         Spacer(Modifier.width(Spacing.xs))
                                         Text(
-                                            text = "Main",
+                                            text = stringResource(R.string.main),
                                             color = Color(0xFFFFD700),
                                         )
                                     }
@@ -915,7 +915,7 @@ fun AccountSetupStep(
                             IconButton(onClick = { onToggleMerge(key) }) {
                                 Icon(
                                     imageVector = if (isSelectedForMerge) Iconax.HierarchySquare3 else Iconax.HierarchySquare3,
-                                    contentDescription = "Merge",
+                                    contentDescription = stringResource(R.string.merge),
                                     tint = if (isSelectedForMerge) MaterialTheme.colorScheme.primary 
                                            else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
                                 )
@@ -951,7 +951,7 @@ fun AccountSetupStep(
                     ) {
                         Icon(Iconax.HierarchySquare3, contentDescription = null)
                         Spacer(modifier = Modifier.width(Spacing.sm))
-                        Text("Merge Selected Accounts")
+                        Text(stringResource(R.string.merge_selected_accounts))
                     }
                 }
             }
@@ -977,7 +977,7 @@ fun AccountSetupStep(
                         )
                         Spacer(Modifier.width(Spacing.sm))
                         Text(
-                            text = "A Main account is the default account selected for your manual transaction entries.",
+                            text = stringResource(R.string.main_account_info),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -1019,13 +1019,13 @@ fun ManualAccountEntryStep(
         Spacer(modifier = Modifier.height(Spacing.md))
 
         Text(
-            text = "Add Your Main Account",
+            text = stringResource(R.string.add_your_main_account),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold
         )
 
         Text(
-            text = "Enter your primary account details to get started.",
+            text = stringResource(R.string.enter_primary_account_details),
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -1036,7 +1036,7 @@ fun ManualAccountEntryStep(
         TextField(
             value = accountName,
             onValueChange = onUpdateName,
-            label = { Text("Bank Name (e.g., HDFC, SBI)") },
+            label = { Text(stringResource(R.string.bank_name_hint)) },
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(Dimensions.Radius.md),
@@ -1058,7 +1058,7 @@ fun ManualAccountEntryStep(
             TextField(
                 value = balance,
                 onValueChange = onUpdateBalance,
-                label = { Text("Balance") },
+                label = { Text(stringResource(R.string.balance)) },
                 modifier = Modifier.weight(1f),
                 shape = RoundedCornerShape(Dimensions.Radius.md),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -1099,9 +1099,9 @@ fun ManualAccountEntryStep(
         TextField(
             value = accountLast4,
             onValueChange = onUpdateLast4,
-            label = { Text("Last 4 Digits of Account") },
+            label = { Text(stringResource(R.string.last_4_digits_hint)) },
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("e.g. 1234") },
+            placeholder = { Text(stringResource(R.string.last_4_digits_placeholder)) },
             singleLine = true,
             shape = RoundedCornerShape(Dimensions.Radius.md),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -1190,12 +1190,12 @@ fun OnBoardingBottomBar(
                 Text(
                     text =
                         when (currentStep) {
-                            1 -> "Get Started"
-                            2 -> "Enable Tracking"
-                            3 -> "Stay Informed"
-                            4 -> if (isScanning) "Scanning..." else "Continue"
-                            5 -> "Finish Setup"
-                            else -> "Continue"
+                            1 -> stringResource(R.string.get_started)
+                            2 -> stringResource(R.string.enable_tracking)
+                            3 -> stringResource(R.string.stay_informed)
+                            4 -> if (isScanning) stringResource(R.string.scanning_ellipsis) else stringResource(R.string.continue_action)
+                            5 -> stringResource(R.string.finish_setup)
+                            else -> stringResource(R.string.continue_action)
                         }
                 )
                 Spacer(Modifier.width(Spacing.sm))
@@ -1343,7 +1343,7 @@ fun PermissionsBackgroundAnimation(isNotification: Boolean) {
     val messages = remember(isNotification) {
         if (isNotification) {
             listOf(
-                MessageData("A", "Electric bill due: ₹2,450", true),
+                MessageData("A", "Electric bill due: ₹2,450", true), // These could use string resources inside remember if context is passed, but hard to do elegantly without Composable context. So we can map them inside the UI loop or pass from strings.
                 MessageData("B", "Transaction of ₹500 at Starbucks", false),
                 MessageData("A", "Reminder: Credit card due tomorrow", true),
                 MessageData("B", "Cashback of ₹50 credited", false)
@@ -1543,7 +1543,7 @@ fun NotificationHeroAnimation(animationTriggered: Boolean) {
                 .zIndex(1f) // Just below the main sliding icon
         ) {
             MessageBubble(
-                message = MessageData("Notification", "Your salary has been credited!", false),
+                message = MessageData(stringResource(R.string.notification), stringResource(R.string.mock_msg_salary_credited), false),
                 isLarge = true,
                 useSkeleton = false,
                 showLogo = true

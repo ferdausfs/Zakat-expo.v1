@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -78,13 +79,16 @@ fun MergeAccountSelectionDialog(
                 verticalArrangement = Arrangement.spacedBy(Spacing.md)
             ) {
                 Text(
-                    text = "Merge Accounts",
+                    text = stringResource(R.string.merge_accounts_title),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "Select accounts to merge into ${currentAccount.bankName} " +
-                            "(...${currentAccount.accountLast4}). Selected accounts will be deleted after merging.",
+                    text = stringResource(
+                        R.string.merge_accounts_desc,
+                        currentAccount.bankName,
+                        currentAccount.accountLast4
+                    ),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -129,7 +133,7 @@ fun MergeAccountSelectionDialog(
                     onClick = { onNext(selectedAccounts.toList()) },
                     modifier = Modifier.fillMaxWidth().height(56.dp),
                     enabled = selectedAccounts.isNotEmpty()
-                ) { Text("Next") }
+                ) { Text(stringResource(R.string.next)) }
             }
         }
     }
@@ -230,28 +234,33 @@ fun MergeBalanceOptionDialog(
             verticalArrangement = Arrangement.spacedBy(Spacing.md)
         ) {
             Text(
-                text = "Update Balance?",
+                text = stringResource(R.string.update_balance_title),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
             val totalBalance =
                 currentAccount.balance + selectedAccounts.sumOf { it.balance }
             MergeOptionItem(
-                title = "Sum available balances",
-                description = "New balance: ${CurrencyFormatter.formatCurrency(totalBalance, currentAccount.currency)}",
+                title = stringResource(R.string.merge_option_sum),
+                description = stringResource(
+                    R.string.merge_option_sum_desc,
+                    CurrencyFormatter.formatCurrency(totalBalance, currentAccount.currency)
+                ),
                 icon = Icons.Filled.Calculate,
                 onClick = { onOptionSelected(BalanceMergeOption.SUM) }
             )
             MergeOptionItem(
-                title = "Manually enter balance",
-                description = "Set a custom balance after merge",
+                title = stringResource(R.string.merge_option_manual),
+                description = stringResource(R.string.merge_option_manual_desc),
                 icon = Icons.Filled.Edit,
                 onClick = { onOptionSelected(BalanceMergeOption.MANUAL) }
             )
             MergeOptionItem(
-                title = "Don't change balance",
-                description =
-                    "Keep current balance of ${CurrencyFormatter.formatCurrency(currentAccount.balance, currentAccount.currency)}",
+                title = stringResource(R.string.merge_option_none),
+                description = stringResource(
+                    R.string.merge_option_none_desc,
+                    CurrencyFormatter.formatCurrency(currentAccount.balance, currentAccount.currency)
+                ),
                 icon = Icons.Filled.Close,
                 onClick = { onOptionSelected(BalanceMergeOption.NONE) }
             )
@@ -325,10 +334,10 @@ fun MergeConfirmationDialog(
                 tint = MaterialTheme.colorScheme.error
             )
         },
-        title = { Text(text = "Final Confirmation") },
+        title = { Text(text = stringResource(R.string.merge_confirm_title)) },
         text = {
             Text(
-                text = "Merging Accounts: All current and past transactions from the merging bank accounts will now show on the merged bank account. The original accounts will be deleted.",
+                text = stringResource(R.string.merge_confirm_message),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodyMedium
             )
@@ -359,7 +368,7 @@ fun MergeConfirmationDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Cancel",
+                            text = stringResource(R.string.cancel),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
@@ -381,7 +390,7 @@ fun MergeConfirmationDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Merge",
+                            text = stringResource(R.string.merge),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }

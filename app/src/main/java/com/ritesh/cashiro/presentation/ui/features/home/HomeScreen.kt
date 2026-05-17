@@ -146,6 +146,7 @@ import kotlinx.coroutines.launch
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
+import androidx.compose.ui.res.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class,
     ExperimentalHazeApi::class
@@ -191,7 +192,7 @@ fun SharedTransitionScope.HomeScreen(
             (context as? Activity)?.finish()
         } else {
             lastBackPressTime = currentTime
-            Toast.makeText(context, "Press back again to close the app", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.press_back_again_to_close), Toast.LENGTH_SHORT).show()
         }
     }
     val scope = rememberCoroutineScope()
@@ -237,8 +238,8 @@ fun SharedTransitionScope.HomeScreen(
             scope.launch {
                 val result =
                     snackbarHostState.showSnackbar(
-                        message = "Transaction deleted",
-                        actionLabel = "Undo",
+                        message = context.getString(R.string.transaction_deleted),
+                        actionLabel = context.getString(R.string.undo),
                         duration = SnackbarDuration.Short
                     )
                 if (result == SnackbarResult.ActionPerformed) {
@@ -262,7 +263,7 @@ fun SharedTransitionScope.HomeScreen(
         containerColor = Color.Transparent,
         topBar = {
             CustomTitleTopAppBar(
-                title = "Cashiro",
+                title = stringResource(R.string.cashiro_title),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
                 hazeState = hazeState,
@@ -292,14 +293,14 @@ fun SharedTransitionScope.HomeScreen(
                         if (uiState.profileImageUri != null) {
                             AsyncImage(
                                 model = uiState.profileImageUri,
-                                contentDescription = "Profile",
+                                contentDescription = stringResource(R.string.profile),
                                 modifier = Modifier.fillMaxSize(),
                                 contentScale = ContentScale.Crop
                             )
                         } else {
                             Image(
                                 painter = painterResource(id = R.drawable.avatar_1),
-                                contentDescription = "Profile",
+                                contentDescription = stringResource(R.string.profile),
                                 modifier = Modifier.fillMaxSize(),
                                 contentScale = ContentScale.Crop
                             )
@@ -341,7 +342,7 @@ fun SharedTransitionScope.HomeScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.MoreHoriz,
-                            contentDescription = "More options",
+                            contentDescription = stringResource(R.string.more_options),
                             tint = MaterialTheme.colorScheme.inverseSurface,
                             modifier = Modifier.size(24.dp)
                         )
@@ -388,7 +389,7 @@ fun SharedTransitionScope.HomeScreen(
                         if (uiState.bannerImageUri != null) {
                             AsyncImage(
                                 model = uiState.bannerImageUri,
-                                contentDescription = "Banner",
+                                contentDescription = stringResource(R.string.banner),
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .hazeSource(hazeStateBanner)
@@ -400,7 +401,7 @@ fun SharedTransitionScope.HomeScreen(
                         } else {
                             Image(
                                 painter = painterResource(id = R.drawable.banner_bg_image),
-                                contentDescription = "Banner",
+                                contentDescription = stringResource(R.string.banner),
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .alpha(0.5f)
@@ -581,7 +582,7 @@ fun SharedTransitionScope.HomeScreen(
                                         ) {
                                             Column {
                                                 SectionHeader(
-                                                    title = "Recent",
+                                                    title = stringResource(R.string.recent),
                                                     action = {
                                                         Row(
                                                             horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -614,12 +615,12 @@ fun SharedTransitionScope.HomeScreen(
                                                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                                                     Icon(
                                                                         imageVector = Iconax.Search,
-                                                                        contentDescription = "Search transactions",
+                                                                        contentDescription = stringResource(R.string.search_transactions),
                                                                         modifier = Modifier.size(Dimensions.Icon.small),
                                                                         tint = MaterialTheme.colorScheme.primary
                                                                     )
                                                                     Spacer(modifier = Modifier.width(4.dp))
-                                                                    Text("Search")
+                                                                    Text(stringResource(R.string.search))
                                                                 }
 
                                                             }
@@ -657,7 +658,7 @@ fun SharedTransitionScope.HomeScreen(
                                                             )
                                                             Spacer(modifier = Modifier.height(Spacing.md))
                                                             Text(
-                                                                text = "No transactions yet",
+                                                                text = stringResource(R.string.no_transactions_yet),
                                                                 style = MaterialTheme.typography.bodyLarge,
                                                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                                                             )
@@ -753,7 +754,7 @@ fun SharedTransitionScope.HomeScreen(
                                                 contentPadding = PaddingValues(0.dp)
                                             ) {
                                                 Text(
-                                                    text = "View All",
+                                                    text = stringResource(R.string.view_all),
                                                     style = MaterialTheme.typography.bodySmall,
                                                     lineHeight = MaterialTheme.typography.bodySmall.lineHeight,
                                                     modifier = Modifier.padding(horizontal = Spacing.md)
@@ -787,7 +788,7 @@ fun SharedTransitionScope.HomeScreen(
                             .padding(horizontal = 16.dp),
                     ) {
                         Text(
-                            text = "More Options",
+                            text = stringResource(R.string.more_options),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center,
@@ -798,7 +799,7 @@ fun SharedTransitionScope.HomeScreen(
 
                         // Edit Widgets Option
                         ListItem(
-                            headline = { Text("Edit Widgets") },
+                            headline = { Text(stringResource(R.string.edit_widgets)) },
                             leading = {
                                 Icon(
                                     imageVector = Iconax.Convertshape2,
@@ -814,7 +815,7 @@ fun SharedTransitionScope.HomeScreen(
 
                         // Settings Option
                         ListItem(
-                            headline = { Text("Settings") },
+                            headline = { Text(stringResource(R.string.settings)) },
                             leading = {
                                 Icon(
                                     imageVector = Iconax.Setting2,
@@ -830,7 +831,7 @@ fun SharedTransitionScope.HomeScreen(
 
                         // Ask AI Option
                         ListItem(
-                            headline = { Text("Ask AI") },
+                            headline = { Text(stringResource(R.string.ask_ai)) },
                             leading = {
                                 Icon(
                                     imageVector = Iconax.AiCommentary,
@@ -846,14 +847,14 @@ fun SharedTransitionScope.HomeScreen(
 
                         // Sync SMS Option
                         ListItem(
-                            headline = { Text("Sync SMS") },
+                            headline = { Text(stringResource(R.string.sync_sms)) },
                             leading = {
                                 Icon(
                                     imageVector = Iconax.RefreshCircle,
                                     contentDescription = null,
                                 )
                             },
-                            supporting = { Text("Long press for full resync") },
+                            supporting = { Text(stringResource(R.string.long_press_for_full_resync)) },
                             modifier = Modifier.pointerInput(Unit) {
                                 detectTapGestures(
                                     onTap = {
@@ -875,7 +876,7 @@ fun SharedTransitionScope.HomeScreen(
 
                         // Banner Image Toggle
                         PreferenceSwitch(
-                            title = "Show Banner Image",
+                            title = stringResource(R.string.show_banner_image),
                             leadingIcon = {
                                 Icon(
                                     imageVector = Iconax.Gallery,
@@ -953,7 +954,7 @@ private fun BreakdownDialog(
             ) {
                 // Title
                 Text(
-                    text = "Calculation Breakdown",
+                    text = stringResource(R.string.calculation_breakdown),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold
                 )
@@ -967,13 +968,13 @@ private fun BreakdownDialog(
                 )
 
                 BreakdownRow(
-                    label = "Income",
+                    label = stringResource(R.string.income),
                     amount = currentMonthIncome,
                     isIncome = true
                 )
 
                 BreakdownRow(
-                    label = "Expenses",
+                    label = stringResource(R.string.expenses),
                     amount = currentMonthExpenses,
                     isIncome = false
                 )
@@ -981,7 +982,7 @@ private fun BreakdownDialog(
                 HorizontalDivider()
 
                 BreakdownRow(
-                    label = "Net Balance",
+                    label = stringResource(R.string.net_balance),
                     amount = currentMonthTotal,
                     isIncome = currentMonthTotal >= BigDecimal.ZERO,
                     isBold = true
@@ -998,13 +999,13 @@ private fun BreakdownDialog(
                 )
 
                 BreakdownRow(
-                    label = "Income",
+                    label = stringResource(R.string.income),
                     amount = lastMonthIncome,
                     isIncome = true
                 )
 
                 BreakdownRow(
-                    label = "Expenses",
+                    label = stringResource(R.string.expenses),
                     amount = lastMonthExpenses,
                     isIncome = false
                 )
@@ -1012,7 +1013,7 @@ private fun BreakdownDialog(
                 HorizontalDivider()
 
                 BreakdownRow(
-                    label = "Net Balance",
+                    label = stringResource(R.string.net_balance),
                     amount = lastMonthTotal,
                     isIncome = lastMonthTotal >= BigDecimal.ZERO,
                     isBold = true
@@ -1028,8 +1029,7 @@ private fun BreakdownDialog(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = "Formula: Income - Expenses = Net Balance\n" +
-                                    "Green (+) = Savings | Red (-) = Overspending",
+                        text = stringResource(R.string.breakdown_formula_description),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSecondaryContainer,
                         modifier = Modifier.padding(Spacing.sm),
@@ -1041,7 +1041,7 @@ private fun BreakdownDialog(
                 TextButton(
                     onClick = onDismiss,
                     modifier = Modifier.align(Alignment.End)
-                ) { Text("Close") }
+                ) { Text(stringResource(R.string.close)) }
             }
         }
     }
@@ -1123,7 +1123,7 @@ private fun UpcomingSubscriptionsCard(
                 modifier = Modifier.padding(start = 12.dp)
             ) {
                 Text(
-                    text ="${subscriptions.size} Subscriptions",
+                    text = stringResource(R.string.subscriptions_count_format, subscriptions.size),
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface.copy(
@@ -1146,7 +1146,7 @@ private fun UpcomingSubscriptionsCard(
                     )
                     Text(
                         text =
-                            "/ Month".uppercase(),
+                            stringResource(R.string.per_month).uppercase(),
                         style = MaterialTheme.typography.bodySmall,
                         fontStyle = FontStyle.Italic,
                         fontWeight = FontWeight.Bold,
@@ -1193,6 +1193,7 @@ private fun NetworthSummaryCards(
         )
     }
 
+    val context = LocalContext.current
     val abbreviatedName = remember(uiState.userName) {
         if (uiState.userName.contains(" ")) {
             uiState.userName.split(" ")
@@ -1216,7 +1217,7 @@ private fun NetworthSummaryCards(
             val start = uiState.balanceHistory.first().timestamp.toLocalDate()
             val end = uiState.balanceHistory.last().timestamp.toLocalDate()
             val days = ChronoUnit.DAYS.between(start, end)
-            "Last $days days"
+            context.getString(R.string.last_days_format, days)
         }
     }
 

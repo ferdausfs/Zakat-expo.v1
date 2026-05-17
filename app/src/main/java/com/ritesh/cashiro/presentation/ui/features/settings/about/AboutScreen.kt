@@ -38,6 +38,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -81,7 +82,7 @@ fun AboutScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CustomTitleTopAppBar(
-                title = "About",
+                title = stringResource(R.string.about),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
                 hazeState = hazeState,
@@ -150,7 +151,7 @@ fun AboutScreen(
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.cashiro),
-                            contentDescription = "Cashiro Logo",
+                            contentDescription = stringResource(R.string.cashiro_logo_cd),
                             colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimaryContainer),
                             modifier = Modifier.size(64.dp)
                         )
@@ -159,14 +160,14 @@ fun AboutScreen(
                     Spacer(modifier = Modifier.height(Dimensions.Padding.content))
 
                     Text(
-                        text = "Cashiro",
+                        text = stringResource(R.string.app_name),
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
 
                     Text(
-                        text = "Version ${BuildConfig.VERSION_NAME}, db-v${settingsViewModel.databaseVersion}",
+                        text = stringResource(R.string.version_format, BuildConfig.VERSION_NAME, settingsViewModel.databaseVersion),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface.copy(0.7f)
                     )
@@ -184,7 +185,7 @@ fun AboutScreen(
                 )
 
                 AboutDeveloperItem(
-                    title = "Developed By Ritesh",
+                    title = stringResource(R.string.developed_by),
                     subtitle = "modestcat0309@gmail.com",
                     onClick = {
                         val intent = Intent(Intent.ACTION_SENDTO).apply {
@@ -206,7 +207,7 @@ fun AboutScreen(
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.lead_developer),
-                                contentDescription = "lead developer",
+                                contentDescription = stringResource(R.string.lead_developer_cd),
                                 modifier = Modifier
                                     .rotate(-rotation)
                                     .size(48.dp)
@@ -221,7 +222,7 @@ fun AboutScreen(
                     verticalArrangement = Arrangement.spacedBy(1.5.dp)
                 ) {
                     AboutListItem(
-                        title = "Website",
+                        title = stringResource(R.string.website),
                         subtitle = "cashiro.showcase",
                         icon = Iconax.Shop,
                         iconColor = orange_dark,
@@ -237,7 +238,7 @@ fun AboutScreen(
                         position = ListItemPosition.Top
                     )
                     AboutListItem(
-                        title = "Github",
+                        title = stringResource(R.string.github),
                         subtitle = "ritesh-kanwar/Cashiro",
                         icon = Iconax.Github,
                         iconColor = green_dark,
@@ -253,8 +254,8 @@ fun AboutScreen(
                         position = ListItemPosition.Middle
                     )
                     AboutListItem(
-                        title = "Discord",
-                        subtitle = "Join our community",
+                        title = stringResource(R.string.discord),
+                        subtitle = stringResource(R.string.join_community),
                         icon = Iconax.Discord,
                         iconColor = purple_dark,
                         iconBackground = purple_light,
@@ -276,8 +277,8 @@ fun AboutScreen(
                 ) {
 
                     AboutListItem(
-                        title = "FAQ",
-                        subtitle = "Frequently asked questions",
+                        title = stringResource(R.string.faq),
+                        subtitle = stringResource(R.string.faq_desc),
                         icon = Iconax.MessageQuestion,
                         iconColor = orange_dark,
                         iconBackground = orange_light,
@@ -293,8 +294,8 @@ fun AboutScreen(
                     )
 
                     AboutListItem(
-                        title = "Guides",
-                        subtitle = "How to use Cashiro",
+                        title = stringResource(R.string.guides),
+                        subtitle = stringResource(R.string.guides_desc),
                         icon = Iconax.DocumentText2,
                         iconColor = purple_dark,
                         iconBackground = purple_light,
@@ -310,8 +311,8 @@ fun AboutScreen(
                     )
 
                     AboutListItem(
-                        title = "Report Bug",
-                        subtitle = "Help us improve Cashiro",
+                        title = stringResource(R.string.report_bug),
+                        subtitle = stringResource(R.string.report_bug_desc),
                         icon = Iconax.Ghost,
                         iconColor = red_dark,
                         iconBackground = red_light,
@@ -327,8 +328,8 @@ fun AboutScreen(
                     )
 
                     AboutListItem(
-                        title = "Privacy Policy",
-                        subtitle = "Your data usage and privacy",
+                        title = stringResource(R.string.privacy_policy),
+                        subtitle = stringResource(R.string.privacy_policy_desc),
                         icon = Iconax.SecuritySafe,
                         iconColor = green_dark,
                         iconBackground = green_light,
@@ -344,8 +345,8 @@ fun AboutScreen(
                     )
 
                     AboutListItem(
-                        title = "Terms of Service",
-                        subtitle = "Rules for using the app",
+                        title = stringResource(R.string.terms_of_service),
+                        subtitle = stringResource(R.string.terms_of_service_desc),
                         icon = Iconax.DocumentText2,
                         iconColor = cyan_dark,
                         iconBackground = cyan_light,
@@ -361,8 +362,8 @@ fun AboutScreen(
                     )
 
                     AboutListItem(
-                        title = "Licenses",
-                        subtitle = "Open source libraries",
+                        title = stringResource(R.string.licenses),
+                        subtitle = stringResource(R.string.licenses_desc),
                         icon = Iconax.Status,
                         iconColor = orange_dark,
                         iconBackground = orange_light,
@@ -371,8 +372,8 @@ fun AboutScreen(
                     )
 
                     AboutListItem(
-                        title = "Developer Options",
-                        subtitle = "Tests and Experimental features",
+                        title = stringResource(R.string.developer_options),
+                        subtitle = stringResource(R.string.developer_options_desc),
                         icon = Iconax.CodeCircle,
                         iconColor = grey_dark,
                         iconBackground = grey_light,
@@ -381,8 +382,8 @@ fun AboutScreen(
                     )
 
                     AboutListItem(
-                        title = "Delete All Data",
-                        subtitle = "Permanently clear all records",
+                        title = stringResource(R.string.delete_all_data),
+                        subtitle = stringResource(R.string.delete_all_data_desc),
                         icon = Icons.Rounded.Delete,
                         iconColor = red_dark,
                         iconBackground = red_light,
@@ -492,7 +493,7 @@ fun AboutScreen(
                 Spacer(modifier = Modifier.height(Dimensions.Padding.card))
 
                 Text(
-                    text = "Built with ❤️ for privacy",
+                    text = stringResource(R.string.built_with_love),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurface.copy(0.5f),
                     textAlign = TextAlign.Center,
@@ -514,10 +515,10 @@ fun AboutScreen(
                     tint = MaterialTheme.colorScheme.error
                 )
             },
-            title = { Text("Delete All Data?") },
+            title = { Text(stringResource(R.string.delete_all_data_confirm_title)) },
             text = {
                 Text(
-                    text = "This action will permanently delete all your transactions, budgets, subscriptions, and settings. This cannot be undone.",
+                    text = stringResource(R.string.delete_all_data_confirm_desc),
                     style = MaterialTheme.typography.bodyMedium
                 )
             },
@@ -547,7 +548,7 @@ fun AboutScreen(
                                 .fillMaxWidth()
                         ) {
                             Text(
-                                text = "Cancel",
+                                text = stringResource(R.string.cancel),
                                 style = MaterialTheme.typography.titleMedium
                             )
                         }
@@ -572,7 +573,7 @@ fun AboutScreen(
                                 .fillMaxWidth()
                         ) {
                             Text(
-                                text = "Delete All",
+                                text = stringResource(R.string.delete_all),
                                 style = MaterialTheme.typography.titleMedium
                             )
                         }

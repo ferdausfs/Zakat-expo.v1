@@ -36,6 +36,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -90,7 +92,12 @@ fun WebhookSyncSettingsCard(
                     onSettingsChange(settings.copy(syncMode = target))
                 }
             },
-            options = segments.map { it.label },
+            options = segments.map {
+            when (it.mode) {
+                WebhookSyncMode.INTERVAL -> stringResource(R.string.sync_mode_interval)
+                WebhookSyncMode.SCHEDULED -> stringResource(R.string.sync_mode_scheduled)
+            }
+        },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -168,7 +175,7 @@ private fun IntervalDetail(
 
     Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
         Text(
-            text = "Run automatically on a repeating interval. Range: $MIN_INTERVAL_HOURS–$MAX_INTERVAL_HOURS hours.",
+            text = stringResource(R.string.webhook_interval_desc_format, MIN_INTERVAL_HOURS, MAX_INTERVAL_HOURS),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -178,8 +185,8 @@ private fun IntervalDetail(
             onValueChange = { input ->
                 text = input.filter { it.isDigit() }.take(2)
             },
-            label = "Every",
-            suffix = { Text("hours") },
+            label = stringResource(R.string.webhook_interval_every),
+            suffix = { Text(stringResource(R.string.hours_unit)) },
             leading = Icons.Rounded.Bolt,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
@@ -212,7 +219,7 @@ private fun ScheduledDetail(
 
     Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
         Text(
-            text = "Run at fixed times each day. Falls back to inexact delivery if exact alarm permission is unavailable.",
+            text = stringResource(R.string.webhook_scheduled_desc),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -220,7 +227,7 @@ private fun ScheduledDetail(
         if (times.isEmpty()) {
             Spacer(modifier = Modifier.height(Spacing.xs))
             Text(
-                text = "No times added yet.",
+                text = stringResource(R.string.webhook_no_times),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -256,7 +263,7 @@ private fun ScheduledDetail(
         ) {
             Icon(Icons.Rounded.Add, contentDescription = null)
             Spacer(modifier = Modifier.width(Spacing.sm))
-            Text("Add Schedule Time")
+            Text(stringResource(R.string.add_schedule_time))
         }
     }
 
@@ -281,6 +288,15 @@ private fun ScheduledTimeRow(
     onToggle: (Boolean) -> Unit,
     onDelete: () -> Unit
 ) {
+    val enabledStr = stringResource(R.string.enabled)
+    val disabledStr = stringResource(R.string.disabled)
+    val removeScheduleStr = stringResource(R.string.webhook_remove_schedule_content_desc, time.displayTime())
+    val scheduleContentStr = stringResource(
+        R.string.webhook_schedule_content_desc,
+        time.displayTime(),
+        if (time.enabled) enabledStr else disabledStr
+    )
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -303,14 +319,13 @@ private fun ScheduledTimeRow(
             checked = time.enabled,
             onCheckedChange = onToggle,
             modifier = Modifier.semantics {
-                contentDescription = "${time.displayTime()} schedule, " +
-                    if (time.enabled) "enabled" else "disabled"
+                contentDescription = scheduleContentStr
             }
         )
         IconButton(
             onClick = onDelete,
             modifier = Modifier.semantics {
-                contentDescription = "Remove ${time.displayTime()} schedule"
+                contentDescription = removeScheduleStr
             }
         ) {
             Icon(
@@ -339,15 +354,15 @@ private fun TimePickerDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(onClick = { onConfirm(state.hour, state.minute) }) {
-                Text("OK")
+                Text(stringResource(R.string.ok))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(R.string.cancel))
             }
         },
-        title = { Text("Pick a time") },
+        title = { Text(stringResource(R.string.pick_a_time)) },
         text = {
             Box(
                 modifier = Modifier.fillMaxWidth(),

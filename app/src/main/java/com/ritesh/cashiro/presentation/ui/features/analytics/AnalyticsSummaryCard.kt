@@ -21,6 +21,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -80,7 +82,7 @@ fun AnalyticsSummaryCard(
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = "TOTAL",
+                        text = stringResource(R.string.total_uppercase),
                         style = MaterialTheme.typography.labelMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
@@ -121,7 +123,7 @@ fun AnalyticsSummaryCard(
                             tint = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                         Text(
-                            text = "$transactionCount TXNS",
+                            text = stringResource(R.string.transactions_format, transactionCount),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onPrimaryContainer
@@ -152,7 +154,7 @@ fun AnalyticsSummaryCard(
                     // Average Amount
                     Column {
                         Text(
-                            text = "AVERAGE",
+                            text = stringResource(R.string.average),
                             style = MaterialTheme.typography.labelMedium,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
@@ -170,7 +172,7 @@ fun AnalyticsSummaryCard(
                                 color = MaterialTheme.colorScheme.onSurface
                             )
                             Text(
-                                text = " /day",
+                                text = stringResource(R.string.per_day),
                                 style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),
                                 modifier = Modifier.padding(bottom = 4.dp, start = 4.dp)
@@ -190,7 +192,7 @@ fun AnalyticsSummaryCard(
                                 modifier = Modifier.fillMaxWidth(),
                             ) {
                                 Text(
-                                    text = "${topCategoryPercentage.toInt()}% OF TOTAL",
+                                    text = stringResource(R.string.percentage_of_total, topCategoryPercentage.toInt()),
                                     style = MaterialTheme.typography.labelSmall,
                                     fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),

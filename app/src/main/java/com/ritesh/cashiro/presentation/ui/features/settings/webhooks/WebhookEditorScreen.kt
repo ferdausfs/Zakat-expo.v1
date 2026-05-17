@@ -50,6 +50,8 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -141,7 +143,7 @@ fun WebhookEditorScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CustomTitleTopAppBar(
-                title = if (profileId == null) "New Webhook" else "Edit Webhook",
+                title = if (profileId == null) stringResource(R.string.new_webhook) else stringResource(R.string.edit_webhook),
                 scrollBehaviorSmall = pinned,
                 scrollBehaviorLarge = scrollBehavior,
                 hazeState = hazeState,
@@ -177,7 +179,7 @@ fun WebhookEditorScreen(
                     .imePadding(),
                 verticalArrangement = Arrangement.spacedBy(Spacing.md)
             ) {
-                SectionHeader(title = "Endpoint")
+                SectionHeader(title = stringResource(R.string.webhook_endpoint_section))
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(1.5.dp)
@@ -188,7 +190,7 @@ fun WebhookEditorScreen(
                             name = it
                             nameError = WebhookValidation.validateName(it)
                         },
-                        label = "Webhook name",
+                        label = stringResource(R.string.webhook_name_label),
                         leading = Icons.Rounded.Badge,
                         shape = topFieldShape(),
                         errorMessage = nameError
@@ -199,7 +201,7 @@ fun WebhookEditorScreen(
                             url = it
                             urlError = WebhookValidation.validateUrl(it)
                         },
-                        label = "Webhook URL",
+                        label = stringResource(R.string.webhook_url_label),
                         leading = Icons.Rounded.Link,
                         shape = bottomFieldShape(),
                         errorMessage = urlError
@@ -207,9 +209,9 @@ fun WebhookEditorScreen(
                 }
 
                 Spacer(modifier = Modifier.height(Spacing.xs))
-                SectionHeader(title = "Data types")
+                SectionHeader(title = stringResource(R.string.webhook_data_types_section))
                 Text(
-                    text = "Select which data is delivered to your endpoint.",
+                    text = stringResource(R.string.webhook_data_types_desc),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -220,7 +222,13 @@ fun WebhookEditorScreen(
                     WebhookDataType.entries.forEach { type ->
                         val selected = selectedTypes.contains(type)
                         PillChip(
-                            label = type.name.lowercase(),
+                            label = when (type) {
+                                WebhookDataType.SUMMARY -> stringResource(R.string.datatype_summary)
+                                WebhookDataType.TRANSACTIONS -> stringResource(R.string.datatype_transactions)
+                                WebhookDataType.BUDGETS -> stringResource(R.string.datatype_budgets)
+                                WebhookDataType.ACCOUNTS -> stringResource(R.string.datatype_accounts)
+                                WebhookDataType.SUBSCRIPTIONS -> stringResource(R.string.datatype_subscriptions)
+                            },
                             selected = selected,
                             onClick = {
                                 if (selected) selectedTypes.remove(type) else selectedTypes.add(type)
@@ -230,14 +238,22 @@ fun WebhookEditorScreen(
                 }
 
                 Spacer(modifier = Modifier.height(Spacing.xs))
-                SectionHeader(title = "Time range")
+                SectionHeader(title = stringResource(R.string.webhook_time_range_section))
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                     verticalArrangement = Arrangement.spacedBy(Spacing.sm)
                 ) {
                     WebhookRangePreset.entries.forEach { preset ->
                         PillChip(
-                            label = preset.name.lowercase().replace('_', ' '),
+                            label = when (preset) {
+                                WebhookRangePreset.SINCE_LAST_SUCCESS -> stringResource(R.string.range_since_last_success)
+                                WebhookRangePreset.TODAY -> stringResource(R.string.range_today)
+                                WebhookRangePreset.CURRENT_WEEK -> stringResource(R.string.range_current_week)
+                                WebhookRangePreset.CURRENT_MONTH -> stringResource(R.string.range_current_month)
+                                WebhookRangePreset.PREVIOUS_MONTH -> stringResource(R.string.range_previous_month)
+                                WebhookRangePreset.LAST_30_DAYS -> stringResource(R.string.range_last_30_days_lower)
+                                WebhookRangePreset.CUSTOM -> stringResource(R.string.range_custom)
+                            },
                             selected = rangePreset == preset,
                             onClick = { rangePreset = preset }
                         )
@@ -250,14 +266,14 @@ fun WebhookEditorScreen(
                         horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
                     ) {
                         DateField(
-                            label = "Starts",
+                            label = stringResource(R.string.starts),
                             value = customStart,
                             icon = Icons.Rounded.CalendarMonth,
                             onClick = { showStartPicker = true },
                             modifier = Modifier.weight(1f)
                         )
                         DateField(
-                            label = "Ends",
+                            label = stringResource(R.string.ends),
                             value = customEnd,
                             icon = Icons.Rounded.Event,
                             onClick = { showEndPicker = true },
@@ -280,7 +296,7 @@ fun WebhookEditorScreen(
                         tint = MaterialTheme.colorScheme.primary
                     )
                     Text(
-                        text = "Optional headers",
+                        text = stringResource(R.string.webhook_optional_headers),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -300,7 +316,7 @@ fun WebhookEditorScreen(
                             modifier = Modifier.size(16.dp)
                         )
                         Spacer(modifier = Modifier.width(4.dp))
-                        Text("Add", style = MaterialTheme.typography.labelMedium)
+                        Text(stringResource(R.string.add), style = MaterialTheme.typography.labelMedium)
                     }
                 }
 
@@ -320,7 +336,7 @@ fun WebhookEditorScreen(
                                 horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
                             ) {
                                 Text(
-                                    text = "Header ${index + 1}",
+                                    text = stringResource(R.string.header_index_format, index + 1),
                                     style = MaterialTheme.typography.labelLarge,
                                     color = MaterialTheme.colorScheme.primary
                                 )
@@ -331,7 +347,7 @@ fun WebhookEditorScreen(
                                 ) {
                                     Icon(
                                         Iconax.Bag,
-                                        contentDescription = "Remove header",
+                                        contentDescription = stringResource(R.string.remove_header),
                                         tint = MaterialTheme.colorScheme.error,
                                         modifier = Modifier.size(18.dp)
                                     )
@@ -344,14 +360,14 @@ fun WebhookEditorScreen(
                                 CashiroTextField(
                                     value = header.key,
                                     onValueChange = { headers[index] = header.copy(key = it) },
-                                    label = "Header name",
+                                    label = stringResource(R.string.header_name_label),
                                     leading = Icons.Rounded.VpnKey,
                                     shape = topFieldShape()
                                 )
                                 CashiroTextField(
                                     value = header.value,
                                     onValueChange = { headers[index] = header.copy(value = it) },
-                                    label = "Header value",
+                                    label = stringResource(R.string.header_value_label),
                                     leading = Icons.Rounded.Code,
                                     shape = bottomFieldShape()
                                 )
@@ -392,75 +408,74 @@ fun WebhookEditorScreen(
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     // Save button
-                    Button(
-                        onClick = {
-                            val draft = WebhookProfileDraft(
-                                id = profileId,
-                                name = name,
-                                url = url,
-                                enabled = enabled,
-                                dataTypes = selectedTypes.toSet(),
-                                rangePreset = rangePreset,
-                                customStart = customStart,
-                                customEnd = customEnd,
-                                currency = currency,
-                                headers = headers.filter { it.key.isNotBlank() }
-                            )
-                            viewModel.saveProfile(
-                                draft = draft,
-                                onSaved = { onNavigateBack() },
-                                onError = { errorMessage = it }
-                            )
-                        },
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(56.dp),
-                        enabled = name.isNotBlank() && url.isNotBlank() &&
-                                nameError == null && urlError == null &&
-                                isCustomRangeValid(rangePreset, customStart, customEnd),
-                        shapes = ButtonDefaults.shapes()
-                    ) {
-                        Text(
-                            text = "Save webhook",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                    // Delete button (only for existing budgets)
-                    if (profileId != null) {
-                        OutlinedButton(
-                            onClick = { showDeleteDialog = true },
-                            modifier = Modifier.height(56.dp),
-                            colors = ButtonDefaults.outlinedButtonColors(
-                                containerColor = MaterialTheme.colorScheme.surface,
-                                contentColor = MaterialTheme.colorScheme.error
-                            ),
-                            border = ButtonDefaults.outlinedButtonBorder(enabled = true).copy(
-                                brush = Brush.linearGradient(
-                                    colors = listOf(
-                                        MaterialTheme.colorScheme.error,
-                                        MaterialTheme.colorScheme.error
-                                    )
-                                )
-                            )
-                        ) {
-                            Icon(
-                                imageVector = Iconax.Bag,
-                                contentDescription = "Delete Webhook"
-                            )
-                        }
-                    }
+                         Button(
+                             onClick = {
+                                 val draft = WebhookProfileDraft(
+                                     id = profileId,
+                                     name = name,
+                                     url = url,
+                                     enabled = enabled,
+                                     dataTypes = selectedTypes.toSet(),
+                                     rangePreset = rangePreset,
+                                     customStart = customStart,
+                                     customEnd = customEnd,
+                                     currency = currency,
+                                     headers = headers.filter { it.key.isNotBlank() }
+                                 )
+                                 viewModel.saveProfile(
+                                     draft = draft,
+                                     onSaved = { onNavigateBack() },
+                                     onError = { errorMessage = it }
+                                 )
+                             },
+                             modifier = Modifier
+                                 .weight(1f)
+                                 .height(56.dp),
+                             enabled = name.isNotBlank() && url.isNotBlank() &&
+                                     nameError == null && urlError == null &&
+                                     isCustomRangeValid(rangePreset, customStart, customEnd),
+                             shapes = ButtonDefaults.shapes()
+                         ) {
+                             Text(
+                                 text = stringResource(R.string.save_webhook),
+                                 fontSize = 16.sp,
+                                 fontWeight = FontWeight.Bold
+                             )
+                         }
+                         // Delete button (only for existing budgets)
+                         if (profileId != null) {
+                             OutlinedButton(
+                                 onClick = { showDeleteDialog = true },
+                                 modifier = Modifier.height(56.dp),
+                                 colors = ButtonDefaults.outlinedButtonColors(
+                                     containerColor = MaterialTheme.colorScheme.surface,
+                                     contentColor = MaterialTheme.colorScheme.error
+                                 ),
+                                 border = ButtonDefaults.outlinedButtonBorder(enabled = true).copy(
+                                     brush = Brush.linearGradient(
+                                         colors = listOf(
+                                             MaterialTheme.colorScheme.error,
+                                             MaterialTheme.colorScheme.error
+                                         )
+                                     )
+                                 )
+                             ) {
+                                 Icon(
+                                     imageVector = Iconax.Bag,
+                                     contentDescription = stringResource(R.string.delete_webhook)
+                                 )
+                             }
+                         }
                 }
             }
 
             if (showDeleteDialog && profileId != null) {
                 AlertDialog(
                     onDismissRequest = { showDeleteDialog = false },
-                    title = { Text("Delete webhook?") },
+                    title = { Text(stringResource(R.string.delete_webhook_confirm_title)) },
                     text = {
                         Text(
-                            "This profile, its scheduled syncs, and all delivery logs " +
-                                    "will be removed. This can't be undone."
+                            stringResource(R.string.delete_webhook_confirm_desc)
                         )
                     },
                     confirmButton = {
@@ -472,14 +487,14 @@ fun WebhookEditorScreen(
                             }
                         ) {
                             Text(
-                                "Delete",
+                                stringResource(R.string.delete),
                                 color = MaterialTheme.colorScheme.error
                             )
                         }
                     },
                     dismissButton = {
                         TextButton(onClick = { showDeleteDialog = false }) {
-                            Text("Cancel")
+                            Text(stringResource(R.string.cancel))
                         }
                     }
                 )
@@ -659,7 +674,7 @@ private fun DateField(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
-                    text = value?.format(DATE_FIELD_FORMATTER) ?: "Pick a date",
+                    text = value?.format(DATE_FIELD_FORMATTER) ?: stringResource(R.string.pick_a_date),
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold,
                     color = if (value != null) MaterialTheme.colorScheme.onSurface

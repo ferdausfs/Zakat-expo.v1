@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -111,9 +112,9 @@ fun EditAccountSheet(
                     }
                     showNumberPad = false
                     },
-                title = if (editingCreditLimit) "Enter Credit Limit" 
-                        else if (account == null) "Enter Amount" 
-                        else "Update Amount"
+                title = if (editingCreditLimit) stringResource(R.string.enter_credit_limit) 
+                        else if (account == null) stringResource(R.string.enter_amount) 
+                        else stringResource(R.string.update_amount)
             )
         }
     }
@@ -174,7 +175,7 @@ fun EditAccountSheet(
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
             Text(
-                text = if (account == null) "Add Account" else "Edit Account",
+                text = if (account == null) stringResource(R.string.add_account_title) else stringResource(R.string.edit_account_title),
                 style = MaterialTheme.typography.titleMediumEmphasized,
                 fontWeight = FontWeight.Bold
             )
@@ -209,7 +210,7 @@ fun EditAccountSheet(
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(Icons.Rounded.AccountBalance, null, modifier = Modifier.size(18.dp))
                             Spacer(Modifier.width(8.dp))
-                            Text("Bank")
+                            Text(stringResource(R.string.type_bank))
                         }
                     }
                     SegmentedButton(
@@ -231,7 +232,7 @@ fun EditAccountSheet(
                             verticalAlignment = Alignment.CenterVertically) {
                             Icon(Iconax.Card, null, modifier = Modifier.size(18.dp))
                             Spacer(Modifier.width(8.dp))
-                            Text("Card")
+                            Text(stringResource(R.string.type_card))
                         }
                     }
                     SegmentedButton(
@@ -257,7 +258,7 @@ fun EditAccountSheet(
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(Iconax.Wallet3, null, modifier = Modifier.size(18.dp))
                             Spacer(Modifier.width(8.dp))
-                            Text("Wallet")
+                            Text(stringResource(R.string.type_wallet))
                         }
                     }
                 }
@@ -269,7 +270,7 @@ fun EditAccountSheet(
                 verticalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 PreviewAccountCard(
-                    bankName = bankName.ifEmpty { "Bank Name" },
+                    bankName = bankName.ifEmpty { stringResource(R.string.preview_bank_name) },
                     balance = balance,
                     accountLast4 = accountLast4.ifEmpty { "0000" },
                     iconResId = iconResId,
@@ -281,7 +282,7 @@ fun EditAccountSheet(
                     creditLimit = creditLimit
                 )
                 Text(
-                    text = "Preview",
+                    text = stringResource(R.string.preview_label),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
                 )
@@ -365,7 +366,7 @@ fun EditAccountSheet(
                             // Label and Value
                             Column(verticalArrangement = Arrangement.Center) {
                                 Text(
-                                    text = if (isCreditCard) "Outstanding" else "Balance",
+                                    text = if (isCreditCard) stringResource(R.string.outstanding_label) else stringResource(R.string.balance_label),
                                     style = MaterialTheme.typography.bodySmall,
                                     fontWeight = FontWeight.SemiBold,
                                     color = MaterialTheme.colorScheme.primary
@@ -412,7 +413,7 @@ fun EditAccountSheet(
 
                             Column(verticalArrangement = Arrangement.Center) {
                                 Text(
-                                    text = "Credit Limit",
+                                    text = stringResource(R.string.credit_limit_label),
                                     style = MaterialTheme.typography.bodySmall,
                                     fontWeight = FontWeight.SemiBold,
                                     color = MaterialTheme.colorScheme.primary
@@ -456,13 +457,13 @@ fun EditAccountSheet(
                             )
                             Column {
                                 Text(
-                                    text = "Available Credit: ${CurrencyFormatter.formatCurrency(availableCredit, selectedCurrency)}",
+                                    text = stringResource(R.string.available_credit_label, CurrencyFormatter.formatCurrency(availableCredit, selectedCurrency)),
                                     style = MaterialTheme.typography.bodySmall,
                                     fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.onSecondaryContainer
                                 )
                                 Text(
-                                    text = "Utilization: $utilization%",
+                                    text = stringResource(R.string.utilization_label, utilization),
                                     style = MaterialTheme.typography.labelSmall,
                                     color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.7f)
                                 )
@@ -477,7 +478,7 @@ fun EditAccountSheet(
                 TextField(
                     value = bankName,
                     onValueChange = { bankName = it },
-                    label = { Text(if (isWallet) "Wallet Name" else "Bank Name", fontWeight = FontWeight.SemiBold) },
+                    label = { Text(if (isWallet) stringResource(R.string.wallet_name_label) else stringResource(R.string.bank_name_label), fontWeight = FontWeight.SemiBold) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(
@@ -499,15 +500,15 @@ fun EditAccountSheet(
                     leadingIcon = { Icon(Iconax.Edit2, contentDescription = null)
                     }
                 )
-
+ 
                 if (!isWallet) {
                     TextField(
                         value = accountLast4,
                         onValueChange = { if (it.length <= 4 && it.all { char -> char.isDigit() })
                             accountLast4 = it },
-                        label = { Text("Account Number (Last 4)", fontWeight = FontWeight.SemiBold) },
+                        label = { Text(stringResource(R.string.account_number_last_4_label), fontWeight = FontWeight.SemiBold) },
                         modifier = Modifier.fillMaxWidth(),
-                        placeholder = { Text("e.g. 1234") },
+                        placeholder = { Text(stringResource(R.string.placeholder_last_4_digits)) },
                         singleLine = true,
                         shape = RoundedCornerShape(4.dp),
                         colors = TextFieldDefaults.colors(
@@ -529,7 +530,7 @@ fun EditAccountSheet(
                 TextField(
                     value = "$selectedCurrency (${CurrencyFormatter.getCurrencySymbol(selectedCurrency)})",
                     onValueChange = {},
-                    label = { Text("Currency", fontWeight = FontWeight.SemiBold) },
+                    label = { Text(stringResource(R.string.currency_label), fontWeight = FontWeight.SemiBold) },
                     readOnly = true,
                     singleLine = true,
                     modifier = Modifier
@@ -567,7 +568,7 @@ fun EditAccountSheet(
                         )
                     },
                     trailingIcon = {
-                        Icon(Icons.Rounded.KeyboardArrowDown, contentDescription = null)
+                        Icon(Icons.Rounded.KeyboardArrowDown, contentDescription = stringResource(R.string.select_currency))
                     },
                     enabled = false
                 )
@@ -638,11 +639,11 @@ fun EditAccountSheet(
                     ) {
                         Icon(
                             imageVector = Iconax.Bag,
-                            contentDescription = "Delete account"
+                            contentDescription = stringResource(R.string.delete_account_desc)
                         )
                     }
                 }
-
+ 
                 // Save button
                 Button(
                     onClick = {
@@ -666,7 +667,7 @@ fun EditAccountSheet(
                     shape = MaterialTheme.shapes.extraExtraLarge
                 ) {
                     Text(
-                        text = if (account == null) "Add Account" else "Save Changes",
+                        text = if (account == null) stringResource(R.string.add_account_title) else stringResource(R.string.save_changes),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -705,7 +706,7 @@ private fun PreviewAccountCard(
             // Balance/Outstanding Section
             Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 20.dp)) {
                 Text(
-                    text = if (isCreditCard) "Outstanding" else "Balance",
+                    text = if (isCreditCard) stringResource(R.string.outstanding_label) else stringResource(R.string.balance_label),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -734,7 +735,7 @@ private fun PreviewAccountCard(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "Credit Limit",
+                            text = stringResource(R.string.credit_limit_label),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -767,7 +768,7 @@ private fun PreviewAccountCard(
                             color = MaterialTheme.colorScheme.onSurface
                         )
                         Text(
-                            text = if (isWallet) "wallet" else "**** **** **** $accountLast4",
+                            text = if (isWallet) stringResource(R.string.type_wallet_lowercase) else "**** **** **** $accountLast4",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.6f)
                         )

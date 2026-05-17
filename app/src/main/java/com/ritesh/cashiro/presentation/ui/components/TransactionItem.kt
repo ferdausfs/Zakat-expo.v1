@@ -23,9 +23,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.data.database.entity.CategoryEntity
 import com.ritesh.cashiro.data.database.entity.SubcategoryEntity
 import com.ritesh.cashiro.data.database.entity.TransactionEntity
@@ -160,14 +163,16 @@ fun SharedTransitionScope.TransactionItem(
     }
 
     // Build subtitle parts
+    val recurringStr = stringResource(R.string.recurring)
+    val balanceAfterStr = balanceAfter?.let { balance ->
+        stringResource(R.string.balance_after_format, CurrencyFormatter.formatCurrency(balance, balanceCurrency ?: "INR"))
+    }
     val (subtitleParts, subtitleFinal) = remember(
         subtitleOverride,
-        transaction,
-        finalType,
         defaultSubtitle,
         isRecurring,
-        balanceAfter,
-        balanceCurrency
+        recurringStr,
+        balanceAfterStr
     ) {
         val parts = buildList {
             if (subtitleOverride != null) {
@@ -176,11 +181,9 @@ fun SharedTransitionScope.TransactionItem(
                 if (defaultSubtitle.isNotEmpty()) {
                     add(defaultSubtitle)
                 }
-                if (isRecurring) add("Recurring")
+                if (isRecurring) add(recurringStr)
 
-                balanceAfter?.let { balance ->
-                    add("Bal: ${CurrencyFormatter.formatCurrency(balance, balanceCurrency ?: "INR")}")
-                }
+                balanceAfterStr?.let { add(it) }
             }
         }
         parts to parts.joinToString(" • ")
@@ -274,7 +277,7 @@ fun SharedTransitionScope.TransactionItem(
                         if (isRecurring) {
                             TagSeparator()
                             SubtitleTag(
-                                text = "Recurring",
+                                text = stringResource(R.string.recurring),
                                 color = Color(0xFF5B54D6)
                             )
                             needsSeparator = true
@@ -285,7 +288,7 @@ fun SharedTransitionScope.TransactionItem(
                         balanceAfter?.let { balance ->
                             TagSeparator()
                             SubtitleTag(
-                                text = "Bal: ${CurrencyFormatter.formatCurrency(balance, balanceCurrency ?: "INR")}",
+                                text = stringResource(R.string.balance_after_format, CurrencyFormatter.formatCurrency(balance, balanceCurrency ?: "INR")),
                                 color = MaterialTheme.colorScheme.secondary
                             )
                             needsSeparator = true
@@ -296,7 +299,7 @@ fun SharedTransitionScope.TransactionItem(
                             TagSeparator()
                             Icon(
                                 imageVector = Iconax.DocumentText2,
-                                contentDescription = "Has description",
+                                contentDescription = stringResource(R.string.description_indicator_desc),
                                 modifier = Modifier.size(12.dp),
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.7f)
                             )
@@ -308,7 +311,7 @@ fun SharedTransitionScope.TransactionItem(
                             TagSeparator()
                             Icon(
                                 imageVector = Iconax.Paperclip2,
-                                contentDescription = "Has attachments",
+                                contentDescription = stringResource(R.string.attachments_indicator_desc),
                                 modifier = Modifier.size(12.dp),
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.7f)
                             )
@@ -331,35 +334,35 @@ fun SharedTransitionScope.TransactionItem(
                             when (finalType) {
                                 TransactionType.CREDIT -> Icon(
                                     Iconax.Card,
-                                    contentDescription = "Credit Card",
+                                    contentDescription = stringResource(R.string.type_credit_card),
                                     modifier = Modifier.size(Dimensions.Icon.small),
                                     tint = if (!isSystemInDarkTheme()) credit_light else credit_dark
                                 )
 
                                 TransactionType.TRANSFER -> Icon(
                                     Icons.Rounded.SwapHoriz,
-                                    contentDescription = "Transfer",
+                                    contentDescription = stringResource(R.string.type_transfer),
                                     modifier = Modifier.size(Dimensions.Icon.small),
                                     tint = if (!isSystemInDarkTheme()) transfer_light else transfer_dark
                                 )
 
                                 TransactionType.INVESTMENT -> Icon(
                                     Icons.AutoMirrored.Filled.ShowChart,
-                                    contentDescription = "Investment",
+                                    contentDescription = stringResource(R.string.type_investment),
                                     modifier = Modifier.size(Dimensions.Icon.small),
                                     tint = if (!isSystemInDarkTheme()) investment_light else investment_dark
                                 )
 
                                 TransactionType.INCOME -> Icon(
                                     Icons.AutoMirrored.Filled.TrendingUp,
-                                    contentDescription = "Income",
+                                    contentDescription = stringResource(R.string.type_income),
                                     modifier = Modifier.size(Dimensions.Icon.small),
                                     tint = if (!isSystemInDarkTheme()) income_light else income_dark
                                 )
 
                                 TransactionType.EXPENSE -> Icon(
                                     Icons.AutoMirrored.Filled.TrendingDown,
-                                    contentDescription = "Expense",
+                                    contentDescription = stringResource(R.string.type_expense),
                                     modifier = Modifier.size(Dimensions.Icon.small),
                                     tint = if (!isSystemInDarkTheme()) expense_light else expense_dark
                                 )

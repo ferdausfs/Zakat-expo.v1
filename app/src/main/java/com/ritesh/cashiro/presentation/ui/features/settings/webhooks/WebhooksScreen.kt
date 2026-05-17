@@ -49,6 +49,8 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -104,7 +106,7 @@ fun WebhooksScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CustomTitleTopAppBar(
-                title = "Webhooks",
+                title = stringResource(R.string.webhooks),
                 scrollBehaviorSmall = pinned,
                 scrollBehaviorLarge = scrollBehavior,
                 hazeState = hazeState,
@@ -127,9 +129,9 @@ fun WebhooksScreen(
                 ),
             verticalArrangement = Arrangement.spacedBy(Spacing.md)
         ) {
-            SectionHeader(title = "BYOAPI Finance Sync")
+            SectionHeader(title = stringResource(R.string.byoapi_sync_title))
             Text(
-                text = "Send selected finance data to your own endpoint. Any HTTP 2xx response is treated as a successful delivery.",
+                text = stringResource(R.string.byoapi_sync_desc),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -151,7 +153,7 @@ fun WebhooksScreen(
                         modifier = Modifier.size(24.dp)
                     )
                     Text(
-                        text = "This will send your financial data to the URL you configure. Cashiro cannot verify the security of that endpoint.",
+                        text = stringResource(R.string.byoapi_sync_warning),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onErrorContainer,
                         fontWeight = FontWeight.SemiBold
@@ -181,14 +183,14 @@ fun WebhooksScreen(
             ListItem(
                 headline = {
                     Text(
-                        text = "Sync now",
+                        text = stringResource(R.string.sync_now),
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Medium
                     )
                 },
                 supporting = {
                     Text(
-                        text = "Trigger delivery for all enabled profiles",
+                        text = stringResource(R.string.sync_now_desc),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -219,7 +221,7 @@ fun WebhooksScreen(
                 padding = PaddingValues(0.dp)
             )
 
-            SectionHeader(title = "Sync Schedule")
+            SectionHeader(title = stringResource(R.string.sync_schedule_title))
             if (uiState.settingsLoaded) {
                 WebhookSyncSettingsCard(
                     settings = uiState.settings,
@@ -227,19 +229,19 @@ fun WebhooksScreen(
                 )
             }
 
-            SectionHeader(title = "Profiles")
+            SectionHeader(title = stringResource(R.string.webhook_profiles_title))
             if (uiState.profiles.isEmpty()) {
                 ListItem(
                     headline = {
                         Text(
-                            text = "No webhook profiles yet",
+                            text = stringResource(R.string.no_webhook_profiles),
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.Medium
                         )
                     },
                     supporting = {
                         Text(
-                            text = "Create one to start syncing summaries, transactions, budgets, accounts, or subscriptions.",
+                            text = stringResource(R.string.no_webhook_profiles_desc),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -279,7 +281,7 @@ fun WebhooksScreen(
                     ListItem(
                         headline = {
                             Text(
-                                text = "Add webhook",
+                                text = stringResource(R.string.add_webhook),
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Medium,
                                 color = MaterialTheme.colorScheme.onPrimaryContainer
@@ -287,7 +289,7 @@ fun WebhooksScreen(
                         },
                         supporting = {
                             Text(
-                                text = "Create a new webhook profile",
+                                text = stringResource(R.string.create_webhook_desc),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
                             )
@@ -327,7 +329,7 @@ fun WebhooksScreen(
 
 
             SectionHeader(
-                title = "Delivery Logs",
+                title = stringResource(R.string.delivery_logs_title),
                 action = {
                     if (uiState.logs.isNotEmpty()) {
                         Text(
@@ -342,14 +344,14 @@ fun WebhooksScreen(
                 ListItem(
                     headline = {
                         Text(
-                            text = "No deliveries yet",
+                            text = stringResource(R.string.no_deliveries_yet),
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.Medium
                         )
                     },
                     supporting = {
                         Text(
-                            text = "Successful and failed webhook attempts will appear here. Payloads are never stored. The latest 100 are kept.",
+                            text = stringResource(R.string.no_deliveries_yet_desc),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -448,7 +450,7 @@ private fun WebhookProfileCard(
                 verticalArrangement = Arrangement.spacedBy(2.dp)
             ) {
                 Text(
-                    text = profile.name.ifBlank { "Untitled webhook" },
+                    text = profile.name.ifBlank { stringResource(R.string.untitled_webhook) },
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
                     maxLines = 1,
@@ -467,7 +469,7 @@ private fun WebhookProfileCard(
                 IconButton(onClick = { showMenu = true }) {
                     Icon(
                         Icons.Rounded.MoreVert,
-                        contentDescription = "More actions",
+                        contentDescription = stringResource(R.string.more_options_desc),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
@@ -477,7 +479,7 @@ private fun WebhookProfileCard(
                     shape = MaterialTheme.shapes.large
                 ) {
                     DropdownMenuItem(
-                        text = { Text("Edit Webhook") },
+                        text = { Text(stringResource(R.string.edit_webhook)) },
                         leadingIcon = {
                             Icon(Icons.Rounded.Edit, contentDescription = null)
                         },
@@ -491,7 +493,7 @@ private fun WebhookProfileCard(
                         color = MaterialTheme.colorScheme.surface
                     )
                     DropdownMenuItem(
-                        text = { Text("Delete") },
+                        text = { Text(stringResource(R.string.delete)) },
                         leadingIcon = {
                             Icon(Iconax.Bag, contentDescription = null)
                         },
@@ -521,7 +523,15 @@ private fun WebhookProfileCard(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 profile.dataTypes.forEach { dataType ->
-                    DataTypeChip(label = dataType.lowercase(), onClick = onClick)
+                    val localizedType = when (dataType.uppercase()) {
+                        "SUMMARY" -> stringResource(R.string.datatype_summary)
+                        "TRANSACTIONS" -> stringResource(R.string.datatype_transactions)
+                        "BUDGETS" -> stringResource(R.string.datatype_budgets)
+                        "ACCOUNTS" -> stringResource(R.string.datatype_accounts)
+                        "SUBSCRIPTIONS" -> stringResource(R.string.datatype_subscriptions)
+                        else -> dataType.lowercase()
+                    }
+                    DataTypeChip(label = localizedType, onClick = onClick)
                 }
             }
         }
@@ -539,7 +549,7 @@ private fun WebhookProfileCard(
                     tint = MaterialTheme.colorScheme.error
                 )
                 Text(
-                    text = "Latest error: ${profile.lastError}",
+                    text = stringResource(R.string.latest_error_format, profile.lastError),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.error,
                     maxLines = 2,

@@ -68,6 +68,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -246,7 +247,7 @@ fun EditBudgetSheet(
                     onAmountChange(value.toBigDecimalOrNull() ?: BigDecimal.ZERO)
                     showNumberPad = false
                 },
-                title = if (budgetState.isNewBudget) "Set Budget Amount" else "Update Budget Amount"
+                title = if (budgetState.isNewBudget) stringResource(R.string.set_budget_amount) else stringResource(R.string.update_budget_amount)
             )
         }
     }
@@ -277,7 +278,7 @@ fun EditBudgetSheet(
                     editingCategoryLimit = null
                     pendingCategoryName = null
                 },
-                title = "Set Limit for $categoryName"
+                title = stringResource(R.string.set_limit_for_format, categoryName)
             )
         }
     }
@@ -358,7 +359,7 @@ fun EditBudgetSheet(
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             Text(
-                text = if (budgetState.isNewBudget) "Create Budget" else "Edit Budget",
+                text = if (budgetState.isNewBudget) stringResource(R.string.create_budget) else stringResource(R.string.edit_budget),
                 style = MaterialTheme.typography.titleMediumEmphasized,
                 fontWeight = FontWeight.Bold
             )
@@ -377,7 +378,7 @@ fun EditBudgetSheet(
             // Periodic Type Selector
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = "Budget Period",
+                    text = stringResource(R.string.budget_period),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(start = 4.dp, bottom = 8.dp)
@@ -422,7 +423,7 @@ fun EditBudgetSheet(
                     color = MaterialTheme.colorScheme.surfaceContainerLow,
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        Text("Starts", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(stringResource(R.string.starts), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         Text(
                             text = budgetState.startDate.format(DateTimeFormatter.ofPattern("MMM d, yyyy")),
                             style = MaterialTheme.typography.bodyLarge,
@@ -439,7 +440,7 @@ fun EditBudgetSheet(
                         color = MaterialTheme.colorScheme.surfaceContainerLow,
                     ) {
                         Column(modifier = Modifier.padding(16.dp)) {
-                            Text("Ends", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(stringResource(R.string.ends), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             Text(
                                 text = budgetState.endDate.format(DateTimeFormatter.ofPattern("MMM d, yyyy")),
                                 style = MaterialTheme.typography.bodyLarge,
@@ -454,7 +455,7 @@ fun EditBudgetSheet(
                         color = MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = 0.5f),
                     ) {
                         Column(modifier = Modifier.padding(16.dp)) {
-                            Text("Ends", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(stringResource(R.string.ends), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             Text(
                                 text = budgetState.endDate.format(DateTimeFormatter.ofPattern("MMM d, yyyy")),
                                 style = MaterialTheme.typography.bodyLarge,
@@ -477,7 +478,7 @@ fun EditBudgetSheet(
                         modifier = Modifier.padding(bottom = 8.dp)
                     ) {
                         Text(
-                            text = "Track",
+                            text = stringResource(R.string.track),
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.padding(start = 4.dp)
@@ -485,7 +486,7 @@ fun EditBudgetSheet(
                         Spacer(modifier = Modifier.width(4.dp))
                         Icon(
                             imageVector = Icons.Rounded.Info,
-                            contentDescription = "Track Info",
+                            contentDescription = stringResource(R.string.track_info),
                             modifier = Modifier
                                 .size(14.dp)
                                 .clickable { showTrackInfoSheet = true },
@@ -503,7 +504,7 @@ fun EditBudgetSheet(
                                 inactiveBorderColor = Color.Transparent,
                                 activeBorderColor = Color.Transparent
                             ),
-                            label = { Text("Added", fontSize = 11.sp) }
+                            label = { Text(stringResource(R.string.added), fontSize = 11.sp) }
                         )
                         SegmentedButton(
                             selected = budgetState.trackType == BudgetTrackType.ALL_TRANSACTIONS,
@@ -515,7 +516,7 @@ fun EditBudgetSheet(
                                 inactiveBorderColor = Color.Transparent,
                                 activeBorderColor = Color.Transparent
                             ),
-                            label = { Text("All", fontSize = 11.sp) }
+                            label = { Text(stringResource(R.string.all), fontSize = 11.sp) }
                         )
                     }
                 }
@@ -527,7 +528,7 @@ fun EditBudgetSheet(
                         modifier = Modifier.padding(bottom = 8.dp)
                     ) {
                         Text(
-                            text = "Type",
+                            text = stringResource(R.string.type),
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.padding(start = 4.dp)
@@ -535,7 +536,7 @@ fun EditBudgetSheet(
                         Spacer(modifier = Modifier.width(4.dp))
                         Icon(
                             imageVector = Icons.Rounded.Info,
-                            contentDescription = "Type Info",
+                            contentDescription = stringResource(R.string.type_info),
                             modifier = Modifier
                                 .size(14.dp)
                                 .clickable { showTypeInfoSheet = true },
@@ -553,7 +554,7 @@ fun EditBudgetSheet(
                                 inactiveBorderColor = Color.Transparent,
                                 activeBorderColor = Color.Transparent
                             ),
-                            label = { Text("Expense", fontSize = 11.sp) }
+                            label = { Text(stringResource(R.string.expense), fontSize = 11.sp) }
                         )
                         SegmentedButton(
                             selected = budgetState.budgetType == BudgetType.SAVINGS,
@@ -565,7 +566,7 @@ fun EditBudgetSheet(
                                 inactiveBorderColor = Color.Transparent,
                                 activeBorderColor = Color.Transparent
                             ),
-                            label = { Text("Savings", fontSize = 11.sp) }
+                            label = { Text(stringResource(R.string.savings), fontSize = 11.sp) }
                         )
                     }
                 }
@@ -585,10 +586,10 @@ fun EditBudgetSheet(
                     Icon(Icons.Rounded.AccountBalance, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                     Spacer(modifier = Modifier.width(16.dp))
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("Accounts", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                        Text(stringResource(R.string.accounts), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                         Text(
-                            text = if (budgetState.accountIds.isEmpty()) "All Accounts" 
-                                   else "${budgetState.accountIds.size} Accounts Selected",
+                            text = if (budgetState.accountIds.isEmpty()) stringResource(R.string.all_accounts) 
+                                   else stringResource(R.string.accounts_selected_format, budgetState.accountIds.size),
                             style = MaterialTheme.typography.bodyLarge
                         )
                     }
@@ -619,7 +620,7 @@ fun EditBudgetSheet(
                         Icon(Iconax.Wallet3, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                         Spacer(modifier = Modifier.width(12.dp))
                         Column {
-                            Text("Amount", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                            Text(stringResource(R.string.amount), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                             Text(
                                 text = CurrencyFormatter.formatCurrency(budgetState.amount, budgetState.currency),
                                 style = MaterialTheme.typography.bodyLarge,
@@ -640,7 +641,7 @@ fun EditBudgetSheet(
                         modifier = Modifier.padding(12.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text("Color", style = MaterialTheme.typography.labelSmall)
+                        Text(stringResource(R.string.color), style = MaterialTheme.typography.labelSmall)
                         Spacer(modifier = Modifier.height(4.dp))
                         Box(
                             modifier = Modifier
@@ -656,7 +657,7 @@ fun EditBudgetSheet(
             TextField(
                 value = budgetState.name,
                 onValueChange = onNameChange,
-                label = { Text("Budget Name (optional)", fontWeight = FontWeight.SemiBold) },
+                label = { Text(stringResource(R.string.budget_name_optional), fontWeight = FontWeight.SemiBold) },
                 placeholder = { Text(budgetState.getDefaultName()) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
@@ -685,7 +686,7 @@ fun EditBudgetSheet(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Category Limits",
+                            text = stringResource(R.string.category_limits),
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Bold
                         )
@@ -699,13 +700,13 @@ fun EditBudgetSheet(
                                 modifier = Modifier.size(18.dp)
                             )
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text("Add Limit")
+                            Text(stringResource(R.string.add_limit))
                         }
                     }
                     
                     if (budgetState.categoryLimits.isEmpty()) {
                         Text(
-                            text = "No category limits set. Add limits to track spending per category.",
+                            text = stringResource(R.string.no_category_limits_desc),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(vertical = Spacing.sm)
@@ -788,7 +789,7 @@ fun EditBudgetSheet(
                     ) {
                         Icon(
                             imageVector = Iconax.Bag,
-                            contentDescription = "Delete budget"
+                            contentDescription = stringResource(R.string.delete_budget)
                         )
                     }
                 }
@@ -803,7 +804,7 @@ fun EditBudgetSheet(
                     shapes = ButtonDefaults.shapes()
                 ) {
                     Text(
-                        text = if (budgetState.isNewBudget) "Create Budget" else "Save Changes",
+                        text = if (budgetState.isNewBudget) stringResource(R.string.create_budget) else stringResource(R.string.save_changes),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -955,7 +956,7 @@ private fun BudgetPreviewCard(
             ) {
                 Column {
                     Text(
-                        text = if (isSavings) "DAILY GOAL REMAINING" else "DAILY BUDGET LEFT",
+                        text = if (isSavings) stringResource(R.string.daily_goal_remaining) else stringResource(R.string.daily_budget_left),
                         style = MaterialTheme.typography.labelSmall.copy(
                             letterSpacing = 0.5.sp,
                             fontWeight = FontWeight.Medium
@@ -974,7 +975,7 @@ private fun BudgetPreviewCard(
 
                 Column(horizontalAlignment = Alignment.End) {
                     Text(
-                        text = if (isSavings) "SAVED / GOAL" else "SPEND / LIMIT",
+                        text = if (isSavings) stringResource(R.string.saved_goal) else stringResource(R.string.spend_limit),
                         style = MaterialTheme.typography.labelSmall.copy(
                             letterSpacing = 0.5.sp,
                             fontWeight = FontWeight.Medium
@@ -1030,7 +1031,7 @@ private fun BudgetPreviewCard(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "$daysRemaining Days remaining",
+                text = stringResource(R.string.days_remaining_format, daysRemaining),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                 modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -1054,7 +1055,7 @@ private fun AccountMultiSelectionSheet(
                 .padding(bottom = Spacing.xl)
         ) {
             Text(
-                text = "Link Accounts",
+                text = stringResource(R.string.link_accounts),
                 style = MaterialTheme.typography.titleMedium,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
@@ -1081,7 +1082,7 @@ private fun AccountMultiSelectionSheet(
                             Icon(Icons.Rounded.AccountBalance, contentDescription = null)
                             Spacer(modifier = Modifier.width(16.dp))
                             Text(
-                                "All Accounts",
+                                stringResource(R.string.all_accounts),
                                 modifier = Modifier.weight(1f),
                                 fontWeight = FontWeight.SemiBold
                             )
@@ -1137,7 +1138,7 @@ private fun AccountMultiSelectionSheet(
                                     fontWeight = FontWeight.SemiBold
                                 )
                                 Text(
-                                    "Ending in ${account.accountLast4}",
+                                    stringResource(R.string.ending_in_format, account.accountLast4),
                                     style = MaterialTheme.typography.labelSmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -1184,7 +1185,7 @@ private fun AccountMultiSelectionSheet(
                     .padding(Spacing.md)
                     .height(56.dp)
             ) {
-                Text("Done")
+                Text(stringResource(R.string.done))
             }
         }
     }

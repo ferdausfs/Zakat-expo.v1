@@ -214,6 +214,8 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -255,6 +257,7 @@ fun SharedTransitionScope.TransactionDetailScreen(
 
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     val scrollBehaviorSmall = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val scrollBehaviorLarge = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
@@ -284,7 +287,7 @@ fun SharedTransitionScope.TransactionDetailScreen(
                     transactionDetailViewModel.updateSubscriptionCustomCycleCount(newCount.toIntOrNull() ?: 1)
                     showCustomCountPad = false
                 },
-                title = "Repeat every"
+                title = stringResource(R.string.repeat_every)
             )
         }
     }
@@ -316,7 +319,7 @@ fun SharedTransitionScope.TransactionDetailScreen(
     LaunchedEffect(saveSuccess) {
         if (saveSuccess) {
             scope.launch {
-                snackbarHostState.showSnackbar("Transaction updated successfully")
+                snackbarHostState.showSnackbar(context.getString(R.string.transaction_updated_successfully))
                 transactionDetailViewModel.clearSaveSuccess()
             }
         }
@@ -341,8 +344,6 @@ fun SharedTransitionScope.TransactionDetailScreen(
             onNavigateBack()
         }
     }
-
-    val context = LocalContext.current
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehaviorLarge.nestedScrollConnection).then(
@@ -388,7 +389,7 @@ fun SharedTransitionScope.TransactionDetailScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.BugReport,
-                            contentDescription = "Report Issue"
+                            contentDescription = stringResource(R.string.report_issue)
                         )
                     }
                 }
@@ -398,7 +399,7 @@ fun SharedTransitionScope.TransactionDetailScreen(
             CustomTitleTopAppBar(
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehaviorLarge,
-                title = if (isEditMode) "Edit Transaction" else "Transaction Details",
+                title = if (isEditMode) stringResource(R.string.edit_transaction) else stringResource(R.string.transaction_details),
                 hasBackButton = true,
                 hasActionButton = true,
                 hazeState = hazeState,
@@ -435,7 +436,7 @@ fun SharedTransitionScope.TransactionDetailScreen(
                             ) {
                                 Icon(
                                     imageVector = Iconax.Edit2,
-                                    contentDescription = "Edit",
+                                    contentDescription = stringResource(R.string.edit),
                                     modifier = Modifier.size(18.dp)
                                 )
                             }
@@ -540,12 +541,12 @@ fun SharedTransitionScope.TransactionDetailScreen(
                         ) {
                             Icon(
                                 imageVector = Iconax.Bag,
-                                contentDescription = "Delete Transaction",
+                                contentDescription = stringResource(R.string.delete_transaction),
                                 modifier = Modifier.size(Dimensions.Icon.small)
                             )
                             Spacer(modifier = Modifier.width(Spacing.xs))
                             Text(
-                                text = "Delete",
+                                text = stringResource(R.string.delete),
                                 style = MaterialTheme.typography.labelLarge
                             )
                         }
@@ -570,7 +571,7 @@ fun SharedTransitionScope.TransactionDetailScreen(
                     transactionDetailViewModel.updateAmount(newAmount)
                     showNumberPad = false
                 },
-                title = "Enter Amount"
+                title = stringResource(R.string.enter_amount)
             )
         }
     }
@@ -627,7 +628,7 @@ fun SharedTransitionScope.TransactionDetailScreen(
             AccountSelectionSheet(
                 accounts = accounts,
                 selectedAccount = targetAccount,
-                title = "Select Target Account",
+                title = stringResource(R.string.select_target_account),
                 onAccountSelected = {
                     transactionDetailViewModel.updateTransactionTargetAccount(it)
                     showTargetAccountSheet = false
@@ -658,7 +659,7 @@ fun SharedTransitionScope.TransactionDetailScreen(
                 onDeselectAll = { transactionDetailViewModel.deselectAllMatches() },
                 onApply = {
                     transactionDetailViewModel.applyToSelectedMatches()
-                    scope.launch { snackbarHostState.showSnackbar("Updated ${selectedMatchIds.size} transactions") }
+                    scope.launch { snackbarHostState.showSnackbar(context.getString(R.string.updated_transactions_format, selectedMatchIds.size)) }
                 },
                 onDismiss = { transactionDetailViewModel.hideMatchPreviewSheet() },
                 newCategory = editableTransaction?.category ?: ""
@@ -702,7 +703,7 @@ private fun TransactionNavigationContent(
         ) {
             Icon(
                 imageVector = if (isEditMode) Icons.Rounded.Close else Iconax.ArrowLeft02,
-                contentDescription = if (isEditMode) "Cancel" else "Back",
+                contentDescription = if (isEditMode) stringResource(R.string.cancel) else null,
                 modifier = Modifier.size(18.dp)
             )
         }
@@ -733,7 +734,7 @@ private fun TransactionSaveContent(
             )
         } else {
             Text(
-                text = "Save",
+                text = stringResource(R.string.save),
             )
         }
     }
@@ -902,7 +903,7 @@ private fun SmsBodyCard(smsBody: String) {
                 )
                 Spacer(modifier = Modifier.width(Spacing.sm))
                 Text(
-                    text = "Original SMS",
+                    text = stringResource(R.string.original_sms),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary
@@ -1022,7 +1023,7 @@ private fun EditableTransactionHeader(
                 TextField(
                     value = transaction.merchantName,
                     onValueChange = { viewModel.updateMerchantName(it) },
-                    label = { Text("Merchant", fontWeight = FontWeight.SemiBold) },
+                    label = { Text(stringResource(R.string.merchant_label), fontWeight = FontWeight.SemiBold) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(
@@ -1062,7 +1063,7 @@ private fun EditableTransactionHeader(
                 TextField(
                     value = transaction.description ?: "",
                     onValueChange = { viewModel.updateDescription(it) },
-                    label = { Text("Description (Optional)", fontWeight = FontWeight.SemiBold) },
+                    label = { Text(stringResource(R.string.description_optional_label), fontWeight = FontWeight.SemiBold) },
                     shape = RoundedCornerShape(
                         topStart = 4.dp,
                         topEnd = 4.dp,
@@ -1192,7 +1193,7 @@ private fun EditableExtractedInfoCard(
                                     Column(modifier = Modifier.weight(1f)) {
                                         Text(
                                             text = selectedAccount?.bankName
-                                                ?: "Select Source Account",
+                                                ?: stringResource(R.string.select_source_account),
                                             style = MaterialTheme.typography.bodyLarge,
                                             color =
                                                 if (selectedAccount != null)
@@ -1247,7 +1248,7 @@ private fun EditableExtractedInfoCard(
                                     Column(modifier = Modifier.weight(1f)) {
                                         Text(
                                             text = targetAccount?.bankName
-                                                ?: "Select Target Account",
+                                                ?: stringResource(R.string.select_target_account),
                                             style = MaterialTheme.typography.bodyLarge,
                                             color =
                                                 if (targetAccount != null)
@@ -1289,7 +1290,7 @@ private fun EditableExtractedInfoCard(
                             ) {
                                 Icon(
                                     imageVector = Icons.Rounded.SwapVert,
-                                    contentDescription = "Transfer",
+                                    contentDescription = stringResource(R.string.transfer_action),
                                     tint = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier.size(16.dp)
                                 )
@@ -1353,7 +1354,7 @@ private fun EditableExtractedInfoCard(
 
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
-                                    text = selectedAccount?.bankName ?: "Select Account",
+                                    text = selectedAccount?.bankName ?: stringResource(R.string.select_account),
                                     style = MaterialTheme.typography.bodyLarge,
                                     color =
                                         if (selectedAccount != null)
@@ -1413,7 +1414,7 @@ private fun EditableExtractedInfoCard(
                     )
                     Spacer(modifier = Modifier.width(Spacing.sm))
                     Text(
-                        text = "Apply this category to all future transactions from \"${transaction.merchantName}\"",
+                        text = stringResource(R.string.apply_category_to_all_future_transactions_format, transaction.merchantName),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface
                     )
@@ -1446,7 +1447,7 @@ private fun EditableExtractedInfoCard(
                                     modifier = Modifier.size(14.dp)
                                 )
                                 Text(
-                                    text = "This doesn't work on manually entered transactions",
+                                    text = stringResource(R.string.manual_entry_warning),
                                     style = MaterialTheme.typography.labelSmall,
                                 )
                             }
@@ -1480,7 +1481,7 @@ private fun EditableExtractedInfoCard(
                         )
                         Spacer(modifier = Modifier.width(Spacing.sm))
                         Text(
-                            text = "Update $existingTransactionCount existing ${if (existingTransactionCount == 1) "transaction" else "transactions"} from \"${transaction.merchantName}\"",
+                            text = stringResource(R.string.update_existing_transactions_format, existingTransactionCount, if (existingTransactionCount == 1) stringResource(R.string.transaction) else stringResource(R.string.transactions_plural), transaction.merchantName),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurface
                         )
@@ -1514,7 +1515,7 @@ private fun EditableExtractedInfoCard(
                                         modifier = Modifier.size(16.dp)
                                     )
                                     Text(
-                                        text = "Preview transaction matches",
+                                        text = stringResource(R.string.preview_transaction_matches),
                                         style = MaterialTheme.typography.labelMedium,
                                         fontWeight = FontWeight.SemiBold
                                     )
@@ -1529,8 +1530,8 @@ private fun EditableExtractedInfoCard(
 
             // Recurring Switch and Billing Cycle
             PreferenceSwitch(
-                title = "Recurring Transaction",
-                subtitle = "Mark this as a repeating payment",
+                title = stringResource(R.string.recurring_transaction),
+                subtitle = stringResource(R.string.mark_as_repeating_payment),
                 checked = transaction.isRecurring,
                 onCheckedChange = { viewModel.updateRecurringStatus(it) },
                 leadingIcon = {
@@ -1550,7 +1551,7 @@ private fun EditableExtractedInfoCard(
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(1.5.dp)
                 ) {
-                    val billingCycles = listOf("Weekly", "Monthly", "Quarterly", "Semi-Annual", "Annual", "Custom")
+                    val billingCycles = listOf(stringResource(R.string.weekly_recurring), stringResource(R.string.monthly_recurring), stringResource(R.string.quarterly_recurring), stringResource(R.string.semi_annual_recurring), stringResource(R.string.annual_recurring), stringResource(R.string.custom_recurring))
                     
                     ExposedDropdownMenuBox(
                         expanded = showBillingCycleMenu,
@@ -1561,7 +1562,7 @@ private fun EditableExtractedInfoCard(
                             value = transaction.billingCycle ?: "Monthly",
                             onValueChange = {},
                             readOnly = true,
-                            label = { Text("Billing Cycle", fontWeight = FontWeight.SemiBold) },
+                            label = { Text(stringResource(R.string.billing_cycle), fontWeight = FontWeight.SemiBold) },
                             leadingIcon = {
                                 Icon(
                                     Iconax.VideoTime,
@@ -1672,7 +1673,7 @@ private fun CategoryDropdown(
         TextField(
             value = selectedCategory,
             onValueChange = {},
-            label = { Text("Category", fontWeight = FontWeight.SemiBold) },
+            label = { Text(stringResource(R.string.category), fontWeight = FontWeight.SemiBold) },
             readOnly = true,
             singleLine = true,
             modifier = Modifier
@@ -1737,7 +1738,7 @@ private fun CategoryDropdown(
                 value = selectedSubcategory,
                 onValueChange = {},
                 readOnly = true,
-                label = { Text("Subcategory") },
+                label = { Text(stringResource(R.string.subcategory)) },
                 leadingIcon = {
                     val context = LocalContext.current
                     val resolvedResId = remember(selectedSubcategoryObj) {
@@ -1843,7 +1844,7 @@ private fun DateTimeField(
                 val themeColors = MaterialTheme.colorScheme
                 Icon(
                     imageVector = Iconax.Calendar,
-                    contentDescription = "Date Picker",
+                    contentDescription = stringResource(R.string.date_picker),
                     tint = themeColors.onSurface
                 )
                 Spacer(Modifier.size(8.dp))
@@ -2078,7 +2079,7 @@ private fun TransactionReceipt(
                             verticalArrangement = Arrangement.spacedBy(4.dp)
                         ) {
                             Text(
-                                text = "Date",
+                                text = stringResource(R.string.date),
                                 style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                             )
@@ -2164,13 +2165,13 @@ private fun TransactionReceipt(
                     }
 
                     ReceiptInfoRow(
-                        label = "Type",
+                        label = stringResource(R.string.type),
                         value = transaction.transactionType.name.lowercase().replaceFirstChar { it.uppercase() }
                     )
 
                     val subcategoryValue = transaction.subcategory
                     ReceiptInfoRow(
-                        label = "Category",
+                        label = stringResource(R.string.category),
                         value = transaction.category,
                         subValue = subcategoryValue,
                         icon = {
@@ -2209,9 +2210,9 @@ private fun TransactionReceipt(
                     val isTransfer = transaction.transactionType == TransactionType.TRANSFER
                     
                     val fromBankName = if (isTransfer) {
-                        availableAccounts.find { it.accountLast4 == fromAccount }?.bankName ?: transaction.bankName ?: fromAccount ?: "Source"
+                        availableAccounts.find { it.accountLast4 == fromAccount }?.bankName ?: transaction.bankName ?: fromAccount ?: stringResource(R.string.source)
                     } else {
-                        transaction.bankName ?: "Account"
+                        transaction.bankName ?: stringResource(R.string.account)
                     }
                     
                     val toBankName = if (isTransfer && toAccount != null) {
@@ -2222,8 +2223,8 @@ private fun TransactionReceipt(
                     val toAccountEntity = toAccount?.let { acc -> availableAccounts.find { it.accountLast4 == acc } }
 
                     ReceiptInfoRow(
-                        label = "Account",
-                        value = if (isTransfer) fromAccount ?: "Source" else transaction.bankName ?: "Account",
+                        label = stringResource(R.string.account),
+                        value = if (isTransfer) fromAccount ?: stringResource(R.string.source) else transaction.bankName ?: stringResource(R.string.account),
                         subValue = toAccount,
                         bankName = fromBankName,
                         subBankName = toBankName,
@@ -2254,7 +2255,7 @@ private fun TransactionReceipt(
 
                     transaction.balanceAfter?.let {
                         ReceiptInfoRow(
-                            label = "Balance",
+                            label = stringResource(R.string.balance),
                             value = CurrencyFormatter.formatCurrency(it, primaryCurrency),
                             icon = {
                                 Icon(
@@ -2269,7 +2270,7 @@ private fun TransactionReceipt(
 
                     if (transaction.isRecurring && linkedSubscription?.nextPaymentDate != null) {
                         ReceiptInfoRow(
-                            label = "Next Billing",
+                            label = stringResource(R.string.next_billing),
                             value = linkedSubscription.nextPaymentDate.format(
                                 DateTimeFormatter.ofPattern("d MMM yyyy")
                             ),
@@ -2320,7 +2321,7 @@ private fun TransactionReceipt(
                                     tint = MaterialTheme.colorScheme.tertiary
                                 )
                                 Text(
-                                    text = "Description",
+                                    text = stringResource(R.string.description),
                                     style = MaterialTheme.typography.labelLarge,
                                     color = MaterialTheme.colorScheme.tertiary
                                 )
@@ -2390,7 +2391,7 @@ private fun TransactionReceipt(
                                     tint = MaterialTheme.colorScheme.primary
                                 )
                                 Text(
-                                    text = "Original SMS",
+                                    text = stringResource(R.string.original_sms),
                                     style = MaterialTheme.typography.labelLarge,
                                     color = MaterialTheme.colorScheme.primary
                                 )
@@ -2443,7 +2444,7 @@ private fun TransactionReceipt(
 
                 // Amount
                 Text(
-                    text = "Amount",
+                    text = stringResource(R.string.amount),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                 )
@@ -2753,13 +2754,13 @@ private fun ReceiptInfoRow(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ){
                             Text(
-                                text = "FROM",
+                                text = stringResource(R.string.from),
                                 style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                                 modifier = Modifier.fillMaxWidth().weight(1f)
                             )
                             Text(
-                                text = "TO",
+                                text = stringResource(R.string.to_destination),
                                 style = MaterialTheme.typography.labelMedium,
                                 textAlign = TextAlign.End,
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
@@ -3003,13 +3004,13 @@ private fun MatchPreviewSheetContent(
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = "Matches Preview",
+                        text = stringResource(R.string.matches_preview),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     Text(
-                        text = "${selectedMatchIds.size} of ${matchedTransactions.size} selected • will be set to \"$newCategory\"",
+                        text = stringResource(R.string.matches_selected_format, selectedMatchIds.size, matchedTransactions.size, newCategory),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
                     )
@@ -3030,7 +3031,7 @@ private fun MatchPreviewSheetContent(
                 ) {
                     Icon(
                         imageVector = if (allSelected) Icons.Rounded.Deselect else Icons.Rounded.SelectAll,
-                        contentDescription = if (allSelected) "Deselect All" else "Select All",
+                        contentDescription = if (allSelected) stringResource(R.string.deselect_all) else stringResource(R.string.select_all),
                         modifier = Modifier.size(18.dp)
                     )
                 }
@@ -3057,7 +3058,7 @@ private fun MatchPreviewSheetContent(
                 leadingIcon = {
                     Icon(
                         imageVector = Iconax.Search,
-                        contentDescription = "Search",
+                        contentDescription = stringResource(R.string.search),
                         tint = MaterialTheme.colorScheme.onSurface.copy(0.5f)
                     )
                 },
@@ -3069,7 +3070,7 @@ private fun MatchPreviewSheetContent(
                         }) {
                             Icon(
                                 imageVector = Iconax.CloseCircle,
-                                contentDescription = "Clear search",
+                                contentDescription = stringResource(R.string.clear_search),
                                 tint = MaterialTheme.colorScheme.onSurface.copy(0.5f)
                             )
                         }
@@ -3077,7 +3078,7 @@ private fun MatchPreviewSheetContent(
                 },
                 label = {
                     Text(
-                        text = "Search transactions to add...",
+                        text = stringResource(R.string.search_transactions_to_add),
                         maxLines = 1,
                         textAlign = TextAlign.Center,
                         overflow = TextOverflow.Ellipsis,
@@ -3094,7 +3095,7 @@ private fun MatchPreviewSheetContent(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "No additional transactions found",
+                            text = stringResource(R.string.no_additional_transactions_found),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -3116,7 +3117,7 @@ private fun MatchPreviewSheetContent(
                     ) {
                         item {
                             Text(
-                                text = "Search Results",
+                                text = stringResource(R.string.search_results),
                                 style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.padding(top = Spacing.md, bottom = Spacing.xs)
@@ -3177,7 +3178,7 @@ private fun MatchPreviewSheetContent(
                                         )
                                         Icon(
                                             imageVector = Icons.Rounded.Add,
-                                            contentDescription = "Add transaction",
+                                            contentDescription = stringResource(R.string.add_transaction_cd),
                                             tint = MaterialTheme.colorScheme.primary
                                         )
                                     }
@@ -3200,7 +3201,7 @@ private fun MatchPreviewSheetContent(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "No matching transactions found",
+                        text = stringResource(R.string.no_matching_transactions_found),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -3335,8 +3336,8 @@ private fun MatchPreviewSheetContent(
                 shapes = ButtonDefaults.shapes()
             ) {
                 Text(
-                    text = if (selectedMatchIds.isEmpty()) "Select transactions to update"
-                    else "Apply to ${selectedMatchIds.size} ${if (selectedMatchIds.size == 1) "transaction" else "transactions"}",
+                    text = if (selectedMatchIds.isEmpty()) stringResource(R.string.select_transactions_to_update)
+                    else stringResource(R.string.apply_to_transactions_format, selectedMatchIds.size, if (selectedMatchIds.size == 1) stringResource(R.string.transaction) else stringResource(R.string.transactions_plural)),
                     style = MaterialTheme.typography.labelLarge,
                     fontWeight = FontWeight.Bold
                 )

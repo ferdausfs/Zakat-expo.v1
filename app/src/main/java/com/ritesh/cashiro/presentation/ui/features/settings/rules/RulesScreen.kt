@@ -42,6 +42,8 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -102,7 +104,7 @@ fun RulesScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CustomTitleTopAppBar(
-                title = "Smart Rules",
+                title = stringResource(R.string.smart_rules),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
                 hazeState = hazeState,
@@ -124,7 +126,7 @@ fun RulesScreen(
                     ) {
                         Icon(
                             Icons.Rounded.Refresh,
-                            contentDescription = "Reset to defaults"
+                            contentDescription = stringResource(R.string.reset_to_defaults)
                         )
                     }
 
@@ -147,7 +149,7 @@ fun RulesScreen(
                 onClick = onNavigateToCreateRule,
                 containerColor = MaterialTheme.colorScheme.primary
             ) {
-                Icon(Icons.Rounded.Add, contentDescription = "Create Rule")
+                Icon(Icons.Rounded.Add, contentDescription = stringResource(R.string.create_rule))
             }
         }
     ) { paddingValues ->
@@ -201,13 +203,13 @@ fun RulesScreen(
                         )
                         Column {
                             Text(
-                                text = "Automatic Categorization",
+                                text = stringResource(R.string.automatic_categorization),
                                 style = MaterialTheme.typography.titleSmall,
                                 fontWeight = FontWeight.Medium,
                                 color = MaterialTheme.colorScheme.onPrimaryContainer
                             )
                             Text(
-                                text = "Enable rules to automatically categorize your transactions based on patterns",
+                                text = stringResource(R.string.automatic_categorization_desc),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onPrimaryContainer.copy(0.8f)
                             )
@@ -252,8 +254,16 @@ fun RulesScreen(
 
                     groupedRules.forEach { (category, categoryRules) ->
                         if (categoryRules.isNotEmpty()) {
+                            val localizedCategory = when (category) {
+                                "Daily Expenses" -> stringResource(R.string.rules_group_daily)
+                                "Income & Cashback" -> stringResource(R.string.rules_group_income)
+                                "Recurring Payments" -> stringResource(R.string.rules_group_recurring)
+                                "Banking & Investments" -> stringResource(R.string.rules_group_banking)
+                                "Healthcare" -> stringResource(R.string.rules_group_healthcare)
+                                else -> stringResource(R.string.rules_group_other)
+                            }
                             SectionHeader(
-                                title = category,
+                                title = localizedCategory,
                                 modifier = Modifier.padding(Spacing.md)
                             )
 
@@ -283,7 +293,7 @@ fun RulesScreen(
                 item {
                     Spacer(modifier = Modifier.height(Spacing.lg))
                     Text(
-                        text = "Rules are applied automatically to new transactions. Higher priority rules run first.",
+                        text = stringResource(R.string.rules_explanation),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(horizontal = Spacing.md)
@@ -360,16 +370,16 @@ private fun RuleCard(
 
                 // Show simple condition summary
                 val conditionSummary = when {
-                    rule.name.contains("Small Payments", ignoreCase = true) -> "Amount < 200"
-                    rule.name.contains("UPI Cashback", ignoreCase = true) -> "Amount < 10 from NPCI"
-                    rule.name.contains("Salary", ignoreCase = true) -> "Credits with salary keywords"
-                    rule.name.contains("Rent", ignoreCase = true) -> "Payments with rent keywords"
-                    rule.name.contains("EMI", ignoreCase = true) -> "EMI/loan keywords"
-                    rule.name.contains("Investment", ignoreCase = true) -> "Mutual funds, stocks keywords"
-                    rule.name.contains("Subscription", ignoreCase = true) -> "Netflix, Spotify, etc."
-                    rule.name.contains("Fuel", ignoreCase = true) -> "Petrol pump transactions"
-                    rule.name.contains("Healthcare", ignoreCase = true) -> "Hospital, pharmacy keywords"
-                    rule.name.contains("Transfer", ignoreCase = true) -> "Self transfers, contra"
+                    rule.name.contains("Small Payments", ignoreCase = true) -> stringResource(R.string.rule_summary_small_payments)
+                    rule.name.contains("UPI Cashback", ignoreCase = true) -> stringResource(R.string.rule_summary_upi_cashback)
+                    rule.name.contains("Salary", ignoreCase = true) -> stringResource(R.string.rule_summary_salary)
+                    rule.name.contains("Rent", ignoreCase = true) -> stringResource(R.string.rule_summary_rent)
+                    rule.name.contains("EMI", ignoreCase = true) -> stringResource(R.string.rule_summary_emi)
+                    rule.name.contains("Investment", ignoreCase = true) -> stringResource(R.string.rule_summary_investment)
+                    rule.name.contains("Subscription", ignoreCase = true) -> stringResource(R.string.rule_summary_subscription)
+                    rule.name.contains("Fuel", ignoreCase = true) -> stringResource(R.string.rule_summary_fuel)
+                    rule.name.contains("Healthcare", ignoreCase = true) -> stringResource(R.string.rule_summary_healthcare)
+                    rule.name.contains("Transfer", ignoreCase = true) -> stringResource(R.string.rule_summary_transfer)
                     else -> null
                 }
 
@@ -398,7 +408,7 @@ private fun RuleCard(
                         containerColor = MaterialTheme.colorScheme.secondaryContainer
                     ) {
                         Text(
-                            text = "Priority: ${rule.priority}",
+                            text = stringResource(R.string.priority_format, rule.priority),
                             style = MaterialTheme.typography.bodySmall
                         )
                     }
@@ -417,7 +427,7 @@ private fun RuleCard(
                         ) {
                             Icon(
                                 Icons.Rounded.MoreVert,
-                                contentDescription = "More actions"
+                                contentDescription = stringResource(R.string.more_options_desc)
                             )
                         }
 
@@ -428,7 +438,7 @@ private fun RuleCard(
                         ) {
                              // Edit rule
                             DropdownMenuItem(
-                                text = { Text("Edit Rule") },
+                                text = { Text(stringResource(R.string.edit_rule)) },
                                 leadingIcon = {
                                     Icon(
                                         Iconax.Edit2,
@@ -448,7 +458,7 @@ private fun RuleCard(
 
                             // Apply to past transactions
                             DropdownMenuItem(
-                                text = { Text("Apply to Past Transactions") },
+                                text = { Text(stringResource(R.string.apply_to_past_transactions)) },
                                 leadingIcon = {
                                     Icon(
                                         Iconax.History,
@@ -471,7 +481,7 @@ private fun RuleCard(
                                 DropdownMenuItem(
                                     text = {
                                         Text(
-                                            text = "Delete",
+                                            text = stringResource(R.string.delete),
                                         )
                                     },
                                     leadingIcon = {

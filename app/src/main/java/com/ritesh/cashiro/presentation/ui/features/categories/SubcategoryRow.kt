@@ -10,7 +10,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.Alignment
+import com.ritesh.cashiro.R
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -114,7 +116,7 @@ private fun AddSubcategoryButton(onClick: () -> Unit) {
     ) {
         Icon(
                 imageVector = Icons.Default.Add,
-                contentDescription = "Add Subcategory",
+                contentDescription = stringResource(R.string.add_subcategory),
                 modifier = Modifier.size(14.dp),
                 tint = MaterialTheme.colorScheme.primary
         )

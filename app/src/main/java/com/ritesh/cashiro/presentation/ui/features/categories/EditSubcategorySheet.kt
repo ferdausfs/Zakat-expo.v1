@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
@@ -168,7 +169,7 @@ fun EditSubcategorySheet(
                         }
                     }
                     Text(
-                        text = name.ifEmpty { "Subcategory" },
+                        text = name.ifEmpty { stringResource(R.string.subcategory) },
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = Color(colorHex.toColorInt())
@@ -181,7 +182,7 @@ fun EditSubcategorySheet(
                     value = name,
                     onValueChange = { name = it },
                     label = { Text(
-                        text= "Name",
+                        text= stringResource(R.string.name_label),
                         fontWeight = FontWeight.SemiBold
                     ) },
                     modifier = Modifier.fillMaxWidth(),
@@ -269,7 +270,7 @@ fun EditSubcategorySheet(
                     ) {
                         Icon(
                             imageVector = Iconax.Bag,
-                            contentDescription = "Delete subcategory"
+                            contentDescription = stringResource(R.string.delete_subcategory)
                         )
                     }
                 }
@@ -284,7 +285,7 @@ fun EditSubcategorySheet(
                     shape = MaterialTheme.shapes.extraExtraLarge
                 ) {
                     Text(
-                        text = if (subcategory == null) "Create Subcategory" else "Update Subcategory",
+                        text = if (subcategory == null) stringResource(R.string.create_subcategory) else stringResource(R.string.update_subcategory),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -309,7 +310,7 @@ fun EditSubcategorySheet(
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.RestartAlt,
-                            contentDescription = "Reset to default",
+                            contentDescription = stringResource(R.string.reset_to_default),
                             tint = MaterialTheme.colorScheme.onSecondaryContainer
                         )
                     }

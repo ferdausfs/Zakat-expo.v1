@@ -52,6 +52,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.data.repository.BudgetWithSpending
 import com.ritesh.cashiro.presentation.effects.overScrollVertical
 import com.ritesh.cashiro.presentation.effects.rememberOverscrollFlingBehavior
@@ -243,7 +245,7 @@ fun SharedTransitionScope.BudgetsScreen(
             .then(sharedModifier),
         topBar = {
             CustomTitleTopAppBar(
-                title = "Budgets",
+                title = stringResource(R.string.budgets),
                 hazeState = hazeState,
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
@@ -261,7 +263,7 @@ fun SharedTransitionScope.BudgetsScreen(
                     showTypeWizard = true
                 },
                 icon = { Icon(Icons.Rounded.Add, contentDescription = null) },
-                text = { Text("New Budget") },
+                text = { Text(stringResource(R.string.new_budget)) },
                 shape = if (showFloatingLabel) MaterialTheme.shapes.extraLargeIncreased else MaterialTheme.shapes.large,
                 modifier = Modifier
                     .then(
@@ -396,7 +398,7 @@ private fun EmptyBudgetsContent(
         Spacer(modifier = Modifier.height(Spacing.md))
         
         Text(
-            text = "No Budgets Yet",
+            text = stringResource(R.string.no_budgets_yet),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -404,7 +406,7 @@ private fun EmptyBudgetsContent(
         Spacer(modifier = Modifier.height(Spacing.xs))
         
         Text(
-            text = "Create your first budget to start tracking your spending goals",
+            text = stringResource(R.string.create_first_budget_desc),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(horizontal = Spacing.xl)
@@ -415,7 +417,7 @@ private fun EmptyBudgetsContent(
         Button(onClick = onCreateBudget) {
             Icon(Icons.Rounded.Add, contentDescription = null)
             Spacer(modifier = Modifier.width(8.dp))
-            Text("Create Budget")
+            Text(stringResource(R.string.create_budget))
         }
     }
 }

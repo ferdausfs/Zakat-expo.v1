@@ -102,6 +102,8 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -144,7 +146,7 @@ fun ChatScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CustomTitleTopAppBar(
-                title = "Cashiro AI",
+                title = stringResource(R.string.cashiro_ai),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
                 hazeState = hazeState,
@@ -164,7 +166,7 @@ fun ChatScreen(
                         ) {
                             Icon(
                                 imageVector = Icons.Rounded.MoreHoriz,
-                                contentDescription = "More options",
+                                contentDescription = stringResource(R.string.more_options),
                                 modifier = Modifier.size(20.dp)
                             )
                         }
@@ -173,7 +175,7 @@ fun ChatScreen(
                             onDismissRequest = { showMenu = false }
                         ) {
                             DropdownMenuItem(
-                                text = { Text("Clear Chat") },
+                                text = { Text(stringResource(R.string.clear_chat)) },
                                 onClick = {
                                     showMenu = false
                                     chatViewModel.clearChat()
@@ -229,17 +231,17 @@ fun ChatScreen(
                                         tint = MaterialTheme.colorScheme.primary
                                     )
                                     Text(
-                                        text = "Qwen Model Required",
+                                        text = stringResource(R.string.qwen_model_required),
                                         style = MaterialTheme.typography.headlineSmall
                                     )
                                     Text(
-                                        text = "Download the AI model from Settings to start chatting",
+                                        text = stringResource(R.string.download_ai_model_prompt),
                                         style = MaterialTheme.typography.bodyMedium,
                                         textAlign = TextAlign.Center,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                     Button(onClick = onNavigateToSettings) {
-                                        Text("Go to Settings")
+                                        Text(stringResource(R.string.go_to_settings))
                                     }
                                 }
                             }
@@ -281,12 +283,12 @@ fun ChatScreen(
                             ) {
                                 Column(modifier = Modifier.weight(1f)) {
                                     Text(
-                                        text = "Model Required",
+                                        text = stringResource(R.string.model_required),
                                         style = MaterialTheme.typography.titleSmall,
                                         fontWeight = FontWeight.Bold
                                     )
                                     Text(
-                                        text = "Download to continue chatting",
+                                        text = stringResource(R.string.download_to_continue_chatting),
                                         style = MaterialTheme.typography.bodySmall
                                     )
                                 }
@@ -294,7 +296,7 @@ fun ChatScreen(
                                     onClick = onNavigateToSettings,
                                     modifier = Modifier.padding(start = Spacing.sm)
                                 ) {
-                                    Text("Download")
+                                    Text(stringResource(R.string.download))
                                 }
                             }
                         }
@@ -317,7 +319,7 @@ fun ChatScreen(
                         ) {
                             LoadingCircle(modifier = Modifier.size(64.dp))
                             Text(
-                                text = "Downloading Model... ${uiState.downloadProgress}%",
+                                text = stringResource(R.string.downloading_model_format, uiState.downloadProgress),
                                 style = MaterialTheme.typography.bodyLarge
                             )
                             LoadingLine(
@@ -328,7 +330,7 @@ fun ChatScreen(
                                 progress = uiState.downloadProgress / 100f
                             )
                             Text(
-                                text = "Check Settings for more details",
+                                text = stringResource(R.string.check_settings_for_more_details),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -349,11 +351,11 @@ fun ChatScreen(
                             ) {
                                 LoadingCircle()
                                 Text(
-                                    text = "Initializing AI Model...",
+                                    text = stringResource(R.string.initializing_ai_model),
                                     style = MaterialTheme.typography.bodyLarge
                                 )
                                 Text(
-                                    text = "This may take a few seconds",
+                                    text = stringResource(R.string.this_may_take_a_few_seconds),
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -447,7 +449,7 @@ fun ChatScreen(
                                             IconButton(onClick = { chatViewModel.clearError() }) {
                                                 Icon(
                                                     Icons.Rounded.Close,
-                                                    contentDescription = "Dismiss",
+                                                    contentDescription = stringResource(R.string.dismiss),
                                                     tint = MaterialTheme.colorScheme.onErrorContainer
                                                 )
                                             }
@@ -490,7 +492,7 @@ fun ChatScreen(
                                         TextField(
                                             value = inputText,
                                             onValueChange = { inputText = it },
-                                            placeholder = { Text("Ask about your expenses...") },
+                                            placeholder = { Text(stringResource(R.string.ask_about_expenses_placeholder)) },
                                             enabled = !uiState.isLoading,
                                             singleLine = true,
                                             modifier = Modifier
@@ -527,7 +529,7 @@ fun ChatScreen(
                                                     } else {
                                                         Icon(
                                                             Iconax.Send,
-                                                            contentDescription = "Send",
+                                                            contentDescription = stringResource(R.string.send),
                                                             modifier = Modifier.size(18.dp)
                                                         )
                                                     }
@@ -570,9 +572,9 @@ fun TokenLimitWarning(
     }
     
     val message = when {
-        usagePercent >= 95 -> "Chat memory almost full! Clear chat to continue."
-        usagePercent >= 90 -> "Chat memory is ${usagePercent}% full. Consider clearing soon."
-        else -> "Chat memory is ${usagePercent}% full."
+        usagePercent >= 95 -> stringResource(R.string.chat_memory_full_warning)
+        usagePercent >= 90 -> stringResource(R.string.chat_memory_almost_full_warning_format, usagePercent)
+        else -> stringResource(R.string.chat_memory_usage_format, usagePercent)
     }
     
     Surface(
@@ -611,7 +613,7 @@ fun TokenLimitWarning(
                         contentColor = contentColor
                     )
                 ) {
-                    Text("Clear", fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.clear), fontWeight = FontWeight.Bold)
                 }
             }
         }
@@ -660,7 +662,7 @@ fun DeveloperInfoCard(
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Text(
-                        text = "Qwen 2.5 • ${chatStats.messageCount} messages",
+                        text = stringResource(R.string.qwen_model_messages_format, chatStats.messageCount),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -671,14 +673,14 @@ fun DeveloperInfoCard(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "${TokenUtils.formatNumber(chatStats.estimatedTokens)} tokens",
+                        text = stringResource(R.string.tokens_format, TokenUtils.formatNumber(chatStats.estimatedTokens)),
                         style = MaterialTheme.typography.labelSmall,
                         fontWeight = FontWeight.Medium,
                         color = usageColor
                     )
                     Icon(
                         if (isExpanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore,
-                        contentDescription = if (isExpanded) "Collapse" else "Expand",
+                        contentDescription = if (isExpanded) stringResource(R.string.collapse) else stringResource(R.string.expand),
                         modifier = Modifier.size(16.dp),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -708,12 +710,12 @@ fun DeveloperInfoCard(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "Context Usage",
+                            text = stringResource(R.string.context_usage),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Text(
-                            text = "${chatStats.contextUsagePercent}%",
+                            text = stringResource(R.string.percentage_format_no_brackets, chatStats.contextUsagePercent),
                             style = MaterialTheme.typography.bodySmall,
                             fontWeight = FontWeight.Medium,
                             color = usageColor
@@ -736,13 +738,13 @@ fun DeveloperInfoCard(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "${TokenUtils.formatNumber(chatStats.estimatedTokens)} / ${TokenUtils.formatNumber(chatStats.maxTokens)} tokens",
+                            text = stringResource(R.string.tokens_usage_format, TokenUtils.formatNumber(chatStats.estimatedTokens), TokenUtils.formatNumber(chatStats.maxTokens)),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                         )
                         if (chatStats.systemPromptTokens > 0) {
                             Text(
-                                text = "System: ${TokenUtils.formatNumber(chatStats.systemPromptTokens)}",
+                                text = stringResource(R.string.system_tokens_format, TokenUtils.formatNumber(chatStats.systemPromptTokens)),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
                             )

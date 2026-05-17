@@ -36,6 +36,8 @@ import com.ritesh.cashiro.presentation.ui.components.PreferenceSwitch
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -68,7 +70,7 @@ fun EditWidgetsSheet(
                 .padding(bottom = 32.dp)
         ) {
             Text(
-                text = "Edit Widgets",
+                text = stringResource(R.string.edit_widgets),
                 style = MaterialTheme.typography.titleMedium,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
@@ -79,7 +81,7 @@ fun EditWidgetsSheet(
             )
 
             Text(
-                text = "Reorder or hide sections on your home screen.",
+                text = stringResource(R.string.edit_widgets_desc),
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.7f),
@@ -150,7 +152,7 @@ private fun WidgetItem(
                 // Drag Handle
                 Icon(
                     imageVector = Icons.Default.DragHandle,
-                    contentDescription = "Reorder",
+                    contentDescription = stringResource(R.string.reorder),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = dragModifier
                         .padding(end = 16.dp)

@@ -64,6 +64,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -180,7 +182,7 @@ fun ManageAccountsScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CustomTitleTopAppBar(
-                title = "Accounts",
+                title = stringResource(R.string.title_accounts),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
                 hazeState = hazeState,
@@ -194,8 +196,8 @@ fun ManageAccountsScreen(
             ExtendedFloatingActionButton(
                 onClick = { showAddSheet = true },
                 expanded = showFloatingLabel,
-                icon = { Icon(Icons.Rounded.Add, contentDescription = "Add Account") },
-                text = { Text(text = "Add Account") },
+                icon = { Icon(Icons.Rounded.Add, contentDescription = stringResource(R.string.add_account_fab_desc)) },
+                text = { Text(text = stringResource(R.string.add_account_fab_desc)) },
                 shape = if (showFloatingLabel) MaterialTheme.shapes.extraLargeIncreased else MaterialTheme.shapes.large,
                 modifier = Modifier
                     .then(
@@ -253,12 +255,12 @@ fun ManageAccountsScreen(
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Text(
-                            text = "No accounts yet",
+                            text = stringResource(R.string.no_accounts_yet),
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Text(
-                            text = "Add an account to get started",
+                            text = stringResource(R.string.add_account_prompt),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -315,7 +317,7 @@ fun ManageAccountsScreen(
                     if (wallets.isNotEmpty()) {
                         item {
                             SectionHeader(
-                                title = "Wallets",
+                                title = stringResource(R.string.section_wallets),
                                 modifier = Modifier.padding(start = 8.dp)
                             )
                         }
@@ -377,7 +379,7 @@ fun ManageAccountsScreen(
                     if (visibleRegularAccounts.isNotEmpty()) {
                         item {
                             SectionHeader(
-                                title = "Bank Accounts",
+                                title = stringResource(R.string.section_bank_accounts),
                                 modifier = Modifier.padding(start = 8.dp)
                             )
                         }
@@ -440,7 +442,7 @@ fun ManageAccountsScreen(
                             Spacer(modifier = Modifier.height(Spacing.md))
 
                             SectionHeader(
-                                title = "Unlinked Cards",
+                                title = stringResource(R.string.section_unlinked_cards),
                                 modifier = Modifier.padding(start = 8.dp)
                             )
                         }
@@ -462,7 +464,7 @@ fun ManageAccountsScreen(
                         item {
                             Spacer(modifier = Modifier.height(Spacing.md))
                             SectionHeader(
-                                title = "Credit Cards",
+                                title = stringResource(R.string.section_credit_cards),
                                 modifier = Modifier.padding(start = 8.dp)
                             )
                         }
@@ -550,7 +552,7 @@ fun ManageAccountsScreen(
                                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                                         )
                                         Text(
-                                            text = "Hidden Accounts (${hiddenRegularAccounts.size + hiddenCreditCards.size})",
+                                            text = stringResource(R.string.hidden_accounts_count, hiddenRegularAccounts.size + hiddenCreditCards.size),
                                             style = MaterialTheme.typography.titleMedium,
                                             fontWeight = FontWeight.SemiBold,
                                             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -561,7 +563,7 @@ fun ManageAccountsScreen(
                                             Icons.Rounded.ExpandLess
                                         else
                                             Icons.Rounded.ExpandMore,
-                                        contentDescription = if (showHiddenAccounts) "Collapse" else "Expand",
+                                        contentDescription = if (showHiddenAccounts) stringResource(R.string.collapse) else stringResource(R.string.expand),
                                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                 }
@@ -696,10 +698,10 @@ fun ManageAccountsScreen(
                 NumberPad(
                     initialValue =
                         selectedAccountEntity!!.balance.toPlainString(),
-                    title = "Update Outstanding",
+                    title = stringResource(R.string.update_outstanding_title),
                     bankName = selectedAccount!!.first,
                     accountLast4 = selectedAccount!!.second,
-                    doneButtonLabel = "Update Outstanding",
+                    doneButtonLabel = stringResource(R.string.update_outstanding_title),
                     onDone = { newValue ->
                         newValue.toBigDecimalOrNull()?.let { newBalance ->
                             manageAccountsViewModel.updateCreditCard(
@@ -719,10 +721,10 @@ fun ManageAccountsScreen(
                 NumberPad(
                     initialValue =
                         selectedAccountEntity!!.balance.toPlainString(),
-                    title = "Update Balance",
+                    title = stringResource(R.string.update_balance),
                     bankName = selectedAccount!!.first,
                     accountLast4 = selectedAccount!!.second,
-                    doneButtonLabel = "Update Balance",
+                    doneButtonLabel = stringResource(R.string.update_balance),
                     onDone = { newValue ->
                         newValue.toBigDecimalOrNull()?.let { newBalance ->
                             manageAccountsViewModel.updateAccountBalance(
@@ -937,10 +939,10 @@ fun ManageAccountsScreen(
         ) {
             NumberPad(
                 initialValue = accountForMerge!!.balance.toPlainString(),
-                title = "Enter Merged Balance",
+                title = stringResource(R.string.enter_merged_balance),
                 bankName = accountForMerge!!.bankName,
                 accountLast4 = accountForMerge!!.accountLast4,
-                doneButtonLabel = "Confirm Balance",
+                doneButtonLabel = stringResource(R.string.confirm_balance),
                 onDone = { newValue ->
                     newValue.toBigDecimalOrNull()?.let { newBalance ->
                         mergeNewBalance = newBalance
@@ -1050,7 +1052,7 @@ private fun CreditCardItem(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Available",
+                    text = stringResource(R.string.label_available),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -1071,7 +1073,7 @@ private fun CreditCardItem(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Credit Limit",
+                    text = stringResource(R.string.credit_limit_label),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -1088,7 +1090,7 @@ private fun CreditCardItem(
                         fontWeight = FontWeight.Medium
                     )
                     Text(
-                        text = "($utilization% used)",
+                        text = stringResource(R.string.utilization_used, utilization),
                         style = MaterialTheme.typography.bodySmall,
                         color = utilizationColor,
                         fontWeight = FontWeight.Medium
@@ -1136,7 +1138,7 @@ private fun AccountItem(
             if (linkedCards.isNotEmpty()) {
                 Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
                     Text(
-                        text = "Linked Cards",
+                        text = stringResource(R.string.linked_cards_label),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(bottom = Spacing.xs)
@@ -1178,7 +1180,7 @@ private fun AccountItem(
                                             if (!card.isActive
                                             ) {
                                                 Text(
-                                                    text = "(Inactive)",
+                                                    text = stringResource(R.string.label_inactive),
                                                     style = MaterialTheme.typography.bodySmall,
                                                     color = MaterialTheme.colorScheme.error
                                                 )
@@ -1197,7 +1199,7 @@ private fun AccountItem(
                                 ) {
                                     Icon(
                                         imageVector = Icons.Rounded.LinkOff,
-                                        contentDescription = "Unlink card",
+                                        contentDescription = stringResource(R.string.unlink_card_desc),
                                         modifier = Modifier.size(16.dp),
                                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
@@ -1274,7 +1276,7 @@ private fun OrphanedCardItem(
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.MoreHoriz,
-                            contentDescription = "More options",
+                            contentDescription = stringResource(R.string.more_options_desc),
                         )
                     }
                     DropdownMenu(
@@ -1286,7 +1288,7 @@ private fun OrphanedCardItem(
                         modifier = Modifier.padding(8.dp)
                     ) {
                         DropdownMenuItem(
-                            text = { Text("Link to Account") },
+                            text = { Text(stringResource(R.string.link_to_account)) },
                             leadingIcon = {
                                 Icon(
                                     Icons.Rounded.Link,
@@ -1322,7 +1324,7 @@ private fun OrphanedCardItem(
                         DropdownMenuItem(
                             text = {
                                 Text(
-                                    "Delete",
+                                    stringResource(R.string.action_delete),
                                     color = MaterialTheme.colorScheme.onErrorContainer
                                 )
                             },
@@ -1361,8 +1363,8 @@ private fun OrphanedCardItem(
                 }
             }
             Text(
-                text = "${if (card.cardType == CardType.CREDIT) "Credit"
-                else "Debit"} Card",
+                text = "${if (card.cardType == CardType.CREDIT) stringResource(R.string.credit_card)
+                else stringResource(R.string.debit_card)}",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
@@ -1371,7 +1373,7 @@ private fun OrphanedCardItem(
             // Show last known balance if available
             if (card.lastBalance != null) {
                 Text(
-                    text = "Last Balance: ${CurrencyFormatter.formatCurrency(card.lastBalance, card.currency)}",
+                    text = stringResource(R.string.last_balance, CurrencyFormatter.formatCurrency(card.lastBalance, card.currency)),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 8.dp)
@@ -1391,9 +1393,9 @@ private fun OrphanedCardItem(
                 ) {
                     Text(
                         text = if (expandedSource) {
-                            "SMS: ${card.lastBalanceSource}"
+                            stringResource(R.string.sms_source_formatted, card.lastBalanceSource)
                         } else {
-                            "SMS: ${card.lastBalanceSource.take(80)}... (tap to expand)"
+                            stringResource(R.string.sms_source_expand, card.lastBalanceSource.take(80))
                         },
                         style = MaterialTheme.typography.bodySmall,
                         fontFamily = FontFamily.Monospace,
@@ -1434,7 +1436,7 @@ private fun LinkCardDialog(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("Link Card")
+                Text(stringResource(R.string.link_card_title))
                 Text(
                     text = "${card.bankName} ••${card.cardLast4}",
                     style = MaterialTheme.typography.bodyMedium,
@@ -1446,7 +1448,7 @@ private fun LinkCardDialog(
             Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                 if (accounts.isEmpty()) {
                     Text(
-                        text = "No ${card.bankName} accounts found. Please add a corresponding bank account first.",
+                        text = stringResource(R.string.no_accounts_found_link, card.bankName),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         textAlign = TextAlign.Center,
@@ -1454,7 +1456,7 @@ private fun LinkCardDialog(
                     )
                 } else {
                     Text(
-                        text = "Select an account to link this card to:",
+                        text = stringResource(R.string.select_account_link_prompt),
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(bottom = Spacing.xs)
                     )
@@ -1538,7 +1540,7 @@ private fun LinkCardDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Cancel",
+                            text = stringResource(R.string.action_cancel),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
@@ -1561,7 +1563,7 @@ private fun LinkCardDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Link",
+                            text = stringResource(R.string.action_link),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }

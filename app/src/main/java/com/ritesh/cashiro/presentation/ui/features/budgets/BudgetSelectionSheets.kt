@@ -27,6 +27,8 @@ import com.ritesh.cashiro.presentation.ui.icons.Folder2
 import com.ritesh.cashiro.presentation.ui.icons.Iconax
 import com.ritesh.cashiro.presentation.ui.icons.ReceiptItem
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 
 @Composable
 fun BudgetTypeSelectionSheet(
@@ -41,15 +43,15 @@ fun BudgetTypeSelectionSheet(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Select Budget Type",
+            text = stringResource(R.string.select_budget_type),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(vertical = Spacing.md)
         )
 
         SelectionCard(
-            title = "Savings budget",
-            description = "Track your income and budget your savings",
+            title = stringResource(R.string.savings_budget),
+            description = stringResource(R.string.savings_budget_desc),
             icon = Icons.Rounded.Savings,
             onClick = { onTypeSelected(BudgetType.SAVINGS) }
         )
@@ -57,8 +59,8 @@ fun BudgetTypeSelectionSheet(
         Spacer(modifier = Modifier.height(Spacing.md))
 
         SelectionCard(
-            title = "Expense budget",
-            description = "Track your expenses and budget your spending",
+            title = stringResource(R.string.expense_budget),
+            description = stringResource(R.string.expense_budget_desc),
             icon = Iconax.ReceiptItem,
             onClick = { onTypeSelected(BudgetType.EXPENSE) }
         )
@@ -78,16 +80,16 @@ fun BudgetTrackTypeSelectionSheet(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Select Tracking Mode",
+            text = stringResource(R.string.select_tracking_mode),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(vertical = Spacing.md)
         )
 
         SelectionCard(
-            title = "Added only",
-            description = "Only the transactions you add\nUseful for one-time budgets with custom time periods",
-            example = "Example: 'Vacation' budget",
+            title = stringResource(R.string.added_only),
+            description = stringResource(R.string.added_only_desc),
+            example = stringResource(R.string.added_only_example),
             icon = Iconax.Folder2,
             onClick = { onTrackTypeSelected(BudgetTrackType.ADDED_ONLY) }
         )
@@ -95,9 +97,9 @@ fun BudgetTrackTypeSelectionSheet(
         Spacer(modifier = Modifier.height(Spacing.md))
 
         SelectionCard(
-            title = "All transactions",
-            description = "All transactions within selected categories and filters\nUseful for long term budgets over multiple periods",
-            example = "Example: 'Monthly Spending' budget",
+            title = stringResource(R.string.all_transactions),
+            description = stringResource(R.string.all_transactions_desc),
+            example = stringResource(R.string.all_transactions_example),
             icon = Iconax.Box2,
             onClick = { onTrackTypeSelected(BudgetTrackType.ALL_TRANSACTIONS) }
         )

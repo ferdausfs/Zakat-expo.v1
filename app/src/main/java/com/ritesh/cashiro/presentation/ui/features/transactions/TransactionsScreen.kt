@@ -68,13 +68,16 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.presentation.common.TimePeriod
 import com.ritesh.cashiro.presentation.effects.BlurredAnimatedVisibility
 import com.ritesh.cashiro.presentation.effects.overScrollVertical
@@ -125,6 +128,7 @@ fun SharedTransitionScope.TransactionsScreen(
     animatedContentScope: AnimatedVisibilityScope? = null,
     blurEffects: Boolean
 ) {
+    val context = LocalContext.current
     val uiState by transactionsViewModel.uiState.collectAsState()
     val searchQuery by transactionsViewModel.searchQuery.collectAsState()
     val selectedPeriod by transactionsViewModel.selectedPeriod.collectAsState()
@@ -235,8 +239,8 @@ fun SharedTransitionScope.TransactionsScreen(
             
             scope.launch {
                 val result = snackbarHostState.showSnackbar(
-                    message = "Transaction deleted",
-                    actionLabel = "Undo",
+                    message = context.getString(R.string.transaction_deleted),
+                    actionLabel = context.getString(R.string.undo),
                     duration = SnackbarDuration.Short
                 )
                 if (result == SnackbarResult.ActionPerformed) {
@@ -255,8 +259,8 @@ fun SharedTransitionScope.TransactionsScreen(
             
             scope.launch {
                 val result = snackbarHostState.showSnackbar(
-                    message = "${transactions.size} transactions deleted",
-                    actionLabel = "Undo",
+                    message = context.getString(R.string.transactions_deleted_format, transactions.size),
+                    actionLabel = context.getString(R.string.undo),
                     duration = SnackbarDuration.Short
                 )
                 if (result == SnackbarResult.ActionPerformed) {
@@ -315,7 +319,7 @@ fun SharedTransitionScope.TransactionsScreen(
             ),
         topBar = {
             CustomTitleTopAppBar(
-                title = if (selectionMode) "${selectedTransactionIds.size} selected" else "Transactions",
+                title = if (selectionMode) stringResource(R.string.items_selected_format, selectedTransactionIds.size) else stringResource(R.string.transactions),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehaviorLarge,
                 hazeState = hazeState,
@@ -353,7 +357,7 @@ fun SharedTransitionScope.TransactionsScreen(
                             ) {
                                 Icon(
                                     imageVector = if (allSelected) Icons.Rounded.Deselect else Icons.Rounded.SelectAll,
-                                    contentDescription = if (allSelected) "Deselect All" else "Select All",
+                                    contentDescription = if (allSelected) stringResource(R.string.deselect_all) else stringResource(R.string.select_all),
                                     modifier = Modifier.size(18.dp)
                                 )
                             }
@@ -372,7 +376,7 @@ fun SharedTransitionScope.TransactionsScreen(
                             ) {
                                 Icon(
                                     imageVector = Iconax.Bag,
-                                    contentDescription = "Delete Selected",
+                                    contentDescription = stringResource(R.string.delete_selected),
                                     modifier = Modifier.size(18.dp)
                                 )
                             }
@@ -422,7 +426,7 @@ fun SharedTransitionScope.TransactionsScreen(
                     leadingIcon = {
                         Icon(
                             imageVector = Iconax.Search,
-                            contentDescription = "Search",
+                            contentDescription = stringResource(R.string.search),
                             tint = MaterialTheme.colorScheme.onSurface.copy(0.5f)
                         )
                     },
@@ -435,7 +439,7 @@ fun SharedTransitionScope.TransactionsScreen(
                                 }) {
                                     Icon(
                                         imageVector = Iconax.CloseCircle,
-                                        contentDescription = "Clear search",
+                                        contentDescription = stringResource(R.string.clear_search),
                                         tint = MaterialTheme.colorScheme.onSurface.copy(0.5f)
                                     )
                                 }
@@ -451,7 +455,7 @@ fun SharedTransitionScope.TransactionsScreen(
                                 ) {
                                     Icon(
                                         imageVector = Icons.Rounded.MoreHoriz,
-                                        contentDescription = "More Options",
+                                        contentDescription = stringResource(R.string.more_options),
                                         tint = MaterialTheme.colorScheme.onSurface.copy(0.5f)
                                     )
                                 }
@@ -462,7 +466,7 @@ fun SharedTransitionScope.TransactionsScreen(
                                     shape = MaterialTheme.shapes.large
                                 ) {
                                     DropdownMenuItem(
-                                        text = { Text("Filter") },
+                                        text = { Text(stringResource(R.string.filters)) },
                                         onClick = { showFilterSheet = true; showMainMenu = false },
                                         leadingIcon = {
                                             Icon(
@@ -478,7 +482,7 @@ fun SharedTransitionScope.TransactionsScreen(
                                         color = MaterialTheme.colorScheme.surface
                                     )
                                     DropdownMenuItem(
-                                        text = { Text("Sort") },
+                                        text = { Text(stringResource(R.string.sort)) },
                                         onClick = { showSortMenu = true; showMainMenu = false },
                                         leadingIcon = {
                                             Icon(
@@ -535,8 +539,8 @@ fun SharedTransitionScope.TransactionsScreen(
                     label = {
                         Text(
                             text = if (categoryFilter.isNotEmpty()) {
-                                "Search in ${categoryFilter.joinToString(", ")}..."
-                            } else "Search transactions",
+                                stringResource(R.string.search_in_categories_format, categoryFilter.joinToString(", "))
+                            } else stringResource(R.string.search_transactions),
                             maxLines = 1,
                             textAlign = TextAlign.Center,
                             overflow = TextOverflow.Ellipsis,
@@ -812,9 +816,9 @@ private fun EmptyTransactionsState(
                 Spacer(modifier = Modifier.height(Spacing.md))
                 Text(
                     text = when {
-                        searchQuery.isNotEmpty() -> "No transactions matching \"$searchQuery\""
-                        selectedPeriod != TimePeriod.ALL -> "No transactions for ${selectedPeriod.label.lowercase()}"
-                        else -> "No transactions yet"
+                        searchQuery.isNotEmpty() -> stringResource(R.string.no_transactions_matching_format, searchQuery)
+                        selectedPeriod != TimePeriod.ALL -> stringResource(R.string.no_transactions_for_format, selectedPeriod.label.lowercase())
+                        else -> stringResource(R.string.no_transactions_yet)
                     },
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -822,7 +826,7 @@ private fun EmptyTransactionsState(
                 if (searchQuery.isEmpty() && selectedPeriod == TimePeriod.ALL) {
                     Spacer(modifier = Modifier.height(Spacing.xs))
                     Text(
-                        text = "Sync your SMS to see transactions",
+                        text = stringResource(R.string.sync_sms_to_see_transactions),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

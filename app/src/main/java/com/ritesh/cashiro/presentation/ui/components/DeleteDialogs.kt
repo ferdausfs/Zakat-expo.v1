@@ -35,6 +35,9 @@ import com.ritesh.cashiro.presentation.ui.icons.Iconax
 import com.ritesh.cashiro.presentation.ui.theme.Dimensions
 import com.ritesh.cashiro.presentation.ui.theme.LocalBlurEffects
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import dev.chrisbanes.haze.ExperimentalHazeApi
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeEffectScope
@@ -60,10 +63,10 @@ fun DeleteTransactionDialog(
                 tint = MaterialTheme.colorScheme.error
             )
         },
-        title = { Text("Delete Transaction") },
+        title = { Text(stringResource(R.string.delete_transaction_title)) },
         text = {
             Text(
-                text ="Are you sure you want to delete this transaction? This action cannot be undone.",
+                text = stringResource(R.string.delete_transaction_confirm),
                 style = MaterialTheme.typography.bodyMedium
             )
         },
@@ -93,7 +96,7 @@ fun DeleteTransactionDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Cancel",
+                            text = stringResource(R.string.cancel),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
@@ -120,7 +123,7 @@ fun DeleteTransactionDialog(
                             )
                         } else {
                             Text(
-                                text = "Delete",
+                                text = stringResource(R.string.delete),
                                 style = MaterialTheme.typography.titleMedium
                             )
                         }
@@ -173,11 +176,11 @@ fun DeleteMultipleTransactionsDialog(
             )
         },
         title = {
-            Text(text = "Delete ${selectedTransactionIds.size} transaction${if (selectedTransactionIds.size > 1) "s" else ""}?")
+            Text(text = pluralStringResource(R.plurals.delete_transactions_title, selectedTransactionIds.size, selectedTransactionIds.size))
         },
         text = {
             Text(
-                text = "This action is irreversible. The selected transactions will be permanently deleted and cannot be recovered.",
+                text = stringResource(R.string.delete_multiple_transactions_confirm),
                 style = MaterialTheme.typography.bodyMedium
             )
         },
@@ -207,7 +210,7 @@ fun DeleteMultipleTransactionsDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Cancel",
+                            text = stringResource(R.string.cancel),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
@@ -229,7 +232,7 @@ fun DeleteMultipleTransactionsDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Delete",
+                            text = stringResource(R.string.delete),
                             style = MaterialTheme.typography.titleMedium)
                     }
 
@@ -284,11 +287,11 @@ fun DeleteAccountDialog(
                 tint = MaterialTheme.colorScheme.error
             )
         },
-        title = { Text("Delete Account?") },
+        title = { Text(stringResource(R.string.delete_account_title)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                 Text(
-                    text = "Are you sure you want to delete this account?",
+                    text = stringResource(R.string.delete_account_confirm),
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Card(
@@ -314,8 +317,8 @@ fun DeleteAccountDialog(
                                 fontWeight = FontWeight.Medium
                             )
                             val supportingText = when {
-                                isWallet -> "wallet"
-                                else -> "**** **** **** $accountLast4"
+                                isWallet -> stringResource(R.string.type_wallet_lowercase)
+                                else -> stringResource(R.string.account_last4_format, accountLast4)
                             }
                             Text(
                                 text = supportingText,
@@ -331,8 +334,7 @@ fun DeleteAccountDialog(
                     )
                 ) {
                     Text(
-                        text = "This will permanently delete all balance history for this account." +
-                                " Any linked cards will be unlinked. This action cannot be undone.",
+                        text = stringResource(R.string.delete_account_warning),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onErrorContainer,
                         modifier = Modifier.padding(Spacing.sm)
@@ -366,7 +368,7 @@ fun DeleteAccountDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Cancel",
+                            text = stringResource(R.string.cancel),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
@@ -388,7 +390,7 @@ fun DeleteAccountDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Delete",
+                            text = stringResource(R.string.delete),
                             style = MaterialTheme.typography.titleMedium)
                     }
                 }
@@ -440,7 +442,7 @@ fun DeleteCategoryDialog(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("Delete Category")
+                    Text(stringResource(R.string.delete_category_title))
                     IconButton(
                         onClick = onDismiss,
                         colors = IconButtonDefaults.iconButtonColors(
@@ -450,7 +452,7 @@ fun DeleteCategoryDialog(
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.Close,
-                            contentDescription = "Cancel",
+                            contentDescription = stringResource(R.string.cancel),
                             modifier = Modifier.size(18.dp)
                         )
                     }
@@ -458,7 +460,7 @@ fun DeleteCategoryDialog(
             },
             text = {
                 Text(
-                    "This action cannot be undone. All transactions under '$categoryName' must be moved to another category."
+                    stringResource(R.string.delete_category_confirm_with_transactions, categoryName)
                 )
             },
             confirmButton = {
@@ -474,7 +476,7 @@ fun DeleteCategoryDialog(
                         ),
                         modifier = Modifier.padding(horizontal = Dimensions.Radius.md).fillMaxWidth()
                     ) {
-                        Text("Move to Different Category")
+                        Text(stringResource(R.string.move_to_different_category))
                     }
                     Button(
                         onClick = onMoveDefault,
@@ -484,7 +486,7 @@ fun DeleteCategoryDialog(
                         ),
                         modifier = Modifier.padding(horizontal = Dimensions.Radius.md).fillMaxWidth()
                     ) {
-                        Text("Move to Miscellaneous")
+                        Text(stringResource(R.string.move_to_miscellaneous))
                     }
                 }
             },
@@ -512,8 +514,8 @@ fun DeleteCategoryDialog(
     } else {
         AlertDialog(
             onDismissRequest = onDismiss,
-            title = { Text("Delete Category") },
-            text = { Text("Are you sure you want to delete '$categoryName'?") },
+            title = { Text(stringResource(R.string.delete_category_title)) },
+            text = { Text(stringResource(R.string.delete_category_confirm_no_transactions, categoryName)) },
             confirmButton = {
                 Box(
                     modifier = Modifier.fillMaxWidth(),
@@ -540,7 +542,7 @@ fun DeleteCategoryDialog(
                                 .fillMaxWidth()
                         ) {
                             Text(
-                                text = "Cancel",
+                                text = stringResource(R.string.cancel),
                                 style = MaterialTheme.typography.titleMedium
                             )
                         }
@@ -562,7 +564,7 @@ fun DeleteCategoryDialog(
                                 .fillMaxWidth()
                         ) {
                             Text(
-                                text = "Delete",
+                                text = stringResource(R.string.delete),
                                 style = MaterialTheme.typography.titleMedium)
                         }
                     }
@@ -606,8 +608,8 @@ fun DeleteBudgetDialog(
     AlertDialog(
         onDismissRequest = onDismiss,
         icon = { Icon(Iconax.Danger, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
-        title = { Text("Delete Budget?") },
-        text = { Text("Are you sure you want to delete this budget? This action cannot be undone.") },
+        title = { Text(stringResource(R.string.delete_budget_title)) },
+        text = { Text(stringResource(R.string.delete_budget_confirm)) },
         confirmButton = {
             Box(
                 modifier = Modifier.fillMaxWidth(),
@@ -634,7 +636,7 @@ fun DeleteBudgetDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Cancel",
+                            text = stringResource(R.string.cancel),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
@@ -656,7 +658,7 @@ fun DeleteBudgetDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Delete",
+                            text = stringResource(R.string.delete),
                             style = MaterialTheme.typography.titleMedium)
                     }
                 }
@@ -704,10 +706,10 @@ fun DeleteAIModelDialog(
                 tint = MaterialTheme.colorScheme.error
             )
         },
-        title = { Text("Delete AI Model?") },
+        title = { Text(stringResource(R.string.delete_ai_model_title)) },
         text = {
             Text(
-                text = "Are you sure you want to delete the AI model? This will remove the offline chat capability until you download it again.",
+                text = stringResource(R.string.delete_ai_model_confirm),
                 style = MaterialTheme.typography.bodyMedium
             )
         },
@@ -737,7 +739,7 @@ fun DeleteAIModelDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Cancel",
+                            text = stringResource(R.string.cancel),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
@@ -759,7 +761,7 @@ fun DeleteAIModelDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Delete",
+                            text = stringResource(R.string.delete),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
@@ -809,10 +811,10 @@ fun DeleteSubscriptionDialog(
                 tint = MaterialTheme.colorScheme.error
             )
         },
-        title = { Text("Delete Subscription?") },
+        title = { Text(stringResource(R.string.delete_subscription_title)) },
         text = {
             Text(
-                text = "Are you sure you want to delete '$subscriptionName'? This will permanently remove it from your subscriptions list.",
+                text = stringResource(R.string.delete_subscription_confirm, subscriptionName),
                 style = MaterialTheme.typography.bodyMedium
             )
         },
@@ -842,7 +844,7 @@ fun DeleteSubscriptionDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Cancel",
+                            text = stringResource(R.string.cancel),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
@@ -864,7 +866,7 @@ fun DeleteSubscriptionDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Delete",
+                            text = stringResource(R.string.delete),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
@@ -914,10 +916,10 @@ fun DeleteSubcategoryDialog(
                 tint = MaterialTheme.colorScheme.error
             )
         },
-        title = { Text("Delete Subcategory?") },
+        title = { Text(stringResource(R.string.delete_subcategory_title)) },
         text = {
             Text(
-                text = "Are you sure you want to delete '$subcategoryName'? This action cannot be undone.",
+                text = stringResource(R.string.delete_subcategory_confirm, subcategoryName),
                 style = MaterialTheme.typography.bodyMedium
             )
         },
@@ -947,7 +949,7 @@ fun DeleteSubcategoryDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Cancel",
+                            text = stringResource(R.string.cancel),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
@@ -969,7 +971,7 @@ fun DeleteSubcategoryDialog(
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Delete",
+                            text = stringResource(R.string.delete),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }

@@ -35,6 +35,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -85,7 +87,7 @@ fun UnrecognizedSmsScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CustomTitleTopAppBar(
-                title = "Unrecognized Messages",
+                title = stringResource(R.string.unrecognized_messages_title),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
                 hazeState = hazeState,
@@ -123,15 +125,14 @@ fun UnrecognizedSmsScreen(
                         tint = MaterialTheme.colorScheme.primary
                     )
                     Text(
-                        text = "Unrecognized Bank Messages",
+                        text = stringResource(R.string.unrecognized_bank_messages),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
                 }
                 
                 Text(
-                    text = "These messages from potential banks couldn't be automatically parsed. " +
-                          "Help improve Cashiro by reporting them so we can add support for more banks.",
+                    text = stringResource(R.string.unrecognized_bank_messages_desc),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -145,7 +146,7 @@ fun UnrecognizedSmsScreen(
                     FilterChip(
                         selected = showReported,
                         onClick = { unrecognizedSmsViewModel.toggleShowReported() },
-                        label = { Text("Show Reported") },
+                        label = { Text(stringResource(R.string.show_reported)) },
                         leadingIcon = if (showReported) {
                             { Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(16.dp)) }
                         } else null
@@ -162,14 +163,14 @@ fun UnrecognizedSmsScreen(
                                 Badge(
                                     containerColor = MaterialTheme.colorScheme.primary
                                 ) {
-                                    Text("$unreportedCount new")
+                                    Text(stringResource(R.string.count_new_format, unreportedCount))
                                 }
                             }
                             if (reportedCount > 0) {
                                 Badge(
                                     containerColor = MaterialTheme.colorScheme.surfaceVariant
                                 ) {
-                                    Text("$reportedCount reported")
+                                    Text(stringResource(R.string.count_reported_format, reportedCount))
                                 }
                             }
                         }
@@ -201,7 +202,7 @@ fun UnrecognizedSmsScreen(
                         tint = MaterialTheme.colorScheme.primary
                     )
                     Text(
-                        text = "No unrecognized messages",
+                        text = stringResource(R.string.no_unrecognized_messages),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -245,9 +246,9 @@ fun UnrecognizedSmsScreen(
                 showDeleteConfirmation = false
                 selectedMessage = null
             },
-            title = { Text("Delete Message") },
+            title = { Text(stringResource(R.string.delete_message)) },
             text = { 
-                Text("Are you sure you want to delete this unrecognized message? This action cannot be undone.")
+                Text(stringResource(R.string.delete_message_confirm_desc))
             },
             confirmButton = {
                 TextButton(
@@ -260,7 +261,7 @@ fun UnrecognizedSmsScreen(
                         contentColor = MaterialTheme.colorScheme.error
                     )
                 ) {
-                    Text("Delete")
+                    Text(stringResource(R.string.delete))
                 }
             },
             dismissButton = {
@@ -270,7 +271,7 @@ fun UnrecognizedSmsScreen(
                         selectedMessage = null
                     }
                 ) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             }
         )
@@ -317,7 +318,7 @@ private fun UnrecognizedSmsItem(
                         containerColor = MaterialTheme.colorScheme.surfaceVariant
                     ) {
                         Text(
-                            "Reported",
+                            stringResource(R.string.reported),
                             style = MaterialTheme.typography.labelSmall
                         )
                     }
@@ -345,11 +346,11 @@ private fun UnrecognizedSmsItem(
                     ) {
                         Icon(
                             Iconax.Bag,
-                            contentDescription = "Delete",
+                            contentDescription = stringResource(R.string.delete),
                             modifier = Modifier.size(18.dp)
                         )
                         Spacer(modifier = Modifier.width(Spacing.xs))
-                        Text("Delete")
+                        Text(stringResource(R.string.delete))
                     }
                     
                     Spacer(modifier = Modifier.width(Spacing.sm))
@@ -363,11 +364,11 @@ private fun UnrecognizedSmsItem(
                     ) {
                         Icon(
                             Iconax.Send,
-                            contentDescription = "Report",
+                            contentDescription = stringResource(R.string.report),
                             modifier = Modifier.size(18.dp)
                         )
                         Spacer(modifier = Modifier.width(Spacing.xs))
-                        Text("Report")
+                        Text(stringResource(R.string.report))
                     }
                 } else {
                     TextButton(
@@ -378,11 +379,11 @@ private fun UnrecognizedSmsItem(
                     ) {
                         Icon(
                             Iconax.Bag,
-                            contentDescription = "Delete",
+                            contentDescription = stringResource(R.string.delete),
                             modifier = Modifier.size(18.dp)
                         )
                         Spacer(modifier = Modifier.width(Spacing.xs))
-                        Text("Delete")
+                        Text(stringResource(R.string.delete))
                     }
                 }
             }

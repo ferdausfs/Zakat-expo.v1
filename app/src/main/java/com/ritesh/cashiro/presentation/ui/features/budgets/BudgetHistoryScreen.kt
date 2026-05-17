@@ -50,6 +50,8 @@ import com.ritesh.cashiro.presentation.ui.theme.Spacing
 import com.ritesh.cashiro.utils.CurrencyFormatter
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeSource
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,7 +75,7 @@ fun BudgetHistoryScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CustomTitleTopAppBar(
-                title = uiState.budget?.name?.let { "$it History" } ?: "Budget History",
+                title = uiState.budget?.name?.let { stringResource(R.string.budget_history_format, it) } ?: stringResource(R.string.budget_history),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
                 hazeState = hazeState,
@@ -175,10 +177,10 @@ fun BudgetHistoryItem(
                 
                 val statusText = if (period.isOverBudget) {
                     val overspent = period.spent - period.amount
-                    "${CurrencyFormatter.formatCurrency(overspent, period.currency)} overspent of ${CurrencyFormatter.formatCurrency(period.amount, period.currency)}"
+                    stringResource(R.string.budget_overspent_format, CurrencyFormatter.formatCurrency(overspent, period.currency), CurrencyFormatter.formatCurrency(period.amount, period.currency))
                 } else {
                     val left = period.amount - period.spent
-                    "${CurrencyFormatter.formatCurrency(left, period.currency)} left of ${CurrencyFormatter.formatCurrency(period.amount, period.currency)}"
+                    stringResource(R.string.budget_left_format, CurrencyFormatter.formatCurrency(left, period.currency), CurrencyFormatter.formatCurrency(period.amount, period.currency))
                 }
                 
                 Text(
@@ -213,7 +215,7 @@ fun BudgetHistoryItem(
                     trackColor = progressColor.copy(alpha = 0.1f)
                 )
                 Text(
-                    text = if (percentage < 1 && percentage > 0) "< 1%" else "$percentage%",
+                    text = if (percentage < 1 && percentage > 0) stringResource(R.string.less_than_one_percent) else "$percentage%",
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.Bold,
                     color = progressColor

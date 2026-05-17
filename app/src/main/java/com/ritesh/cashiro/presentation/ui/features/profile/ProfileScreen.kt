@@ -60,6 +60,7 @@ import com.ritesh.cashiro.presentation.ui.theme.red_light
 import com.ritesh.cashiro.utils.CurrencyFormatter
 import dev.chrisbanes.haze.HazeState
 import java.math.BigDecimal
+import androidx.compose.ui.res.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -79,7 +80,7 @@ fun ProfileScreen(
             CustomTitleTopAppBar(
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehaviorSmall,
-                title = "Profile",
+                title = stringResource(R.string.profile),
                 hazeState = hazeState,
                 hasBackButton = true,
                 hasActionButton = true,
@@ -96,7 +97,7 @@ fun ProfileScreen(
                     ) {
                         Icon(
                             imageVector = Iconax.Edit2,
-                            contentDescription = "Edit",
+                            contentDescription = stringResource(R.string.edit),
                             modifier = Modifier.size(18.dp)
                         )
                     }
@@ -150,14 +151,14 @@ fun ProfileContent(
             if ( state.bannerImageUri != null) {
                 AsyncImage(
                     model =  state.bannerImageUri,
-                    contentDescription = "Banner",
+                    contentDescription = stringResource(R.string.banner),
                     modifier = Modifier.fillMaxSize().alpha(0.5f),
                     contentScale = ContentScale.Crop
                 )
             } else {
                 Image(
                     painter = painterResource(id = R.drawable.banner_bg_image),
-                    contentDescription = "Banner",
+                    contentDescription = stringResource(R.string.banner),
                     modifier = Modifier.fillMaxSize().alpha(0.5f),
                     contentScale = ContentScale.Crop
                 )
@@ -228,14 +229,14 @@ fun DisplayProfileImagesCard(
                 if (profileImageUri != null) {
                     AsyncImage(
                         model = profileImageUri,
-                        contentDescription = "Profile",
+                        contentDescription = stringResource(R.string.profile),
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop
                     )
                 } else {
                     Image(
                         painter = painterResource(id = R.drawable.avatar_1),
-                        contentDescription = "Profile",
+                        contentDescription = stringResource(R.string.profile),
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop
                     )
@@ -302,7 +303,7 @@ fun DisplayUserNameAndSubtitles(userName: String, totalTransactions: Int) {
             }
         }
         Text(
-            text = "Transactions: $totalTransactions",
+            text = stringResource(R.string.transactions_count_format, totalTransactions),
             style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
@@ -330,7 +331,7 @@ fun FinancialOverviewCard(
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             Text(
-                text = "Financial Overview",
+                text = stringResource(R.string.financial_overview),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
@@ -342,7 +343,7 @@ fun FinancialOverviewCard(
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 FinancialItem(
-                    label = "Net Worth",
+                    label = stringResource(R.string.net_worth),
                     value = CurrencyFormatter.formatCurrency(netWorth, baseCurrency),
                     icon = Icons.Rounded.AccountBalance,
                     color = green_light,
@@ -350,10 +351,10 @@ fun FinancialOverviewCard(
                     modifier = Modifier.weight(1f)
                 )
                 FinancialItem(
-                    label = "Upcoming",
+                    label = stringResource(R.string.upcoming),
                     value =
-                        if (activeSubscriptions == 1) "1 Sub"
-                        else "$activeSubscriptions Subs",
+                        if (activeSubscriptions == 1) stringResource(R.string.active_subscriptions_singular)
+                        else stringResource(R.string.active_subscriptions_plural, activeSubscriptions),
                     icon = Iconax.Calendar,
                     color = orange_light,
                     iconColor = orange_dark,
@@ -367,7 +368,7 @@ fun FinancialOverviewCard(
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 FinancialItem(
-                    label = "Expense",
+                    label = stringResource(R.string.expense),
                     value = CurrencyFormatter.formatCurrency(expense, baseCurrency),
                     icon = Icons.AutoMirrored.Rounded.TrendingDown,
                     color = red_light,
@@ -375,7 +376,7 @@ fun FinancialOverviewCard(
                     modifier = Modifier.weight(1f)
                 )
                 FinancialItem(
-                    label = "Income",
+                    label = stringResource(R.string.income),
                     value = CurrencyFormatter.formatCurrency(income, baseCurrency),
                     icon = Icons.AutoMirrored.Rounded.TrendingUp,
                     color = blue_light,

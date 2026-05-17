@@ -19,6 +19,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.pluralStringResource
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.presentation.effects.BlurredAnimatedVisibility
 import com.ritesh.cashiro.presentation.effects.overScrollVertical
 import com.ritesh.cashiro.presentation.effects.rememberOverscrollFlingBehavior
@@ -429,7 +432,7 @@ fun LicensesScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CustomTitleTopAppBar(
-                title = selectedLibrary?.name ?: "Licenses",
+                title = selectedLibrary?.name ?: stringResource(R.string.licenses),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
                 hazeState = hazeState,
@@ -476,14 +479,14 @@ fun LicensesScreen(
                         Spacer(modifier = Modifier.height(Spacing.xl))
 
                         Text(
-                            text = "Cashiro",
+                            text = stringResource(R.string.app_name),
                             style = MaterialTheme.typography.headlineMedium,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center
                         )
 
                         Text(
-                            text = "v${com.ritesh.cashiro.BuildConfig.VERSION_NAME}, db-v${settingsViewModel.databaseVersion}",
+                            text = stringResource(R.string.license_version_format, com.ritesh.cashiro.BuildConfig.VERSION_NAME, settingsViewModel.databaseVersion),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurface,
                             textAlign = TextAlign.Center
@@ -492,7 +495,7 @@ fun LicensesScreen(
                         Spacer(modifier = Modifier.height(Spacing.xl))
 
                         Text(
-                            text = "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
+                            text = stringResource(R.string.license_disclaimer_software),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
                             textAlign = TextAlign.Center,
@@ -503,7 +506,7 @@ fun LicensesScreen(
                         Spacer(modifier = Modifier.height(Spacing.lg))
 
                         Text(
-                            text = "The exchange rates displayed within this app are for informational purposes only and should not be used for investment decisions. These rates are estimates and may not reflect actual rates. By using this app, you acknowledge that you understand and accept these limitations and that you assume full responsibility for any decisions made based on the information provided within the app.",
+                            text = stringResource(R.string.license_disclaimer_rates),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
                             textAlign = TextAlign.Center,
@@ -513,7 +516,7 @@ fun LicensesScreen(
                         Spacer(modifier = Modifier.height(Spacing.lg))
 
                         Text(
-                            text = "Powered by Kotlin Compose",
+                            text = stringResource(R.string.powered_by),
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.Medium,
                             textAlign = TextAlign.Center
@@ -542,7 +545,7 @@ fun LicensesScreen(
                             fontWeight = FontWeight.Medium
                         )
                         Text(
-                            text = "${library.licenseCount} license${if (library.licenseCount > 1) "s" else ""}",
+                            text = pluralStringResource(R.plurals.licenses_count, library.licenseCount, library.licenseCount),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurface
                         )

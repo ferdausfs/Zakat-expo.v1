@@ -17,10 +17,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
 import com.ritesh.cashiro.presentation.ui.theme.expense_dark
 import com.ritesh.cashiro.presentation.ui.theme.expense_light
@@ -94,19 +96,21 @@ fun TransactionTotalsCard(
                             .padding(Spacing.sm),
                         contentAlignment = Alignment.Center
                     ) {
-                        val formattedIncome = remember(income, currency, isEstimated) {
-                            formatAmount(income, currency, isEstimated)
+                        val formattedIncome = if (isEstimated) {
+                            stringResource(R.string.estimated_amount_format, CurrencyFormatter.formatCurrency(income, currency))
+                        } else {
+                            CurrencyFormatter.formatCurrency(income, currency)
                         }
                         TotalColumn(
                             icon = {
                                 Icon(
                                     imageVector = Icons.AutoMirrored.Filled.TrendingUp,
-                                    contentDescription = "Income",
+                                    contentDescription = stringResource(R.string.income),
                                     modifier = Modifier.size(20.dp),
                                     tint = if (!isSystemInDarkTheme()) income_light else income_dark
                                 )
                             },
-                            label = "Income",
+                            label = stringResource(R.string.income),
                             amount = formattedIncome,
                             color = if (!isSystemInDarkTheme()) income_light else income_dark,
                             modifier = Modifier
@@ -140,19 +144,21 @@ fun TransactionTotalsCard(
                             .padding(Spacing.sm),
                         contentAlignment = Alignment.Center
                     ) {
-                        val formattedExpenses = remember(expenses, currency, isEstimated) {
-                            formatAmount(expenses, currency, isEstimated)
+                        val formattedExpenses = if (isEstimated) {
+                            stringResource(R.string.estimated_amount_format, CurrencyFormatter.formatCurrency(expenses, currency))
+                        } else {
+                            CurrencyFormatter.formatCurrency(expenses, currency)
                         }
                         TotalColumn(
                             icon = {
                                 Icon(
                                     imageVector = Icons.AutoMirrored.Filled.TrendingDown,
-                                    contentDescription = "Expenses",
+                                    contentDescription = stringResource(R.string.expenses),
                                     modifier = Modifier.size(20.dp),
                                     tint = if (!isSystemInDarkTheme()) expense_light else expense_dark
                                 )
                             },
-                            label = "Expenses",
+                            label = stringResource(R.string.expenses),
                             amount = formattedExpenses,
                             color = if (!isSystemInDarkTheme()) expense_light else expense_dark,
                             modifier = Modifier
@@ -195,19 +201,21 @@ fun TransactionTotalsCard(
                             .padding(Spacing.sm),
                         contentAlignment = Alignment.Center
                     ) {
-                        val formattedNet = remember(netPrefix, netBalance, currency, isEstimated) {
-                            "$netPrefix${formatAmount(netBalance, currency, isEstimated)}"
+                        val formattedNet = if (isEstimated) {
+                            stringResource(R.string.estimated_amount_format, "$netPrefix${CurrencyFormatter.formatCurrency(netBalance, currency)}")
+                        } else {
+                            "$netPrefix${CurrencyFormatter.formatCurrency(netBalance, currency)}"
                         }
                         TotalColumn(
                             icon = {
                                 Icon(
                                     imageVector = Icons.Filled.SettingsEthernet,
-                                    contentDescription = "Net",
+                                    contentDescription = stringResource(R.string.net),
                                     modifier = Modifier.size(20.dp),
                                     tint = netColor
                                 )
                             },
-                            label = "Net",
+                            label = stringResource(R.string.net),
                             amount = formattedNet,
                             color = netColor,
                             modifier = Modifier
@@ -219,11 +227,6 @@ fun TransactionTotalsCard(
         }
 
     }
-}
-
-private fun formatAmount(amount: BigDecimal, currency: String, isEstimated: Boolean): String {
-    val formatted = CurrencyFormatter.formatCurrency(amount, currency)
-    return if (isEstimated) "est. $formatted" else formatted
 }
 
 @Composable

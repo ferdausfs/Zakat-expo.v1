@@ -27,6 +27,8 @@ import com.ritesh.cashiro.utils.CurrencyFormatter
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.ArrowDropDown
 import com.ritesh.cashiro.presentation.ui.components.CurrencyBottomSheet
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,7 +65,7 @@ fun AddAccountScreen(
                     modifier = Modifier.size(20.dp)
                 )
                 Text(
-                    text = "Add accounts not tracked via SMS like cash, wallets, or investment accounts.",
+                    text = stringResource(R.string.add_account_info),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
@@ -107,7 +109,7 @@ fun AddAccountScreen(
                     .replaceFirstChar { it.uppercase() },
                 onValueChange = {},
                 readOnly = true,
-                label = { Text("Account Type") },
+                label = { Text(stringResource(R.string.account_type_label)) },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = showTypeDropdown) },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -156,7 +158,7 @@ fun AddAccountScreen(
     }
 
     // Icon Selector
-    Text("Account Icon", style = MaterialTheme.typography.labelMedium)
+    Text(stringResource(R.string.account_icon_label), style = MaterialTheme.typography.labelMedium)
     val context = LocalContext.current
     Box(modifier = Modifier.height(200.dp).fillMaxWidth().border(1.dp, MaterialTheme.colorScheme.outline, MaterialTheme.shapes.small)) {
         IconSelector(
@@ -170,13 +172,13 @@ fun AddAccountScreen(
     OutlinedTextField(
         value = formState.bankName,
         onValueChange = manageAccountsViewModel::updateBankName,
-        label = { Text("Account Name *") },
+        label = { Text(stringResource(R.string.account_name_required_label)) },
         placeholder = {
             Text(
                 when (formState.accountType) {
-                    AccountType.SAVINGS, AccountType.CURRENT -> "e.g., HDFC Bank"
-                    AccountType.CREDIT -> "e.g., HDFC Credit Card"
-                    AccountType.WALLET -> "e.g., Cash"
+                    AccountType.SAVINGS, AccountType.CURRENT -> stringResource(R.string.placeholder_bank_name)
+                    AccountType.CREDIT -> stringResource(R.string.placeholder_credit_name)
+                    AccountType.WALLET -> stringResource(R.string.placeholder_wallet_name)
                 }
             )
         },
@@ -194,13 +196,13 @@ fun AddAccountScreen(
     OutlinedTextField(
         value = formState.accountLast4,
         onValueChange = manageAccountsViewModel::updateAccountLast4,
-        label = { Text("Last 4 Digits *") },
-        placeholder = { Text("e.g., 1234") },
+        label = { Text(stringResource(R.string.last_4_digits_required_label)) },
+        placeholder = { Text(stringResource(R.string.placeholder_last_4_digits)) },
         leadingIcon = {
             Icon(Icons.Default.Tag, contentDescription = null)
         },
         supportingText = {
-            Text("Enter last 4 digits of account/card")
+            Text(stringResource(R.string.enter_last_4_digits_hint))
         },
         modifier = Modifier.fillMaxWidth(),
         singleLine = true,
@@ -213,8 +215,8 @@ fun AddAccountScreen(
     OutlinedTextField(
         value = formState.balance,
         onValueChange = manageAccountsViewModel::updateBalance,
-        label = { Text("Current Balance *") },
-        placeholder = { Text("0.00") },
+        label = { Text(stringResource(R.string.current_balance_required_label)) },
+        placeholder = { Text(stringResource(R.string.placeholder_decimal)) },
         leadingIcon = {
             Text(
                 CurrencyFormatter.getCurrencySymbol(formState.currency),
@@ -234,12 +236,12 @@ fun AddAccountScreen(
     OutlinedTextField(
         value = "${formState.currency} (${CurrencyFormatter.getCurrencySymbol(formState.currency)})",
         onValueChange = {},
-        label = { Text("Currency") },
+        label = { Text(stringResource(R.string.currency_label)) },
         readOnly = true,
         modifier = Modifier.fillMaxWidth(),
         trailingIcon = {
             IconButton(onClick = { showCurrencySheet = true }) {
-                Icon(Icons.Default.ArrowDropDown, contentDescription = "Select Currency")
+                Icon(Icons.Default.ArrowDropDown, contentDescription = stringResource(R.string.select_currency))
             }
         },
         leadingIcon = {
@@ -263,13 +265,13 @@ fun AddAccountScreen(
         OutlinedTextField(
             value = formState.creditLimit,
             onValueChange = manageAccountsViewModel::updateCreditLimit,
-            label = { Text("Credit Limit") },
-            placeholder = { Text("0.00") },
+            label = { Text(stringResource(R.string.credit_limit_label)) },
+            placeholder = { Text(stringResource(R.string.placeholder_decimal)) },
             leadingIcon = {
                 Icon(Icons.Default.CreditScore, contentDescription = null)
             },
             supportingText = {
-                Text("Optional: Set credit limit for utilization tracking")
+                Text(stringResource(R.string.credit_limit_hint))
             },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
@@ -290,7 +292,7 @@ fun AddAccountScreen(
         enabled = formState.isValid,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Text("Save Account")
+        Text(stringResource(R.string.save_account))
     }
 
     // Add some bottom padding for better scroll experience

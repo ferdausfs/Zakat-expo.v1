@@ -56,6 +56,8 @@ import dev.chrisbanes.haze.hazeEffect
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import java.time.format.DateTimeFormatter
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 
 @OptIn(ExperimentalHazeApi::class)
 @Composable
@@ -132,10 +134,10 @@ fun ExportTransactionsDialog(
                 // Title
                 Text(
                     text = when (exportState) {
-                        is ExportState.Ready -> "Export Transactions"
-                        is ExportState.Exporting -> "Exporting..."
-                        is ExportState.Success -> "Export Complete!"
-                        is ExportState.Error -> "Export Failed"
+                        is ExportState.Ready -> stringResource(R.string.export_transactions)
+                        is ExportState.Exporting -> stringResource(R.string.exporting)
+                        is ExportState.Success -> stringResource(R.string.export_complete)
+                        is ExportState.Error -> stringResource(R.string.export_failed)
                     },
                     style = MaterialTheme.typography.headlineSmall,
                     textAlign = TextAlign.Center
@@ -147,7 +149,7 @@ fun ExportTransactionsDialog(
                 when (val state = exportState) {
                     is ExportState.Ready -> {
                         Text(
-                            text = "Export ${transactions.size} transactions to CSV format",
+                            text = stringResource(R.string.export_transactions_desc, transactions.size),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.7f),
                             textAlign = TextAlign.Center
@@ -171,7 +173,7 @@ fun ExportTransactionsDialog(
                                     horizontalArrangement = Arrangement.SpaceBetween
                                 ) {
                                     Text(
-                                        text = "Total transactions:",
+                                        text = stringResource(R.string.total_transactions_export),
                                         style = MaterialTheme.typography.bodySmall
                                     )
                                     Text(
@@ -193,7 +195,7 @@ fun ExportTransactionsDialog(
                                         modifier = Modifier.fillMaxWidth()
                                     ) {
                                         Text(
-                                            text = "Date range:",
+                                            text = stringResource(R.string.date_range),
                                             style = MaterialTheme.typography.bodySmall,
                                             color = MaterialTheme.colorScheme.onSurfaceVariant
                                         )
@@ -225,7 +227,7 @@ fun ExportTransactionsDialog(
                     
                     is ExportState.Success -> {
                         Text(
-                            text = "Successfully exported ${state.transactionCount} transactions",
+                            text = stringResource(R.string.export_success_msg_format, state.transactionCount),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = TextAlign.Center
@@ -261,7 +263,7 @@ fun ExportTransactionsDialog(
                                     )
                                 }
                                 Text(
-                                    text = "Size: ${formatFileSize(state.fileSizeBytes)}",
+                                    text = stringResource(R.string.size_format, formatFileSize(state.fileSizeBytes)),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
                                 )
@@ -302,7 +304,7 @@ fun ExportTransactionsDialog(
                                 ),
                                 modifier = Modifier.weight(1f)
                             ) {
-                                Text("Cancel")
+                                Text(stringResource(R.string.cancel))
                             }
                             
                             Button(
@@ -345,7 +347,7 @@ fun ExportTransactionsDialog(
                                 ),
                                 modifier = Modifier.weight(1f)
                             ) {
-                                Text("Export")
+                                Text(stringResource(R.string.export))
                             }
                         }
                         
@@ -368,7 +370,7 @@ fun ExportTransactionsDialog(
                                 ),
                                 modifier = Modifier.weight(1f)
                             ) {
-                                Text("Done")
+                                Text(stringResource(R.string.done))
                             }
                             
                             Button(
@@ -377,10 +379,10 @@ fun ExportTransactionsDialog(
                                     val shareIntent = Intent(Intent.ACTION_SEND).apply {
                                         type = "text/csv"
                                         putExtra(Intent.EXTRA_STREAM, (exportState as ExportState.Success).uri)
-                                        putExtra(Intent.EXTRA_SUBJECT, "Cashiro Transactions Export")
+                                        putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.csv_export_subject))
                                         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                                     }
-                                    context.startActivity(Intent.createChooser(shareIntent, "Share CSV"))
+                                    context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share_csv)))
                                 },
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = MaterialTheme.colorScheme.primary,
@@ -400,7 +402,7 @@ fun ExportTransactionsDialog(
                                     modifier = Modifier.size(16.dp)
                                 )
                                 Spacer(modifier = Modifier.width(4.dp))
-                                Text("Share")
+                                Text(stringResource(R.string.share))
                             }
                         }
                         
@@ -419,7 +421,7 @@ fun ExportTransactionsDialog(
                                 ),
                                 modifier = Modifier.weight(1f)
                             ) {
-                                Text("Close")
+                                Text(stringResource(R.string.close))
                             }
                             
                             Button(
@@ -438,7 +440,7 @@ fun ExportTransactionsDialog(
                                 ),
                                 modifier = Modifier.weight(1f)
                             ) {
-                                Text("Retry")
+                                Text(stringResource(R.string.retry))
                             }
                         }
                     }

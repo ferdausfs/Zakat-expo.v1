@@ -57,6 +57,7 @@ import com.ritesh.cashiro.presentation.ui.icons.GalleryExport
 import com.ritesh.cashiro.presentation.ui.icons.Iconax
 import com.ritesh.cashiro.presentation.ui.theme.Dimensions
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
+import androidx.compose.ui.res.stringResource
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -96,7 +97,7 @@ fun EditProfileSheet(
             verticalArrangement = Arrangement.spacedBy(Spacing.lg)
         ) {
             Text(
-                text = "Edit Profile",
+                text = stringResource(R.string.edit_profile),
                 style = MaterialTheme.typography.titleMediumEmphasized,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(horizontal = Dimensions.Padding.content)
@@ -114,7 +115,7 @@ fun EditProfileSheet(
             TextField(
                 value = state.editedUserName,
                 onValueChange = onNameChange,
-                label = { Text("Name", fontWeight = FontWeight.SemiBold) },
+                label = { Text(stringResource(R.string.name_label), fontWeight = FontWeight.SemiBold) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth().padding(horizontal = Dimensions.Padding.content),
                 shape = RoundedCornerShape(Dimensions.Radius.md),
@@ -159,7 +160,7 @@ fun EditProfileSheet(
                     ) {
                         Icon(Iconax.GalleryExport, contentDescription = null)
                         Spacer(Modifier.width(8.dp))
-                        Text("Gallery")
+                        Text(stringResource(R.string.gallery))
                     }
 
                     Button(
@@ -175,7 +176,7 @@ fun EditProfileSheet(
                     ) {
                         Icon(Iconax.CloseCircle, contentDescription = null)
                         Spacer(Modifier.width(8.dp))
-                        Text("Clear")
+                        Text(stringResource(R.string.clear))
                     }
                 }
                 Button(
@@ -186,7 +187,7 @@ fun EditProfileSheet(
                 ) {
                     Icon(Iconax.Camera, contentDescription = null)
                     Spacer(Modifier.width(8.dp))
-                    Text("Change Banner")
+                    Text(stringResource(R.string.change_banner))
                 }
             }
 
@@ -237,7 +238,7 @@ fun EditProfileSheet(
             ) {
                 Icon(Icons.Default.Done, contentDescription = null)
                 Spacer(Modifier.width(Spacing.sm))
-                Text("Save", style = MaterialTheme.typography.titleMedium)
+                Text(stringResource(R.string.save), style = MaterialTheme.typography.titleMedium)
             }
         }
     }
@@ -261,14 +262,14 @@ fun ProfileCardPreview(
         if (bannerImageUri != null) {
             AsyncImage(
                 model = bannerImageUri,
-                contentDescription = null,
+                contentDescription = stringResource(R.string.banner),
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
         } else {
             Image(
                 painter = painterResource(id = R.drawable.banner_bg_image),
-                contentDescription = null,
+                contentDescription = stringResource(R.string.banner),
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
@@ -302,14 +303,14 @@ fun ProfileCardPreview(
             if (profileImageUri != null) {
                 AsyncImage(
                     model = profileImageUri,
-                    contentDescription = null,
+                    contentDescription = stringResource(R.string.profile),
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
             } else {
                 Image(
                     painter = painterResource(id = R.drawable.avatar_1),
-                    contentDescription = "Profile",
+                    contentDescription = stringResource(R.string.profile),
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )

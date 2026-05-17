@@ -51,6 +51,8 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -124,7 +126,7 @@ fun SharedTransitionScope.AccountDetailScreen(
             CustomTitleTopAppBar(
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehaviorLarge,
-                title = uiState.bankName.ifEmpty { "Account Details" },
+                title = uiState.bankName.ifEmpty { stringResource(R.string.account_details) },
                 hasBackButton = true,
                 hazeState = hazeState,
                 navigationContent = { NavigationContent { navController.safePopBackStack() } },
@@ -172,7 +174,7 @@ fun SharedTransitionScope.AccountDetailScreen(
                     ExpandableBalanceChart(
                         primaryCurrency = uiState.primaryCurrency,
                         balanceHistory = uiState.balanceChartData,
-                        selectedTimeframe = selectedDateRange.label,
+                        selectedTimeframe = selectedDateRange.getLocalizedLabel(),
                         modifier = Modifier.padding(horizontal = Dimensions.Padding.content)
                     )
                 }
@@ -187,7 +189,7 @@ fun SharedTransitionScope.AccountDetailScreen(
                     expenses = uiState.totalExpenses,
                     netBalance = uiState.netBalance,
                     currency = uiState.primaryCurrency,
-                    title = selectedDateRange.label,
+                    title = selectedDateRange.getLocalizedLabel(),
                     isEstimated = uiState.hasMultipleCurrencies,
                     isLoading = uiState.isLoading,
                     modifier = Modifier.padding(horizontal = Dimensions.Padding.content)
@@ -199,7 +201,7 @@ fun SharedTransitionScope.AccountDetailScreen(
 
             item {
                 SectionHeader(
-                    title = "Transactions (${uiState.transactions.size})",
+                    title = stringResource(R.string.transactions_count, uiState.transactions.size),
                     modifier = Modifier.padding(horizontal = Dimensions.Padding.content + Spacing.sm)
                 )
             }
@@ -313,7 +315,7 @@ private fun ExpandableBalanceChart(
                             modifier = Modifier.size(20.dp)
                         )
                         Text(
-                            text = "Balance Trend",
+                            text = stringResource(R.string.balance_trend),
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Bold
                         )
@@ -328,7 +330,7 @@ private fun ExpandableBalanceChart(
                 
                 Icon(
                     imageVector = Icons.Rounded.KeyboardArrowDown,
-                    contentDescription = if (isExpanded) "Collapse" else "Expand",
+                    contentDescription = if (isExpanded) stringResource(R.string.collapse) else stringResource(R.string.expand),
                     modifier = Modifier
                         .size(24.dp)
                         .rotate(if (isExpanded) 180f else 0f),
@@ -374,7 +376,7 @@ private fun DateRangeFilter(
             FilterChip(
                 selected = selectedRange == range,
                 onClick = { onRangeSelected(range) },
-                label = { Text(range.label) },
+                label = { Text(range.getLocalizedLabel()) },
                 colors = FilterChipDefaults.filterChipColors(
                     selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
                     selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -416,16 +418,28 @@ private fun EmptyTransactionsState(
             )
             Spacer(modifier = Modifier.height(Spacing.md))
             Text(
-                text = "No transactions found",
+                text = stringResource(R.string.no_transactions_found),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Spacer(modifier = Modifier.height(Spacing.xs))
             Text(
-                text = "Transactions for this account will appear here",
+                text = stringResource(R.string.transactions_appear_here),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
+    }
+}
+
+@Composable
+fun DateRange.getLocalizedLabel(): String {
+    return when (this) {
+        DateRange.LAST_7_DAYS -> stringResource(R.string.range_last_7_days)
+        DateRange.LAST_30_DAYS -> stringResource(R.string.range_last_30_days)
+        DateRange.LAST_3_MONTHS -> stringResource(R.string.range_last_3_months)
+        DateRange.LAST_6_MONTHS -> stringResource(R.string.range_last_6_months)
+        DateRange.LAST_YEAR -> stringResource(R.string.range_last_year)
+        DateRange.ALL_TIME -> stringResource(R.string.range_all_time)
     }
 }
