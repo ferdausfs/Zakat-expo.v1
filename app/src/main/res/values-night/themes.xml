@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Base dark theme -->
-    <style name="Theme.CashiroCompose" parent="android:Theme.Material.NoActionBar" />
+    <style name="Theme.CashiroCompose" parent="Theme.AppCompat.NoActionBar" />
     
     <!-- Splash Screen theme for dark mode -->
     <style name="Theme.Cashiro.SplashScreen" parent="Theme.SplashScreen">

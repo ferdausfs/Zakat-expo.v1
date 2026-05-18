@@ -148,6 +148,7 @@ ksp {
 
 dependencies {
     implementation(libs.androidx.compose.animation)
+    implementation(libs.appcompat)
     // Core Library Desugaring
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 
@@ -155,6 +156,7 @@ dependencies {
     implementation(project(":parser-core"))
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))

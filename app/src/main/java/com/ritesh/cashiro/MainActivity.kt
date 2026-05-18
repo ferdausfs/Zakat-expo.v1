@@ -10,7 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.fragment.app.FragmentActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.ritesh.cashiro.receiver.SmsBroadcastReceiver
 import com.ritesh.cashiro.data.manager.NotificationScheduler
 import androidx.lifecycle.lifecycleScope
@@ -40,7 +40,7 @@ import javax.inject.Inject
 import kotlin.getValue
 
 @AndroidEntryPoint
-class MainActivity : FragmentActivity() {
+class MainActivity : AppCompatActivity() {
     companion object {
         const val ACTION_ADD_TRANSACTION = "com.ritesh.cashiro.action.ADD_TRANSACTION"
         const val ACTION_ADD_SUBSCRIPTION = "com.ritesh.cashiro.action.ADD_SUBSCRIPTION"

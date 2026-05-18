@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Base theme -->
-    <style name="Theme.CashiroCompose" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.CashiroCompose" parent="Theme.AppCompat.Light.NoActionBar" />
     
     <!-- Splash Screen theme for light mode -->
     <style name="Theme.Cashiro.SplashScreen" parent="Theme.SplashScreen">

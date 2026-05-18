@@ -828,4 +828,31 @@
     <string name="uncategorized">Без категорії</string>
     <string name="net">Чистий</string>
     <string name="processing">Processing…</string>
+
+    <!-- Language Selection -->
+    <string name="language">Мова</string>
+    <string name="language_subtitle">Змінити мову додатка</string>
+    <string name="select_language">Оберіть мову</string>
+
+    <!-- Settings Screen -->
+    <string name="transactions_count_short">%1$d транзакцій</string>
+    <string name="appearances">Оформлення</string>
+    <string name="appearances_subtitle">Налаштування персоналізації додатка</string>
+    <string name="accounts_subtitle">Додавайте рахунки та оновлюйте баланс</string>
+    <string name="budgets_subtitle">Встановлюйте та керуйте щомісячними лімітами витрат</string>
+    <string name="categories_subtitle">Керуйте категоріями витрат та доходів</string>
+    <string name="smart_rules_subtitle">Автоматична категоризація транзакцій</string>
+    <string name="data_privacy_subtitle">Керуйте своїми даними та налаштуваннями конфіденційності</string>
+    <string name="ai_chat_assistant">Чат-асистент зі штучним інтелектом</string>
+    <string name="ai_chat_subtitle_not_downloaded">Завантажити модель Qwen 2.5 (%1$d МБ)</string>
+    <string name="ai_chat_subtitle_downloading">Завантаження… %1$d%%</string>
+    <string name="ai_chat_subtitle_paused">Завантаження призупинено. Натисніть, щоб продовжити.</string>
+    <string name="ai_chat_subtitle_completed">Qwen готовий до чату</string>
+    <string name="ai_chat_subtitle_failed">Завантаження не вдалося. Натисніть, щоб спробувати знову.</string>
+    <string name="ai_chat_subtitle_insufficient_space">Недостатньо вільного місця</string>
+    <string name="notifications">Сповіщення</string>
+    <string name="notifications_subtitle">Керуйте налаштуваннями нагадувань</string>
+    <string name="sms_subtitle">Керуйте налаштуваннями SMS</string>
+    <string name="webhooks_subtitle">Синхронізація фінансів BYOAPI</string>
+    <string name="about_subtitle">Версія додатка, вихідний код та інше</string>
 </resources>

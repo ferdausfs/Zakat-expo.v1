@@ -1,12 +1,13 @@
 package com.ritesh.cashiro.presentation.ui.features.settings
 
-import android.content.Intent
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,6 +24,7 @@ import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Error
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material.icons.rounded.Translate
 import androidx.compose.material.icons.rounded.Webhook
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -44,8 +46,8 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
@@ -57,22 +59,18 @@ import com.ritesh.cashiro.core.Constants
 import com.ritesh.cashiro.presentation.effects.overScrollVertical
 import com.ritesh.cashiro.presentation.ui.components.CustomTitleTopAppBar
 import com.ritesh.cashiro.presentation.ui.components.DeleteAIModelDialog
+import com.ritesh.cashiro.presentation.ui.components.LanguageSelectionBottomSheet
 import com.ritesh.cashiro.presentation.ui.components.ListItem
 import com.ritesh.cashiro.presentation.ui.components.ListItemPosition
 import com.ritesh.cashiro.presentation.ui.components.LoadingCircularProgress
-import com.ritesh.cashiro.presentation.ui.components.SectionHeader
 import com.ritesh.cashiro.presentation.ui.components.toShape
 import com.ritesh.cashiro.presentation.ui.features.categories.NavigationContent
 import com.ritesh.cashiro.presentation.ui.icons.Bag
 import com.ritesh.cashiro.presentation.ui.icons.Box2
 import com.ritesh.cashiro.presentation.ui.icons.Clock
-import com.ritesh.cashiro.presentation.ui.icons.ExportArrow02
 import com.ritesh.cashiro.presentation.ui.icons.Fireworks7
-import com.ritesh.cashiro.presentation.ui.icons.Ghost
 import com.ritesh.cashiro.presentation.ui.icons.Iconax
 import com.ritesh.cashiro.presentation.ui.icons.ImportArrow01
-import com.ritesh.cashiro.presentation.ui.icons.MessageProgramming
-import com.ritesh.cashiro.presentation.ui.icons.MessageQuestion
 import com.ritesh.cashiro.presentation.ui.icons.NotificationBing
 import com.ritesh.cashiro.presentation.ui.icons.SecuritySafe
 import com.ritesh.cashiro.presentation.ui.icons.Status
@@ -84,12 +82,8 @@ import com.ritesh.cashiro.presentation.ui.theme.cyan_dark
 import com.ritesh.cashiro.presentation.ui.theme.cyan_light
 import com.ritesh.cashiro.presentation.ui.theme.green_dark
 import com.ritesh.cashiro.presentation.ui.theme.green_light
-import com.ritesh.cashiro.presentation.ui.theme.grey_dark
-import com.ritesh.cashiro.presentation.ui.theme.grey_light
 import com.ritesh.cashiro.presentation.ui.theme.orange_dark
 import com.ritesh.cashiro.presentation.ui.theme.orange_light
-import com.ritesh.cashiro.presentation.ui.theme.pink_dark
-import com.ritesh.cashiro.presentation.ui.theme.pink_light
 import com.ritesh.cashiro.presentation.ui.theme.purple_dark
 import com.ritesh.cashiro.presentation.ui.theme.purple_light
 import com.ritesh.cashiro.presentation.ui.theme.red_dark
@@ -125,6 +119,77 @@ fun SettingsScreen(
     val userPreferences by settingsViewModel.userPreferences.collectAsStateWithLifecycle(initialValue = null)
     val isDeveloperModeEnabled = userPreferences?.isDeveloperModeEnabled == true
     var showDeleteModelDialog by remember { mutableStateOf(false) }
+    var showLanguageBottomSheet by remember { mutableStateOf(false) }
+    val currentLanguageCode = remember(androidx.compose.ui.platform.LocalConfiguration.current) {
+        val locales = AppCompatDelegate.getApplicationLocales()
+        if (!locales.isEmpty) {
+            locales.get(0)?.language ?: "en"
+        } else {
+            java.util.Locale.getDefault().language
+        }
+    }
+    val currentLanguageName = remember(currentLanguageCode) {
+        when (currentLanguageCode) {
+            "en" -> "English"
+            "af" -> "Afrikaans"
+            "ar" -> "العربية"
+            "az" -> "Azərbaycan"
+            "bg" -> "Български"
+            "bn" -> "বাংলা"
+            "bo" -> "བོད་སྐད་"
+            "ca" -> "Català"
+            "cs" -> "Čeština"
+            "da" -> "Dansk"
+            "de" -> "Deutsch"
+            "dz" -> "རྫོང་ཁ་"
+            "el" -> "Ελληνικά"
+            "es" -> "Español"
+            "fa" -> "فارسی"
+            "fr" -> "Français"
+            "gu" -> "ગુજરાતી"
+            "haw" -> "ʻŌlelo Hawaiʻi"
+            "he" -> "עברית"
+            "hi" -> "हिन्दी"
+            "hr" -> "Hrvatski"
+            "hu" -> "Magyar"
+            "id" -> "Bahasa Indonesia"
+            "is" -> "Íslenska"
+            "it" -> "Italiano"
+            "ja" -> "日本語"
+            "kab" -> "Taqbaylit"
+            "kn" -> "ಕನ್ನಡ"
+            "ks" -> "कश्मीरी"
+            "la" -> "Latina"
+            "ml" -> "മലയാളം"
+            "mr" -> "मराठी"
+            "ne" -> "नेपाली"
+            "nl" -> "Nederlands"
+            "no" -> "Norsk"
+            "ny" -> "Chichewa"
+            "or" -> "ଓଡ଼ିଆ"
+            "os" -> "Ирон"
+            "pa" -> "ਪੰਜਾਬੀ"
+            "pl" -> "Polski"
+            "pt" -> "Português"
+            "ro" -> "Română"
+            "ru" -> "Русский"
+            "sk" -> "Slovenčina"
+            "sl" -> "Slovenščina"
+            "sv" -> "Svenska"
+            "ta" -> "தமிழ்"
+            "te" -> "తెలుగు"
+            "th" -> "ไทย"
+            "tk" -> "Türkmençe"
+            "tr" -> "Türkçe"
+            "uk" -> "Українська"
+            "ur" -> "اردو"
+            "uz" -> "Oʻzbekcha"
+            "val" -> "Valencian"
+            "vi" -> "Tiếng Việt"
+            "zh" -> "中文"
+            else -> java.util.Locale.forLanguageTag(currentLanguageCode).displayName
+        }
+    }
 
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val scrollBehaviorSmall = TopAppBarDefaults.pinnedScrollBehavior()
@@ -134,7 +199,7 @@ fun SettingsScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CustomTitleTopAppBar(
-                title = "Settings",
+                title = stringResource(R.string.settings),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
                 hazeState = hazeState,
@@ -177,7 +242,7 @@ fun SettingsScreen(
                     },
                     supporting = {
                         Text(
-                            text = "$totalTransactionsCount Transactions",
+                            text = stringResource(R.string.transactions_count_short, totalTransactionsCount),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onPrimaryContainer.copy(0.8f)
                         )
@@ -224,14 +289,14 @@ fun SettingsScreen(
                 ListItem(
                     headline = {
                         Text(
-                            text = "Appearances",
+                            text = stringResource(R.string.appearances),
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.Medium
                         )
                     },
                     supporting = {
                         Text(
-                            text = "App's personalization settings",
+                            text = stringResource(R.string.appearances_subtitle),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -261,6 +326,46 @@ fun SettingsScreen(
                         )
                     },
                     onClick = { onNavigateToAppearance() },
+                    shape = ListItemPosition.Middle.toShape(),
+                    padding = PaddingValues(0.dp)
+                )
+
+                ListItem(
+                    headline = {
+                        Text(
+                            text = stringResource(R.string.language),
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.Medium
+                        )
+                    },
+                    supporting = {
+                        Text(
+                            text = stringResource(R.string.language_subtitle),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    },
+                    leading = {
+                        Box(
+                            modifier = Modifier
+                                .size(48.dp)
+                                .background(
+                                    color = blue_light,
+                                    shape = CircleShape
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                Icons.Rounded.Translate,
+                                contentDescription = null,
+                                tint = blue_dark
+                            )
+                        }
+                    },
+                    trailing = {
+                        LanguageTrailing(languageName = currentLanguageName)
+                    },
+                    onClick = { showLanguageBottomSheet = true },
                     shape = ListItemPosition.Bottom.toShape(),
                     padding = PaddingValues(0.dp)
                 )
@@ -274,14 +379,14 @@ fun SettingsScreen(
                     ListItem(
                         headline = {
                             Text(
-                                text = "Accounts",
+                                text = stringResource(R.string.title_accounts),
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Medium
                             )
                         },
                         supporting = {
                             Text(
-                                text = "Add accounts and update balances",
+                                text = stringResource(R.string.accounts_subtitle),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -294,7 +399,7 @@ fun SettingsScreen(
                                         color = red_light,
                                         shape = CircleShape
                                     ),
-                                contentAlignment = Alignment.Center
+                            contentAlignment = Alignment.Center
                             ) {
                                 Icon(
                                     Icons.Rounded.AccountBalance,
@@ -319,14 +424,14 @@ fun SettingsScreen(
                     ListItem(
                         headline = {
                             Text(
-                                text = "Budgets",
+                                text = stringResource(R.string.budgets),
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Medium
                             )
                         },
                         supporting = {
                             Text(
-                                text = "Set and manage monthly spending limits",
+                                text = stringResource(R.string.budgets_subtitle),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -364,14 +469,14 @@ fun SettingsScreen(
                     ListItem(
                         headline = {
                             Text(
-                                text = "Categories",
+                                text = stringResource(R.string.categories),
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Medium
                             )
                         },
                         supporting = {
                             Text(
-                                text = "Manage expense and income categories",
+                                text = stringResource(R.string.categories_subtitle),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -409,14 +514,14 @@ fun SettingsScreen(
                     ListItem(
                         headline = {
                             Text(
-                                text = "Smart Rules",
+                                text = stringResource(R.string.smart_rules),
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Medium
                             )
                         },
                         supporting = {
                             Text(
-                                text = "Automatic transaction categorization",
+                                text = stringResource(R.string.smart_rules_subtitle),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -454,14 +559,14 @@ fun SettingsScreen(
                     ListItem(
                         headline = {
                             Text(
-                                text = "Data Privacy",
+                                text = stringResource(R.string.data_privacy_title),
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Medium
                             )
                         },
                         supporting = {
                             Text(
-                                text = "Manage your data and privacy settings",
+                                text = stringResource(R.string.data_privacy_subtitle),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -504,7 +609,7 @@ fun SettingsScreen(
                     ListItem(
                         headline = {
                             Text(
-                                text = "AI Chat Assistant",
+                                text = stringResource(R.string.ai_chat_assistant),
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Medium
                             )
@@ -512,12 +617,12 @@ fun SettingsScreen(
                         supporting = {
                             Text(
                                 text = when (downloadState) {
-                                    DownloadState.NOT_DOWNLOADED -> "Download Qwen 2.5 model (${Constants.ModelDownload.MODEL_SIZE_MB} MB)"
-                                    DownloadState.DOWNLOADING -> "Downloading... $downloadProgress%"
-                                    DownloadState.PAUSED -> "Download paused. Tap to resume."
-                                    DownloadState.COMPLETED -> "Qwen ready for chat"
-                                    DownloadState.FAILED -> "Download failed. Tap to retry."
-                                    DownloadState.ERROR_INSUFFICIENT_SPACE -> "Not enough storage space"
+                                    DownloadState.NOT_DOWNLOADED -> stringResource(R.string.ai_chat_subtitle_not_downloaded, Constants.ModelDownload.MODEL_SIZE_MB)
+                                    DownloadState.DOWNLOADING -> stringResource(R.string.ai_chat_subtitle_downloading, downloadProgress)
+                                    DownloadState.PAUSED -> stringResource(R.string.ai_chat_subtitle_paused)
+                                    DownloadState.COMPLETED -> stringResource(R.string.ai_chat_subtitle_completed)
+                                    DownloadState.FAILED -> stringResource(R.string.ai_chat_subtitle_failed)
+                                    DownloadState.ERROR_INSUFFICIENT_SPACE -> stringResource(R.string.ai_chat_subtitle_insufficient_space)
                                 },
                                 style = MaterialTheme.typography.bodySmall,
                                 color = if (downloadState == DownloadState.FAILED || downloadState == DownloadState.ERROR_INSUFFICIENT_SPACE)
@@ -602,14 +707,14 @@ fun SettingsScreen(
                     ListItem(
                         headline = {
                             Text(
-                                text = "Notifications",
+                                text = stringResource(R.string.notifications),
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Medium
                             )
                         },
                         supporting = {
                             Text(
-                                text = "Manage reminder notification settings",
+                                text = stringResource(R.string.notifications_subtitle),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -646,14 +751,14 @@ fun SettingsScreen(
                     ListItem(
                         headline = {
                             Text(
-                                text = "SMS",
+                                text = stringResource(R.string.sms_title),
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Medium
                             )
                         },
                         supporting = {
                             Text(
-                                text = "Manage SMS settings",
+                                text = stringResource(R.string.sms_subtitle),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -691,14 +796,14 @@ fun SettingsScreen(
                         ListItem(
                             headline = {
                                 Text(
-                                    text = "Webhooks",
+                                    text = stringResource(R.string.webhooks),
                                     style = MaterialTheme.typography.bodyLarge,
                                     fontWeight = FontWeight.Medium
                                 )
                             },
                             supporting = {
                                 Text(
-                                    text = "BYOAPI finance sync",
+                                    text = stringResource(R.string.webhooks_subtitle),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -738,14 +843,14 @@ fun SettingsScreen(
                 ListItem(
                     headline = {
                         Text(
-                            text = "About",
+                            text = stringResource(R.string.about),
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.Medium
                         )
                     },
                     supporting = {
                         Text(
-                            text = "App version, source code and more",
+                            text = stringResource(R.string.about_subtitle),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -793,5 +898,40 @@ fun SettingsScreen(
                 hazeState = hazeState
             )
         }
+
+        if (showLanguageBottomSheet) {
+            LanguageSelectionBottomSheet(
+                selectedLanguageCode = currentLanguageCode,
+                onLanguageSelected = { code ->
+                    val localeList = androidx.core.os.LocaleListCompat.forLanguageTags(code)
+                    androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(localeList)
+                },
+                onDismiss = { showLanguageBottomSheet = false }
+            )
+        }
+    }
+}
+
+@Composable
+fun LanguageTrailing(
+    languageName: String,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Spacing.xs)
+    ) {
+        Text(
+            text = languageName,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.primary,
+            fontWeight = FontWeight.Medium
+        )
+        Icon(
+            Icons.Rounded.ChevronRight,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }
