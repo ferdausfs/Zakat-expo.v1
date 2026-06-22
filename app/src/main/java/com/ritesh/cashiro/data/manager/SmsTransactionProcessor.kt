@@ -1,6 +1,7 @@
 package com.ritesh.cashiro.data.manager
 
 import android.util.Log
+import com.ritesh.cashiro.BuildConfig
 import com.ritesh.parser.core.ParsedTransaction
 import com.ritesh.parser.core.bank.BankParserFactory
 import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
@@ -165,10 +166,11 @@ class SmsTransactionProcessor @Inject constructor(
             } else {
                 entityWithRules
             }
+            val finalEntityForInsert = accountBalanceRepository.resolveEntityAccountNumber(finalEntity, parsedTransaction)
 
-            val rowId = transactionRepository.insertTransaction(finalEntity)
+            val rowId = transactionRepository.insertTransaction(finalEntityForInsert)
             if (rowId != -1L) {
-                Log.d(TAG, "Saved new transaction with ID: $rowId${if (finalEntity.isRecurring) " (Recurring)" else ""}")
+                Log.d(TAG, "Saved new transaction with ID: $rowId${if (finalEntityForInsert.isRecurring) " (Recurring)" else ""}")
 
                 // Save rule applications if any rules were applied
                 if (ruleApplications.isNotEmpty()) {
@@ -179,7 +181,7 @@ class SmsTransactionProcessor @Inject constructor(
                 }
 
                 // Process balance updates
-                processBalanceUpdate(parsedTransaction, finalEntity, rowId)
+                processBalanceUpdate(parsedTransaction, finalEntityForInsert, rowId)
 
                 return ProcessingResult(true, transactionId = rowId)
             } else {
@@ -197,7 +199,7 @@ class SmsTransactionProcessor @Inject constructor(
         entity: TransactionEntity,
         rowId: Long
     ) {
-        if (parsedTransaction.accountLast4 == null) return
+        val parsedAccountLast4 = parsedTransaction.accountLast4 ?: return
 
         val isFromCard = parsedTransaction.isFromCard
 
@@ -242,7 +244,7 @@ class SmsTransactionProcessor @Inject constructor(
                 }
             }
         } else {
-            parsedTransaction.accountLast4
+            entity.accountNumber?.takeIf { it.isNotBlank() } ?: parsedAccountLast4
         }
 
         if (targetAccountLast4 != null) {
@@ -301,7 +303,9 @@ class SmsTransactionProcessor @Inject constructor(
             )
 
             accountBalanceRepository.insertBalance(balanceEntity)
-            Log.d(TAG, "Saved balance update for ${parsedTransaction.bankName} **$targetAccountLast4")
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, "Saved balance update for ${parsedTransaction.bankName} **$targetAccountLast4")
+            }
         }
     }
 }

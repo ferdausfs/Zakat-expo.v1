@@ -6,6 +6,8 @@ import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
 import kotlinx.coroutines.flow.Flow
 import java.math.BigDecimal
 import java.time.LocalDateTime
+import com.ritesh.cashiro.data.database.entity.TransactionEntity
+import com.ritesh.parser.core.ParsedTransaction
 import dagger.hilt.android.qualifiers.ApplicationContext
 import com.ritesh.cashiro.utils.IconResolutionUtils
 import javax.inject.Inject
@@ -16,7 +18,7 @@ class AccountBalanceRepository @Inject constructor(
     private val accountBalanceDao: AccountBalanceDao,
     @ApplicationContext private val context: Context
 ) {
-    
+
     suspend fun insertBalance(balance: AccountBalanceEntity): Long {
         val balanceWithIconName = if (balance.iconName.isEmpty() && balance.iconResId != 0) {
             balance.copy(iconName = IconResolutionUtils.resIdToName(context, balance.iconResId))
@@ -29,7 +31,36 @@ class AccountBalanceRepository @Inject constructor(
     suspend fun getLatestBalance(bankName: String, accountLast4: String): AccountBalanceEntity? {
         return accountBalanceDao.getLatestBalance(bankName, accountLast4)
     }
-    
+
+    suspend fun resolveAccountLast4(bankName: String, accountLast4: String): String {
+        if (accountLast4.isBlank()) {
+            return accountLast4
+        }
+
+        if (!accountLast4.all { it.isDigit() }) {
+            return accountLast4
+        }
+
+        if (accountLast4.length >= 4) {
+            return accountLast4.takeLast(4)
+        }
+
+        val matches = accountBalanceDao.getAccountLast4sEndingWith(bankName, accountLast4)
+        return if (matches.size == 1) matches.first() else accountLast4
+    }
+
+    suspend fun resolveEntityAccountNumber(
+        entity: TransactionEntity,
+        parsedTransaction: ParsedTransaction
+    ): TransactionEntity {
+        if (!parsedTransaction.isFromCard && entity.bankName != null && entity.accountNumber != null) {
+            return entity.copy(
+                accountNumber = resolveAccountLast4(entity.bankName, entity.accountNumber)
+            )
+        }
+        return entity
+    }
+
     fun getLatestBalanceFlow(bankName: String, accountLast4: String): Flow<AccountBalanceEntity?> {
         return accountBalanceDao.getLatestBalanceFlow(bankName, accountLast4)
     }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.provider.Telephony
 import android.util.Log
+import com.ritesh.cashiro.BuildConfig
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -1099,12 +1100,13 @@ private suspend fun saveParsedTransaction(
         } else {
             entityWithRules
         }
+        val finalEntityForInsert = accountBalanceRepository.resolveEntityAccountNumber(finalEntity, parsedTransaction)
 
-        val rowId = transactionRepository.insertTransaction(finalEntity)
+        val rowId = transactionRepository.insertTransaction(finalEntityForInsert)
         if (rowId != -1L) {
             Log.d(
                 TAG,
-                "Saved new transaction with ID: $rowId${if (finalEntity.isRecurring) " (Recurring)" else ""}"
+                "Saved new transaction with ID: $rowId${if (finalEntityForInsert.isRecurring) " (Recurring)" else ""}"
             )
 
             // Save rule applications if any rules were applied
@@ -1120,7 +1122,7 @@ private suspend fun saveParsedTransaction(
             }
 
             // Process balance updates
-            processBalanceUpdate(parsedTransaction, finalEntity, rowId)
+            processBalanceUpdate(parsedTransaction, finalEntityForInsert, rowId)
             return true
         } else {
             Log.d(
@@ -1140,20 +1142,23 @@ private suspend fun processBalanceUpdate(
     entity: com.ritesh.cashiro.data.database.entity.TransactionEntity,
     rowId: Long
 ) {
-    if (parsedTransaction.accountLast4 != null) {
+    val parsedAccountLast4 = parsedTransaction.accountLast4
+    if (parsedAccountLast4 != null) {
         // Determine if this transaction is from a card based on the message pattern
         val isFromCard = parsedTransaction.isFromCard
 
-        Log.d(
-            TAG, """
-                Processing transaction:
-                - Bank: ${parsedTransaction.bankName}
-                - Number: **${parsedTransaction.accountLast4}
-                - Is From Card: $isFromCard
-                - Transaction Type: ${parsedTransaction.type}
-                - SMS Body (first 200 chars): ${parsedTransaction.smsBody.take(200)}
-            """.trimIndent()
-        )
+        if (BuildConfig.DEBUG) {
+            Log.d(
+                TAG, """
+                    Processing transaction:
+                    - Bank: ${parsedTransaction.bankName}
+                    - Number: **${parsedTransaction.accountLast4}
+                    - Is From Card: $isFromCard
+                    - Transaction Type: ${parsedTransaction.type}
+                    - SMS Body (first 200 chars): ${parsedTransaction.smsBody.take(200)}
+                """.trimIndent()
+            )
+        }
 
         val targetAccountLast4 = if (isFromCard) {
             // This is a card transaction
@@ -1225,7 +1230,7 @@ private suspend fun processBalanceUpdate(
         } else {
             // This is a direct account transaction - always create balance entry
             Log.d(TAG, "Transaction identified as ACCOUNT transaction - will create balance entry")
-            parsedTransaction.accountLast4
+            entity.accountNumber?.takeIf { it.isNotBlank() } ?: parsedAccountLast4
         }
 
         // Create balance entry if we have a target account
@@ -1283,23 +1288,25 @@ private suspend fun processBalanceUpdate(
                 else -> "Calculated (${parsedTransaction.type.toEntityType()})"
             }
 
-            Log.d(
-                TAG, """
-                    Saving account balance:
-                    - SMS Timestamp: ${parsedTransaction.timestamp} (${java.time.Instant.ofEpochMilli(parsedTransaction.timestamp)})
-                    - Bank: ${parsedTransaction.bankName}
-                    - Original: **${parsedTransaction.accountLast4}
-                    - Target Account: **$targetAccountLast4
-                    - Is Card Transaction: ${parsedTransaction.isFromCard}
-                    - Is Credit Card: $isCreditCard
-                    - Transaction Type: ${parsedTransaction.type.toEntityType()}
-                    - Transaction Amount: ${parsedTransaction.amount}
-                    - Previous Balance: ${existingAccount?.balance}
-                    - New Balance: $newBalance
-                    - Balance Source: $balanceSource
-                    - Available Limit (from SMS): ${parsedTransaction.creditLimit}
-                """.trimIndent()
-            )
+            if (BuildConfig.DEBUG) {
+                Log.d(
+                    TAG, """
+                        Saving account balance:
+                        - SMS Timestamp: ${parsedTransaction.timestamp} (${java.time.Instant.ofEpochMilli(parsedTransaction.timestamp)})
+                        - Bank: ${parsedTransaction.bankName}
+                        - Original: **${parsedTransaction.accountLast4}
+                        - Target Account: **$targetAccountLast4
+                        - Is Card Transaction: ${parsedTransaction.isFromCard}
+                        - Is Credit Card: $isCreditCard
+                        - Transaction Type: ${parsedTransaction.type.toEntityType()}
+                        - Transaction Amount: ${parsedTransaction.amount}
+                        - Previous Balance: ${existingAccount?.balance}
+                        - New Balance: $newBalance
+                        - Balance Source: $balanceSource
+                        - Available Limit (from SMS): ${parsedTransaction.creditLimit}
+                    """.trimIndent()
+                )
+            }
 
             // Save balance if:
             val shouldSaveBalance = when {
@@ -1327,27 +1334,30 @@ private suspend fun processBalanceUpdate(
 
                 accountBalanceRepository.insertBalance(balanceEntity)
 
-                val logMsg = if (parsedTransaction.creditLimit != null) {
-                    "Saved balance/credit limit (${
-                        CurrencyFormatter.formatCurrency(
-                            parsedTransaction.creditLimit!!
-                        )
-                    }) for ${parsedTransaction.bankName} **$targetAccountLast4"
-                } else {
-                    "Saved balance update for ${parsedTransaction.bankName} **$targetAccountLast4"
+                if (BuildConfig.DEBUG) {
+                    val logMsg = if (parsedTransaction.creditLimit != null) {
+                        "Saved balance/credit limit (${
+                            CurrencyFormatter.formatCurrency(
+                                parsedTransaction.creditLimit!!
+                            )
+                        }) for ${parsedTransaction.bankName} **$targetAccountLast4"
+                    } else {
+                        "Saved balance update for ${parsedTransaction.bankName} **$targetAccountLast4"
+                    }
+                    Log.d(TAG, logMsg)
                 }
-                Log.d(TAG, logMsg)
             } else {
-                Log.d(
-                    TAG,
-                    "Skipped saving balance: ${parsedTransaction.bankName} **$targetAccountLast4"
-                )
+                if (BuildConfig.DEBUG) {
+                    Log.d(TAG, "Skipped saving balance: ${parsedTransaction.bankName} **$targetAccountLast4")
+                }
             }
         } else {
-            Log.d(
-                TAG,
-                "No balance entry created for unlinked debit card: ${parsedTransaction.bankName} **${parsedTransaction.accountLast4}"
-            )
+            if (BuildConfig.DEBUG) {
+                Log.d(
+                    TAG,
+                    "No balance entry created for unlinked debit card: ${parsedTransaction.bankName} **${parsedTransaction.accountLast4}"
+                )
+            }
         }
     }
 }

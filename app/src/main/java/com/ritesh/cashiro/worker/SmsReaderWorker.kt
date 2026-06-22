@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.provider.Telephony
 import android.util.Log
+import com.ritesh.cashiro.BuildConfig
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -345,11 +346,12 @@ class SmsReaderWorker @AssistedInject constructor(
                             } else {
                                 entityWithRules
                             }
+                            val finalEntityForInsert = accountBalanceRepository.resolveEntityAccountNumber(finalEntity, parsedTransaction)
                             
-                            val rowId = transactionRepository.insertTransaction(finalEntity)
+                            val rowId = transactionRepository.insertTransaction(finalEntityForInsert)
                             if (rowId != -1L) {
                                 savedCount++
-                                Log.d(TAG, "Saved new transaction with ID: $rowId${if (finalEntity.isRecurring) " (Recurring)" else ""}")
+                                Log.d(TAG, "Saved new transaction with ID: $rowId${if (finalEntityForInsert.isRecurring) " (Recurring)" else ""}")
 
                                 // Save rule applications if any rules were applied
                                 if (ruleApplications.isNotEmpty()) {
@@ -362,19 +364,22 @@ class SmsReaderWorker @AssistedInject constructor(
                                 
                                 // Only save balance/credit limit information for NEW transactions (not duplicates)
                                 // This prevents incorrect balance accumulation from duplicate SMS messages
-                                if (parsedTransaction.accountLast4 != null) {
+                                val parsedAccountLast4 = parsedTransaction.accountLast4
+                                if (parsedAccountLast4 != null) {
                                 
                                 // Determine if this transaction is from a card based on the message pattern
                                 val isFromCard = parsedTransaction.isFromCard
                                 
-                                Log.d(TAG, """
-                                    Processing transaction:
-                                    - Bank: ${parsedTransaction.bankName}
-                                    - Number: **${parsedTransaction.accountLast4}
-                                    - Is From Card: $isFromCard
-                                    - Transaction Type: ${parsedTransaction.type}
-                                    - SMS Body (first 200 chars): ${parsedTransaction.smsBody.take(200)}
-                                """.trimIndent())
+                                if (BuildConfig.DEBUG) {
+                                    Log.d(TAG, """
+                                        Processing transaction:
+                                        - Bank: ${parsedTransaction.bankName}
+                                        - Number: **${parsedTransaction.accountLast4}
+                                        - Is From Card: $isFromCard
+                                        - Transaction Type: ${parsedTransaction.type}
+                                        - SMS Body (first 200 chars): ${parsedTransaction.smsBody.take(200)}
+                                    """.trimIndent())
+                                }
                                 
                                 // Handle card vs account logic
                                 val targetAccountLast4 = if (isFromCard) {
@@ -442,7 +447,7 @@ class SmsReaderWorker @AssistedInject constructor(
                                 } else {
                                     // This is a direct account transaction - always create balance entry
                                     Log.d(TAG, "Transaction identified as ACCOUNT transaction - will create balance entry")
-                                    parsedTransaction.accountLast4
+                                    finalEntityForInsert.accountNumber?.takeIf { it.isNotBlank() } ?: parsedAccountLast4
                                 }
                                 
                                 // Only create balance entry if we have a target account
@@ -484,18 +489,20 @@ class SmsReaderWorker @AssistedInject constructor(
                                         }
                                     }
                                     
-                                    Log.d(TAG, """
-                                        Saving account balance:
-                                        - Bank: ${parsedTransaction.bankName}
-                                        - Original: **${parsedTransaction.accountLast4}
-                                        - Target Account: **$targetAccountLast4
-                                        - Is Card Transaction: ${parsedTransaction.isFromCard}
-                                        - Is Credit Card: $isCreditCard
-                                        - Transaction Amount: ${parsedTransaction.amount}
-                                        - Previous Balance: ${existingAccount?.balance}
-                                        - New Balance: $newBalance
-                                        - Available Limit (from SMS): ${parsedTransaction.creditLimit}
-                                    """.trimIndent())
+                                    if (BuildConfig.DEBUG) {
+                                        Log.d(TAG, """
+                                            Saving account balance:
+                                            - Bank: ${parsedTransaction.bankName}
+                                            - Original: **${parsedTransaction.accountLast4}
+                                            - Target Account: **$targetAccountLast4
+                                            - Is Card Transaction: ${parsedTransaction.isFromCard}
+                                            - Is Credit Card: $isCreditCard
+                                            - Transaction Amount: ${parsedTransaction.amount}
+                                            - Previous Balance: ${existingAccount?.balance}
+                                            - New Balance: $newBalance
+                                            - Available Limit (from SMS): ${parsedTransaction.creditLimit}
+                                        """.trimIndent())
+                                    }
                                     
                                     // Save balance if:
                                     val shouldSaveBalance = when {
@@ -523,17 +530,23 @@ class SmsReaderWorker @AssistedInject constructor(
                                         
                                         accountBalanceRepository.insertBalance(balanceEntity)
                                         
-                                        val logMsg = if (parsedTransaction.creditLimit != null) {
-                                            "Saved balance/credit limit (${CurrencyFormatter.formatCurrency(parsedTransaction.creditLimit!!)}) for ${parsedTransaction.bankName} **$targetAccountLast4"
-                                        } else {
-                                            "Saved balance update for ${parsedTransaction.bankName} **$targetAccountLast4"
+                                        if (BuildConfig.DEBUG) {
+                                            val logMsg = if (parsedTransaction.creditLimit != null) {
+                                                "Saved balance/credit limit (${CurrencyFormatter.formatCurrency(parsedTransaction.creditLimit!!)}) for ${parsedTransaction.bankName} **$targetAccountLast4"
+                                            } else {
+                                                "Saved balance update for ${parsedTransaction.bankName} **$targetAccountLast4"
+                                            }
+                                            Log.d(TAG, logMsg)
                                         }
-                                        Log.d(TAG, logMsg)
                                     } else {
-                                        Log.d(TAG, "Skipped saving balance: ${parsedTransaction.bankName} **$targetAccountLast4")
+                                        if (BuildConfig.DEBUG) {
+                                            Log.d(TAG, "Skipped saving balance: ${parsedTransaction.bankName} **$targetAccountLast4")
+                                        }
                                     }
                                 } else {
-                                    Log.d(TAG, "No balance entry created for unlinked debit card: ${parsedTransaction.bankName} **${parsedTransaction.accountLast4}")
+                                    if (BuildConfig.DEBUG) {
+                                        Log.d(TAG, "No balance entry created for unlinked debit card: ${parsedTransaction.bankName} **${parsedTransaction.accountLast4}")
+                                    }
                                 }
                             }
                             } else {
