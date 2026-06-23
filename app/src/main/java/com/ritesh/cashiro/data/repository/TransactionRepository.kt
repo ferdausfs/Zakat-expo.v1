@@ -176,23 +176,11 @@ class TransactionRepository @Inject constructor(
         val accountLast4 = transaction.accountNumber ?: return
         val latestBalance = accountBalanceRepository.getLatestBalance(bankName, accountLast4) ?: return
         val currentBalance = latestBalance.balance
-        val isCreditCard = latestBalance.isCreditCard
 
-        val reversedBalance = when {
-            isCreditCard -> {
-                when (transaction.transactionType) {
-                    TransactionType.EXPENSE, TransactionType.INVESTMENT -> currentBalance - transaction.amount
-                    TransactionType.INCOME -> currentBalance + transaction.amount
-                    else -> currentBalance
-                }
-            }
-            else -> {
-                when (transaction.transactionType) {
-                    TransactionType.EXPENSE, TransactionType.INVESTMENT -> currentBalance + transaction.amount
-                    TransactionType.INCOME -> currentBalance - transaction.amount
-                    else -> currentBalance
-                }
-            }
+        val reversedBalance = when (transaction.transactionType) {
+            TransactionType.CREDIT, TransactionType.INCOME -> currentBalance - transaction.amount
+            TransactionType.EXPENSE, TransactionType.INVESTMENT -> currentBalance + transaction.amount
+            else -> currentBalance
         }.max(BigDecimal.ZERO)
 
         val balanceEntity = AccountBalanceEntity(
@@ -202,7 +190,7 @@ class TransactionRepository @Inject constructor(
             timestamp = LocalDateTime.now(),
             transactionId = null,
             creditLimit = latestBalance.creditLimit,
-            isCreditCard = isCreditCard,
+            isCreditCard = latestBalance.isCreditCard,
             iconResId = latestBalance.iconResId,
             iconName = latestBalance.iconName,
             isWallet = latestBalance.isWallet,
@@ -218,23 +206,11 @@ class TransactionRepository @Inject constructor(
         val accountLast4 = transaction.accountNumber ?: return
         val latestBalance = accountBalanceRepository.getLatestBalance(bankName, accountLast4) ?: return
         val currentBalance = latestBalance.balance
-        val isCreditCard = latestBalance.isCreditCard
 
-        val newBalance = when {
-            isCreditCard -> {
-                when (transaction.transactionType) {
-                    TransactionType.EXPENSE, TransactionType.INVESTMENT -> currentBalance + transaction.amount
-                    TransactionType.INCOME -> (currentBalance - transaction.amount).max(BigDecimal.ZERO)
-                    else -> currentBalance
-                }
-            }
-            else -> {
-                when (transaction.transactionType) {
-                    TransactionType.EXPENSE, TransactionType.INVESTMENT -> (currentBalance - transaction.amount).max(BigDecimal.ZERO)
-                    TransactionType.INCOME -> currentBalance + transaction.amount
-                    else -> currentBalance
-                }
-            }
+        val newBalance = when (transaction.transactionType) {
+            TransactionType.CREDIT, TransactionType.INCOME -> currentBalance + transaction.amount
+            TransactionType.EXPENSE, TransactionType.INVESTMENT -> (currentBalance - transaction.amount).max(BigDecimal.ZERO)
+            else -> currentBalance
         }
 
         val balanceEntity = AccountBalanceEntity(
@@ -244,7 +220,7 @@ class TransactionRepository @Inject constructor(
             timestamp = LocalDateTime.now(),
             transactionId = null,
             creditLimit = latestBalance.creditLimit,
-            isCreditCard = isCreditCard,
+            isCreditCard = latestBalance.isCreditCard,
             iconResId = latestBalance.iconResId,
             iconName = latestBalance.iconName,
             isWallet = latestBalance.isWallet,

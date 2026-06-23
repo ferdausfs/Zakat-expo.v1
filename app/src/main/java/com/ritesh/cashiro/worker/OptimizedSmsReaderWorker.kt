@@ -1325,7 +1325,11 @@ private suspend fun processBalanceUpdate(
                     balance = newBalance,
                     timestamp = entity.dateTime,
                     transactionId = if (rowId != -1L) rowId else null,
-                    creditLimit = existingAccount?.creditLimit, // Keep existing credit limit
+                    creditLimit = if (isCreditCard) {
+                        parsedTransaction.creditLimit?.add(newBalance) ?: existingAccount?.creditLimit
+                    } else {
+                        existingAccount?.creditLimit
+                    },
                     isCreditCard = isCreditCard || (existingAccount?.isCreditCard ?: false),
                     smsSource = parsedTransaction.smsBody.take(500),  // Store SMS snippet
                     sourceType = "TRANSACTION",

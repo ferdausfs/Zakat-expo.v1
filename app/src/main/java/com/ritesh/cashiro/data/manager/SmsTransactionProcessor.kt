@@ -295,7 +295,11 @@ class SmsTransactionProcessor @Inject constructor(
                 balance = newBalance,
                 timestamp = entity.dateTime,
                 transactionId = if (rowId != -1L) rowId else null,
-                creditLimit = existingAccount?.creditLimit,
+                creditLimit = if (isCreditCard) {
+                    parsedTransaction.creditLimit?.add(newBalance) ?: existingAccount?.creditLimit
+                } else {
+                    existingAccount?.creditLimit
+                },
                 isCreditCard = isCreditCard || (existingAccount?.isCreditCard ?: false),
                 smsSource = parsedTransaction.smsBody.take(500),
                 sourceType = "TRANSACTION",

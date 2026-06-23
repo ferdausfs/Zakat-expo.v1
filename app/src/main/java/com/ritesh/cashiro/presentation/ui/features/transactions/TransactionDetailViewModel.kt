@@ -719,7 +719,8 @@ class TransactionDetailViewModel @Inject constructor(
                 }
 
                 TransactionType.CREDIT -> {
-                    // No balance update to revert for now
+                    // Originally added (outstanding increased), so subtract to revert
+                    updateBalance(bankName, accountLast4, transaction.amount.negate(), transaction.currency)
                 }
 
                 TransactionType.TRANSFER -> {
@@ -762,7 +763,7 @@ class TransactionDetailViewModel @Inject constructor(
                 }
 
                 TransactionType.CREDIT -> {
-                    // No balance update for now
+                    updateBalance(bankName, accountLast4, transaction.amount, transaction.currency)
                 }
 
                 TransactionType.TRANSFER -> {

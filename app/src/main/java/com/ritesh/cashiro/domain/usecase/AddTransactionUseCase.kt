@@ -114,9 +114,23 @@ constructor(
                     )
                 }
                 TransactionType.CREDIT -> {
-                    // Credit transactions: amount is held for manual confirmation
-                    // No balance update until user confirms payment
-                    // Transaction is saved for future reference
+                    // Credit transactions: add to outstanding balance (credit usage)
+                    val currentBalance = accountBalanceRepository.getLatestBalance(bankName, accountLast4)
+                    val newBalance = (currentBalance?.balance ?: BigDecimal.ZERO) + amount
+                    accountBalanceRepository.insertBalance(
+                        AccountBalanceEntity(
+                            bankName = bankName,
+                            accountLast4 = accountLast4,
+                            balance = newBalance,
+                            timestamp = date,
+                            transactionId = transactionId,
+                            sourceType = "MANUAL",
+                            iconResId = currentBalance?.iconResId ?: 0,
+                            isCreditCard = currentBalance?.isCreditCard ?: false,
+                            creditLimit = currentBalance?.creditLimit,
+                            currency = currency
+                        )
+                    )
                 }
                 TransactionType.TRANSFER -> {
                     // Transfer: subtract from source, add to target
