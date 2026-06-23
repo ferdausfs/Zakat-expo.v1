@@ -1,6 +1,7 @@
 package com.ritesh.cashiro.data.repository
 
 import com.ritesh.cashiro.data.database.dao.TransactionDao
+import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
 import com.ritesh.cashiro.data.database.entity.TransactionEntity
 import com.ritesh.cashiro.data.database.entity.TransactionType
 import java.math.BigDecimal
@@ -13,7 +14,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 @Singleton
-class TransactionRepository @Inject constructor(private val transactionDao: TransactionDao) {
+class TransactionRepository @Inject constructor(
+    private val transactionDao: TransactionDao,
+    private val accountBalanceRepository: AccountBalanceRepository
+) {
     fun getAllTransactions(): Flow<List<TransactionEntity>> = transactionDao.getAllTransactions()
 
     fun getTransactionCount(): Flow<Int> = transactionDao.getTransactionCount()
@@ -124,14 +128,17 @@ class TransactionRepository @Inject constructor(private val transactionDao: Tran
         } else {
             transactionDao.softDeleteTransaction(transaction.id)
         }
+        reverseBalanceForDeletion(transaction)
     }
 
     suspend fun deleteTransactionById(id: Long, hardDelete: Boolean = false) {
+        val transaction = transactionDao.getTransactionById(id) ?: return
         if (hardDelete) {
             transactionDao.deleteTransactionById(id)
         } else {
             transactionDao.softDeleteTransaction(id)
         }
+        reverseBalanceForDeletion(transaction)
     }
 
     suspend fun deleteAllTransactions() = transactionDao.deleteAllTransactions()
@@ -144,6 +151,7 @@ class TransactionRepository @Inject constructor(private val transactionDao: Tran
 
     suspend fun undoDeleteTransaction(transaction: TransactionEntity) {
         transactionDao.updateTransaction(transaction.copy(isDeleted = false))
+        applyBalanceForTransaction(transaction)
     }
 
     suspend fun deleteTransactions(transactions: List<TransactionEntity>, hardDelete: Boolean = false) {
@@ -153,12 +161,98 @@ class TransactionRepository @Inject constructor(private val transactionDao: Tran
         } else {
             transactionDao.softDeleteTransactions(transactionIds)
         }
+        transactions.forEach { reverseBalanceForDeletion(it) }
     }
 
     suspend fun undoDeleteTransactions(transactions: List<TransactionEntity>) {
         transactions.forEach { transaction ->
             transactionDao.updateTransaction(transaction.copy(isDeleted = false))
+            applyBalanceForTransaction(transaction)
         }
+    }
+
+    private suspend fun reverseBalanceForDeletion(transaction: TransactionEntity) {
+        val bankName = transaction.bankName ?: return
+        val accountLast4 = transaction.accountNumber ?: return
+        val latestBalance = accountBalanceRepository.getLatestBalance(bankName, accountLast4) ?: return
+        val currentBalance = latestBalance.balance
+        val isCreditCard = latestBalance.isCreditCard
+
+        val reversedBalance = when {
+            isCreditCard -> {
+                when (transaction.transactionType) {
+                    TransactionType.EXPENSE, TransactionType.INVESTMENT -> currentBalance - transaction.amount
+                    TransactionType.INCOME -> currentBalance + transaction.amount
+                    else -> currentBalance
+                }
+            }
+            else -> {
+                when (transaction.transactionType) {
+                    TransactionType.EXPENSE, TransactionType.INVESTMENT -> currentBalance + transaction.amount
+                    TransactionType.INCOME -> currentBalance - transaction.amount
+                    else -> currentBalance
+                }
+            }
+        }.max(BigDecimal.ZERO)
+
+        val balanceEntity = AccountBalanceEntity(
+            bankName = bankName,
+            accountLast4 = accountLast4,
+            balance = reversedBalance,
+            timestamp = LocalDateTime.now(),
+            transactionId = null,
+            creditLimit = latestBalance.creditLimit,
+            isCreditCard = isCreditCard,
+            iconResId = latestBalance.iconResId,
+            iconName = latestBalance.iconName,
+            isWallet = latestBalance.isWallet,
+            color = latestBalance.color,
+            currency = transaction.currency,
+            sourceType = "DELETE_REVERSAL"
+        )
+        accountBalanceRepository.insertBalance(balanceEntity)
+    }
+
+    private suspend fun applyBalanceForTransaction(transaction: TransactionEntity) {
+        val bankName = transaction.bankName ?: return
+        val accountLast4 = transaction.accountNumber ?: return
+        val latestBalance = accountBalanceRepository.getLatestBalance(bankName, accountLast4) ?: return
+        val currentBalance = latestBalance.balance
+        val isCreditCard = latestBalance.isCreditCard
+
+        val newBalance = when {
+            isCreditCard -> {
+                when (transaction.transactionType) {
+                    TransactionType.EXPENSE, TransactionType.INVESTMENT -> currentBalance + transaction.amount
+                    TransactionType.INCOME -> (currentBalance - transaction.amount).max(BigDecimal.ZERO)
+                    else -> currentBalance
+                }
+            }
+            else -> {
+                when (transaction.transactionType) {
+                    TransactionType.EXPENSE, TransactionType.INVESTMENT -> (currentBalance - transaction.amount).max(BigDecimal.ZERO)
+                    TransactionType.INCOME -> currentBalance + transaction.amount
+                    else -> currentBalance
+                }
+            }
+        }
+
+        val balanceEntity = AccountBalanceEntity(
+            bankName = bankName,
+            accountLast4 = accountLast4,
+            balance = newBalance,
+            timestamp = LocalDateTime.now(),
+            transactionId = null,
+            creditLimit = latestBalance.creditLimit,
+            isCreditCard = isCreditCard,
+            iconResId = latestBalance.iconResId,
+            iconName = latestBalance.iconName,
+            isWallet = latestBalance.isWallet,
+            color = latestBalance.color,
+            currency = transaction.currency,
+            sourceType = "UNDO_REVERSAL"
+        )
+        accountBalanceRepository.insertBalance(balanceEntity)
     }
 
     suspend fun updateCategoryForMerchant(merchantName: String, newCategory: String) {

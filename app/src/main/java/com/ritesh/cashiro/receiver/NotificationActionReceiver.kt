@@ -6,6 +6,10 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import com.ritesh.cashiro.data.database.CashiroDatabase
+import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
+import com.ritesh.cashiro.data.database.entity.TransactionType
+import java.math.BigDecimal
+import java.time.LocalDateTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -66,9 +70,64 @@ class NotificationActionReceiver : BroadcastReceiver() {
                 val database = CashiroDatabase.getInstance(context)
                 val transactionDao = database.transactionDao()
 
+                // Fetch transaction before deleting to get account info for balance reversal
+                val transaction = transactionDao.getTransactionById(transactionId)
+                if (transaction == null) {
+                    Log.e(TAG, "Transaction not found: $transactionId")
+                    dismissNotification(context, notificationId)
+                    return@launch
+                }
+
                 // Soft delete the transaction
                 transactionDao.softDeleteTransaction(transactionId)
                 Log.d(TAG, "Deleted transaction: $transactionId")
+
+                // Reverse account balance if transaction has account info
+                val bankName = transaction.bankName
+                val accountLast4 = transaction.accountNumber
+                if (bankName != null && accountLast4 != null) {
+                    val balanceDao = database.accountBalanceDao()
+                    val latestBalance = balanceDao.getLatestBalance(bankName, accountLast4)
+                    if (latestBalance != null) {
+                        val currentBalance = latestBalance.balance
+                        val isCreditCard = latestBalance.isCreditCard
+
+                        val reversedBalance = when {
+                            isCreditCard -> {
+                                when (transaction.transactionType) {
+                                    TransactionType.EXPENSE, TransactionType.INVESTMENT -> currentBalance - transaction.amount
+                                    TransactionType.INCOME -> currentBalance + transaction.amount
+                                    else -> currentBalance
+                                }
+                            }
+                            else -> {
+                                when (transaction.transactionType) {
+                                    TransactionType.EXPENSE, TransactionType.INVESTMENT -> currentBalance + transaction.amount
+                                    TransactionType.INCOME -> currentBalance - transaction.amount
+                                    else -> currentBalance
+                                }
+                            }
+                        }.max(BigDecimal.ZERO)
+
+                        val balanceEntity = AccountBalanceEntity(
+                            bankName = bankName,
+                            accountLast4 = accountLast4,
+                            balance = reversedBalance,
+                            timestamp = LocalDateTime.now(),
+                            transactionId = null,
+                            creditLimit = latestBalance.creditLimit,
+                            isCreditCard = isCreditCard,
+                            iconResId = latestBalance.iconResId,
+                            iconName = latestBalance.iconName,
+                            isWallet = latestBalance.isWallet,
+                            color = latestBalance.color,
+                            currency = transaction.currency,
+                            sourceType = "DELETE_REVERSAL"
+                        )
+                        balanceDao.insertBalance(balanceEntity)
+                        Log.d(TAG, "Reversed balance for deleted transaction: $transactionId")
+                    }
+                }
 
                 // Dismiss the notification
                 dismissNotification(context, notificationId)
