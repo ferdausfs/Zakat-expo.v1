@@ -3,6 +3,7 @@ package com.ritesh.cashiro.data.repository
 import android.content.Context
 import com.ritesh.cashiro.data.database.dao.AccountBalanceDao
 import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
+import com.ritesh.cashiro.data.database.entity.TransactionType
 import kotlinx.coroutines.flow.Flow
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -18,7 +19,6 @@ class AccountBalanceRepository @Inject constructor(
     private val accountBalanceDao: AccountBalanceDao,
     @ApplicationContext private val context: Context
 ) {
-
     suspend fun insertBalance(balance: AccountBalanceEntity): Long {
         val balanceWithIconName = if (balance.iconName.isEmpty() && balance.iconResId != 0) {
             balance.copy(iconName = IconResolutionUtils.resIdToName(context, balance.iconResId))
@@ -129,6 +129,51 @@ class AccountBalanceRepository @Inject constructor(
             insertBalance(balanceEntity)
         }
     }
+
+    /**
+     * Inserts a balance entry linked to a transaction, and sequentially recalculates succeeding balances.
+     *
+     * @param bankName The name of the bank.
+     * @param accountLast4 The last 4 digits of the account number.
+     * @param amount The transaction amount.
+     * @param transactionType The transaction type.
+     * @param explicitBalance The bank-reported explicit balance (if any).
+     * @param timestamp The transaction timestamp.
+     * @param transactionId The associated transaction ID.
+     * @param creditLimit Optionally, a custom credit limit parsed from SMS.
+     * @param isCreditCard Whether this account is a credit card.
+     * @param smsSource Sanitized SMS snippet source.
+     * @param currency The transaction currency.
+     * @return The ID of the inserted balance record.
+     */
+    suspend fun insertTransactionBalance(
+        bankName: String,
+        accountLast4: String,
+        amount: BigDecimal,
+        transactionType: TransactionType,
+        explicitBalance: BigDecimal?,
+        timestamp: LocalDateTime,
+        transactionId: Long?,
+        creditLimit: BigDecimal?,
+        isCreditCard: Boolean,
+        smsSource: String?,
+        currency: String
+    ): Long {
+        return accountBalanceDao.insertTransactionBalance(
+            bankName = bankName,
+            accountLast4 = accountLast4,
+            amount = amount,
+            transactionType = transactionType,
+            explicitBalance = explicitBalance,
+            timestamp = timestamp,
+            transactionId = transactionId,
+            creditLimit = creditLimit,
+            isCreditCard = isCreditCard,
+            smsSource = smsSource,
+            currency = currency
+        )
+    }
+
 
     suspend fun insertBalanceUpdate(
         bankName: String,

@@ -17,7 +17,6 @@ import com.ritesh.parser.core.bank.IndianBankParser
 import com.ritesh.parser.core.bank.SBIBankParser
 import com.ritesh.parser.core.bank.IndusIndBankParser
 import com.ritesh.parser.core.SmsFilter
-import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
 import com.ritesh.cashiro.data.database.entity.TransactionType
 import com.ritesh.cashiro.data.database.entity.UnrecognizedSmsEntity
 import com.ritesh.cashiro.data.mapper.toEntity
@@ -33,6 +32,7 @@ import com.ritesh.cashiro.data.repository.UnrecognizedSmsRepository
 import com.ritesh.cashiro.domain.repository.RuleRepository
 import com.ritesh.cashiro.domain.service.RuleEngine
 import com.ritesh.cashiro.utils.CurrencyFormatter
+import com.ritesh.cashiro.utils.PiiRedactor
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
@@ -336,8 +336,8 @@ class OptimizedSmsReaderWorker @AssistedInject constructor(
                                 Amount: ${parsedTransaction.amount}
                                 Type: ${parsedTransaction.type}
                                 Merchant: ${parsedTransaction.merchant}
-                                Reference: ${parsedTransaction.reference}
-                                Account: ${parsedTransaction.accountLast4}
+                                Reference: ${PiiRedactor.redactSuffix(parsedTransaction.reference)}
+                                Account: ${PiiRedactor.redactSuffix(parsedTransaction.accountLast4)}
                                 Balance: ${parsedTransaction.balance}
                                 Credit Limit: ${parsedTransaction.creditLimit}
                                 ID: ${parsedTransaction.generateTransactionId()}
@@ -582,8 +582,8 @@ private suspend fun processMessageChunk(
                             Amount: ${parsedTransaction.amount}
                             Type: ${parsedTransaction.type}
                             Merchant: ${parsedTransaction.merchant}
-                            Reference: ${parsedTransaction.reference}
-                            Account: ${parsedTransaction.accountLast4}
+                            Reference: ${PiiRedactor.redactSuffix(parsedTransaction.reference)}
+                            Account: ${PiiRedactor.redactSuffix(parsedTransaction.accountLast4)}
                             Balance: ${parsedTransaction.balance}
                             Credit Limit: ${parsedTransaction.creditLimit}
                             ID: ${parsedTransaction.generateTransactionId()}
@@ -686,8 +686,8 @@ private suspend fun processBatchCoroutinesDirect(
                                 Amount: ${parsedTransaction.amount}
                                 Type: ${parsedTransaction.type}
                                 Merchant: ${parsedTransaction.merchant}
-                                Reference: ${parsedTransaction.reference}
-                                Account: ${parsedTransaction.accountLast4}
+                                Reference: ${PiiRedactor.redactSuffix(parsedTransaction.reference)}
+                                Account: ${PiiRedactor.redactSuffix(parsedTransaction.accountLast4)}
                                 Balance: ${parsedTransaction.balance}
                                 Credit Limit: ${parsedTransaction.creditLimit}
                                 ID: ${parsedTransaction.generateTransactionId()}
@@ -1142,20 +1142,19 @@ private suspend fun processBalanceUpdate(
     entity: com.ritesh.cashiro.data.database.entity.TransactionEntity,
     rowId: Long
 ) {
-    val parsedAccountLast4 = parsedTransaction.accountLast4
-    if (parsedAccountLast4 != null) {
+    val parsedAccountLast4Clean = parsedTransaction.accountLast4?.takeIf { it.isNotBlank() }
+    val fallbackAccount = parsedAccountLast4Clean ?: entity.accountNumber?.takeIf { it.isNotBlank() }
+    if (fallbackAccount != null) {
         // Determine if this transaction is from a card based on the message pattern
         val isFromCard = parsedTransaction.isFromCard
+        val sanitizedSmsSource = PiiRedactor.redact(parsedTransaction.smsBody).take(500)
 
         if (BuildConfig.DEBUG) {
             Log.d(
                 TAG, """
                     Processing transaction:
-                    - Bank: ${parsedTransaction.bankName}
-                    - Number: **${parsedTransaction.accountLast4}
                     - Is From Card: $isFromCard
                     - Transaction Type: ${parsedTransaction.type}
-                    - SMS Body (first 200 chars): ${parsedTransaction.smsBody.take(200)}
                 """.trimIndent()
             )
         }
@@ -1164,9 +1163,7 @@ private suspend fun processBalanceUpdate(
             // This is a card transaction
             Log.d(TAG, "Transaction identified as CARD transaction")
 
-            var card = parsedTransaction.accountLast4?.let {
-                cardRepository.getCard(parsedTransaction.bankName, it)
-            }
+            var card = cardRepository.getCard(parsedTransaction.bankName, fallbackAccount)
 
             if (card == null) {
                 // First time seeing this card - create it
@@ -1174,18 +1171,14 @@ private suspend fun processBalanceUpdate(
                 val isCredit = (parsedTransaction.type.toEntityType() == TransactionType.CREDIT)
                 Log.d(TAG, "Creating new card for ${parsedTransaction.bankName}")
 
-                card = parsedTransaction.accountLast4?.let { accountLast4 ->
-                    cardRepository.findOrCreateCard(
-                        cardLast4 = accountLast4,
-                        bankName = parsedTransaction.bankName,
-                        isCredit = isCredit
-                    )
-                }
+                cardRepository.findOrCreateCard(
+                    cardLast4 = fallbackAccount,
+                    bankName = parsedTransaction.bankName,
+                    isCredit = isCredit
+                )
 
                 // CRITICAL: Refetch the card to get the actual state (might have been created before)
-                card = parsedTransaction.accountLast4?.let {
-                    cardRepository.getCard(parsedTransaction.bankName, it)
-                }!!
+                card = cardRepository.getCard(parsedTransaction.bankName, fallbackAccount)!!
                 Log.d(TAG, "Card created/found successfully")
             } else {
                 Log.d(TAG, "Found existing card")
@@ -1196,7 +1189,7 @@ private suspend fun processBalanceUpdate(
             cardRepository.updateCardBalance(
                 cardId = card.id,
                 balance = parsedTransaction.balance,  // Can be null
-                source = parsedTransaction.smsBody.take(200),  // Always save source
+                source = sanitizedSmsSource.take(200),
                 date = LocalDateTime.ofInstant(
                     Instant.ofEpochMilli(parsedTransaction.timestamp),
                     ZoneId.systemDefault()
@@ -1208,14 +1201,14 @@ private suspend fun processBalanceUpdate(
                 card.cardType == com.ritesh.cashiro.data.database.entity.CardType.CREDIT -> {
                     // Credit cards get balance entries
                     Log.d(TAG, "CREDIT card - will create balance entry")
-                    parsedTransaction.accountLast4
+                    fallbackAccount
                 }
 
                 card.cardType == com.ritesh.cashiro.data.database.entity.CardType.DEBIT && card.accountLast4 != null -> {
                     // Linked debit card - use the linked account for balance
                     Log.d(
                         TAG,
-                        "DEBIT card linked to account **${card.accountLast4} - will update linked account balance"
+                        "DEBIT card linked to account **${PiiRedactor.redactSuffix(card.accountLast4)} - will update linked account balance"
                     )
                     card.accountLast4
                 }
@@ -1230,136 +1223,38 @@ private suspend fun processBalanceUpdate(
         } else {
             // This is a direct account transaction - always create balance entry
             Log.d(TAG, "Transaction identified as ACCOUNT transaction - will create balance entry")
-            entity.accountNumber?.takeIf { it.isNotBlank() } ?: parsedAccountLast4
+            fallbackAccount
         }
 
         // Create balance entry if we have a target account
         if (targetAccountLast4 != null) {
             val isCreditCard = (parsedTransaction.type.toEntityType() == TransactionType.CREDIT) ||
-                    parsedTransaction.accountLast4?.let {
+                    fallbackAccount.let {
                         cardRepository.getCard(parsedTransaction.bankName, it)?.cardType
                     } == com.ritesh.cashiro.data.database.entity.CardType.CREDIT
 
-            val existingAccount = accountBalanceRepository.getLatestBalance(
-                parsedTransaction.bankName,
-                targetAccountLast4
+            accountBalanceRepository.insertTransactionBalance(
+                bankName = parsedTransaction.bankName,
+                accountLast4 = targetAccountLast4,
+                amount = parsedTransaction.amount,
+                transactionType = parsedTransaction.type.toEntityType(),
+                explicitBalance = parsedTransaction.balance,
+                timestamp = entity.dateTime,
+                transactionId = if (rowId != -1L) rowId else null,
+                creditLimit = parsedTransaction.creditLimit,
+                isCreditCard = isCreditCard,
+                smsSource = sanitizedSmsSource,
+                currency = parsedTransaction.currency
             )
 
-            val newBalance = when {
-                isCreditCard -> {
-                    val currentBalance = existingAccount?.balance ?: BigDecimal.ZERO
-                    currentBalance + parsedTransaction.amount
-                }
-
-                existingAccount?.isCreditCard == true && parsedTransaction.type.toEntityType() == TransactionType.INCOME -> {
-                    val currentBalance = existingAccount.balance ?: BigDecimal.ZERO
-                    (currentBalance - parsedTransaction.amount).max(BigDecimal.ZERO)
-                }
-
-                parsedTransaction.balance != null -> {
-                    parsedTransaction.balance!!
-                }
-
-                else -> {
-                    // SMS doesn't have explicit balance - calculate based on transaction type
-                    val currentBalance = existingAccount?.balance ?: BigDecimal.ZERO
-                    when (parsedTransaction.type.toEntityType()) {
-                        TransactionType.INCOME -> {
-                            // Money coming in - add to balance
-                            currentBalance + parsedTransaction.amount
-                        }
-                        TransactionType.EXPENSE, TransactionType.INVESTMENT -> {
-                            // Money going out - subtract from balance
-                            (currentBalance - parsedTransaction.amount).max(BigDecimal.ZERO)
-                        }
-                        TransactionType.CREDIT, TransactionType.TRANSFER -> {
-                            // Keep existing balance for transfers (complex logic needed)
-                            // Credit should be handled above, this is fallback
-                            currentBalance
-                        }
-                    }
-                }
-            }
-
-            val balanceSource = when {
-                isCreditCard -> "Calculated (Credit Card)"
-                existingAccount?.isCreditCard == true && parsedTransaction.type.toEntityType() == TransactionType.INCOME -> "Calculated (CC Payment)"
-                parsedTransaction.balance != null -> "From SMS"
-                else -> "Calculated (${parsedTransaction.type.toEntityType()})"
-            }
-
             if (BuildConfig.DEBUG) {
-                Log.d(
-                    TAG, """
-                        Saving account balance:
-                        - SMS Timestamp: ${parsedTransaction.timestamp} (${java.time.Instant.ofEpochMilli(parsedTransaction.timestamp)})
-                        - Bank: ${parsedTransaction.bankName}
-                        - Original: **${parsedTransaction.accountLast4}
-                        - Target Account: **$targetAccountLast4
-                        - Is Card Transaction: ${parsedTransaction.isFromCard}
-                        - Is Credit Card: $isCreditCard
-                        - Transaction Type: ${parsedTransaction.type.toEntityType()}
-                        - Transaction Amount: ${parsedTransaction.amount}
-                        - Previous Balance: ${existingAccount?.balance}
-                        - New Balance: $newBalance
-                        - Balance Source: $balanceSource
-                        - Available Limit (from SMS): ${parsedTransaction.creditLimit}
-                    """.trimIndent()
-                )
-            }
-
-            // Save balance if:
-            val shouldSaveBalance = when {
-                parsedTransaction.balance != null -> true  // Always save if SMS had explicit balance
-                parsedTransaction.creditLimit != null -> true  // Save if credit limit info
-                newBalance != BigDecimal.ZERO -> true  // Save non-zero balances
-                existingAccount != null -> true  // Save to update existing account or create new one
-                else -> true  // Create new account even with 0 balance (first time)
-            }
-
-            if (shouldSaveBalance) {
-                // Create the balance entity using the target account
-                val balanceEntity = AccountBalanceEntity(
-                    bankName = parsedTransaction.bankName,
-                    accountLast4 = targetAccountLast4,
-                    balance = newBalance,
-                    timestamp = entity.dateTime,
-                    transactionId = if (rowId != -1L) rowId else null,
-                    creditLimit = if (isCreditCard) {
-                        parsedTransaction.creditLimit?.add(newBalance) ?: existingAccount?.creditLimit
-                    } else {
-                        existingAccount?.creditLimit
-                    },
-                    isCreditCard = isCreditCard || (existingAccount?.isCreditCard ?: false),
-                    smsSource = parsedTransaction.smsBody.take(500),  // Store SMS snippet
-                    sourceType = "TRANSACTION",
-                    currency = parsedTransaction.currency
-                )
-
-                accountBalanceRepository.insertBalance(balanceEntity)
-
-                if (BuildConfig.DEBUG) {
-                    val logMsg = if (parsedTransaction.creditLimit != null) {
-                        "Saved balance/credit limit (${
-                            CurrencyFormatter.formatCurrency(
-                                parsedTransaction.creditLimit!!
-                            )
-                        }) for ${parsedTransaction.bankName} **$targetAccountLast4"
-                    } else {
-                        "Saved balance update for ${parsedTransaction.bankName} **$targetAccountLast4"
-                    }
-                    Log.d(TAG, logMsg)
-                }
-            } else {
-                if (BuildConfig.DEBUG) {
-                    Log.d(TAG, "Skipped saving balance: ${parsedTransaction.bankName} **$targetAccountLast4")
-                }
+                Log.d(TAG, "Saved balance update from SMS transaction")
             }
         } else {
             if (BuildConfig.DEBUG) {
                 Log.d(
                     TAG,
-                    "No balance entry created for unlinked debit card: ${parsedTransaction.bankName} **${parsedTransaction.accountLast4}"
+                    "No balance entry created for unlinked debit card: ${parsedTransaction.bankName} **${PiiRedactor.redactSuffix(parsedTransaction.accountLast4)}"
                 )
             }
         }

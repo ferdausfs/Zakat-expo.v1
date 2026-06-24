@@ -2,6 +2,7 @@ package com.ritesh.cashiro.domain.usecase
 
 import android.content.ContextWrapper
 import com.ritesh.cashiro.data.database.dao.AccountBalanceDao
+import com.ritesh.cashiro.data.database.dao.AccountBalanceTransactionInfo
 import com.ritesh.cashiro.data.database.dao.SubscriptionDao
 import com.ritesh.cashiro.data.database.dao.TransactionDao
 import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
@@ -387,8 +388,9 @@ class AddTransactionUseCaseTest {
         private var nextId = 1L
 
         override suspend fun insertTransaction(transaction: TransactionEntity): Long {
-            insertedTransactions.add(transaction)
-            return nextId++
+            val id = nextId++
+            insertedTransactions.add(transaction.copy(id = id))
+            return id
         }
 
         override suspend fun getTransactionByHash(transactionHash: String): TransactionEntity? = null
@@ -511,6 +513,21 @@ class AddTransactionUseCaseTest {
         }
 
         override suspend fun getAccountLast4sEndingWith(bankName: String, suffix: String): List<String> = emptyList()
+        override suspend fun getLatestBalanceOnOrBefore(
+            bankName: String,
+            accountLast4: String,
+            timestamp: LocalDateTime
+        ): AccountBalanceEntity? {
+            val key = Pair(bankName, accountLast4)
+            return balances[key]
+                ?.filter { !it.timestamp.isAfter(timestamp) }
+                ?.maxByOrNull { it.timestamp }
+        }
+        override suspend fun getBalancesAfterWithTransactions(
+            bankName: String,
+            accountLast4: String,
+            timestamp: LocalDateTime
+        ): List<AccountBalanceTransactionInfo> = emptyList()
         override fun getLatestBalanceFlow(bankName: String, accountLast4: String): Flow<AccountBalanceEntity?> = flowOf(null)
         override fun getAllLatestBalances(): Flow<List<AccountBalanceEntity>> = flowOf(emptyList())
         override fun getAllBalances(): Flow<List<AccountBalanceEntity>> = flowOf(emptyList())
@@ -525,7 +542,15 @@ class AddTransactionUseCaseTest {
         override suspend fun deleteBalance(balance: AccountBalanceEntity) = Unit
         override suspend fun getBalanceHistoryForAccount(bankName: String, accountLast4: String): List<AccountBalanceEntity> = emptyList()
         override suspend fun deleteBalanceById(id: Long) = Unit
-        override suspend fun updateBalanceById(id: Long, newBalance: BigDecimal) = Unit
+        override suspend fun updateBalanceById(id: Long, newBalance: BigDecimal) {
+            for (list in balances.values) {
+                val index = list.indexOfFirst { it.id == id }
+                if (index != -1) {
+                    list[index] = list[index].copy(balance = newBalance)
+                    break
+                }
+            }
+        }
         override suspend fun getBalanceCountForAccount(bankName: String, accountLast4: String): Int = balances[Pair(bankName, accountLast4)]?.size ?: 0
         override suspend fun deleteAccount(bankName: String, accountLast4: String): Int {
             val key = Pair(bankName, accountLast4)
