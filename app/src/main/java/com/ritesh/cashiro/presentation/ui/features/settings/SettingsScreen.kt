@@ -68,6 +68,7 @@ import com.ritesh.cashiro.presentation.ui.features.categories.NavigationContent
 import com.ritesh.cashiro.presentation.ui.icons.Bag
 import com.ritesh.cashiro.presentation.ui.icons.Box2
 import com.ritesh.cashiro.presentation.ui.icons.Clock
+import com.ritesh.cashiro.presentation.ui.icons.DollarCircle
 import com.ritesh.cashiro.presentation.ui.icons.Fireworks7
 import com.ritesh.cashiro.presentation.ui.icons.Iconax
 import com.ritesh.cashiro.presentation.ui.icons.ImportArrow01
@@ -109,6 +110,7 @@ fun SettingsScreen(
     onNavigateToBudgets: () -> Unit = {},
     onNavigateToDataPrivacy: () -> Unit = {},
     onNavigateToAbout: () -> Unit = {},
+    onNavigateToCurrency: () -> Unit = {},
     settingsViewModel: SettingsViewModel = hiltViewModel(),
     blurEffects: Boolean
 ) {
@@ -366,6 +368,51 @@ fun SettingsScreen(
                         LanguageTrailing(languageName = currentLanguageName)
                     },
                     onClick = { showLanguageBottomSheet = true },
+                    shape = ListItemPosition.Middle.toShape(),
+                    padding = PaddingValues(0.dp)
+                )
+
+                // Currency
+                ListItem(
+                    headline = {
+                        Text(
+                            text = stringResource(R.string.currency),
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.Medium
+                        )
+                    },
+                    supporting = {
+                        Text(
+                            text = stringResource(R.string.currency_subtitle),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    },
+                    leading = {
+                        Box(
+                            modifier = Modifier
+                                .size(48.dp)
+                                .background(
+                                    color = cyan_light,
+                                    shape = CircleShape
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                Iconax.DollarCircle,
+                                contentDescription = null,
+                                tint = cyan_dark
+                            )
+                        }
+                    },
+                    trailing = {
+                        Icon(
+                            Icons.Rounded.ChevronRight,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    },
+                    onClick = { onNavigateToCurrency() },
                     shape = ListItemPosition.Bottom.toShape(),
                     padding = PaddingValues(0.dp)
                 )

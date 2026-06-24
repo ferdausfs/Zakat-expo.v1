@@ -5,6 +5,9 @@ import com.ritesh.cashiro.data.database.entity.ExchangeRateEntity
 import com.ritesh.cashiro.data.preferences.UserPreferencesRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
@@ -27,6 +30,10 @@ class CurrencyConversionService @Inject constructor(
     // Cache rates for performance
     private val rateCache = mutableMapOf<String, BigDecimal>()
     private var lastCacheUpdate: LocalDateTime = LocalDateTime.MIN
+
+    // Emits a new value whenever a custom rate is saved or reset, so ViewModels can react
+    private val _rateChangeTrigger = MutableStateFlow(0L)
+    val rateChangeTrigger: StateFlow<Long> = _rateChangeTrigger.asStateFlow()
 
     /**
      * Convert amount from one currency to another
@@ -64,6 +71,25 @@ class CurrencyConversionService @Inject constructor(
             rateCache[cacheKey]?.let { return it }
         }
 
+        // Check database for custom rates first (always takes priority)
+        if (!forceRefresh) {
+            val customRate = exchangeRateDao.getCustomRate(fromCurrency.uppercase(), toCurrency.uppercase())
+            if (customRate != null) {
+                updateCache(cacheKey, customRate.rate)
+                return customRate.rate
+            }
+
+            val reverseCustomRate = exchangeRateDao.getCustomRate(toCurrency.uppercase(), fromCurrency.uppercase())
+            if (reverseCustomRate != null) {
+                try {
+                    val invertedRate = BigDecimal.ONE.divide(reverseCustomRate.rate, MathContext(10))
+                    updateCache(cacheKey, invertedRate)
+                    return invertedRate
+                } catch (_: ArithmeticException) {
+                }
+            }
+        }
+
         // Check database for fresh rates
         val currentTime = LocalDateTime.now()
         val dbRate = exchangeRateDao.getExchangeRate(fromCurrency, toCurrency, currentTime)
@@ -90,6 +116,18 @@ class CurrencyConversionService @Inject constructor(
                     refreshExchangeRates(listOf(fromCurrency, toCurrency, "USD"))
                 }
                 return expiredRate.rate
+            }
+        }
+
+        // Check reverse pair (e.g., custom rate stored as INR→USD when looking for USD→INR)
+        val reverseRate = exchangeRateDao.getExchangeRate(toCurrency, fromCurrency, currentTime)
+        if (reverseRate != null && !forceRefresh) {
+            try {
+                val invertedRate = BigDecimal.ONE.divide(reverseRate.rate, MathContext(10))
+                updateCache(cacheKey, invertedRate)
+                return invertedRate
+            } catch (_: ArithmeticException) {
+                // Division by zero or non-terminating decimal — fall through to API
             }
         }
 
@@ -185,9 +223,42 @@ class CurrencyConversionService @Inject constructor(
             }
 
             if (entities.isNotEmpty()) {
-                exchangeRateDao.insertExchangeRates(entities)
+                val customRates = exchangeRateDao.getCustomRatesForCurrency(baseCurrency.uppercase())
+                val customPairs = customRates.map { it.fromCurrency.uppercase() to it.toCurrency.uppercase() }.toSet()
+
+                val filteredEntities = entities.filterNot { entity ->
+                    (entity.fromCurrency.uppercase() to entity.toCurrency.uppercase()) in customPairs
+                }
+
+                if (filteredEntities.isNotEmpty()) {
+                    exchangeRateDao.insertExchangeRates(filteredEntities)
+                }
             }
         }
+    }
+
+    suspend fun saveCustomRate(fromCurrency: String, toCurrency: String, rate: BigDecimal) {
+        val now = LocalDateTime.now()
+        val entity = ExchangeRateEntity(
+            fromCurrency = fromCurrency.uppercase(),
+            toCurrency = toCurrency.uppercase(),
+            rate = rate,
+            provider = "custom",
+            updatedAt = now,
+            updatedAtUnix = now.atZone(ZoneId.systemDefault()).toEpochSecond(),
+            expiresAt = now.plusYears(100),
+            expiresAtUnix = now.plusYears(100).atZone(ZoneId.systemDefault()).toEpochSecond(),
+            isCustom = true
+        )
+        exchangeRateDao.upsertCustomRate(entity)
+        rateCache.clear()
+        _rateChangeTrigger.value++
+    }
+
+    suspend fun resetCustomRate(fromCurrency: String, toCurrency: String) {
+        exchangeRateDao.resetCustomRate(fromCurrency.uppercase(), toCurrency.uppercase())
+        rateCache.clear()
+        _rateChangeTrigger.value++
     }
 
     /**

@@ -75,12 +75,43 @@ constructor(
     private val _formState = MutableStateFlow(AccountFormState())
     val formState: StateFlow<AccountFormState> = _formState.asStateFlow()
 
+    val defaultCurrencyForNewAccounts: StateFlow<String> = combine(
+        userPreferencesRepository.defaultCurrencyEnabled,
+        userPreferencesRepository.defaultCurrencyCode
+    ) { enabled, code ->
+        if (enabled && !code.isNullOrBlank()) code else "INR"
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "INR")
+
     init {
         loadAccounts()
         loadHiddenAccounts()
         loadMainAccount()
         loadCards()
         initializeDefaultWallet()
+        initFormCurrency()
+    }
+
+    private fun initFormCurrency() {
+        viewModelScope.launch {
+            userPreferencesRepository.defaultCurrencyEnabled.first().let { enabled ->
+                if (enabled) {
+                    userPreferencesRepository.defaultCurrencyCode.first()?.let { code ->
+                        if (code.isNotBlank()) {
+                            _formState.update { it.copy(currency = code) }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private suspend fun resolveDefaultCurrency(): String {
+        if (userPreferencesRepository.defaultCurrencyEnabled.first()) {
+            userPreferencesRepository.defaultCurrencyCode.first()?.let { code ->
+                if (code.isNotBlank()) return code
+            }
+        }
+        return "INR"
     }
 
     private fun initializeDefaultWallet() {
@@ -305,7 +336,9 @@ constructor(
         )
 
         // Clear form
-        _formState.value = AccountFormState()
+        viewModelScope.launch {
+            _formState.value = AccountFormState(currency = resolveDefaultCurrency())
+        }
     }
 
     fun updateAccountBalance(bankName: String, accountLast4: String, newBalance: BigDecimal) {

@@ -51,10 +51,10 @@ class AnalyticsViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             var lastBaseCurrency: String? = null
-            currencyRepository.baseCurrencyCode.collectLatest { mainAccountCurrency ->
-                if (lastBaseCurrency == null || mainAccountCurrency != lastBaseCurrency) {
+            currencyRepository.effectiveBaseCurrencyCode.collectLatest { effectiveCurrency ->
+                if (lastBaseCurrency == null || effectiveCurrency != lastBaseCurrency) {
                     // Do not auto-select. Default is null to show "All"
-                    lastBaseCurrency = mainAccountCurrency
+                    lastBaseCurrency = effectiveCurrency
                 }
             }
         }
@@ -102,8 +102,9 @@ class AnalyticsViewModel @Inject constructor(
     val uiState: StateFlow<AnalyticsUiState> = combine(
         filterStateFlow,
         accountBalanceRepository.getAllLatestBalances(),
-        currencyRepository.baseCurrencyCode
-    ) { filterState, allAccounts, baseCurrency ->
+        currencyRepository.effectiveBaseCurrencyCode,
+        currencyConversionService.rateChangeTrigger
+    ) { filterState, allAccounts, baseCurrency, _ ->
         filterState to Pair(allAccounts, baseCurrency)
     }.flatMapLatest { (filterState, data) ->
         val (allAccounts, baseCurrency) = data

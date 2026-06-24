@@ -14,6 +14,7 @@ import com.ritesh.cashiro.data.database.dao.AccountBalanceDao
 import com.ritesh.cashiro.data.database.dao.CardDao
 import com.ritesh.cashiro.data.database.dao.CategoryDao
 import com.ritesh.cashiro.data.database.dao.ChatDao
+
 import com.ritesh.cashiro.data.database.dao.ExchangeRateDao
 import com.ritesh.cashiro.data.database.dao.MerchantMappingDao
 import com.ritesh.cashiro.data.database.dao.RuleApplicationDao
@@ -32,6 +33,7 @@ import com.ritesh.cashiro.data.database.entity.BudgetEntity
 import com.ritesh.cashiro.data.database.entity.CardEntity
 import com.ritesh.cashiro.data.database.entity.CategoryEntity
 import com.ritesh.cashiro.data.database.entity.ChatMessage
+
 import com.ritesh.cashiro.data.database.entity.ExchangeRateEntity
 import com.ritesh.cashiro.data.database.entity.MerchantMappingEntity
 import com.ritesh.cashiro.data.database.entity.RuleApplicationEntity
@@ -75,7 +77,7 @@ import com.ritesh.cashiro.data.database.entity.WebhookProfileEntity
             WebhookLogEntity::class,
             WebhookCursorEntity::class
         ],
-    version = 51,
+    version = 52,
     exportSchema = true,
     autoMigrations =
         [
@@ -147,9 +149,10 @@ abstract class CashiroDatabase : RoomDatabase() {
                                 MIGRATION_21_22,
                                 MIGRATION_22_23,
                                 MIGRATION_29_30,
-                                MIGRATION_48_49,
-                                MIGRATION_49_50,
-                                MIGRATION_50_51
+            MIGRATION_48_49,
+            MIGRATION_49_50,
+            MIGRATION_50_51,
+            MIGRATION_51_52
                             )
                             .build()
                     INSTANCE = instance
@@ -464,6 +467,7 @@ abstract class CashiroDatabase : RoomDatabase() {
                     )
                 }
             }
+
     }
 
     /**
@@ -880,6 +884,13 @@ val MIGRATION_50_51 =
             }
             sb.append("\"")
             return sb.toString()
+        }
+    }
+
+val MIGRATION_51_52 =
+    object : Migration(51, 52) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE exchange_rates ADD COLUMN is_custom INTEGER NOT NULL DEFAULT 0")
         }
     }
 

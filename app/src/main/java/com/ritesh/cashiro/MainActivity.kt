@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.ritesh.cashiro.receiver.SmsBroadcastReceiver
 import com.ritesh.cashiro.data.manager.NotificationScheduler
 import androidx.lifecycle.lifecycleScope
+import com.ritesh.cashiro.data.currency.model.CurrencySymbols
+import com.ritesh.cashiro.data.preferences.UserPreferencesRepository
 import com.ritesh.cashiro.presentation.ui.features.accounts.AccountDetailViewModel
 import com.ritesh.cashiro.presentation.ui.features.accounts.ManageAccountsViewModel
 import com.ritesh.cashiro.presentation.ui.features.add.AddViewModel
@@ -53,6 +55,9 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var notificationScheduler: NotificationScheduler
 
+    @Inject
+    lateinit var userPreferencesRepository: UserPreferencesRepository
+
     // Transaction ID to edit when launched from notification
     var editTransactionId by mutableStateOf<Long?>(null)
         private set
@@ -87,6 +92,14 @@ class MainActivity : AppCompatActivity() {
         // Schedule daily reminders
         lifecycleScope.launch {
             notificationScheduler.scheduleDailyReminder()
+        }
+
+        // Load custom currencies into CurrencySymbols
+        lifecycleScope.launch {
+            userPreferencesRepository.customCurrencies.collect { customCurrencies ->
+                val customMap = customCurrencies.associate { it.code to it.symbol }
+                CurrencySymbols.setCustomSymbols(customMap)
+            }
         }
 
         setContent {

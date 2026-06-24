@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ritesh.cashiro.data.currency.CurrencyConversionService
 import com.ritesh.cashiro.data.database.entity.CategoryEntity
+import com.ritesh.cashiro.data.repository.CurrencyRepository
 import com.ritesh.cashiro.data.database.entity.TransactionEntity
 import com.ritesh.cashiro.data.database.entity.TransactionType
 import com.ritesh.cashiro.data.repository.AccountBalanceRepository
@@ -45,6 +46,7 @@ class TransactionDetailViewModel @Inject constructor(
     private val accountBalanceRepository: AccountBalanceRepository,
     private val subscriptionRepository: SubscriptionRepository,
     private val currencyConversionService: CurrencyConversionService,
+    private val currencyRepository: CurrencyRepository,
     val attachmentService: AttachmentService,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
@@ -140,17 +142,8 @@ class TransactionDetailViewModel @Inject constructor(
     }
 
     private suspend fun determinePrimaryCurrency(transaction: TransactionEntity) {
-        val bankName = transaction.bankName
-        val accountNumber = transaction.accountNumber
-        val primaryCurrency = if (!bankName.isNullOrEmpty() && !accountNumber.isNullOrEmpty()) {
-            accountBalanceRepository.getLatestBalance(bankName, accountNumber)?.currency
-                ?: CurrencyFormatter.getBankBaseCurrency(bankName)
-        } else if (!bankName.isNullOrEmpty()) {
-            CurrencyFormatter.getBankBaseCurrency(bankName)
-        } else {
-            transaction.currency.takeIf { it.isNotEmpty() } ?: "INR"
-        }
-        _uiState.update { it.copy(primaryCurrency = primaryCurrency) }
+        val effectiveCurrency = currencyRepository.effectiveBaseCurrencyCode.first()
+        _uiState.update { it.copy(primaryCurrency = effectiveCurrency) }
     }
 
     private suspend fun calculateConvertedAmount(transaction: TransactionEntity) {

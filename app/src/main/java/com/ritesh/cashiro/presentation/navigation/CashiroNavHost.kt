@@ -76,6 +76,7 @@ import com.ritesh.cashiro.presentation.ui.features.profile.ProfileScreen
 import com.ritesh.cashiro.presentation.ui.features.settings.SettingsScreen
 import com.ritesh.cashiro.presentation.ui.features.settings.about.AboutScreen
 import com.ritesh.cashiro.presentation.ui.features.settings.about.LicensesScreen
+import com.ritesh.cashiro.presentation.ui.features.settings.currency.CurrencySettingsScreen
 import com.ritesh.cashiro.presentation.ui.features.settings.appearance.AppearanceScreen
 import com.ritesh.cashiro.presentation.ui.features.settings.appearance.ThemeViewModel
 import com.ritesh.cashiro.presentation.ui.features.settings.applock.AppLockScreen
@@ -285,6 +286,7 @@ fun CashiroNavHost(
                         onNavigateToBudgets = { navController.safeNavigate(Budgets()) },
                         onNavigateToDataPrivacy = { navController.safeNavigate(DataPrivacy) },
                         onNavigateToAbout = { navController.safeNavigate(About) },
+                        onNavigateToCurrency = { navController.safeNavigate(CurrencySettings) },
                         blurEffects = themeUiState.blurEffects
                     )
                 }
@@ -375,6 +377,17 @@ fun CashiroNavHost(
                         onNavigateBack = { navController.safePopBackStack() },
                         onNavigateToUnrecognizedSms = { navController.safeNavigate(UnrecognizedSms) },
                         blurEffects = themeUiState.blurEffects
+                    )
+                }
+
+                composable<CurrencySettings>(
+                    enterTransition = CashiroTransitions.horizontalSlideEnter,
+                    exitTransition = CashiroTransitions.horizontalSlideExit,
+                    popEnterTransition = CashiroTransitions.horizontalSlidePopEnter,
+                    popExitTransition = CashiroTransitions.horizontalSlidePopExit
+                ) {
+                    CurrencySettingsScreen(
+                        onNavigateBack = { navController.safePopBackStack() }
                     )
                 }
 

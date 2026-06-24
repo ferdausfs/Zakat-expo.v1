@@ -105,8 +105,16 @@ class HomeViewModel @Inject constructor(
     private var currentYearBreakdownMap: Map<String, TransactionRepository.MonthlyBreakdown> =
         emptyMap()
 
-    private val baseCurrency = currencyRepository.baseCurrencyCode
+    private val baseCurrency = currencyRepository.effectiveBaseCurrencyCode
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "INR")
+
+    private val _selectedCurrency = MutableStateFlow<String?>(null)
+    private val selectedCurrencyCombined = combine(
+        baseCurrency,
+        _selectedCurrency
+    ) { base, selected ->
+        selected ?: base
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "INR")
 
     init {
         loadHomeData()
@@ -170,27 +178,40 @@ class HomeViewModel @Inject constructor(
         // Observe base currency changes
         viewModelScope.launch {
             baseCurrency.collect { mainAccountCurrency ->
-                _uiState.update { it.copy(
-                    selectedCurrency = mainAccountCurrency,
-                    baseCurrency = mainAccountCurrency
-                ) }
+                val prevCurrency = _uiState.value.selectedCurrency
+                if (mainAccountCurrency != prevCurrency) {
+                    _uiState.update { it.copy(
+                        selectedCurrency = mainAccountCurrency,
+                        baseCurrency = mainAccountCurrency
+                    ) }
+                    _selectedCurrency.value = mainAccountCurrency
+                    // Recalculate breakdown totals and account balances for the new currency
+                    val availableCurrencies = _uiState.value.availableCurrencies
+                    if (availableCurrencies.isNotEmpty()) {
+                        updateUIStateForCurrency(mainAccountCurrency, availableCurrencies)
+                    }
+                }
             }
         }
 
         viewModelScope.launch {
             // Load current month breakdown by currency
-            transactionRepository.getCurrentMonthBreakdownByCurrency()
-                .collect { breakdownByCurrency ->
-                    updateBreakdownForSelectedCurrency(breakdownByCurrency, period = FinancialPeriod.CURRENT_MONTH)
-                }
+            combine(
+                transactionRepository.getCurrentMonthBreakdownByCurrency(),
+                selectedCurrencyCombined,
+                currencyConversionService.rateChangeTrigger
+            ) { breakdownByCurrency, selectedCurrency, _ ->
+                updateBreakdownForSelectedCurrency(breakdownByCurrency, period = FinancialPeriod.CURRENT_MONTH, selectedCurrency = selectedCurrency)
+            }.collectLatest { }
         }
 
         viewModelScope.launch {
             // Load account balances and react to currency changes
             combine(
                 accountBalanceRepository.getAllLatestBalances(),
-                baseCurrency
-            ) { allBalances, selectedCurrency ->
+                selectedCurrencyCombined,
+                currencyConversionService.rateChangeTrigger
+            ) { allBalances, selectedCurrency, _ ->
                 // Get hidden accounts from SharedPreferences
                 val hiddenAccounts =
                     sharedPrefs.getStringSet("hidden_accounts", emptySet()) ?: emptySet()
@@ -264,7 +285,8 @@ class HomeViewModel @Inject constructor(
                         accountBalances = regularAccounts,
                         creditCards = creditCards,
                         totalBalance = totalBalanceInSelectedCurrency,
-                        totalAvailableCredit = totalAvailableCreditInSelectedCurrency
+                        totalAvailableCredit = totalAvailableCreditInSelectedCurrency,
+                        selectedCurrency = selectedCurrency
                     )
                 }
             }.collectLatest { }
@@ -276,12 +298,43 @@ class HomeViewModel @Inject constructor(
             val startOfMonth = now.withDayOfMonth(1)
             val endOfMonth = now.withDayOfMonth(now.lengthOfMonth())
 
-            transactionRepository.getTransactionsBetweenDates(
-                startDate = startOfMonth,
-                endDate = endOfMonth
-            ).collect { transactions ->
-                updateTransactionTypeTotals(transactions)
-            }
+            combine(
+                transactionRepository.getTransactionsBetweenDates(
+                    startDate = startOfMonth,
+                    endDate = endOfMonth
+                ),
+                selectedCurrencyCombined,
+                currencyConversionService.rateChangeTrigger
+            ) { transactions, selectedCurrency, _ ->
+                var creditCardTotal = BigDecimal.ZERO
+                var transferTotal = BigDecimal.ZERO
+                var investmentTotal = BigDecimal.ZERO
+
+                transactions.forEach { tx ->
+                    val convertedAmount = if (tx.currency == selectedCurrency) {
+                        tx.amount
+                    } else {
+                        currencyConversionService.convertAmount(
+                            amount = tx.amount,
+                            fromCurrency = tx.currency,
+                            toCurrency = selectedCurrency
+                        ) ?: tx.amount
+                    }
+
+                    when (tx.transactionType) {
+                        TransactionType.CREDIT -> creditCardTotal += convertedAmount
+                        TransactionType.TRANSFER -> transferTotal += convertedAmount
+                        TransactionType.INVESTMENT -> investmentTotal += convertedAmount
+                        else -> {}
+                    }
+                }
+
+                _uiState.update { it.copy(
+                    currentMonthCreditCard = creditCardTotal,
+                    currentMonthTransfer = transferTotal,
+                    currentMonthInvestment = investmentTotal
+                ) }
+            }.collectLatest { }
         }
 
         viewModelScope.launch {
@@ -295,35 +348,44 @@ class HomeViewModel @Inject constructor(
             ).collect { transactions ->
                 val heatmap = transactions.groupBy { it.dateTime.toLocalDate() }
                     .mapValues { it.value.size }
-                _uiState.value = _uiState.value.copy(transactionHeatmap = heatmap)
+                _uiState.update { it.copy(transactionHeatmap = heatmap) }
             }
         }
 
         viewModelScope.launch {
             // Load last month breakdown by currency
-            transactionRepository.getLastMonthBreakdownByCurrency().collect { breakdownByCurrency ->
-                updateBreakdownForSelectedCurrency(breakdownByCurrency, period = FinancialPeriod.LAST_MONTH)
-            }
+            combine(
+                transactionRepository.getLastMonthBreakdownByCurrency(),
+                selectedCurrencyCombined,
+                currencyConversionService.rateChangeTrigger
+            ) { breakdownByCurrency, selectedCurrency, _ ->
+                updateBreakdownForSelectedCurrency(breakdownByCurrency, period = FinancialPeriod.LAST_MONTH, selectedCurrency = selectedCurrency)
+            }.collectLatest { }
         }
 
         viewModelScope.launch {
             // Load current year breakdown by currency
-            transactionRepository.getCurrentYearBreakdownByCurrency().collect { breakdownByCurrency ->
-                updateBreakdownForSelectedCurrency(breakdownByCurrency, period = FinancialPeriod.CURRENT_YEAR)
-            }
+            combine(
+                transactionRepository.getCurrentYearBreakdownByCurrency(),
+                selectedCurrencyCombined,
+                currencyConversionService.rateChangeTrigger
+            ) { breakdownByCurrency, selectedCurrency, _ ->
+                updateBreakdownForSelectedCurrency(breakdownByCurrency, period = FinancialPeriod.CURRENT_YEAR, selectedCurrency = selectedCurrency)
+            }.collectLatest { }
         }
 
         viewModelScope.launch {
             // Load recent transactions (last 3) and react to base currency changes
             combine(
                 transactionRepository.getRecentTransactions(limit = 3),
-                baseCurrency
-            ) { transactions, mainCurrency ->
-                // Calculate converted amounts for shown transactions if transaction currency differs from base (main) currency
+                selectedCurrencyCombined,
+                currencyConversionService.rateChangeTrigger
+            ) { transactions, selectedCurrency, _ ->
+                // Calculate converted amounts for shown transactions if transaction currency differs from selected currency
                 val converted = transactions
-                    .filter { it.currency != mainCurrency }
+                    .filter { it.currency != selectedCurrency }
                     .associate { tx ->
-                        tx.id to (currencyConversionService.convertAmount(tx.amount, tx.currency, mainCurrency) ?: tx.amount)
+                        tx.id to (currencyConversionService.convertAmount(tx.amount, tx.currency, selectedCurrency) ?: tx.amount)
                     }
                 
                 _uiState.update { it.copy(
@@ -338,8 +400,9 @@ class HomeViewModel @Inject constructor(
             // Load all active subscriptions and react to currency changes
             combine(
                 subscriptionRepository.getActiveSubscriptions(),
-                baseCurrency
-            ) { subscriptions, targetCurrency ->
+                selectedCurrencyCombined,
+                currencyConversionService.rateChangeTrigger
+            ) { subscriptions, targetCurrency, _ ->
                 // Check if we need to refresh rates for subscription currencies
                 val subscriptionCurrencies = subscriptions.map { it.currency }.distinct()
                 if (subscriptionCurrencies.any { it != targetCurrency }) {
@@ -373,8 +436,9 @@ class HomeViewModel @Inject constructor(
             val yearMonth = YearMonth.now()
             combine(
                 budgetRepository.getBudgetsWithSpendingForMonth(yearMonth.year, yearMonth.monthValue),
-                baseCurrency
-            ) { budgets, targetCurrency ->
+                selectedCurrencyCombined,
+                currencyConversionService.rateChangeTrigger
+            ) { budgets, targetCurrency, _ ->
                 // Convert budgets to match the selected main currency for display
                 val convertedBudgets = budgets.map { budgetWithSpending ->
                     if (budgetWithSpending.budget.currency != targetCurrency) {
@@ -409,13 +473,17 @@ class HomeViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            // Load portfolio balance history for the last 180 days
+            // Load portfolio balance history for the last 180 days, reactive to currency changes
             val endDate = LocalDateTime.now()
             val startDate = endDate.minusDays(180)
-            
-            accountBalanceRepository.getAllBalances().collect { allBalances ->
-                val selectedCurrency = _uiState.value.selectedCurrency
-                
+
+            combine(
+                accountBalanceRepository.getAllBalances(),
+                selectedCurrencyCombined,
+                currencyConversionService.rateChangeTrigger
+            ) { allBalances, selectedCurrency, _ ->
+                allBalances to selectedCurrency
+            }.collectLatest { (allBalances, selectedCurrency) ->
                 // Group balances by date to calculate daily totals
                 val dailyPortfolioHistory = allBalances
                     .filter { it.timestamp.isAfter(startDate) }
@@ -427,10 +495,10 @@ class HomeViewModel @Inject constructor(
                             .mapValues { (_, accountBalances) ->
                                 accountBalances.maxByOrNull { it.timestamp }
                             }
-                        
+
                         latestBalancesPerAccount.values.filterNotNull().sumOf { account ->
                             val balanceValue = if (account.isCreditCard) account.balance.negate() else account.balance
-                            
+
                             if (account.currency == selectedCurrency) {
                                 balanceValue
                             } else {
@@ -451,9 +519,9 @@ class HomeViewModel @Inject constructor(
                         )
                     }
 
-                _uiState.value = _uiState.value.copy(
+                _uiState.update { it.copy(
                     balanceHistory = dailyPortfolioHistory
-                )
+                ) }
             }
         }
     }
@@ -577,93 +645,61 @@ class HomeViewModel @Inject constructor(
 
     fun refreshAccountBalances() {
         viewModelScope.launch {
-            // Force refresh the account balances by retriggering the calculation
-            accountBalanceRepository.getAllLatestBalances().collect { allBalances ->
-                // Get hidden accounts from SharedPreferences
-                val hiddenAccounts = sharedPrefs.getStringSet("hidden_accounts", emptySet()) ?: emptySet()
+            // Force refresh the account balances by fetching once (prevents memory leaks)
+            val allBalances = accountBalanceRepository.getAllLatestBalances().first()
+            val hiddenAccounts = sharedPrefs.getStringSet("hidden_accounts", emptySet()) ?: emptySet()
 
-                // Filter out hidden accounts
-                val balances = allBalances.filter { account ->
-                    val key = "${account.bankName}_${account.accountLast4}"
-                    !hiddenAccounts.contains(key)
-                }
-                // Separate credit cards from regular accounts (hide zero balance accounts)
-                val regularAccounts = balances.filter { !it.isCreditCard && it.balance != BigDecimal.ZERO }
-                val creditCards = balances.filter { it.isCreditCard }
+            // Filter out hidden accounts
+            val balances = allBalances.filter { account ->
+                val key = "${account.bankName}_${account.accountLast4}"
+                !hiddenAccounts.contains(key)
+            }
+            val regularAccounts = balances.filter { !it.isCreditCard && it.balance != BigDecimal.ZERO }
+            val creditCards = balances.filter { it.isCreditCard }
 
-                // Account loading completed
-                Log.d("HomeViewModel", "Refreshed ${balances.size} account(s)")
+            val accountCurrencies = regularAccounts.map { it.currency }.distinct()
+            val creditCardCurrencies = creditCards.map { it.currency }.distinct()
+            val allAccountCurrencies = (accountCurrencies + creditCardCurrencies).distinct()
+            val hasMultipleCurrencies = allAccountCurrencies.size > 1
 
-                // Check if we have multiple currencies and refresh exchange rates if needed
-                val accountCurrencies = regularAccounts.map { it.currency }.distinct()
-                val creditCardCurrencies = creditCards.map { it.currency }.distinct()
-                val allAccountCurrencies = (accountCurrencies + creditCardCurrencies).distinct()
-                val hasMultipleCurrencies = allAccountCurrencies.size > 1
+            if (hasMultipleCurrencies && allAccountCurrencies.isNotEmpty()) {
+                currencyConversionService.refreshExchangeRatesForAccount(allAccountCurrencies)
+            }
 
-                if (hasMultipleCurrencies && allAccountCurrencies.isNotEmpty()) {
-                    currencyConversionService.refreshExchangeRatesForAccount(allAccountCurrencies)
-                }
-
-                // Update available currencies to include account currencies
-                val currentAvailableCurrencies = _uiState.value.availableCurrencies.toSet()
-                val updatedAvailableCurrencies = (currentAvailableCurrencies + allAccountCurrencies)
-                    .sortedWith { a, b ->
-                        when {
-                            a == "INR" -> -1 // INR first
-                            b == "INR" -> 1
-                            else -> a.compareTo(b) // Alphabetical for others
-                        }
-                    }
-
-                // Convert all account balances to selected currency for total
-                val selectedCurrency = _uiState.value.selectedCurrency
-                val assetBalanceInSelectedCurrency = regularAccounts.sumOf { account ->
-                    if (account.currency == selectedCurrency) {
-                        account.balance
-                    } else {
-                        // Convert to selected currency
-                        currencyConversionService.convertAmount(
-                            amount = account.balance,
-                            fromCurrency = account.currency,
-                            toCurrency = selectedCurrency
-                        ) ?: account.balance
+            val currentAvailableCurrencies = _uiState.value.availableCurrencies.toSet()
+            val updatedAvailableCurrencies = (currentAvailableCurrencies + allAccountCurrencies)
+                .sortedWith { a, b ->
+                    when {
+                        a == "INR" -> -1
+                        b == "INR" -> 1
+                        else -> a.compareTo(b)
                     }
                 }
 
-                val liabilityBalanceInSelectedCurrency = creditCards.sumOf { card ->
-                    if (card.currency == selectedCurrency) {
-                        card.balance
-                    } else {
-                        currencyConversionService.convertAmount(
-                            amount = card.balance,
-                            fromCurrency = card.currency,
-                            toCurrency = selectedCurrency
-                        ) ?: card.balance
-                    }
-                }
+            val selectedCurrency = _selectedCurrency.value ?: baseCurrency.value
+            val assetBalanceInSelectedCurrency = regularAccounts.sumOf { account ->
+                if (account.currency == selectedCurrency) account.balance
+                else currencyConversionService.convertAmount(account.balance, account.currency, selectedCurrency) ?: account.balance
+            }
+            val liabilityBalanceInSelectedCurrency = creditCards.sumOf { card ->
+                if (card.currency == selectedCurrency) card.balance
+                else currencyConversionService.convertAmount(card.balance, card.currency, selectedCurrency) ?: card.balance
+            }
+            val totalBalanceInSelectedCurrency = assetBalanceInSelectedCurrency - liabilityBalanceInSelectedCurrency
+            val totalAvailableCreditInSelectedCurrency = creditCards.sumOf { card ->
+                val availableInCardCurrency = (card.creditLimit ?: BigDecimal.ZERO) - card.balance
+                if (card.currency == selectedCurrency) availableInCardCurrency
+                else currencyConversionService.convertAmount(availableInCardCurrency, card.currency, selectedCurrency) ?: availableInCardCurrency
+            }
 
-                val totalBalanceInSelectedCurrency = assetBalanceInSelectedCurrency - liabilityBalanceInSelectedCurrency
-
-                val totalAvailableCreditInSelectedCurrency = creditCards.sumOf { card ->
-                    // Available = Credit Limit - Outstanding Balance, converted to selected currency
-                    val availableInCardCurrency = (card.creditLimit ?: BigDecimal.ZERO) - card.balance
-                    if (card.currency == selectedCurrency) {
-                        availableInCardCurrency
-                    } else {
-                        currencyConversionService.convertAmount(
-                            amount = availableInCardCurrency,
-                            fromCurrency = card.currency,
-                            toCurrency = selectedCurrency
-                        ) ?: availableInCardCurrency
-                    }
-                }
-
-                _uiState.value = _uiState.value.copy(
+            _uiState.update { 
+                it.copy(
                     accountBalances = regularAccounts,
                     creditCards = creditCards,
                     totalBalance = totalBalanceInSelectedCurrency,
                     totalAvailableCredit = totalAvailableCreditInSelectedCurrency,
-                    availableCurrencies = updatedAvailableCurrencies
+                    availableCurrencies = updatedAvailableCurrencies,
+                    selectedCurrency = selectedCurrency
                 )
             }
         }
@@ -736,64 +772,13 @@ class HomeViewModel @Inject constructor(
     }
 
     fun selectCurrency(currency: String) {
-        viewModelScope.launch {
-            // Update monthly breakdown values from stored maps
-            val availableCurrencies = _uiState.value.availableCurrencies
-            updateUIStateForCurrency(currency, availableCurrencies)
-
-            // Refresh account balances to convert them to the new selected currency
-            refreshAccountBalances()
-
-            // Also refresh transaction type totals for new currency
-            val now = LocalDate.now()
-            val startOfMonth = now.withDayOfMonth(1)
-            val endOfMonth = now.withDayOfMonth(now.lengthOfMonth())
-
-            val transactions = transactionRepository.getTransactionsBetweenDates(
-                startDate = startOfMonth,
-                endDate = endOfMonth
-            ).first()
-            updateTransactionTypeTotals(transactions)
-        }
-    }
-
-    private suspend fun updateTransactionTypeTotals(transactions: List<TransactionEntity>) {
-        // Use all transactions and convert them to selected currency for aggregated totals
-        val selectedCurrency = _uiState.value.selectedCurrency
-        
-        var creditCardTotal = BigDecimal.ZERO
-        var transferTotal = BigDecimal.ZERO
-        var investmentTotal = BigDecimal.ZERO
-
-        transactions.forEach { tx ->
-            val convertedAmount = if (tx.currency == selectedCurrency) {
-                tx.amount
-            } else {
-                currencyConversionService.convertAmount(
-                    amount = tx.amount,
-                    fromCurrency = tx.currency,
-                    toCurrency = selectedCurrency
-                )
-            }
-
-            when (tx.transactionType) {
-                TransactionType.CREDIT -> creditCardTotal += convertedAmount
-                TransactionType.TRANSFER -> transferTotal += convertedAmount
-                TransactionType.INVESTMENT -> investmentTotal += convertedAmount
-                else -> {}
-            }
-        }
-
-        _uiState.update { it.copy(
-            currentMonthCreditCard = creditCardTotal,
-            currentMonthTransfer = transferTotal,
-            currentMonthInvestment = investmentTotal
-        ) }
+        _selectedCurrency.value = currency
     }
 
     private suspend fun updateBreakdownForSelectedCurrency(
         breakdownByCurrency: Map<String, TransactionRepository.MonthlyBreakdown>,
-        period: FinancialPeriod
+        period: FinancialPeriod,
+        selectedCurrency: String
     ) {
         // Store the breakdown map for later use when switching currencies
         when (period) {
@@ -802,25 +787,15 @@ class HomeViewModel @Inject constructor(
             FinancialPeriod.CURRENT_YEAR -> currentYearBreakdownMap = breakdownByCurrency
         }
 
-        // Update available currencies from all stored data
-        val allCurrencies = (currentMonthBreakdownMap.keys + lastMonthBreakdownMap.keys + currentYearBreakdownMap.keys).distinct()
+        // Update available currencies from all stored data and include the effective base currency
+        val effectiveCurrency = currencyRepository.effectiveBaseCurrencyCode.first()
+        val allCurrencies = (currentMonthBreakdownMap.keys + lastMonthBreakdownMap.keys + currentYearBreakdownMap.keys + effectiveCurrency).distinct()
         val availableCurrencies = allCurrencies.sortedWith { a, b ->
             when {
                 a == "INR" -> -1 // INR first
                 b == "INR" -> 1
                 else -> a.compareTo(b) // Alphabetical for others
             }
-        }
-
-        // Auto-select primary currency if not already selected or if current currency no longer exists
-        val currentSelectedCurrency = _uiState.value.selectedCurrency
-        val selectedCurrency = if (!availableCurrencies.contains(currentSelectedCurrency) && availableCurrencies.isNotEmpty()) {
-            when {
-                availableCurrencies.contains("INR") -> "INR"
-                else -> availableCurrencies.first()
-            }
-        } else {
-            currentSelectedCurrency
         }
 
         // Update UI state with values for selected currency

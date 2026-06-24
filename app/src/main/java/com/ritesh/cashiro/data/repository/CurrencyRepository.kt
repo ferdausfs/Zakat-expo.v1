@@ -7,6 +7,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -59,6 +60,26 @@ class CurrencyRepository @Inject constructor(
             } else {
                 userPreferencesRepository.baseCurrency
             }
+        }
+    }
+
+    /**
+     * Returns the effective base currency, overriding with:
+     * 1. Unified currency when enabled (highest priority — overrides all other currency settings for display)
+     * 2. Default currency when enabled (used as the relational base for exchange rates)
+     * 3. Main account's currency as fallback
+     */
+    val effectiveBaseCurrencyCode: Flow<String> = combine(
+        baseCurrencyCode,
+        userPreferencesRepository.unifiedCurrencyEnabled,
+        userPreferencesRepository.unifiedCurrencyCode,
+        userPreferencesRepository.defaultCurrencyEnabled,
+        userPreferencesRepository.defaultCurrencyCode
+    ) { baseCode, unifiedEnabled, unifiedCode, defaultEnabled, defaultCode ->
+        when {
+            unifiedEnabled && !unifiedCode.isNullOrBlank() -> unifiedCode
+            defaultEnabled && !defaultCode.isNullOrBlank() -> defaultCode
+            else -> baseCode
         }
     }
 }

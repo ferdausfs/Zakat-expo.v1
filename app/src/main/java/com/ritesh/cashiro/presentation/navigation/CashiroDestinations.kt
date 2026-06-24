@@ -185,6 +185,7 @@ data class Transactions(
 
 
 @Serializable object Settings
+@Serializable object CurrencySettings
 @Serializable object Subscriptions
 @Serializable object Categories
 

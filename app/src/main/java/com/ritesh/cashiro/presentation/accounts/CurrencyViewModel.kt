@@ -30,6 +30,7 @@ class CurrencyViewModel @Inject constructor(
     private val exchangeRateProvider: ExchangeRateProvider,
     private val currencyConversionService: CurrencyConversionService,
     private val currencyRepository: CurrencyRepository,
+    private val userPreferencesRepository: UserPreferencesRepository,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
@@ -50,10 +51,10 @@ class CurrencyViewModel @Inject constructor(
 
     private fun observeBaseCurrency() {
         viewModelScope.launch {
-            currencyRepository.baseCurrencyCode.collectLatest { baseCurrencyCode ->
+            currencyRepository.effectiveBaseCurrencyCode.collectLatest { effectiveCurrency ->
                 val currencies = _uiState.value.currencies
                 if (currencies.isNotEmpty()) {
-                    val selectedCurrency = currencies.find { it.code.equals(baseCurrencyCode, ignoreCase = true) }
+                    val selectedCurrency = currencies.find { it.code.equals(effectiveCurrency, ignoreCase = true) }
                     if (selectedCurrency != null && _uiState.value.selectedCurrency?.code != selectedCurrency.code) {
                         _uiState.update { it.copy(selectedCurrency = selectedCurrency) }
                         loadConversions(selectedCurrency.code)
@@ -91,16 +92,25 @@ class CurrencyViewModel @Inject constructor(
             
             val currencyMap = exchangeRateProvider.fetchAllCurrencies()
             if (currencyMap != null) {
-                val currencies = currencyMap.map { (code, name) ->
+                val customCurrencies = userPreferencesRepository.customCurrencies.first().map { it.toCurrency() }
+                
+                val currenciesMap = currencyMap.map { (code, name) ->
                     Currency(
                         code = code.uppercase(),
                         name = name,
                         symbol = CurrencySymbols.getSymbol(code)
                     )
-                }.sortedBy { it.name }
+                }.toMutableList()
 
-                val baseCurrencyCode = currencyRepository.baseCurrencyCode.first()
-                val selectedCurrency = currencies.find { it.code.equals(baseCurrencyCode, ignoreCase = true) } 
+                customCurrencies.forEach { custom ->
+                    currenciesMap.removeAll { it.code == custom.code }
+                    currenciesMap.add(custom)
+                }
+
+                val currencies = currenciesMap.sortedBy { it.name }
+
+                val effectiveCurrencyCode = currencyRepository.effectiveBaseCurrencyCode.first()
+                val selectedCurrency = currencies.find { it.code.equals(effectiveCurrencyCode, ignoreCase = true) } 
                     ?: currencies.find { it.code == "USD" }
                     ?: currencies.firstOrNull()
 
@@ -132,6 +142,9 @@ class CurrencyViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoadingConversions = true, conversionError = null) }
             
+            val customCurrencies = userPreferencesRepository.customCurrencies.first()
+            val customSymbols = customCurrencies.associate { it.code to it.symbol }
+
             // 1. Load from cache immediately
             val (cachedRates, lastUpdated) = currencyConversionService.getStoredConversions(currencyCode)
             if (cachedRates.isNotEmpty()) {
@@ -139,7 +152,9 @@ class CurrencyViewModel @Inject constructor(
                     CurrencyConversion(
                         currencyCode = entity.toCurrency,
                         rate = entity.rate.toDouble(),
-                        lastUpdated = entity.updatedAtUnix * 1000
+                        lastUpdated = entity.updatedAtUnix * 1000,
+                        isCustom = entity.isCustom,
+                        customSymbol = customSymbols[entity.toCurrency]
                     )
                 }.sortedBy { it.currencyCode }
                 
@@ -163,7 +178,9 @@ class CurrencyViewModel @Inject constructor(
                         CurrencyConversion(
                             currencyCode = entity.toCurrency,
                             rate = entity.rate.toDouble(),
-                            lastUpdated = entity.updatedAtUnix * 1000
+                            lastUpdated = entity.updatedAtUnix * 1000,
+                            isCustom = entity.isCustom,
+                            customSymbol = customSymbols[entity.toCurrency]
                         )
                     }.sortedBy { it.currencyCode }
 
@@ -194,6 +211,33 @@ class CurrencyViewModel @Inject constructor(
                     )
                 }
             }
+        }
+    }
+
+    fun addCustomCurrency(name: String, symbol: String, code: String, rate: Double) {
+        viewModelScope.launch {
+            val customCurrency = com.ritesh.cashiro.data.model.CustomCurrency(code.uppercase(), name, symbol)
+            userPreferencesRepository.addCustomCurrency(customCurrency)
+            
+            val baseCurrency = _uiState.value.selectedCurrency?.code ?: "USD"
+            currencyConversionService.saveCustomRate(baseCurrency, code.uppercase(), BigDecimal.valueOf(rate))
+            
+            loadCurrencies()
+            loadConversions(baseCurrency)
+        }
+    }
+
+    fun saveCustomRate(fromCurrency: String, toCurrency: String, rate: Double) {
+        viewModelScope.launch {
+            currencyConversionService.saveCustomRate(fromCurrency, toCurrency, BigDecimal.valueOf(rate))
+            loadConversions(fromCurrency)
+        }
+    }
+
+    fun resetCustomRate(fromCurrency: String, toCurrency: String) {
+        viewModelScope.launch {
+            currencyConversionService.resetCustomRate(fromCurrency, toCurrency)
+            loadConversions(fromCurrency)
         }
     }
 

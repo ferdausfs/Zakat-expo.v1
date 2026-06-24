@@ -51,7 +51,7 @@ class BudgetViewModel @Inject constructor(
 
     private fun observeBaseCurrency() {
         viewModelScope.launch {
-            currencyRepository.baseCurrencyCode.collect { currency ->
+            currencyRepository.effectiveBaseCurrencyCode.collect { currency ->
                 _uiState.update { it.copy(baseCurrency = currency) }
             }
         }
@@ -71,8 +71,9 @@ class BudgetViewModel @Inject constructor(
             try {
                 combine(
                     budgetRepository.getAllBudgetsWithSpending(),
-                    currencyRepository.baseCurrencyCode
-                ) { budgets, targetCurrency ->
+                    currencyRepository.effectiveBaseCurrencyCode,
+                    currencyConversionService.rateChangeTrigger
+                ) { budgets, targetCurrency, _ ->
                     // Convert budgets to match the selected main currency for display
                     budgets.map { budgetWithSpending ->
                         if (budgetWithSpending.budget.currency != targetCurrency) {
@@ -122,7 +123,11 @@ class BudgetViewModel @Inject constructor(
     fun selectBudget(budgetId: Long, startDate: String? = null, endDate: String? = null) {
         selectedBudgetCollectionJob?.cancel()
         selectedBudgetCollectionJob = viewModelScope.launch {
-            budgetRepository.getAllBudgetsWithSpending().collect { allBudgets ->
+            val effectiveCurrency = currencyRepository.effectiveBaseCurrencyCode.first()
+            combine(
+                budgetRepository.getAllBudgetsWithSpending(),
+                currencyConversionService.rateChangeTrigger
+            ) { allBudgets, _ -> allBudgets }.collect { allBudgets ->
                 val found = allBudgets.find { it.budget.id == budgetId }
                 if (found != null) {
                     var budgetWithSpending = found
@@ -140,6 +145,31 @@ class BudgetViewModel @Inject constructor(
                         } catch (e: Exception) {
                             // Fallback to normal if parsing fails
                         }
+                    }
+
+                    // Convert budget data to effective currency
+                    if (effectiveCurrency != budgetWithSpending.budget.currency) {
+                        val convertedAmount = currencyConversionService.convertAmount(
+                            budgetWithSpending.budget.amount,
+                            budgetWithSpending.budget.currency,
+                            effectiveCurrency
+                        ) ?: budgetWithSpending.budget.amount
+                        val convertedSpending = currencyConversionService.convertAmount(
+                            budgetWithSpending.currentSpending,
+                            budgetWithSpending.budget.currency,
+                            effectiveCurrency
+                        ) ?: budgetWithSpending.currentSpending
+                        val convertedCategorySpending = budgetWithSpending.categorySpending.mapValues { (_, amount) ->
+                            currencyConversionService.convertAmount(amount, budgetWithSpending.budget.currency, effectiveCurrency) ?: amount
+                        }
+                        budgetWithSpending = budgetWithSpending.copy(
+                            budget = budgetWithSpending.budget.copy(
+                                amount = convertedAmount,
+                                currency = effectiveCurrency
+                            ),
+                            currentSpending = convertedSpending,
+                            categorySpending = convertedCategorySpending
+                        )
                     }
 
                     val categoryLimitsWithSpending = budgetWithSpending.categoryLimits.map { limit ->
@@ -176,8 +206,9 @@ class BudgetViewModel @Inject constructor(
             transactionCollectionJob = viewModelScope.launch {
                 combine(
                     budgetRepository.getTransactionsForBudget(collectionBudget),
-                    currencyRepository.baseCurrencyCode
-                ) { transactions, mainCurrency ->
+                    currencyRepository.effectiveBaseCurrencyCode,
+                    currencyConversionService.rateChangeTrigger
+                ) { transactions, mainCurrency, _ ->
                     val converted = transactions
                         .filter { it.currency != mainCurrency }
                         .associate { tx ->

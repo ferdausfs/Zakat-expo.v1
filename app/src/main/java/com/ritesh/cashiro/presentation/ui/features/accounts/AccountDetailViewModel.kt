@@ -69,9 +69,10 @@ class AccountDetailViewModel @Inject constructor(
             combine(
                 selectedDateRange,
                 transactionRepository.getTransactionsByAccount(bankName, accountLast4),
-                currencyRepository.baseCurrencyCode,
-                accountBalanceRepository.getLatestBalanceFlow(bankName, accountLast4)
-            ) { dateRange, allTransactions, mainCurrency, latestBalance ->
+                currencyRepository.effectiveBaseCurrencyCode,
+                accountBalanceRepository.getLatestBalanceFlow(bankName, accountLast4),
+                currencyConversionService.rateChangeTrigger
+            ) { dateRange, allTransactions, mainCurrency, latestBalance, _ ->
                 val (startDate, endDate) = getDateRangeValues(dateRange)
 
                 val filteredTransactions = if (dateRange == DateRange.ALL_TIME) {
@@ -95,16 +96,16 @@ class AccountDetailViewModel @Inject constructor(
                     currencyConversionService.refreshExchangeRatesForAccount(accountCurrencies)
                 }
 
-                // Calculate total income and expenses with account primary currency conversion
+                // Calculate total income and expenses converted to the effective base currency
                 var totalIncome = BigDecimal.ZERO
                 var totalExpenses = BigDecimal.ZERO
 
                 filteredTransactions.forEach { transaction ->
-                    val convertedAmount = if (transaction.currency != accountPrimaryCurrency) {
+                    val convertedAmount = if (transaction.currency != mainCurrency) {
                         currencyConversionService.convertAmount(
                             amount = transaction.amount,
                             fromCurrency = transaction.currency,
-                            toCurrency = accountPrimaryCurrency
+                            toCurrency = mainCurrency
                         ) ?: transaction.amount
                     } else {
                         transaction.amount
@@ -130,7 +131,7 @@ class AccountDetailViewModel @Inject constructor(
                         totalIncome = totalIncome,
                         totalExpenses = totalExpenses,
                         netBalance = totalIncome - totalExpenses,
-                        primaryCurrency = accountPrimaryCurrency,
+                        primaryCurrency = mainCurrency,
                         baseCurrency = mainCurrency,
                         hasMultipleCurrencies = hasMultipleCurrencies,
                         convertedAmounts = converted,
@@ -170,9 +171,9 @@ class AccountDetailViewModel @Inject constructor(
     
     private fun observeBalanceChartData() {
         viewModelScope.launch {
-            selectedDateRange.flatMapLatest { dateRange ->
+            combine(selectedDateRange, currencyConversionService.rateChangeTrigger) { dateRange, _ -> dateRange }
+                .flatMapLatest { dateRange ->
                 val (startDate, endDate) = getDateRangeValues(dateRange)
-
 
                 val chartStartDate = when (dateRange) {
                     DateRange.LAST_7_DAYS -> endDate.minusDays(14)
@@ -190,12 +191,21 @@ class AccountDetailViewModel @Inject constructor(
                     endDate
                 )
             }.collect { balanceHistory ->
+                val effectiveCurrency = currencyRepository.effectiveBaseCurrencyCode.first()
 
                 val chartData = balanceHistory.map { entity ->
+                    val convertedBalance = if (entity.currency != effectiveCurrency) {
+                        currencyConversionService.convertAmount(
+                            entity.balance,
+                            entity.currency,
+                            effectiveCurrency
+                        ) ?: entity.balance
+                    } else entity.balance
+
                     BalancePoint(
                         timestamp = entity.timestamp,
-                        balance = entity.balance,
-                        currency = entity.currency
+                        balance = convertedBalance,
+                        currency = effectiveCurrency
                     )
                 }
 

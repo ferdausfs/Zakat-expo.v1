@@ -114,6 +114,7 @@ fun ManageAccountsScreen(
     blurEffects: Boolean,
 ) {
     val uiState by manageAccountsViewModel.uiState.collectAsState()
+    val defaultCurrency by manageAccountsViewModel.defaultCurrencyForNewAccounts.collectAsState()
     var showUpdateDialog by remember { mutableStateOf(false) }
     var selectedAccount by remember { mutableStateOf<Pair<String, String>?>(null) }
     var selectedAccountEntity by remember {
@@ -816,6 +817,7 @@ fun ManageAccountsScreen(
             EditAccountSheet(
                 account = accountToEdit!!,
                 allAccounts = uiState.accounts,
+                defaultCurrency = defaultCurrency,
                 onDismiss = {
                     showEditSheet = false
                     accountToEdit = null
@@ -857,6 +859,7 @@ fun ManageAccountsScreen(
         ) {
             EditAccountSheet(
                 allAccounts = uiState.accounts,
+                defaultCurrency = defaultCurrency,
                 onDismiss = { showAddSheet = false },
                 onSave = { bankName, balance, last4, iconResId, iconName, color, isCC, isWallet, limit, currency ->
                     manageAccountsViewModel.addAccount(

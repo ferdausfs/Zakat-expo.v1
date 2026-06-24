@@ -47,16 +47,24 @@ object CurrencySymbols {
         "KES" to "KSh"
     )
 
+    private var customSymbols = mapOf<String, String>()
+
+    fun setCustomSymbols(newSymbols: Map<String, String>) {
+        customSymbols = newSymbols.mapKeys { it.key.uppercase(Locale.ROOT) }
+    }
+
     fun getSymbol(currencyCode: String): String {
-        return symbols[currencyCode.uppercase(Locale.ROOT)] ?: currencyCode.uppercase(Locale.ROOT)
+        val code = currencyCode.uppercase(Locale.ROOT)
+        return customSymbols[code] ?: symbols[code] ?: code
     }
 
     fun getSymbolWithCode(currencyCode: String): String {
         val symbol = getSymbol(currencyCode)
-        return if (symbol == currencyCode.uppercase(Locale.ROOT)) {
-            currencyCode.uppercase(Locale.ROOT)
+        val code = currencyCode.uppercase(Locale.ROOT)
+        return if (symbol == code) {
+            code
         } else {
-            "$symbol - ${currencyCode.uppercase(Locale.ROOT)}"
+            "$symbol - $code"
         }
     }
 }

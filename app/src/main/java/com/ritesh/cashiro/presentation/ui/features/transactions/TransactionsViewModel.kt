@@ -81,7 +81,7 @@ class TransactionsViewModel @Inject constructor(
     private val _selectedCurrency = MutableStateFlow("INR") // Default to INR
     val selectedCurrency: StateFlow<String> = _selectedCurrency.asStateFlow()
 
-    val baseCurrency: StateFlow<String> = currencyRepository.baseCurrencyCode
+    val baseCurrency: StateFlow<String> = currencyRepository.effectiveBaseCurrencyCode
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
@@ -291,13 +291,13 @@ class TransactionsViewModel @Inject constructor(
     }
     
     init {
-        // Observe the main account's currency dynamically
+        // Observe the effective base currency dynamically
         viewModelScope.launch {
             var lastBaseCurrency: String? = null
-            currencyRepository.baseCurrencyCode.collectLatest { mainAccountCurrency ->
-                if (lastBaseCurrency == null || mainAccountCurrency != lastBaseCurrency) {
-                    _selectedCurrency.value = mainAccountCurrency
-                    lastBaseCurrency = mainAccountCurrency
+            baseCurrency.collectLatest { effectiveCurrency ->
+                if (lastBaseCurrency == null || effectiveCurrency != lastBaseCurrency) {
+                    _selectedCurrency.value = effectiveCurrency
+                    lastBaseCurrency = effectiveCurrency
                 }
             }
         }
@@ -317,7 +317,8 @@ class TransactionsViewModel @Inject constructor(
                     selectedCurrency.map { "currency" },
                     sortOption.map { "sort" },
                     customDateRange.map { "customDate" },
-                    currencyRepository.baseCurrencyCode.map { "baseCurrency" }
+                    baseCurrency.map { "baseCurrency" },
+                    currencyConversionService.rateChangeTrigger.map { "rates" }
                 )
             }
             .transformLatest { trigger ->
@@ -331,7 +332,7 @@ class TransactionsViewModel @Inject constructor(
                 val filterCurrencies = currenciesFilter.value
                 val typeFilter = transactionTypeFilter.value
                 val currency = selectedCurrency.value
-                val baseCurrencyCode = currencyRepository.baseCurrencyCode.first()
+                val baseCurrencyCode = baseCurrency.value
                 val sort = sortOption.value
  
                  // Get filtered transactions

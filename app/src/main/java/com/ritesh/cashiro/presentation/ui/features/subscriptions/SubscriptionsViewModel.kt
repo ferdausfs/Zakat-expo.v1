@@ -59,8 +59,9 @@ class SubscriptionsViewModel @Inject constructor(
         viewModelScope.launch {
             combine(
                 subscriptionRepository.getActiveSubscriptions(),
-                currencyRepository.baseCurrencyCode
-            ) { subscriptions, targetCurrency ->
+                currencyRepository.effectiveBaseCurrencyCode,
+                currencyConversionService.rateChangeTrigger
+            ) { subscriptions, targetCurrency, _ ->
                 val subscriptionCurrencies = subscriptions.map { it.currency }.distinct()
                 if (subscriptionCurrencies.any { it != targetCurrency }) {
                     currencyConversionService.refreshExchangeRatesForAccount(subscriptionCurrencies + targetCurrency)

@@ -19,7 +19,9 @@ import kotlinx.coroutines.flow.map
 import com.ritesh.cashiro.data.webhook.WebhookScheduledTime
 import com.ritesh.cashiro.data.webhook.WebhookSettings
 import com.ritesh.cashiro.data.webhook.WebhookSyncMode
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import com.ritesh.cashiro.data.model.CustomCurrency
 
 private val Context.dataStore: DataStore<Preferences> by
         preferencesDataStore(name = "user_preferences")
@@ -41,6 +43,13 @@ constructor(@ApplicationContext private val context: Context) {
         val LAST_SCAN_TIMESTAMP = longPreferencesKey("last_scan_timestamp")
         val LAST_SCAN_PERIOD = intPreferencesKey("last_scan_period")
         val BASE_CURRENCY = stringPreferencesKey("base_currency")
+
+        // Currency Settings preferences
+        val UNIFIED_CURRENCY_ENABLED = booleanPreferencesKey("unified_currency_enabled")
+        val UNIFIED_CURRENCY_CODE = stringPreferencesKey("unified_currency_code")
+        val DEFAULT_CURRENCY_ENABLED = booleanPreferencesKey("default_currency_enabled")
+        val DEFAULT_CURRENCY_CODE = stringPreferencesKey("default_currency_code")
+        val CUSTOM_CURRENCIES_JSON = stringPreferencesKey("custom_currencies_json")
 
         // Theme preferences
         val IS_AMOLED_MODE = booleanPreferencesKey("is_amoled_mode")
@@ -156,7 +165,11 @@ constructor(@ApplicationContext private val context: Context) {
                     )
                 } catch (e: Exception) {
                     AppIcon.ORIGINAL
-                }
+                },
+                unifiedCurrencyEnabled = preferences[PreferencesKeys.UNIFIED_CURRENCY_ENABLED] ?: false,
+                unifiedCurrencyCode = preferences[PreferencesKeys.UNIFIED_CURRENCY_CODE],
+                defaultCurrencyEnabled = preferences[PreferencesKeys.DEFAULT_CURRENCY_ENABLED] ?: false,
+                defaultCurrencyCode = preferences[PreferencesKeys.DEFAULT_CURRENCY_CODE]
             )
         }
 
@@ -164,6 +177,52 @@ constructor(@ApplicationContext private val context: Context) {
         context.dataStore.data.map { preferences ->
             preferences[PreferencesKeys.BASE_CURRENCY] ?: "INR"
         }
+
+    // Currency Settings flows
+    val unifiedCurrencyEnabled: Flow<Boolean> =
+        context.dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.UNIFIED_CURRENCY_ENABLED] ?: false
+        }
+
+    val unifiedCurrencyCode: Flow<String?> =
+        context.dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.UNIFIED_CURRENCY_CODE]
+        }
+
+    val defaultCurrencyEnabled: Flow<Boolean> =
+        context.dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.DEFAULT_CURRENCY_ENABLED] ?: false
+        }
+
+    val defaultCurrencyCode: Flow<String?> =
+        context.dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.DEFAULT_CURRENCY_CODE]
+        }
+
+    val customCurrencies: Flow<List<CustomCurrency>> =
+        context.dataStore.data.map { preferences ->
+            val json = preferences[PreferencesKeys.CUSTOM_CURRENCIES_JSON]
+            if (json != null) {
+                runCatching {
+                    Json.decodeFromString<List<CustomCurrency>>(json)
+                }.getOrElse { emptyList() }
+            } else {
+                emptyList()
+            }
+        }
+
+    suspend fun addCustomCurrency(currency: CustomCurrency) {
+        context.dataStore.edit { preferences ->
+            val json = preferences[PreferencesKeys.CUSTOM_CURRENCIES_JSON]
+            val currentList = if (json != null) {
+                runCatching { Json.decodeFromString<List<CustomCurrency>>(json) }.getOrElse { emptyList() }
+            } else {
+                emptyList()
+            }
+            val newList = currentList.filterNot { it.code.equals(currency.code, ignoreCase = true) } + currency
+            preferences[PreferencesKeys.CUSTOM_CURRENCIES_JSON] = Json.encodeToString(newList)
+        }
+    }
 
     val webhookSettings: Flow<WebhookSettings> =
         context.dataStore.data.map { preferences ->
@@ -202,6 +261,38 @@ constructor(@ApplicationContext private val context: Context) {
     suspend fun updateBaseCurrency(currency: String) {
         context.dataStore.edit { preferences ->
             preferences[PreferencesKeys.BASE_CURRENCY] = currency
+        }
+    }
+
+    suspend fun setUnifiedCurrencyEnabled(enabled: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.UNIFIED_CURRENCY_ENABLED] = enabled
+        }
+    }
+
+    suspend fun setUnifiedCurrencyCode(code: String?) {
+        context.dataStore.edit { preferences ->
+            if (code == null) {
+                preferences.remove(PreferencesKeys.UNIFIED_CURRENCY_CODE)
+            } else {
+                preferences[PreferencesKeys.UNIFIED_CURRENCY_CODE] = code
+            }
+        }
+    }
+
+    suspend fun setDefaultCurrencyEnabled(enabled: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.DEFAULT_CURRENCY_ENABLED] = enabled
+        }
+    }
+
+    suspend fun setDefaultCurrencyCode(code: String?) {
+        context.dataStore.edit { preferences ->
+            if (code == null) {
+                preferences.remove(PreferencesKeys.DEFAULT_CURRENCY_CODE)
+            } else {
+                preferences[PreferencesKeys.DEFAULT_CURRENCY_CODE] = code
+            }
         }
     }
 
@@ -723,5 +814,10 @@ data class UserPreferences(
         val hidePillIndicator: Boolean = false,
         val blurEffects: Boolean = true,
         val isSampleDataSeeded: Boolean = false,
-        val appIcon: AppIcon = AppIcon.ORIGINAL
+        val appIcon: AppIcon = AppIcon.ORIGINAL,
+        // Currency Settings preferences
+        val unifiedCurrencyEnabled: Boolean = false,
+        val unifiedCurrencyCode: String? = null,
+        val defaultCurrencyEnabled: Boolean = false,
+        val defaultCurrencyCode: String? = null
 )

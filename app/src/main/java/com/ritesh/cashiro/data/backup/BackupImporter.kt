@@ -172,6 +172,7 @@ class BackupImporter @Inject constructor(
                 }
                 database.ruleDao().deleteAllRules()
                 database.ruleApplicationDao().deleteAllApplications()
+                database.exchangeRateDao().deleteAllRates()
                 
                 // Import all data
                 backup.database.categories.forEach { category ->
@@ -206,6 +207,10 @@ class BackupImporter @Inject constructor(
                 
                 backup.database.chatMessages.forEach { message ->
                     database.chatDao().insertMessage(message)
+                }
+                
+                backup.database.exchangeRates.forEach { rate ->
+                    database.exchangeRateDao().insertExchangeRate(rate)
                 }
                 
                 backup.database.budgets.forEach { budget ->
@@ -366,6 +371,7 @@ class BackupImporter @Inject constructor(
                 importMerchantMappingsWithMerge(backup.database.merchantMappings)
                 importBudgetsWithMerge(backup.database.budgets, backup.database.budgetCategoryLimits)
                 importWebhookProfilesWithMerge(backup.database.webhookProfiles)
+                importExchangeRatesWithMerge(backup.database.exchangeRates)
                 
                 // Import preferences (merge with existing)
                 importPreferences(backup.preferences)
@@ -484,6 +490,12 @@ class BackupImporter @Inject constructor(
             if (existing == null) {
                 webhookRepository.saveProfile(profile.toDraft(baseCurrency))
             }
+        }
+    }
+
+    private suspend fun importExchangeRatesWithMerge(rates: List<ExchangeRateEntity>) {
+        rates.forEach { rate ->
+            database.exchangeRateDao().insertExchangeRate(rate)
         }
     }
 
@@ -641,6 +653,21 @@ class BackupImporter @Inject constructor(
             }
 
             userPreferencesRepository.updateShowBannerImage(profile.showBannerImage)
+        }
+
+        // Currency Preferences
+        preferences.currency?.let { currencyPrefs ->
+            userPreferencesRepository.setUnifiedCurrencyEnabled(currencyPrefs.unifiedCurrencyEnabled)
+            currencyPrefs.unifiedCurrencyCode?.let {
+                userPreferencesRepository.setUnifiedCurrencyCode(it)
+            }
+            userPreferencesRepository.setDefaultCurrencyEnabled(currencyPrefs.defaultCurrencyEnabled)
+            currencyPrefs.defaultCurrencyCode?.let {
+                userPreferencesRepository.setDefaultCurrencyCode(it)
+            }
+            currencyPrefs.customCurrencies.forEach { customCurrency ->
+                userPreferencesRepository.addCustomCurrency(customCurrency)
+            }
         }
     }
 }

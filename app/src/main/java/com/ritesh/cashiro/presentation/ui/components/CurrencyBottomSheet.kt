@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -17,19 +19,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.data.currency.model.CurrencyConversion
 import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.presentation.accounts.CurrencyViewModel
 import com.ritesh.cashiro.presentation.effects.BlurredAnimatedVisibility
-import com.ritesh.cashiro.presentation.effects.overScrollVertical
 import com.ritesh.cashiro.presentation.effects.rememberOverscrollFlingBehavior
 import com.ritesh.cashiro.presentation.ui.theme.Dimensions
 import com.ritesh.cashiro.presentation.ui.icons.CloseCircle
@@ -57,6 +62,7 @@ fun CurrencyBottomSheet(
     var showAllCurrencies by rememberSaveable { mutableStateOf(false) }
     var showExchangeRateInfo by rememberSaveable { mutableStateOf(false) }
     var showExchangeRateSheet by rememberSaveable { mutableStateOf(false) }
+    var showAddCustomCurrencySheet by rememberSaveable { mutableStateOf(false) }
     
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val exchangeRatesSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -210,7 +216,7 @@ fun CurrencyBottomSheet(
                                     shapes = ButtonDefaults.shapes()
                                 ) {
                                     Text(
-                                        text = "View All Currencies",
+                                        text = stringResource(R.string.view_all_currencies),
                                         fontSize = 12.sp,
                                         modifier = Modifier
                                             .background(
@@ -225,6 +231,39 @@ fun CurrencyBottomSheet(
                     }
 
                     Spacer(modifier = Modifier.height(80.dp))
+                }
+            }
+            // Action Buttons at Bottom
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                Color.Transparent,
+                                MaterialTheme.colorScheme.surface,
+                                MaterialTheme.colorScheme.surface
+                            )
+                        )
+                    )
+                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                contentAlignment = Alignment.BottomCenter
+            ) {
+                // Save button
+                Button(
+                    onClick = { showAddCustomCurrencySheet = true },
+                    modifier = Modifier
+                        .height(56.dp),
+                    shape = MaterialTheme.shapes.extraExtraLarge
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(18.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = stringResource(R.string.add_custom_currency),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
             }
 
@@ -281,7 +320,7 @@ fun CurrencyBottomSheet(
                                 modifier = Modifier.size(50.dp)
                             )
                             Text(
-                                text = "Exchange Rates Notice",
+                                text = stringResource(R.string.exchange_rates_notice_title),
                                 textAlign = TextAlign.Center,
                                 fontSize = 18.sp,
                                 fontWeight = FontWeight.Bold,
@@ -289,7 +328,7 @@ fun CurrencyBottomSheet(
                                 modifier = Modifier.fillMaxWidth()
                             )
                             Text(
-                                text = "The exchange rates displayed within this app are for informational purposes only and should not be used for investment decisions. These rates are estimates and may not reflect actual rates. By using this app you acknowledge that you understand and accept these limitations.",
+                                text = stringResource(R.string.exchange_rates_notice_text),
                                 textAlign = TextAlign.Center,
                                 fontSize = 12.sp,
                                 color = MaterialTheme.colorScheme.inverseSurface.copy(0.8f),
@@ -303,7 +342,7 @@ fun CurrencyBottomSheet(
                                         contentColor = MaterialTheme.colorScheme.inverseSurface
                                     ),
                                 ) {
-                                    Text(text = "Ok")
+                                    Text(text = stringResource(R.string.ok))
                                 }
                                 Button(
                                     onClick = {
@@ -316,7 +355,7 @@ fun CurrencyBottomSheet(
                                         contentColor = Color.White
                                     ),
                                 ) {
-                                    Text(text = "Exchange Rates", color = MaterialTheme.colorScheme.onPrimary)
+                                    Text(text = stringResource(R.string.exchange_rates), color = MaterialTheme.colorScheme.onPrimary)
                                 }
                             }
                         }
@@ -328,7 +367,24 @@ fun CurrencyBottomSheet(
                 ExchangeRatesBottomSheet(
                     uiState = uiState,
                     onDismiss = { showExchangeRateSheet = false },
-                    sheetState = exchangeRatesSheetState
+                    sheetState = exchangeRatesSheetState,
+                    onSaveCustomRate = { fromCurrency, toCurrency, rate ->
+                        viewModel.saveCustomRate(fromCurrency, toCurrency, rate)
+                    },
+                    onResetCustomRate = { fromCurrency, toCurrency ->
+                        viewModel.resetCustomRate(fromCurrency, toCurrency)
+                    }
+                )
+            }
+            
+            if (showAddCustomCurrencySheet) {
+                AddCustomCurrencyBottomSheet(
+                    onDismiss = { showAddCustomCurrencySheet = false },
+                    onSave = { name, symbol, code, rate ->
+                        viewModel.addCustomCurrency(name, symbol, code, rate)
+                        showAddCustomCurrencySheet = false
+                        showExchangeRateSheet = true // Optional: show rates to confirm
+                    }
                 )
             }
         }
@@ -414,13 +470,18 @@ fun CurrencyCard(
 fun ExchangeRatesBottomSheet(
     uiState: CurrencyViewModel.CurrencyUiState,
     onDismiss: () -> Unit,
-    sheetState: SheetState
+    sheetState: SheetState,
+    onSaveCustomRate: (fromCurrency: String, toCurrency: String, rate: Double) -> Unit = { _, _, _ -> },
+    onResetCustomRate: (fromCurrency: String, toCurrency: String) -> Unit = { _, _ -> }
 ) {
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
+    var editTarget by remember { mutableStateOf<CurrencyConversion?>(null) }
+    var editRateText by remember { mutableStateOf("") }
     val filteredConversions = uiState.conversions.filter {
         it.currencyCode.contains(searchQuery.text, ignoreCase = true) ||
                 it.symbol.contains(searchQuery.text, ignoreCase = true)
     }
+    val baseCurrencyCode = uiState.selectedCurrency?.code ?: ""
 
     ModalBottomSheet(
         sheetState = sheetState,
@@ -434,7 +495,7 @@ fun ExchangeRatesBottomSheet(
                 .padding(horizontal = 16.dp)
         ) {
             Text(
-                text = "Exchange Rates",
+                text = stringResource(R.string.exchange_rates),
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
@@ -447,7 +508,7 @@ fun ExchangeRatesBottomSheet(
             SearchBarBox(
                 searchQuery = searchQuery,
                 onSearchQueryChange = { searchQuery = it },
-                label = { Text("Search currencies...") },
+                label = { Text(stringResource(R.string.search_currencies)) },
                 leadingIcon = {
                     Icon(
                         imageVector = Iconax.Search,
@@ -479,7 +540,7 @@ fun ExchangeRatesBottomSheet(
                 ) {
                     item {
                         Text(
-                            text = "Rates relative to ${uiState.selectedCurrency?.code ?: "Base"}",
+                            text = stringResource(R.string.rates_relative_to, baseCurrencyCode),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.6f),
                             textAlign = TextAlign.Center,
@@ -491,7 +552,11 @@ fun ExchangeRatesBottomSheet(
                             conversion = conversion,
                             baseCurrency = uiState.selectedCurrency,
                             isFirst = index == 0,
-                            isLast = index == filteredConversions.size - 1
+                            isLast = index == filteredConversions.size - 1,
+                            onClick = {
+                                editTarget = conversion
+                                editRateText = conversion.displayRate
+                            }
                         )
                     }
 
@@ -500,7 +565,7 @@ fun ExchangeRatesBottomSheet(
                             val formatter = remember { SimpleDateFormat("dd MMM yyyy, HH:mm", Locale.getDefault()) }
                             val dateStr = remember(uiState.lastUpdated) { formatter.format(Date(uiState.lastUpdated * 1000)) }
                             Text(
-                                text = "Last updated: $dateStr",
+                                text = stringResource(R.string.last_updated, dateStr),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.5f),
                                 textAlign = TextAlign.Center,
@@ -515,6 +580,146 @@ fun ExchangeRatesBottomSheet(
             Spacer(modifier = Modifier.height(12.dp))
         }
     }
+
+    if (editTarget != null) {
+        val conversion = editTarget!!
+        AlertDialog(
+            onDismissRequest = { editTarget = null },
+            title = {
+                Text(
+                    text = "${conversion.currencyCode} (${conversion.symbol})",
+                    fontWeight = FontWeight.Bold
+                )
+            },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(
+                        text = stringResource(R.string.exchange_rate_format, baseCurrencyCode, conversion.displayRate, conversion.symbol),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    TextField(
+                        value = editRateText,
+                        onValueChange = { editRateText = it },
+                        label = { Text(stringResource(R.string.custom_rate)) },
+                        shape = RoundedCornerShape(Spacing.md),
+                        colors = TextFieldDefaults.colors(
+                            focusedContainerColor = MaterialTheme.colorScheme.surface.copy(0.5f),
+                            unfocusedContainerColor = MaterialTheme.colorScheme.surface.copy(0.5f),
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            focusedLabelColor = MaterialTheme.colorScheme.primary,
+                            unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(
+                                0.7f
+                            )
+                        ),
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    if (conversion.isCustom) {
+                        Text(
+                            text = stringResource(R.string.custom_rate_set),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+            },
+            confirmButton = {
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Row(
+                        modifier = Modifier.align(Alignment.Center),
+                        horizontalArrangement = Arrangement.spacedBy(1.5.dp),
+                    ) {
+                        Button(
+                            onClick = { editTarget = null },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.surface.copy(0.5f),
+                                contentColor = MaterialTheme.colorScheme.onSurface
+                            ),
+                            shape = RoundedCornerShape(
+                                topStart = Dimensions.Radius.xxl,
+                                topEnd = Dimensions.Radius.xs,
+                                bottomStart = Dimensions.Radius.xxl,
+                                bottomEnd = Dimensions.Radius.xs
+                            ),
+                            modifier = Modifier
+                                .padding(start = Spacing.xl)
+                                .weight(1f)
+                                .fillMaxWidth()
+                        ) {
+                            Text(
+                                text = stringResource(R.string.cancel),
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                        }
+
+                        if (conversion.isCustom) {
+                            Button(
+                                onClick = {
+                                    onResetCustomRate(baseCurrencyCode, conversion.currencyCode)
+                                    editTarget = null
+                                },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.surface.copy(0.5f),
+                                    contentColor = MaterialTheme.colorScheme.onSurface
+                                ),
+                                shape = RoundedCornerShape(
+                                    topStart = Dimensions.Radius.xs,
+                                    topEnd = Dimensions.Radius.xs,
+                                    bottomStart = Dimensions.Radius.xs,
+                                    bottomEnd = Dimensions.Radius.xs
+                                ),
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.reset),
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                            }
+                        }
+
+                        Button(
+                            onClick = {
+                                val rate = editRateText.toDoubleOrNull()
+                                if (rate != null && rate > 0) {
+                                    onSaveCustomRate(baseCurrencyCode, conversion.currencyCode, rate)
+                                }
+                                editTarget = null
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                            ),
+                            shape = RoundedCornerShape(
+                                topStart = Dimensions.Radius.xs,
+                                topEnd = Dimensions.Radius.xxl,
+                                bottomStart = Dimensions.Radius.xs,
+                                bottomEnd = Dimensions.Radius.xxl
+                            ),
+                            modifier = Modifier
+                                .padding(end = Spacing.xl)
+                                .weight(1f)
+                                .fillMaxWidth()
+                        ) {
+                            Text(
+                                text = stringResource(R.string.save),
+                                style = MaterialTheme.typography.titleMedium)
+                        }
+                    }
+                }
+            },
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+            dismissButton = {},
+            modifier = Modifier
+                .clip(RoundedCornerShape(Dimensions.Radius.md)),
+            shape = MaterialTheme.shapes.large
+        )
+    }
 }
 
 @Composable
@@ -522,17 +727,37 @@ fun ExchangeRateItem(
     conversion: CurrencyConversion,
     baseCurrency: Currency?,
     isFirst: Boolean,
-    isLast: Boolean
+    isLast: Boolean,
+    onClick: () -> Unit = {}
 ) {
     val baseSymbol = baseCurrency?.symbol ?: ""
-    
+
     ListItem(
         headlineContent = {
-            Text(
-                text = "${conversion.currencyCode} (${conversion.symbol})",
-                fontWeight = FontWeight.Bold,
-                fontFamily = MaterialTheme.typography.bodyLarge.fontFamily
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = "${conversion.currencyCode} (${conversion.symbol})",
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = MaterialTheme.typography.bodyLarge.fontFamily
+                )
+                if (conversion.isCustom) {
+                    Surface(
+                        shape = RoundedCornerShape(4.dp),
+                        color = MaterialTheme.colorScheme.primaryContainer
+                    ) {
+                        Text(
+                            text = stringResource(R.string.custom_label),
+                            style = MaterialTheme.typography.labelSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                        )
+                    }
+                }
+            }
         },
         supportingContent = {
             Text(
@@ -546,6 +771,7 @@ fun ExchangeRateItem(
         ),
         modifier = Modifier
             .fillMaxWidth()
+            .clickable(onClick = onClick)
             .clip(
                 RoundedCornerShape(
                     topStart = if (isFirst) 16.dp else 0.dp,
@@ -561,5 +787,194 @@ fun ExchangeRateItem(
             thickness = 0.5.dp,
             color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
         )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+fun AddCustomCurrencyBottomSheet(
+    onDismiss: () -> Unit,
+    onSave: (name: String, symbol: String, code: String, rate: Double) -> Unit
+) {
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val scrollState = rememberScrollState()
+    var countryName by remember { mutableStateOf("") }
+    var symbol by remember { mutableStateOf("") }
+    var code by remember { mutableStateOf("") }
+    var rate by remember { mutableStateOf("") }
+    var showError by remember { mutableStateOf(false) }
+
+    ModalBottomSheet(
+        sheetState = sheetState,
+        onDismissRequest = onDismiss,
+        containerColor = MaterialTheme.colorScheme.background,
+        dragHandle = { BottomSheetDefaults.DragHandle() },
+    ) {
+        Box(modifier = Modifier.fillMaxWidth()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(
+                        state = scrollState,
+                        flingBehavior = rememberOverscrollFlingBehavior { scrollState }
+                    )
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.custom_currency),
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+
+                TextField(
+                    value = countryName,
+                    onValueChange = { countryName = it },
+                    shape = RoundedCornerShape(Spacing.md),
+                    label = { Text(stringResource(R.string.currency_country_name))},
+                    placeholder = { Text(stringResource(R.string.currency_name_hint)) },
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedLabelColor = MaterialTheme.colorScheme.primary,
+                        unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(
+                            0.7f
+                        ),
+                        focusedPlaceholderColor = MaterialTheme.colorScheme.onSurface.copy(0.7f),
+                        unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurface.copy(0.7f)
+                    ),
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true
+                )
+
+                Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                    TextField(
+                        value = code,
+                        onValueChange = { if (it.length <= 4) code = it.uppercase() },
+                        label = { Text(stringResource(R.string.currency_code))},
+                        placeholder = { Text(stringResource(R.string.currency_code_hint)) },
+                        colors = TextFieldDefaults.colors(
+                            focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            focusedLabelColor = MaterialTheme.colorScheme.primary,
+                            unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(
+                                0.7f
+                            ),
+                            focusedPlaceholderColor = MaterialTheme.colorScheme.onSurface.copy(0.7f),
+                            unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurface.copy(0.7f)
+                        ),
+                        shape = RoundedCornerShape(Spacing.md),
+                        modifier = Modifier.weight(1f),
+                        singleLine = true
+                    )
+
+                    TextField(
+                        value = symbol,
+                        onValueChange = { if (it.length <= 3) symbol = it },
+                        label = { Text(stringResource(R.string.currency_symbol))},
+                        placeholder = { Text(stringResource(R.string.currency_symbols_hint)) },
+                        colors = TextFieldDefaults.colors(
+                            focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            focusedLabelColor = MaterialTheme.colorScheme.primary,
+                            unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(
+                                0.7f
+                            ),
+                            focusedPlaceholderColor = MaterialTheme.colorScheme.onSurface.copy(0.7f),
+                            unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurface.copy(0.7f)
+                        ),
+                        shape = RoundedCornerShape(Spacing.md),
+                        modifier = Modifier.weight(1f),
+                        singleLine = true
+                    )
+                }
+
+                TextField(
+                    value = rate,
+                    onValueChange = { rate = it },
+                    label = { Text(stringResource(R.string.exchange_rate))},
+                    placeholder = { Text(stringResource(R.string.exchange_rate_hint)) },
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedLabelColor = MaterialTheme.colorScheme.primary,
+                        unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(
+                            0.7f
+                        ),
+                        focusedPlaceholderColor = MaterialTheme.colorScheme.onSurface.copy(0.7f),
+                        unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurface.copy(0.7f)
+                    ),
+                    shape = RoundedCornerShape(Spacing.md),
+                    modifier = Modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                    singleLine = true
+                )
+                Text(
+                    text = stringResource(R.string.base_currency_hint),
+                    color = MaterialTheme.colorScheme.onSurface.copy(0.8f),
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(start = 12.dp)
+                )
+
+                if (showError) {
+                    Text(
+                        text = stringResource(R.string.please_fill_all_fields),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+                Spacer(modifier = Modifier.height(80.dp))
+            }
+            // Action Buttons at Bottom
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                Color.Transparent,
+                                MaterialTheme.colorScheme.surface,
+                                MaterialTheme.colorScheme.surface
+                            )
+                        )
+                    )
+                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                contentAlignment = Alignment.BottomCenter
+            ) {
+                // Save button
+                Button(
+                    onClick = {
+                        val rateValue = rate.toDoubleOrNull()
+                        if (countryName.isNotBlank() && symbol.isNotBlank() && code.isNotBlank() && rateValue != null && rateValue > 0) {
+                            onSave(countryName, symbol, code, rateValue)
+                        } else {
+                            showError = true
+                        }
+                    },
+                    modifier = Modifier
+                        .height(56.dp),
+                    shape = MaterialTheme.shapes.extraExtraLarge
+                ) {
+                    Text(
+                        text = stringResource(R.string.save_currency),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+        }
     }
 }

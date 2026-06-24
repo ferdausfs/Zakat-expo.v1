@@ -49,7 +49,7 @@ constructor(
 
     private fun observeBaseCurrency() {
         viewModelScope.launch {
-            currencyRepository.baseCurrencyCode.collectLatest { code ->
+            currencyRepository.effectiveBaseCurrencyCode.collectLatest { code ->
                 _state.update { it.copy(baseCurrency = code) }
             }
         }
@@ -84,8 +84,9 @@ constructor(
     private fun observeNetWorth() {
         combine(
             accountBalanceRepository.getAllLatestBalances(),
-            currencyRepository.baseCurrencyCode
-        ) { allBalances, baseCurrency ->
+            currencyRepository.effectiveBaseCurrencyCode,
+            currencyConversionService.rateChangeTrigger
+        ) { allBalances, baseCurrency, _ ->
             if (allBalances.isEmpty()) return@combine BigDecimal.ZERO
 
             allBalances.sumOf { account ->
@@ -111,8 +112,9 @@ constructor(
 
         combine(
             transactionRepository.getAllTransactions(),
-            currencyRepository.baseCurrencyCode
-        ) { transactions, baseCurrency ->
+            currencyRepository.effectiveBaseCurrencyCode,
+            currencyConversionService.rateChangeTrigger
+        ) { transactions, baseCurrency, _ ->
             val monthTransactions =
                 transactions.filter {
                     val date = it.dateTime.toLocalDate()

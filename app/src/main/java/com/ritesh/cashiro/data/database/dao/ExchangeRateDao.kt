@@ -54,4 +54,22 @@ interface ExchangeRateDao {
 
     @Query("SELECT MAX(expires_at_unix) FROM exchange_rates WHERE from_currency = :fromCurrency")
     suspend fun getMaxExpiryTimeUnix(fromCurrency: String): Long?
+
+    @Query("SELECT * FROM exchange_rates WHERE from_currency = :fromCurrency AND to_currency = :toCurrency AND is_custom = 1")
+    suspend fun getCustomRate(fromCurrency: String, toCurrency: String): ExchangeRateEntity?
+
+    @Query("SELECT * FROM exchange_rates WHERE from_currency = :fromCurrency AND is_custom = 1")
+    suspend fun getCustomRatesForCurrency(fromCurrency: String): List<ExchangeRateEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertCustomRate(entity: ExchangeRateEntity)
+
+    @Query("DELETE FROM exchange_rates WHERE from_currency = :fromCurrency AND to_currency = :toCurrency AND is_custom = 1")
+    suspend fun resetCustomRate(fromCurrency: String, toCurrency: String)
+
+    @Query("SELECT * FROM exchange_rates")
+    fun getAllRates(): Flow<List<ExchangeRateEntity>>
+
+    @Query("DELETE FROM exchange_rates")
+    suspend fun deleteAllRates()
 }

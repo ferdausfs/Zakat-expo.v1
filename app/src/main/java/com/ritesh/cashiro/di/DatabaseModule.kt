@@ -8,6 +8,8 @@ import com.ritesh.cashiro.data.database.CashiroDatabase
 import com.ritesh.cashiro.data.database.MIGRATION_48_49
 import com.ritesh.cashiro.data.database.MIGRATION_49_50
 import com.ritesh.cashiro.data.database.MIGRATION_50_51
+import com.ritesh.cashiro.data.database.MIGRATION_51_52
+
 import com.ritesh.cashiro.data.database.dao.AccountBalanceDao
 import com.ritesh.cashiro.data.database.dao.BudgetDao
 import com.ritesh.cashiro.data.database.dao.CardDao
@@ -66,7 +68,8 @@ object DatabaseModule {
                     CashiroDatabase.MIGRATION_22_23,
                     MIGRATION_48_49,
                     MIGRATION_49_50,
-                    MIGRATION_50_51
+                    MIGRATION_50_51,
+                    MIGRATION_51_52
                 )
 
                 // Enable auto-migrations

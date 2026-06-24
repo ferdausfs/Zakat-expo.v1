@@ -121,6 +121,7 @@ class BackupExporter @Inject constructor(
         val budgetCategoryLimits = if (config.includeBudgets) database.budgetDao().getAllCategoryLimits().first() else emptyList()
         val subcategories = if (config.includeProfileData) database.subcategoryDao().getAllSubcategories().first() else emptyList()
         val rules = if (config.includeAppPreferences) database.ruleDao().getAllRules().first() else emptyList()
+        val exchangeRates = if (config.includeAppPreferences) database.exchangeRateDao().getAllRates().first() else emptyList()
         val ruleApplications = if (config.includeTransactionalData) database.ruleApplicationDao().getRecentApplications(1000).first() else emptyList() // Limit to recent apps for backup size
         val webhookProfiles = if (config.includeAppPreferences) {
             database.webhookProfileDao().getAllProfiles().first().map { profile ->
@@ -204,7 +205,8 @@ class BackupExporter @Inject constructor(
                 subcategories = subcategories,
                 rules = rules,
                 ruleApplications = ruleApplications,
-                webhookProfiles = webhookProfiles
+                webhookProfiles = webhookProfiles,
+                exchangeRates = exchangeRates
             ),
             preferences = PreferencesSnapshot(
                 theme = ThemePreferences(
@@ -249,6 +251,20 @@ class BackupExporter @Inject constructor(
                     HomeWidgetPreferences(
                         order = order.map { it.name },
                         hidden = hidden.map { it.name }
+                    )
+                } else null,
+                currency = if (config.includeAppPreferences) {
+                    val unifiedCurrencyEnabled = userPreferencesRepository.unifiedCurrencyEnabled.first()
+                    val unifiedCurrencyCode = userPreferencesRepository.unifiedCurrencyCode.first()
+                    val defaultCurrencyEnabled = userPreferencesRepository.defaultCurrencyEnabled.first()
+                    val defaultCurrencyCode = userPreferencesRepository.defaultCurrencyCode.first()
+                    val customCurrencies = userPreferencesRepository.customCurrencies.first()
+                    CurrencyPreferences(
+                        unifiedCurrencyEnabled = unifiedCurrencyEnabled,
+                        unifiedCurrencyCode = unifiedCurrencyCode,
+                        defaultCurrencyEnabled = defaultCurrencyEnabled,
+                        defaultCurrencyCode = defaultCurrencyCode,
+                        customCurrencies = customCurrencies
                     )
                 } else null
             )

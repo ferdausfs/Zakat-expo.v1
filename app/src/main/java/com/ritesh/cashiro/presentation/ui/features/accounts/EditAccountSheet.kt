@@ -53,6 +53,7 @@ import com.ritesh.cashiro.presentation.ui.components.BrandIcon
 fun EditAccountSheet(
     account: AccountBalanceEntity? = null,
     allAccounts: List<AccountBalanceEntity> = emptyList(),
+    defaultCurrency: String = "INR",
     onDismiss: () -> Unit,
     onDelete: (() -> Unit)? = null,
     onSave: (bankName: String,
@@ -74,7 +75,7 @@ fun EditAccountSheet(
     var isCreditCard by remember { mutableStateOf(account?.isCreditCard ?: false) }
     var isWallet by remember { mutableStateOf(account?.isWallet ?: false) }
     var accountLast4 by remember { mutableStateOf(account?.accountLast4 ?: "") }
-    var selectedCurrency by remember { mutableStateOf(account?.currency ?: "INR") }
+    var selectedCurrency by remember { mutableStateOf(account?.currency ?: defaultCurrency) }
     var iconResId by remember {
         mutableStateOf(
             if (account?.iconResId != 0 && account?.iconResId != null) account.iconResId

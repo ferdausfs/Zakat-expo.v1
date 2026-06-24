@@ -132,7 +132,10 @@ data class DatabaseSnapshot(
     val webhookProfiles: List<WebhookProfileBackup> = emptyList(),
 
     @SerializedName("chat_messages")
-    val chatMessages: List<ChatMessage>
+    val chatMessages: List<ChatMessage>,
+
+    @SerializedName("exchange_rates")
+    val exchangeRates: List<ExchangeRateEntity> = emptyList()
 )
 
 data class WebhookProfileBackup(
@@ -178,7 +181,10 @@ data class PreferencesSnapshot(
     val profile: ProfilePreferences? = null,
 
     @SerializedName("home_widgets")
-    val homeWidgets: HomeWidgetPreferences? = null
+    val homeWidgets: HomeWidgetPreferences? = null,
+
+    @SerializedName("currency")
+    val currency: CurrencyPreferences? = null
 )
 
 /**
@@ -190,6 +196,26 @@ data class HomeWidgetPreferences(
 
     @SerializedName("hidden")
     val hidden: List<String>
+)
+
+/**
+ * Currency preferences
+ */
+data class CurrencyPreferences(
+    @SerializedName("unified_currency_enabled")
+    val unifiedCurrencyEnabled: Boolean,
+    
+    @SerializedName("unified_currency_code")
+    val unifiedCurrencyCode: String?,
+    
+    @SerializedName("default_currency_enabled")
+    val defaultCurrencyEnabled: Boolean,
+    
+    @SerializedName("default_currency_code")
+    val defaultCurrencyCode: String?,
+
+    @SerializedName("custom_currencies")
+    val customCurrencies: List<com.ritesh.cashiro.data.model.CustomCurrency> = emptyList()
 )
 
 /**
