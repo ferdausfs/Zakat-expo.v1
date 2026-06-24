@@ -4,5 +4,6 @@ enum class AppIcon {
     ORIGINAL,
     ANARCHY,
     ZENITH,
-    MONOCHROME
+    MONOCHROME,
+    COMIC
 }

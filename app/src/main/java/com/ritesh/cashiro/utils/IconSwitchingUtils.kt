@@ -14,7 +14,8 @@ object IconSwitchingUtils {
             AppIcon.ORIGINAL to "$packageName.MainActivityOriginal",
             AppIcon.ANARCHY to "$packageName.MainActivityAnarchy",
             AppIcon.ZENITH to "$packageName.MainActivityZenith",
-            AppIcon.MONOCHROME to "$packageName.MainActivityMonochrome"
+            AppIcon.MONOCHROME to "$packageName.MainActivityMonochrome",
+            AppIcon.COMIC to "$packageName.MainActivityComic"
         )
 
         iconComponents.forEach { (icon, componentName) ->

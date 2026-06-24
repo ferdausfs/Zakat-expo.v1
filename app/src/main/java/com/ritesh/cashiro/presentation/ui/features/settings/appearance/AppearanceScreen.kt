@@ -516,6 +516,20 @@ fun AppearanceScreen(
                             }
                         )
                     }
+                    item {
+                        AppLogoOption(
+                            name = "Comic",
+                            icon = AppIcon.COMIC,
+                            backgroundColor = Color.Transparent,
+                            drawableResId = R.drawable.cashiro_comic,
+                            backgroundDrawableResId = R.drawable.ic_logo_comic_bg,
+                            isSelected = themeUiState.currentAppIcon == AppIcon.COMIC,
+                            onClick = {
+                                IconSwitchingUtils.switchAppIcon(context, AppIcon.COMIC)
+                                themeViewModel.updateAppIcon(AppIcon.COMIC)
+                            }
+                        )
+                    }
                 }
 
                 // Navigation Style Section
@@ -1011,6 +1025,7 @@ fun AppLogoOption(
     drawableResId: Int,
     isSelected: Boolean,
     iconTint: Color? = null,
+    backgroundDrawableResId: Int? = null,
     onClick: () -> Unit
 ) {
     Column(
@@ -1027,10 +1042,23 @@ fun AppLogoOption(
         Box(
             modifier = Modifier
                 .size(100.dp)
-                .clip(RoundedCornerShape(Dimensions.Radius.lg))
-                .background(backgroundColor),
+                .clip(RoundedCornerShape(Dimensions.Radius.lg)),
             contentAlignment = Alignment.Center
         ) {
+            if (backgroundDrawableResId != null) {
+                Image(
+                    painter = painterResource(id = backgroundDrawableResId),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize()
+                )
+            } else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(backgroundColor)
+                )
+            }
+            
             Image(
                 painter = painterResource(id = drawableResId),
                 contentDescription = null,
