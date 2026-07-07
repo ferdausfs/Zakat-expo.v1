@@ -828,31 +828,67 @@
     <string name="uncategorized">Без категорії</string>
     <string name="net">Чистий</string>
     <string name="processing">Processing…</string>
-
     <!-- Language Selection -->
-    <string name="language">Мова</string>
-    <string name="language_subtitle">Змінити мову додатка</string>
-    <string name="select_language">Оберіть мову</string>
-
+    <string name="language">Language</string>
+    <string name="language_subtitle">Change application language</string>
+    <string name="select_language">Select Language</string>
     <!-- Settings Screen -->
-    <string name="transactions_count_short">%1$d транзакцій</string>
-    <string name="appearances">Оформлення</string>
-    <string name="appearances_subtitle">Налаштування персоналізації додатка</string>
-    <string name="accounts_subtitle">Додавайте рахунки та оновлюйте баланс</string>
-    <string name="budgets_subtitle">Встановлюйте та керуйте щомісячними лімітами витрат</string>
-    <string name="categories_subtitle">Керуйте категоріями витрат та доходів</string>
-    <string name="smart_rules_subtitle">Автоматична категоризація транзакцій</string>
-    <string name="data_privacy_subtitle">Керуйте своїми даними та налаштуваннями конфіденційності</string>
-    <string name="ai_chat_assistant">Чат-асистент зі штучним інтелектом</string>
-    <string name="ai_chat_subtitle_not_downloaded">Завантажити модель Qwen 2.5 (%1$d МБ)</string>
-    <string name="ai_chat_subtitle_downloading">Завантаження… %1$d%%</string>
-    <string name="ai_chat_subtitle_paused">Завантаження призупинено. Натисніть, щоб продовжити.</string>
-    <string name="ai_chat_subtitle_completed">Qwen готовий до чату</string>
-    <string name="ai_chat_subtitle_failed">Завантаження не вдалося. Натисніть, щоб спробувати знову.</string>
-    <string name="ai_chat_subtitle_insufficient_space">Недостатньо вільного місця</string>
-    <string name="notifications">Сповіщення</string>
-    <string name="notifications_subtitle">Керуйте налаштуваннями нагадувань</string>
-    <string name="sms_subtitle">Керуйте налаштуваннями SMS</string>
-    <string name="webhooks_subtitle">Синхронізація фінансів BYOAPI</string>
-    <string name="about_subtitle">Версія додатка, вихідний код та інше</string>
+    <string name="transactions_count_short">%1$d Transactions</string>
+    <string name="appearances">Appearances</string>
+    <string name="appearances_subtitle">App\'s personalization settings</string>
+    <string name="accounts_subtitle">Add accounts and update balances</string>
+    <string name="budgets_subtitle">Set and manage monthly spending limits</string>
+    <string name="categories_subtitle">Manage expense and income categories</string>
+    <string name="smart_rules_subtitle">Automatic transaction categorization</string>
+    <string name="data_privacy_subtitle">Manage your data and privacy settings</string>
+    <string name="ai_chat_assistant">AI Chat Assistant</string>
+    <string name="ai_chat_subtitle_not_downloaded">Download Qwen 2.5 model (%1$d MB)</string>
+    <string name="ai_chat_subtitle_downloading">Downloading… %1$d%%</string>
+    <string name="ai_chat_subtitle_paused">Download paused. Tap to resume.</string>
+    <string name="ai_chat_subtitle_completed">Qwen ready for chat</string>
+    <string name="ai_chat_subtitle_failed">Download failed. Tap to retry.</string>
+    <string name="ai_chat_subtitle_insufficient_space">Not enough storage space</string>
+    <string name="notifications">Notifications</string>
+    <string name="notifications_subtitle">Manage reminder notification settings</string>
+    <string name="sms_subtitle">Manage SMS settings</string>
+    <string name="webhooks_subtitle">BYOAPI finance sync</string>
+    <string name="about_subtitle">App version, source code and more</string>
+    <!-- Currency Settings -->
+    <string name="currency">Валюта</string>
+    <string name="currency_subtitle">Exchange rates and currency preferences</string>
+    <string name="currency_settings_title">Валюта</string>
+    <string name="unified_currency">Unified Currency</string>
+    <string name="unified_currency_subtitle">Display all amounts in a single currency</string>
+    <string name="default_currency">Default Currency</string>
+    <string name="default_currency_subtitle">Pre-select currency for new entries</string>
+    <string name="display_currency">Display Currency</string>
+    <string name="default_label">Default</string>
+    <string name="none">Без ефекту</string>
+    <string name="rates_info_subtitle">View exchange rates for your base currency</string>
+    <!-- Custom Currency Settings -->
+    <string name="search_currencies">Пошук валют...</string>
+    <string name="rates_relative_to">Рейтинг по відношенню до %1$s</string>
+    <string name="last_updated">Останнє оновлення: %1$s</string>
+    <string name="custom_rate">Custom rate</string>
+    <string name="custom_rate_set">Custom rate set. Tap Reset to revert to API rate.</string>
+    <string name="add_custom_currency">Add Custom Currency</string>
+    <string name="custom_currency">Custom Currency</string>
+    <string name="currency_country_name">Currency name</string>
+    <string name="eg_test_country">e.g. Test Country</string>
+    <string name="currency_code">Currency Code</string>
+    <string name="eg_tst">e.g. TST</string>
+    <string name="currency_symbol">Currency Symbol</string>
+    <string name="eg_tsymbol">e.g. T$</string>
+    <string name="exchange_rate">Exchange Rate</string>
+    <string name="exchange_rate_format">1 %1$s = %2$s %3$s</string>
+    <string name="please_fill_all_fields">Please fill all fields with valid data.</string>
+    <string name="base_currency_hint">Base = default currency or main account\'s currency</string>
+    <string name="save_currency">Save Currency</string>
+    <string name="currency_name_hint">US Dollar, India Rupee ..</string>
+    <string name="currency_code_hint">USD, INR, EUR ...</string>
+    <string name="currency_symbols_hint">$,₹,€,£,₽</string>
+    <string name="exchange_rate_hint">1 Base = X Custom currency</string>
+    <string name="exchange_rates_notice_title">Повідомлення про курс обміну</string>
+    <string name="exchange_rates_notice_text">The exchange rates displayed within this app are for informational purposes only and should not be used for investment decisions. These rates are estimates and may not reflect actual rates. By using this app you acknowledge that you understand and accept these limitations.</string>
+    <string name="custom_label">CUSTOM</string>
 </resources>
