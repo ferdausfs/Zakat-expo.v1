@@ -2,7 +2,7 @@
 [![Cashiro Banner](banner.png)](https://github.com/sarim2000/pennywiseai-tracker)
 
 [//]: # ([![GitHub stars]&#40;https://img.shields.io/github/stars/sarim2000/pennywiseai-tracker?style=social&#41;]&#40;https://github.com/sarim2000/pennywiseai-tracker&#41;)
-[![License](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-8.0+-3DDC84)](https://developer.android.com/about/versions/oreo)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0.21-7F52FF)](https://kotlinlang.org/)
 [![Privacy](https://img.shields.io/badge/AI-100%25_On--Device-FF6B6B)](https://developers.google.com/mediapipe)
@@ -302,7 +302,7 @@ Special thanks to the following projects and resources:
 
 ## License
 
-GNU General Public License v3.0 - see [LICENSE](LICENSE)
+GNU Affero General Public License v3.0 - see [LICENSE](LICENSE)
 
 ---
 
