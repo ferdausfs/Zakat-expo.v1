@@ -6,6 +6,7 @@ import com.ritesh.parser.core.SmsFilter
 import com.ritesh.parser.core.ParsedTransaction
 import com.ritesh.parser.core.TransactionType
 import java.math.BigDecimal
+import java.time.LocalDateTime
 
 /**
  * Base class for bank-specific message parsers.
@@ -31,6 +32,20 @@ abstract class BankParser {
 
     companion object {
         private const val MAX_SMS_LENGTH = 5000
+
+        /**
+         * Generic data class representing a parsed balance-update notification.
+         * Used by [isBalanceUpdateNotification] / [parseBalanceUpdate] and consumed by
+         * workers that call [AccountBalanceRepository.insertBalanceUpdate].
+         */
+        data class BalanceUpdateInfo(
+            val bankName: String,
+            val accountLast4: String,
+            val balance: BigDecimal,
+            val asOfDate: LocalDateTime? = null,
+            /** true when the balance figure represents CC outstanding (Total Amount Due) */
+            val isCreditCard: Boolean = false
+        )
     }
 
     /**
@@ -83,6 +98,22 @@ abstract class BankParser {
             currency = getCurrency()
         )
     }
+
+    /**
+     * Returns true when the message is a balance-update/statement notification that should
+     * NOT be processed as a regular transaction but stored as an explicit balance anchor.
+     *
+     * Subclasses should override this to add bank-specific detection.
+     */
+    open fun isBalanceUpdateNotification(message: String): Boolean = false
+
+    /**
+     * Parses a balance-update/statement notification and returns the extracted balance info.
+     * Returns null if the message is not a recognisable balance update.
+     *
+     * Subclasses should override this alongside [isBalanceUpdateNotification].
+     */
+    open fun parseBalanceUpdate(message: String): BalanceUpdateInfo? = null
 
     /**
      * Checks if the message is a transaction message (not OTP, promotional, etc.)

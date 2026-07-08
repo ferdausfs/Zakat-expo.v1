@@ -1,9 +1,11 @@
 package com.ritesh.cashiro.data.database.entity
 
+import androidx.annotation.StringRes
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.ritesh.cashiro.R
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
@@ -36,11 +38,11 @@ data class TransactionEntity(
         @ColumnInfo(name = "is_sample", defaultValue = "0") val isSample: Boolean = false
 )
 
-enum class TransactionType {
-    INCOME,
-    EXPENSE,
-    CREDIT,
-    TRANSFER,
-    INVESTMENT,
-    BALANCE_UPDATE
+enum class TransactionType(@StringRes val labelRes: Int) {
+    INCOME(R.string.type_income),
+    EXPENSE(R.string.type_expense),
+    CREDIT(R.string.type_credit),
+    TRANSFER(R.string.type_transfer),
+    INVESTMENT(R.string.type_investment),
+    BALANCE_UPDATE(R.string.type_balance_update)
 }

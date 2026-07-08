@@ -476,6 +476,30 @@ private suspend fun processSubscriptionNotifications(
     smsDateTime: LocalDateTime,
     isRecentMessage: Boolean
 ): SubscriptionResult {
+    // ─── Generic balance-update check (works for ALL parsers) ─────────────────
+    // This covers HDFC, IndusInd, SBI CC statements, and any future parser that
+    // overrides isBalanceUpdateNotification/parseBalanceUpdate in BankParser.
+    if (parser.isBalanceUpdateNotification(sms.body)) {
+        val balanceUpdateInfo = parser.parseBalanceUpdate(sms.body)
+        if (balanceUpdateInfo != null) {
+            try {
+                accountBalanceRepository.insertBalanceUpdate(
+                    bankName = balanceUpdateInfo.bankName,
+                    accountLast4 = balanceUpdateInfo.accountLast4,
+                    balance = balanceUpdateInfo.balance,
+                    timestamp = balanceUpdateInfo.asOfDate ?: smsDateTime,
+                    currency = parser.getCurrency()
+                )
+                Log.d(TAG, "Saved balance update for ${balanceUpdateInfo.bankName} " +
+                    "(isCreditCard=${balanceUpdateInfo.isCreditCard})")
+            } catch (e: Exception) {
+                Log.e(TAG, "Error saving balance update for ${parser.getBankName()}: ${e.message}")
+            }
+        }
+        return SubscriptionResult(true, 0) // Skip transaction parsing for balance/statement updates
+    }
+    // ──────────────────────────────────────────────────────────────────────────
+
     return when (parser) {
         is SBIBankParser -> {
             if (parser.isUPIMandateNotification(sms.body)) {
@@ -664,29 +688,6 @@ private suspend fun processSubscriptionNotifications(
                 }
             }
 
-            // Check for Balance Update notifications
-            if (parser.isBalanceUpdateNotification(sms.body)) {
-                val balanceUpdateInfo = parser.parseBalanceUpdate(sms.body)
-                if (balanceUpdateInfo != null) {
-                    try {
-                        accountBalanceRepository.insertBalanceUpdate(
-                            bankName = balanceUpdateInfo.bankName,
-                            accountLast4 = balanceUpdateInfo.accountLast4,
-                            balance = balanceUpdateInfo.balance,
-                            timestamp = balanceUpdateInfo.asOfDate ?: smsDateTime,
-                            currency = parser.getCurrency()
-                        )
-                        Log.d(TAG, "Saved balance update for ${balanceUpdateInfo.bankName}")
-                        return SubscriptionResult(
-                            true,
-                            subscriptionCount
-                        ) // Skip transaction parsing for balance updates
-                    } catch (e: Exception) {
-                        Log.e(TAG, "Error saving balance update: ${e.message}")
-                    }
-                }
-            }
-
             if (subscriptionCount > 0) {
                 SubscriptionResult(
                     true,
@@ -732,32 +733,11 @@ private suspend fun processSubscriptionNotifications(
             SubscriptionResult(false, 0) // Continue with transaction parsing
         }
 
-        is IndusIndBankParser -> {
-            // Balance-only updates for IndusInd (hook like HDFC)
-            if (parser.isBalanceUpdateNotification(sms.body)) {
-                val balanceUpdateInfo = parser.parseBalanceUpdate(sms.body)
-                if (balanceUpdateInfo != null) {
-                    try {
-                        accountBalanceRepository.insertBalanceUpdate(
-                            bankName = balanceUpdateInfo.bankName,
-                            accountLast4 = balanceUpdateInfo.accountLast4,
-                            balance = balanceUpdateInfo.balance,
-                            timestamp = balanceUpdateInfo.asOfDate ?: smsDateTime,
-                            currency = parser.getCurrency()
-                        )
-                        Log.d(TAG, "Saved balance update for ${balanceUpdateInfo.bankName}")
-                        return SubscriptionResult(true, 0) // Skip transaction parsing for balance updates
-                    } catch (e: Exception) {
-                        Log.e(TAG, "Error saving IndusInd balance update: ${e.message}")
-                    }
-                }
-            }
-            SubscriptionResult(false, 0)
-        }
-
         else -> SubscriptionResult(false, 0) // Continue with transaction parsing for other banks
     }
 }
+
+
 
 private suspend fun processUnrecognizedSms(sms: SmsMessage) {
     val upperSender = sms.sender.uppercase()

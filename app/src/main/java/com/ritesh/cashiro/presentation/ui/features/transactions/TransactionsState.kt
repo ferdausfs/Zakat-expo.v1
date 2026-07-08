@@ -1,5 +1,7 @@
 package com.ritesh.cashiro.presentation.ui.features.transactions
 
+import androidx.annotation.StringRes
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.data.database.entity.TransactionEntity
 import com.ritesh.cashiro.presentation.common.TimePeriod
 import com.ritesh.cashiro.presentation.common.TransactionTypeFilter
@@ -19,20 +21,20 @@ data class FilterParams(
     val typeFilter: TransactionTypeFilter
 )
 
-enum class DateGroup(val label: String) {
-    TODAY("Today"),
-    YESTERDAY("Yesterday"),
-    THIS_WEEK("This Week"),
-    EARLIER("Earlier")
+enum class DateGroup(@StringRes val labelRes: Int) {
+    TODAY(R.string.today_lbl),
+    YESTERDAY(R.string.yesterday_lbl),
+    THIS_WEEK(R.string.this_week_lbl),
+    EARLIER(R.string.earlier_lbl)
 }
 
-enum class SortOption(val label: String) {
-    DATE_NEWEST("Newest First"),
-    DATE_OLDEST("Oldest First"),
-    AMOUNT_HIGHEST("Highest Amount"),
-    AMOUNT_LOWEST("Lowest Amount"),
-    MERCHANT_AZ("Merchant (A-Z)"),
-    MERCHANT_ZA("Merchant (Z-A)")
+enum class SortOption(@StringRes val labelRes: Int) {
+    DATE_NEWEST(R.string.sort_date_newest),
+    DATE_OLDEST(R.string.sort_date_oldest),
+    AMOUNT_HIGHEST(R.string.sort_amount_highest),
+    AMOUNT_LOWEST(R.string.sort_amount_lowest),
+    MERCHANT_AZ(R.string.sort_merchant_az),
+    MERCHANT_ZA(R.string.sort_merchant_za)
 }
 
 data class FilteredTotals(

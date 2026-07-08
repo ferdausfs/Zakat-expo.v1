@@ -59,6 +59,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavDestination
@@ -173,7 +175,7 @@ fun CashiroBottomNavigation(
                             icon = {
                                 Icon(
                                     imageVector = item.icon,
-                                    contentDescription = item.title,
+                                    contentDescription = stringResource(item.titleRes),
                                     tint = if (selected) {
                                         if (hidePill) MaterialTheme.colorScheme.primary
                                         else MaterialTheme.colorScheme.onPrimaryContainer
@@ -186,7 +188,7 @@ fun CashiroBottomNavigation(
                             label = if (hideLabels) null else {
                                 {
                                     Text(
-                                        text = item.title,
+                                        text = stringResource(item.titleRes),
                                         color = if (selected) MaterialTheme.colorScheme.primary
                                         else MaterialTheme.colorScheme.onSurfaceVariant,
                                         style = MaterialTheme.typography.labelMedium
@@ -305,14 +307,14 @@ fun CashiroBottomNavigation(
                                 modifier = Modifier
                                     .padding(horizontal = 4.dp)
                             ) {
-                                Icon(imageVector = item.icon, contentDescription = item.title)
+                                Icon(imageVector = item.icon, contentDescription = stringResource(item.titleRes))
                                 AnimatedVisibility(
                                     visible = selected,
                                     enter = fadeIn() + expandHorizontally(MaterialTheme.motionScheme.fastSpatialSpec()),
                                     exit = fadeOut() + shrinkHorizontally(MaterialTheme.motionScheme.fastSpatialSpec())
                                 ) {
                                     Text(
-                                        text = item.title,
+                                        text = stringResource(item.titleRes),
                                         modifier = Modifier.padding(start = 8.dp)
                                     )
                                 }

@@ -5,6 +5,7 @@ import com.ritesh.parser.core.MandateInfo
 import com.ritesh.parser.core.TransactionType
 import java.math.BigDecimal
 import java.time.LocalDateTime
+import com.ritesh.parser.core.bank.BankParser.Companion.BalanceUpdateInfo
 
 /**
  * HDFC Bank specific parser.
@@ -609,20 +610,11 @@ class HDFCBankParser : BankParser() {
         override val dateFormat = "dd/MM/yy"
     }
 
-    /**
-     * Balance update information.
-     */
-    data class BalanceUpdateInfo(
-        val bankName: String,
-        val accountLast4: String,
-        val balance: BigDecimal,
-        val asOfDate: LocalDateTime? = null
-    )
 
     /**
      * Checks if this is a balance update notification (not a transaction).
      */
-    fun isBalanceUpdateNotification(message: String): Boolean {
+    override fun isBalanceUpdateNotification(message: String): Boolean {
         val lowerMessage = message.lowercase()
 
         // Check for balance update patterns
@@ -641,7 +633,7 @@ class HDFCBankParser : BankParser() {
     /**
      * Parses balance update notification.
      */
-    fun parseBalanceUpdate(message: String): BalanceUpdateInfo? {
+    override fun parseBalanceUpdate(message: String): BalanceUpdateInfo? {
         if (!isBalanceUpdateNotification(message)) {
             return null
         }

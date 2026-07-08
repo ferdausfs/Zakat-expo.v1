@@ -532,7 +532,7 @@ fun SharedTransitionScope.TransactionsScreen(
                                                         onClick = null,
                                                         modifier = Modifier.size(20.dp)
                                                     )
-                                                    Text(option.label)
+                                                    Text(stringResource(option.labelRes))
                                                 }
                                             },
                                             onClick = {
@@ -602,7 +602,7 @@ fun SharedTransitionScope.TransactionsScreen(
                                         if (period == TimePeriod.CUSTOM && customRangeLabel != null) {
                                             customRangeLabel
                                         } else {
-                                            period.label
+                                            stringResource(period.labelRes)
                                         }
                                     )
                                 },
@@ -722,7 +722,7 @@ fun SharedTransitionScope.TransactionsScreen(
                                                     )
 
                                         )
-                                        SectionHeader(title = dateGroup.label)
+                                        SectionHeader(title = stringResource(dateGroup.labelRes))
                                     }
                                 }
 
@@ -848,7 +848,7 @@ private fun EmptyTransactionsState(
                 Text(
                     text = when {
                         searchQuery.isNotEmpty() -> stringResource(R.string.no_transactions_matching_format, searchQuery)
-                        selectedPeriod != TimePeriod.ALL -> stringResource(R.string.no_transactions_for_format, selectedPeriod.label.lowercase())
+                        selectedPeriod != TimePeriod.ALL -> stringResource(R.string.no_transactions_for_format, stringResource(selectedPeriod.labelRes).lowercase())
                         else -> stringResource(R.string.no_transactions_yet)
                     },
                     style = MaterialTheme.typography.bodyLarge,

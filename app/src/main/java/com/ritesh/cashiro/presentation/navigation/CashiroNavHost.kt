@@ -57,7 +57,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.ritesh.cashiro.R
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -770,13 +772,13 @@ fun CashiroNavHost(
                                 if (isHomeScreen) {
                                     Icon(
                                         imageVector = Icons.Rounded.Sync,
-                                        contentDescription = "Sync SMS transactions",
+                                        contentDescription = stringResource(R.string.sync_sms_cd),
                                         modifier = Modifier.size(20.dp)
                                     )
                                 } else {
                                     Icon(
                                         imageVector = Iconax.ImportArrow01,
-                                        contentDescription = "Export Transactions",
+                                        contentDescription = stringResource(R.string.export_transactions),
                                         modifier = Modifier.size(20.dp)
                                     )
                                 }
@@ -832,7 +834,7 @@ fun CashiroNavHost(
                         ) {
                             Icon(
                                 imageVector = Icons.Rounded.Add,
-                                contentDescription = "Add Transaction or Subscription",
+                                contentDescription = stringResource(R.string.add_transaction_subscription_cd),
                                 modifier = Modifier.size(24.dp)
                             )
                         }
@@ -852,13 +854,9 @@ fun CashiroNavHost(
                             tint = MaterialTheme.colorScheme.primary
                         )
                     },
-                    title = { Text("Full Resync") },
+                    title = { Text(stringResource(R.string.full_resync)) },
                     text = {
-                        Text(
-                            "This will reprocess all SMS messages from scratch. " +
-                                    "Use this to fix issues caused by updated bank parsers.\n\n" +
-                                    "This may take a few seconds depending on your message history."
-                        )
+                        Text(stringResource(R.string.full_resync_desc))
                     },
                     confirmButton = {
                         Box(
@@ -885,7 +883,7 @@ fun CashiroNavHost(
                                         .fillMaxWidth()
                                 ) {
                                     Text(
-                                        text = "Cancel",
+                                        text = stringResource(R.string.cancel),
                                         style = MaterialTheme.typography.titleMedium
                                     )
                                 }
@@ -911,7 +909,7 @@ fun CashiroNavHost(
                                         .fillMaxWidth()
                                 ) {
                                     Text(
-                                        text = "Resync All",
+                                        text = stringResource(R.string.resync_all),
                                         style = MaterialTheme.typography.titleMedium)
                                 }
                             }
@@ -963,16 +961,23 @@ fun CashiroNavHost(
             )
         }
 
+        val optionsDesc = stringResource(R.string.options_desc)
+        val addTransactionLbl = stringResource(R.string.add_transaction)
+        val syncSmsLbl = stringResource(R.string.sync_sms)
+        val askAiLbl = stringResource(R.string.ask_ai)
+        val exportLbl = stringResource(R.string.export)
+        val searchLbl = stringResource(R.string.search)
+
         val fabConfig = remember(showFloatingFab, isHomeScreen, isTransactionsScreen, isAnalyticsScreen) {
             if (showFloatingFab) {
                 FabConfig(
                     icon = Icons.Rounded.Add,
-                    contentDescription = "Options",
+                    contentDescription = optionsDesc,
                     dropdownContent = { dismiss ->
                         if (isHomeScreen || isTransactionsScreen) {
                             DropdownMenuItem(
                                 text = { Text(
-                                    text = "Add Transaction",
+                                    text = addTransactionLbl,
                                 ) },
                                 onClick = { 
                                     view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
@@ -1016,7 +1021,7 @@ fun CashiroNavHost(
                                 )
                                 Spacer(modifier = Modifier.width(12.dp))
                                 Text(
-                                    text = "Sync SMS",
+                                    text = syncSmsLbl,
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurface
                                 )
@@ -1029,7 +1034,7 @@ fun CashiroNavHost(
 
                             DropdownMenuItem(
                                 text = { Text(
-                                    text = "Ask AI",
+                                    text = askAiLbl,
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurface
                                 ) },
@@ -1042,7 +1047,7 @@ fun CashiroNavHost(
                             )
                         } else if (isTransactionsScreen) {
                             DropdownMenuItem(
-                                text = { Text("Export") },
+                                text = { Text(exportLbl) },
                                 onClick = {
                                     view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
                                     dismiss()
@@ -1052,7 +1057,7 @@ fun CashiroNavHost(
                             )
                         } else if (isAnalyticsScreen) {
                             DropdownMenuItem(
-                                text = { Text("Search") },
+                                text = { Text(searchLbl) },
                                 onClick = {
                                     view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
                                     dismiss()
@@ -1069,7 +1074,7 @@ fun CashiroNavHost(
                                 color = MaterialTheme.colorScheme.surface.copy(0.6f)
                             )
                             DropdownMenuItem(
-                                text = { Text("Ask AI") },
+                                text = { Text(askAiLbl) },
                                 onClick = {
                                     view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
                                     dismiss()

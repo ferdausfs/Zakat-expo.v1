@@ -25,6 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
 
 @Composable
@@ -59,9 +61,9 @@ fun CollapsibleFilterRow(
             
             Text(
                 text = if (activeFilterCount > 0) {
-                    "More Filters ($activeFilterCount active)"
+                    stringResource(R.string.more_filters_active_format, activeFilterCount)
                 } else {
-                    "More Filters"
+                    stringResource(R.string.more_filters)
                 },
                 style = MaterialTheme.typography.bodyMedium,
                 color = if (activeFilterCount > 0) {
@@ -75,7 +77,7 @@ fun CollapsibleFilterRow(
             
             Icon(
                 imageVector = Icons.Rounded.ExpandMore,
-                contentDescription = if (isExpanded) "Collapse" else "Expand",
+                contentDescription = if (isExpanded) stringResource(R.string.collapse_cd) else stringResource(R.string.expand_cd),
                 modifier = Modifier
                     .size(20.dp)
                     .rotate(rotationAngle),

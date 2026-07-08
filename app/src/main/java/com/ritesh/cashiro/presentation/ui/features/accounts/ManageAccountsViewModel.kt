@@ -302,6 +302,7 @@ constructor(
                     isWallet = isWallet,
                     iconResId = iconResId,
                     iconName = iconName,
+                    sourceType = "MANUAL",
                     currency = currency,
                     color = colorHex
                 )
@@ -355,6 +356,7 @@ constructor(
                 iconResId = latestBalance?.iconResId ?: 0,
                 iconName = latestBalance?.iconName ?: "",
                 isWallet = latestBalance?.isWallet ?: false,
+                sourceType = "MANUAL",
                 color = latestBalance?.color ?: "#33B5E5"
             )
             )
@@ -376,6 +378,7 @@ constructor(
                     creditLimit = newLimit,
                     timestamp = LocalDateTime.now(),
                     isCreditCard = true,
+                    sourceType = "MANUAL",
                     iconName = "type_finance_credit_card",
                     color = "#E91E63"
                 )

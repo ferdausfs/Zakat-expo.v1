@@ -86,21 +86,39 @@ fun SharedTransitionScope.TransactionItem(
     onSelectionToggle: () -> Unit = {},
     onLongClick: () -> Unit = {},
     convertedAmount: BigDecimal? = null,
-    mainCurrency: String? = null
+    mainCurrency: String? = null,
+    currentAccountContext: String? = null,
+    currentBankNameContext: String? = null
 ) {
     val finalMerchantName = merchantName ?: transaction?.merchantName ?: ""
     val finalAmount = amount ?: transaction?.amount ?: BigDecimal.ZERO
     val finalType = transactionType ?: transaction?.transactionType ?: TransactionType.EXPENSE
     val isRecurring = transaction?.isRecurring ?: false
     val isDark = isSystemInDarkTheme()
-    val amountColor = amountColorOverride ?: remember(finalType, isRecurring, isDark) {
-        when (finalType) {
-            TransactionType.INCOME -> if (!isDark) income_light else income_dark
-            TransactionType.EXPENSE -> if (!isDark) expense_light else expense_dark
-            TransactionType.CREDIT -> if (!isDark) credit_light else credit_dark
-            TransactionType.TRANSFER -> if (!isDark) transfer_light else transfer_dark
-            TransactionType.INVESTMENT -> if (!isDark) investment_light else investment_dark
-            TransactionType.BALANCE_UPDATE -> if (!isDark) transfer_light else transfer_dark
+    val effectiveSign = remember(transaction, currentAccountContext, currentBankNameContext) {
+        if (transaction?.transactionType == TransactionType.TRANSFER && currentAccountContext != null && currentBankNameContext != null) {
+            val isSender = transaction.bankName == currentBankNameContext && 
+                (transaction.accountNumber == currentAccountContext || transaction.fromAccount == currentAccountContext)
+            val isReceiver = !isSender && transaction.toAccount == currentAccountContext
+            
+            if (isSender) "-" else if (isReceiver) "+" else null
+        } else null
+    }
+
+    val amountColor = amountColorOverride ?: remember(finalType, isRecurring, isDark, effectiveSign) {
+        if (effectiveSign == "-") {
+            if (!isDark) expense_light else expense_dark
+        } else if (effectiveSign == "+") {
+            if (!isDark) income_light else income_dark
+        } else {
+            when (finalType) {
+                TransactionType.INCOME -> if (!isDark) income_light else income_dark
+                TransactionType.EXPENSE -> if (!isDark) expense_light else expense_dark
+                TransactionType.CREDIT -> if (!isDark) credit_light else credit_dark
+                TransactionType.TRANSFER -> if (!isDark) transfer_light else transfer_dark
+                TransactionType.INVESTMENT -> if (!isDark) investment_light else investment_dark
+                TransactionType.BALANCE_UPDATE -> if (!isDark) transfer_light else transfer_dark
+            }
         }
     }
 
@@ -108,8 +126,11 @@ fun SharedTransitionScope.TransactionItem(
     val defaultSubtitle = remember(transaction?.dateTime) { 
         transaction?.dateTime?.format(dateTimeFormatter) ?: "" 
     }
-    val amountText = remember(transaction, amountOverride, finalAmount) {
-        amountOverride ?: transaction?.formatAmount() ?: finalAmount.toString()
+    val amountText = remember(transaction, amountOverride, finalAmount, effectiveSign) {
+        amountOverride ?: transaction?.let { 
+             val formatted = it.formatAmount()
+             if (effectiveSign != null) "$effectiveSign $formatted" else formatted
+        } ?: finalAmount.toString()
     }
 
     val dateTagColor = remember(transaction?.dateTime,) {

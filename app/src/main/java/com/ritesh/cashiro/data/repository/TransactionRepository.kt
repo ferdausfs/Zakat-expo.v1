@@ -19,6 +19,7 @@ class TransactionRepository @Inject constructor(
     private val accountBalanceRepository: AccountBalanceRepository
 ) {
     fun getAllTransactions(): Flow<List<TransactionEntity>> = transactionDao.getAllTransactions()
+        .map { list -> list.filter { it.transactionType != TransactionType.BALANCE_UPDATE } }
 
     fun getTransactionCount(): Flow<Int> = transactionDao.getTransactionCount()
 
@@ -399,7 +400,10 @@ class TransactionRepository @Inject constructor(
     }
 
     fun getRecentTransactions(limit: Int = 5): Flow<List<TransactionEntity>> {
-        return transactionDao.getAllTransactions().map { transactions -> transactions.take(limit) }
+        return transactionDao.getAllTransactions().map { transactions -> transactions
+            .filter { it.transactionType != TransactionType.BALANCE_UPDATE }
+            .take(limit)
+        }
     }
 
     fun getTransactionsByAccount(

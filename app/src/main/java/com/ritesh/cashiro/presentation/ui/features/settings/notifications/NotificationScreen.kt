@@ -56,6 +56,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -64,6 +65,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.presentation.effects.overScrollVertical
 import com.ritesh.cashiro.presentation.ui.components.BrandIcon
 import com.ritesh.cashiro.presentation.ui.components.CustomTitleTopAppBar
@@ -168,7 +170,7 @@ fun NotificationScreen(
                         )
                     }
                     Text(
-                        text = "Notification Access Required",
+                        text = stringResource(R.string.notification_access_required),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -179,7 +181,7 @@ fun NotificationScreen(
                     verticalArrangement = Arrangement.spacedBy(Spacing.md)
                 ) {
                     Text(
-                        text = "To automatically detect bank transactions in real-time, Cashiro requires notification access. This is a system-level permission.",
+                        text = stringResource(R.string.notification_access_required_desc),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -194,7 +196,7 @@ fun NotificationScreen(
                             .padding(Spacing.md)
                     ) {
                         Text(
-                            text = "How to enable:",
+                            text = stringResource(R.string.how_to_enable),
                             style = MaterialTheme.typography.labelLarge,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onSurface
@@ -202,15 +204,15 @@ fun NotificationScreen(
 
                         Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                             Text("1.", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
-                            Text("Tap the 'Open Settings' button below.", style = MaterialTheme.typography.bodyMedium)
+                            Text(stringResource(R.string.step_1), style = MaterialTheme.typography.bodyMedium)
                         }
                         Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                             Text("2.", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
-                            Text("Find 'Cashiro' in the list of applications.", style = MaterialTheme.typography.bodyMedium)
+                            Text(stringResource(R.string.step_2), style = MaterialTheme.typography.bodyMedium)
                         }
                         Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                             Text("3.", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
-                            Text("Toggle 'Allow notification access' to enabled.", style = MaterialTheme.typography.bodyMedium)
+                            Text(stringResource(R.string.step_3), style = MaterialTheme.typography.bodyMedium)
                         }
                     }
                 }
@@ -229,14 +231,14 @@ fun NotificationScreen(
                     ),
                     shape = RoundedCornerShape(10.dp)
                 ) {
-                    Text("Open Settings")
+                    Text(stringResource(R.string.open_settings))
                 }
             },
             dismissButton = {
                 TextButton(
                     onClick = { showPermissionGuide = false }
                 ) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             },
             shape = RoundedCornerShape(20.dp),
@@ -249,7 +251,7 @@ fun NotificationScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CustomTitleTopAppBar(
-                title = "Notifications",
+                title = stringResource(R.string.notifications),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
                 hazeState = hazeState,
@@ -276,12 +278,12 @@ fun NotificationScreen(
                 verticalArrangement = Arrangement.spacedBy(Spacing.md)
             ) {
                 // Notification Access
-                SectionHeader(title = "Notification Access", modifier = Modifier.padding(start = Spacing.md))
+                SectionHeader(title = stringResource(R.string.notification_access), modifier = Modifier.padding(start = Spacing.md))
                 PreferenceSwitch(
                     visible = true,
-                    title = "Bank Push Notifications",
-                    subtitle = if (isNotificationAccessGranted) "Notification access is active"
-                    else "Enable to detect bank transactions from push notifications",
+                    title = stringResource(R.string.bank_push_notifications),
+                    subtitle = if (isNotificationAccessGranted) stringResource(R.string.notification_access_active)
+                    else stringResource(R.string.notification_access_desc),
                     checked = isNotificationAccessGranted,
                     onCheckedChange = {
                         if (!isNotificationAccessGranted) {
@@ -314,14 +316,14 @@ fun NotificationScreen(
                 )
 
                 // Scan Settings
-                SectionHeader(title = "Scan Settings", modifier = Modifier.padding(start = Spacing.md))
+                SectionHeader(title = stringResource(R.string.scan_settings), modifier = Modifier.padding(start = Spacing.md))
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(1.5.dp)
                 ) {
                     PreferenceSwitch(
-                        title = "Remind Transactions",
-                        subtitle = "Get reminders to scan new messages",
+                        title = stringResource(R.string.remind_transactions),
+                        subtitle = stringResource(R.string.remind_transactions_desc),
                         checked = scanEnabled,
                         onCheckedChange = notificationViewModel::setScanNewTransactionsEnabled,
                         leadingIcon = {
@@ -352,7 +354,7 @@ fun NotificationScreen(
                         val time = LocalTime.of((alertTimeMinutes / 60).toInt(), (alertTimeMinutes % 60).toInt())
                         
                         ListItem(
-                            headline = { Text("Alert Time") },
+                            headline = { Text(stringResource(R.string.alert_time)) },
                             trailing = {
                                 Box(
                                     modifier = Modifier
@@ -446,7 +448,7 @@ fun NotificationScreen(
                 }
 
                 // Upcoming Settings
-                SectionHeader(title = "Upcoming Transactions", modifier = Modifier.padding(start = Spacing.md))
+                SectionHeader(title = stringResource(R.string.upcoming_transactions_section), modifier = Modifier.padding(start = Spacing.md))
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(1.5.dp)
@@ -454,8 +456,8 @@ fun NotificationScreen(
 
                     val itemsCount = subscriptions.size
                     PreferenceSwitch(
-                        title = "Upcoming Transactions",
-                        subtitle = "Get reminders for upcoming payments",
+                        title = stringResource(R.string.upcoming_transactions_section),
+                        subtitle = stringResource(R.string.upcoming_transactions_desc),
                         checked = upcomingEnabled,
                         onCheckedChange = notificationViewModel::setUpcomingNotificationsEnabled,
                         leadingIcon = {

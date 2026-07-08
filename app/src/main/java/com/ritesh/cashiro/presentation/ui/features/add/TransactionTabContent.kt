@@ -185,17 +185,12 @@ fun TransactionTabContent(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    TransactionType.entries.forEach { type ->
+                    TransactionType.entries.filter { it != TransactionType.BALANCE_UPDATE }.forEach { type ->
                         FilterChip(
                             selected = uiState.transactionType == type,
                             onClick = { viewModel.updateTransactionType(type) },
                             label = {
-                                Text(
-                                    type.name.lowercase(Locale.getDefault())
-                                        .replaceFirstChar {
-                                            it.titlecase(Locale.getDefault())
-                                        }
-                                )
+                                Text(stringResource(type.labelRes))
                             },
                             leadingIcon =
                                 if (uiState.transactionType == type) {
@@ -300,7 +295,7 @@ fun TransactionTabContent(
                     ) {
                         val hour = if (uiState.date.hour % 12 == 0) 12 else uiState.date.hour % 12
                         val minute = uiState.date.minute
-                        val amPm = if (uiState.date.hour < 12) "AM" else "PM"
+                        val amPm = if (uiState.date.hour < 12) stringResource(R.string.am_lbl) else stringResource(R.string.pm_lbl)
 
                         Box(modifier = Modifier
                             .padding(5.dp)
@@ -878,7 +873,7 @@ fun TransactionTabContent(
                     AccountSelectionSheet(
                         accounts = availableTargetAccounts,
                         selectedAccount = uiState.targetAccount,
-                        title = "Select Target Account",
+                        title = stringResource(R.string.select_target_account),
                         onAccountSelected = {
                             viewModel.updateTransactionTargetAccount(it)
                             showTargetAccountSheet = false
@@ -903,7 +898,7 @@ fun TransactionTabContent(
                             viewModel.updateTransactionAmount(newAmount)
                             showNumberPad = false
                         },
-                        title = "Enter Amount"
+                        title = stringResource(R.string.enter_amount)
                     )
                 }
             }
@@ -939,7 +934,7 @@ fun TransactionTabContent(
                 TextField(
                     value = uiState.merchant,
                     onValueChange = viewModel::updateTransactionMerchant,
-                    label = { Text("Merchant", fontWeight = FontWeight.SemiBold) },
+                    label = { Text(stringResource(R.string.merchant_lbl), fontWeight = FontWeight.SemiBold) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     shape =
@@ -967,7 +962,7 @@ fun TransactionTabContent(
                 TextField(
                     value = uiState.notes,
                     onValueChange = viewModel::updateTransactionNotes,
-                    label = { Text("Notes (Optional)", fontWeight = FontWeight.SemiBold) },
+                    label = { Text(stringResource(R.string.notes_optional), fontWeight = FontWeight.SemiBold) },
                     modifier = Modifier.fillMaxWidth(),
                     shape =
                         RoundedCornerShape(

@@ -74,6 +74,7 @@ fun SpendingLineChart(
     val suffixMillion = stringResource(R.string.suffix_million)
     val suffixThousand = stringResource(R.string.suffix_thousand)
     val totalLabel = stringResource(R.string.total)
+    val filterLabelStrings = typeFilters.map { stringResource(it.labelRes) }
 
     val cashFlowData = remember(data) { data.map { it.balance.toDouble() } }
     val labels = remember(data) {
@@ -104,7 +105,7 @@ fun SpendingLineChart(
                 label = if (typeFilters.contains(TransactionTypeFilter.ALL) || typeFilters.size > 2) {
                     totalLabel
                 } else {
-                    typeFilters.joinToString(" & ") { it.label }
+                    filterLabelStrings.joinToString(" & ")
                 },
                 values = cashFlowData,
                 color = SolidColor(themeColors.primary),
@@ -198,6 +199,7 @@ fun SpendingBarChart(
     val suffixMillion = stringResource(R.string.suffix_million)
     val suffixThousand = stringResource(R.string.suffix_thousand)
     val totalLabel = stringResource(R.string.total)
+    val filterLabelStrings = typeFilters.map { stringResource(it.labelRes) }
 
     val columnData = remember(data) {
         val isYearly = data.size > 1 && data.all { it.timestamp.dayOfYear == 1 }
@@ -220,7 +222,7 @@ fun SpendingBarChart(
                         label = if (typeFilters.contains(TransactionTypeFilter.ALL) || typeFilters.size > 2) {
                             totalLabel
                         } else {
-                            typeFilters.joinToString(" & ") { it.label }
+                            filterLabelStrings.joinToString(" & ")
                         },
                         value = point.balance.toDouble(),
                         color = SolidColor(themeColors.primary.copy(alpha = 0.8f))

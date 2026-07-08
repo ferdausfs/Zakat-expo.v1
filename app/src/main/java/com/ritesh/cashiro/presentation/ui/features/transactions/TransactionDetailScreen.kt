@@ -605,7 +605,7 @@ fun SharedTransitionScope.TransactionDetailScreen(
                             ) {
                                 Icon(
                                     imageVector = Icons.Rounded.MoreHoriz,
-                                    contentDescription = "More options",
+                                    contentDescription = stringResource(R.string.more_options_desc),
                                     modifier = Modifier.size(22.dp)
                                 )
                             }
@@ -1176,13 +1176,13 @@ private fun EditableTransactionHeader(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    TransactionType.entries.forEach { type ->
+                    TransactionType.entries.filter { it != TransactionType.BALANCE_UPDATE }.forEach { type ->
                         FilterChip(
                             selected = transaction.transactionType == type,
                             onClick = { viewModel.updateTransactionType(type) },
                             label = {
                                 Text(
-                                    text = type.name.lowercase().replaceFirstChar { it.uppercase() },
+                                    text = stringResource(type.labelRes),
                                     maxLines = 1
                                 )
                             },
@@ -2104,7 +2104,7 @@ private fun DateTimeField(
             ) {
                 val hour = if (dateTime.hour % 12 == 0) 12 else dateTime.hour % 12
                 val minute = dateTime.minute
-                val amPm = if (dateTime.hour < 12) "AM" else "PM"
+                val amPm = if (dateTime.hour < 12) stringResource(R.string.am_lbl) else stringResource(R.string.pm_lbl)
 
                 Box(modifier = Modifier
                     .padding(5.dp)
@@ -2337,7 +2337,7 @@ private fun TransactionReceipt(
                             ) {
                                 val hour = if (dateTime.hour % 12 == 0) 12 else dateTime.hour % 12
                                 val minute = dateTime.minute
-                                val amPm = if (dateTime.hour < 12) "AM" else "PM"
+                                val amPm = if (dateTime.hour < 12) stringResource(R.string.am_lbl) else stringResource(R.string.pm_lbl)
 
                                 Box(modifier = Modifier
                                     .padding(5.dp)
@@ -2833,7 +2833,7 @@ private fun ReceiptInfoRow(
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         when (label) {
-            "Type", "Balance", "Next Billing" -> {
+            stringResource(R.string.type), stringResource(R.string.balance), stringResource(R.string.next_billing) -> {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
@@ -2872,7 +2872,7 @@ private fun ReceiptInfoRow(
                 }
             }
 
-            "Category" -> {
+            stringResource(R.string.category) -> {
                 if (subValue != null) {
                     Text(
                         text = label.uppercase(),
@@ -2988,7 +2988,7 @@ private fun ReceiptInfoRow(
                 }
             }
 
-            "Account" -> {
+            stringResource(R.string.account) -> {
                 if (isTransfer) {
                     Column(
                         modifier = Modifier.fillMaxWidth(),

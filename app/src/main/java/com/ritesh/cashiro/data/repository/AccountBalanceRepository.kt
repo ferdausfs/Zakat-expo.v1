@@ -32,6 +32,14 @@ class AccountBalanceRepository @Inject constructor(
         return accountBalanceDao.getLatestBalance(bankName, accountLast4)
     }
 
+    suspend fun getLatestBalanceOnOrBefore(
+        bankName: String,
+        accountLast4: String,
+        timestamp: LocalDateTime
+    ): AccountBalanceEntity? {
+        return accountBalanceDao.getLatestBalanceOnOrBefore(bankName, accountLast4, timestamp)
+    }
+
     suspend fun resolveAccountLast4(bankName: String, accountLast4: String): String {
         if (accountLast4.isBlank()) {
             return accountLast4
@@ -238,5 +246,18 @@ class AccountBalanceRepository @Inject constructor(
 
     suspend fun getAccountByLast4(accountLast4: String): AccountBalanceEntity? {
         return accountBalanceDao.getAccountByLast4(accountLast4)
+    }
+
+    suspend fun getBalanceByTransactionId(transactionId: Long): AccountBalanceEntity? {
+        return accountBalanceDao.getBalanceByTransactionId(transactionId)
+    }
+
+    suspend fun recalculateBalancesAfter(
+        bankName: String,
+        accountLast4: String,
+        timestamp: LocalDateTime,
+        startingBalance: BigDecimal
+    ) {
+        accountBalanceDao.recalculateBalancesAfter(bankName, accountLast4, timestamp, startingBalance)
     }
 }

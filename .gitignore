@@ -42,6 +42,7 @@ keys/
 
 # Scripts
 scripts/.env
+scripts/node_modules/
 
 reddit.md
 .claude

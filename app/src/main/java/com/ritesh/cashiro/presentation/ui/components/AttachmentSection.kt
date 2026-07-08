@@ -53,6 +53,9 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.ritesh.cashiro.data.service.AttachmentService
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.presentation.ui.icons.Iconax
 import com.ritesh.cashiro.presentation.ui.icons.Paperclip2
 import com.ritesh.cashiro.presentation.ui.theme.Dimensions
@@ -108,14 +111,14 @@ fun AttachmentSection(
         ListItem(
             headline = {
                 Text(
-                    "Attachments",
+                    stringResource(R.string.attachments),
                     style = MaterialTheme.typography.bodyLarge
                 )
             },
             supporting = if (attachments.isNotEmpty()) {
                 {
                     Text(
-                        "${attachments.size} file${if (attachments.size > 1) "s" else ""}",
+                        pluralStringResource(R.plurals.attachments_count, attachments.size, attachments.size),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -148,7 +151,7 @@ fun AttachmentSection(
                     ) {
                         Icon(
                             Icons.Rounded.Add,
-                            contentDescription = "Add attachment"
+                            contentDescription = stringResource(R.string.add_attachment_cd)
                         )
                     }
                 }
@@ -284,13 +287,13 @@ private fun AttachmentPreviewItem(
                         // Error State
                         Icon(
                             imageVector = Icons.Default.BrokenImage,
-                            contentDescription = "File missing",
+                            contentDescription = stringResource(R.string.file_missing),
                             tint = MaterialTheme.colorScheme.error,
                             modifier = Modifier.size(32.dp)
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "Missing",
+                            text = stringResource(R.string.missing),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.error
                         )
@@ -312,7 +315,7 @@ private fun AttachmentPreviewItem(
                 ) {
                     Icon(
                         Icons.Default.Close,
-                        contentDescription = "Remove",
+                        contentDescription = stringResource(R.string.remove_cd),
                         tint = MaterialTheme.colorScheme.onErrorContainer,
                         modifier = Modifier.size(16.dp)
                     )

@@ -721,132 +721,91 @@ class TransactionDetailViewModel @Inject constructor(
         oldTransaction: TransactionEntity,
         newTransaction: TransactionEntity
     ) {
-        //Revert effect of old transaction
-        revertBalanceEffect(oldTransaction)
-
-        //Apply effect of new transaction
-        applyBalanceEffect(newTransaction)
+        if (oldTransaction.transactionType == TransactionType.TRANSFER) {
+            handleTransferBalanceEdit(oldTransaction, newTransaction)
+            return
+        }
+        if (oldTransaction.bankName != null && oldTransaction.accountNumber != null) {
+            updateNonTransferBalance(oldTransaction, newTransaction)
+        }
     }
 
-    private suspend fun revertBalanceEffect(transaction: TransactionEntity) {
-        val bankName = transaction.bankName
-        val accountLast4 = transaction.accountNumber
+    private suspend fun updateNonTransferBalance(
+        oldTransaction: TransactionEntity,
+        newTransaction: TransactionEntity
+    ) {
+        val bankName = oldTransaction.bankName!!
+        val accountLast4 = oldTransaction.accountNumber!!
+        val timestamp = oldTransaction.dateTime ?: LocalDateTime.now()
 
-        if (bankName != null && accountLast4 != null) {
-            when (transaction.transactionType) {
-                TransactionType.INCOME -> {
-                    // Originally added, so subtract to revert
-                    updateBalance(
-                        bankName,
-                        accountLast4,
-                        transaction.amount.negate(),
-                        transaction.currency
-                    )
+        val oldEffect = balanceEffect(oldTransaction.amount, oldTransaction.transactionType)
+        val newEffect = balanceEffect(newTransaction.amount, newTransaction.transactionType)
+
+        // Fix the historical balance entry at the transaction's timestamp, then
+        // recalculate forward — this cascades the change to all subsequent entries
+        // including the latest balance. No additional delta application needed.
+        val linkedEntry = accountBalanceRepository.getBalanceByTransactionId(oldTransaction.id)
+        if (linkedEntry != null) {
+            val newBalance = (linkedEntry.balance - oldEffect + newEffect).max(BigDecimal.ZERO)
+            accountBalanceRepository.updateBalance(linkedEntry.copy(balance = newBalance))
+            accountBalanceRepository.recalculateBalancesAfter(bankName, accountLast4, timestamp, newBalance)
+        }
+    }
+
+    private suspend fun handleTransferBalanceEdit(
+        oldTransaction: TransactionEntity,
+        newTransaction: TransactionEntity
+    ) {
+        val oldAmount = oldTransaction.amount
+        val newAmount = newTransaction.amount
+
+        // source account: -amount effect
+        val sourceDelta = -(newAmount - oldAmount)
+        if (sourceDelta != BigDecimal.ZERO && oldTransaction.bankName != null && oldTransaction.accountNumber != null) {
+            applyBalanceWithDelta(oldTransaction.bankName, oldTransaction.accountNumber, sourceDelta, newTransaction.currency)
+        }
+
+        // target account: +amount effect
+        val oldTarget = oldTransaction.toAccount
+        val newTarget = newTransaction.toAccount
+        if (oldTarget != null) {
+            findAccountByLast4(oldTarget)?.let { target ->
+                val targetDelta = newAmount - oldAmount
+                if (targetDelta != BigDecimal.ZERO) {
+                    applyBalanceWithDelta(target.bankName, target.accountLast4, targetDelta, newTransaction.currency)
                 }
-
-                TransactionType.EXPENSE, TransactionType.INVESTMENT -> {
-                    // Originally subtracted, so add to revert
-                    updateBalance(bankName, accountLast4, transaction.amount, transaction.currency)
-                }
-
-                TransactionType.CREDIT -> {
-                    // Originally added (outstanding increased), so subtract to revert
-                    updateBalance(bankName, accountLast4, transaction.amount.negate(), transaction.currency)
-                }
-
-                TransactionType.TRANSFER -> {
-                    // Revert source: Originally subtracted, so add
-                    updateBalance(bankName, accountLast4, transaction.amount, transaction.currency)
-
-                   //find an account with that last4.
-                    transaction.toAccount?.let { targetLast4 ->
-                        findAccountByLast4(targetLast4)?.let { targetAccount ->
-                            updateBalance(
-                                targetAccount.bankName,
-                                targetLast4,
-                                transaction.amount.negate(),
-                                transaction.currency
-                            )
-                        }
-                    }
-                }
-
-                TransactionType.BALANCE_UPDATE -> {
-                    // Balance updates track the balance directly, no reversal needed
-                }
+            }
+        }
+        if (newTarget != null && newTarget != oldTarget) {
+            findAccountByLast4(newTarget)?.let { target ->
+                applyBalanceWithDelta(target.bankName, target.accountLast4, newAmount, newTransaction.currency)
             }
         }
     }
 
-    private suspend fun applyBalanceEffect(transaction: TransactionEntity) {
-        val bankName = transaction.bankName
-        val accountLast4 = transaction.accountNumber
-
-        if (bankName != null && accountLast4 != null) {
-            when (transaction.transactionType) {
-                TransactionType.INCOME -> {
-                    updateBalance(bankName, accountLast4, transaction.amount, transaction.currency)
-                }
-
-                TransactionType.EXPENSE, TransactionType.INVESTMENT -> {
-                    updateBalance(
-                        bankName,
-                        accountLast4,
-                        transaction.amount.negate(),
-                        transaction.currency
-                    )
-                }
-
-                TransactionType.CREDIT -> {
-                    updateBalance(bankName, accountLast4, transaction.amount, transaction.currency)
-                }
-
-                TransactionType.TRANSFER -> {
-                    // Source: Subtract
-                    updateBalance(
-                        bankName,
-                        accountLast4,
-                        transaction.amount.negate(),
-                        transaction.currency
-                    )
-
-                    // Target: Add
-                    transaction.toAccount?.let { targetLast4 ->
-                        findAccountByLast4(targetLast4)?.let { targetAccount ->
-                            updateBalance(
-                                targetAccount.bankName,
-                                targetLast4,
-                                transaction.amount,
-                                transaction.currency
-                            )
-                        }
-                    }
-                }
-
-                TransactionType.BALANCE_UPDATE -> {
-                    // Balance updates track the balance directly, no adjustment needed
-                }
-            }
+    private fun balanceEffect(amount: BigDecimal, type: TransactionType): BigDecimal {
+        return when (type) {
+            TransactionType.INCOME, TransactionType.CREDIT -> amount
+            TransactionType.EXPENSE, TransactionType.INVESTMENT -> amount.negate()
+            else -> BigDecimal.ZERO
         }
     }
 
-    private suspend fun updateBalance(
+    private suspend fun applyBalanceWithDelta(
         bankName: String,
         accountLast4: String,
-        amountDelta: BigDecimal,
-        currency: String,
-        transactionId: Long? = null
+        delta: BigDecimal,
+        currency: String
     ) {
         val currentBalance = accountBalanceRepository.getLatestBalance(bankName, accountLast4)
-        val newBalance = (currentBalance?.balance ?: BigDecimal.ZERO) + amountDelta
-
+        val newBalance = (currentBalance?.balance ?: BigDecimal.ZERO) + delta
         accountBalanceRepository.insertBalance(
             AccountBalanceEntity(
                 bankName = bankName,
                 accountLast4 = accountLast4,
                 balance = newBalance,
                 timestamp = LocalDateTime.now(),
-                transactionId = transactionId,
+                transactionId = null,
                 sourceType = "MANUAL_EDIT",
                 iconResId = currentBalance?.iconResId ?: 0,
                 isCreditCard = currentBalance?.isCreditCard ?: false,

@@ -113,6 +113,25 @@ class AccountDetailViewModel @Inject constructor(
 
                     if (transaction.transactionType == TransactionType.INCOME) {
                         totalIncome += convertedAmount
+                    } else if (transaction.transactionType == TransactionType.TRANSFER) {
+                        // For self transfers, we must check bankName AND accountLast4 to disambiguate correctly
+                        // transaction.bankName is always the sender's bank.
+                        val isSender = transaction.bankName == bankName && 
+                            (transaction.accountNumber == accountLast4 || transaction.fromAccount == accountLast4)
+                        
+                        // If it's a transfer and we are not the sender, but this transaction was fetched 
+                        // for our account, we must be the receiver.
+                        val isReceiver = !isSender && transaction.toAccount == accountLast4
+
+                        if (isReceiver) {
+                            totalIncome += convertedAmount
+                        } else if (isSender) {
+                            totalExpenses += convertedAmount
+                        }
+                    } else if (transaction.transactionType == TransactionType.CREDIT || transaction.transactionType == TransactionType.BALANCE_UPDATE) {
+                        // Optional: do credit or balance update affect total income/expenses? 
+                        // Currently everything not INCOME goes to EXPENSE, but leaving it as-is for backward compatibility
+                        totalExpenses += convertedAmount
                     } else {
                         totalExpenses += convertedAmount
                     }

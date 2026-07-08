@@ -223,8 +223,11 @@ interface TransactionDao {
             """
         SELECT * FROM transactions
         WHERE is_deleted = 0
-        AND bank_name = :bankName
-        AND (account_number = :accountLast4 OR account_number IS NULL)
+        AND (
+            (bank_name = :bankName AND (account_number = :accountLast4 OR account_number IS NULL))
+            OR
+            (transaction_type = 'TRANSFER' AND to_account = :accountLast4)
+        )
         ORDER BY date_time DESC
     """
     )
@@ -237,9 +240,12 @@ interface TransactionDao {
             """
         SELECT * FROM transactions 
         WHERE is_deleted = 0 
-        AND bank_name = :bankName 
-        AND account_number = :accountLast4
         AND date_time BETWEEN :startDate AND :endDate
+        AND (
+            (bank_name = :bankName AND account_number = :accountLast4)
+            OR
+            (transaction_type = 'TRANSFER' AND to_account = :accountLast4)
+        )
         ORDER BY date_time DESC
     """
     )

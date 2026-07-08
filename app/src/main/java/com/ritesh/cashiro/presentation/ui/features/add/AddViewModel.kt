@@ -29,6 +29,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalTime
+import com.ritesh.cashiro.R
 
 @HiltViewModel
 class AddViewModel
@@ -248,7 +249,7 @@ constructor(
             if (state.selectedAccount == null || state.targetAccount == null) {
                 _transactionUiState.update { currentState ->
                     currentState.copy(
-                        error = "Both source and target accounts are required for transfers"
+                        error = context.getString(R.string.err_source_target_required)
                     )
                 }
                 return
@@ -257,7 +258,7 @@ constructor(
             if (state.selectedAccount?.id == state.targetAccount?.id) {
                 _transactionUiState.update { currentState ->
                     currentState.copy(
-                        error = "Source and target accounts must be different"
+                        error = context.getString(R.string.err_accounts_different)
                     )
                 }
                 return
@@ -304,7 +305,7 @@ constructor(
                 _transactionUiState.update { currentState ->
                     currentState.copy(
                         isLoading = false,
-                        error = e.message ?: "Failed to save transaction"
+                        error = e.message ?: context.getString(R.string.err_save_transaction)
                     )
                 }
             }
@@ -405,7 +406,7 @@ constructor(
                     // Update subcategories for the loaded category
                     updateSubscriptionSubcategories(subscription.category ?: "Subscription")
                 } else {
-                    _subscriptionUiState.update { it.copy(isLoading = false, error = "Subscription not found") }
+                    _subscriptionUiState.update { it.copy(isLoading = false, error = context.getString(R.string.err_subscription_not_found)) }
                 }
             } catch (e: Exception) {
                 _subscriptionUiState.update { it.copy(isLoading = false, error = e.message) }
@@ -419,7 +420,7 @@ constructor(
         _subscriptionUiState.update { currentState ->
             currentState.copy(
                 serviceName = service,
-                serviceError = if (service.isBlank()) "Service name is required" else null
+                serviceError = if (service.isBlank()) context.getString(R.string.err_service_required) else null
             )
         }
     }
@@ -514,7 +515,7 @@ constructor(
         Log.d("AddViewModel", "saveSubscription called with state: $state")
 
         // Validate all fields
-        val serviceError = if (state.serviceName.isBlank()) "Service name is required" else null
+        val serviceError = if (state.serviceName.isBlank()) context.getString(R.string.err_service_required) else null
         val amountError = validateAmount(state.amount)
         val categoryError = validateCategory(state.category)
 
@@ -566,7 +567,7 @@ constructor(
                         updateSubscriptionUseCase.execute(updatedSubscription)
                         Log.d("AddViewModel", "Subscription updated successfully: ${state.subscriptionId}")
                     } else {
-                        throw Exception("Subscription not found for update")
+                        throw Exception(context.getString(R.string.err_subscription_not_found))
                     }
                 } else {
                     // Create new subscription
@@ -617,7 +618,7 @@ constructor(
                 _subscriptionUiState.update { currentState ->
                     currentState.copy(
                         isLoading = false,
-                        error = e.message ?: "Failed to save subscription"
+                        error = e.message ?: context.getString(R.string.err_save_subscription)
                     )
                 }
             } finally {
@@ -630,24 +631,24 @@ constructor(
     // Validation helpers
     private fun validateAmount(amount: String): String? {
         return when {
-            amount.isBlank() -> "Amount is required"
-            amount.toDoubleOrNull() == null -> "Invalid amount"
-            amount.toDouble() <= 0 -> "Amount must be greater than 0"
+            amount.isBlank() -> context.getString(R.string.err_amount_required)
+            amount.toDoubleOrNull() == null -> context.getString(R.string.err_invalid_amount)
+            amount.toDouble() <= 0 -> context.getString(R.string.err_amount_positive)
             else -> null
         }
     }
 
     private fun validateMerchant(merchant: String): String? {
         return when {
-            merchant.isBlank() -> "Merchant/Description is required"
-            merchant.length < 2 -> "Too short"
+            merchant.isBlank() -> context.getString(R.string.err_merchant_required)
+            merchant.length < 2 -> context.getString(R.string.err_too_short)
             else -> null
         }
     }
 
     private fun validateCategory(category: String): String? {
         return when {
-            category.isBlank() -> "Category is required"
+            category.isBlank() -> context.getString(R.string.err_category_required)
             else -> null
         }
     }

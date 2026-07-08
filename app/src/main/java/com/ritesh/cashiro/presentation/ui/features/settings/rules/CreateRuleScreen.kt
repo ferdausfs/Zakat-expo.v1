@@ -90,6 +90,8 @@ import com.ritesh.cashiro.presentation.ui.theme.Dimensions
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeSource
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
@@ -147,7 +149,7 @@ fun CreateRuleScreen(
 
     // Common presets for quick setup
     val commonPresets = listOf(
-        "Block OTPs" to {
+        stringResource(R.string.preset_block_otps) to {
             ruleName = "Block OTP Messages"
             conditions = listOf(
                 RuleCondition(TransactionField.SMS_TEXT, ConditionOperator.CONTAINS, "OTP")
@@ -157,7 +159,7 @@ fun CreateRuleScreen(
             actionValue = ""
             fieldDropdownsExpanded = List(conditions.size) { false }
         },
-        "Block Small Amounts" to {
+        stringResource(R.string.preset_block_small) to {
             ruleName = "Block Small Transactions"
             conditions = listOf(
                 RuleCondition(TransactionField.AMOUNT, ConditionOperator.LESS_THAN, "10")
@@ -167,7 +169,7 @@ fun CreateRuleScreen(
             actionValue = ""
             fieldDropdownsExpanded = List(conditions.size) { false }
         },
-        "Small amounts → Food" to {
+        stringResource(R.string.preset_small_food) to {
             ruleName = "Small Food Payments"
             conditions = listOf(
                 RuleCondition(TransactionField.AMOUNT, ConditionOperator.LESS_THAN, "200")
@@ -177,7 +179,7 @@ fun CreateRuleScreen(
             actionValue = "Food & Drinks"
             fieldDropdownsExpanded = List(conditions.size) { false }
         },
-        "Standardize Merchant" to {
+        stringResource(R.string.preset_standardize) to {
             ruleName = "Standardize Merchant Name"
             conditions = listOf(
                 RuleCondition(TransactionField.MERCHANT, ConditionOperator.CONTAINS, "AMZN")
@@ -187,7 +189,7 @@ fun CreateRuleScreen(
             actionValue = "Amazon"
             fieldDropdownsExpanded = List(conditions.size) { false }
         },
-        "Mark as Income" to {
+        stringResource(R.string.preset_mark_income) to {
             ruleName = "Mark Credits as Income"
             conditions = listOf(
                 RuleCondition(TransactionField.SMS_TEXT, ConditionOperator.CONTAINS, "credited")
@@ -209,7 +211,7 @@ fun CreateRuleScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CustomTitleTopAppBar(
-                title = if (existingRule != null) "Edit Rule" else "Create Rule",
+                title = if (existingRule != null) stringResource(R.string.edit_rule) else stringResource(R.string.create_rule),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
                 hazeState = hazeState,
@@ -242,7 +244,7 @@ fun CreateRuleScreen(
                         verticalArrangement = Arrangement.spacedBy(Spacing.sm)
                     ) {
                         Text(
-                            text = "Quick Templates",
+                            text = stringResource(R.string.quick_templates),
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(horizontal = 4.dp)
@@ -292,8 +294,8 @@ fun CreateRuleScreen(
                         TextField(
                             value = ruleName,
                             onValueChange = { ruleName = it },
-                            label = { Text("Rule Name", fontWeight = FontWeight.SemiBold) },
-                            placeholder = { Text("e.g., Food expenses under ₹200") },
+                            label = { Text(stringResource(R.string.rule_name_label), fontWeight = FontWeight.SemiBold) },
+                            placeholder = { Text(stringResource(R.string.rule_name_placeholder)) },
                             singleLine = true,
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(
@@ -324,11 +326,11 @@ fun CreateRuleScreen(
                             onValueChange = { description = it },
                             label = {
                                 Text(
-                                    "Description (Optional)",
+                                    stringResource(R.string.description_optional_label),
                                     fontWeight = FontWeight.SemiBold
                                 )
                             },
-                            placeholder = { Text("\"What does this rule do?") },
+                            placeholder = { Text(stringResource(R.string.description_placeholder)) },
                             minLines = 2,
                             maxLines = 3,
                             modifier = Modifier.fillMaxWidth(),
@@ -374,7 +376,7 @@ fun CreateRuleScreen(
                                 tint = MaterialTheme.colorScheme.primary
                             )
                             Text(
-                                text = "Conditions",
+                                text = stringResource(R.string.conditions_title),
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold
                             )
@@ -396,7 +398,7 @@ fun CreateRuleScreen(
                                 ) {
                                     Icon(Icons.Rounded.Add, contentDescription = null, modifier = Modifier.size(16.dp))
                                     Spacer(Modifier.size(4.dp))
-                                    Text("Add", style = MaterialTheme.typography.labelMedium)
+                                    Text(stringResource(R.string.add_condition), style = MaterialTheme.typography.labelMedium)
                                 }
                             }
                         }
@@ -417,7 +419,7 @@ fun CreateRuleScreen(
                                         horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
                                     ) {
                                         Text(
-                                            text = "Condition ${index + 1}",
+                                            text = stringResource(R.string.condition_n_format, index + 1),
                                             style = MaterialTheme.typography.labelLarge,
                                             color = MaterialTheme.colorScheme.primary
                                         )
@@ -433,7 +435,7 @@ fun CreateRuleScreen(
                                             ) {
                                                 Icon(
                                                     Iconax.Bag,
-                                                    contentDescription = "Remove Condition",
+                                                    contentDescription = stringResource(R.string.remove_condition_cd),
                                                     tint = MaterialTheme.colorScheme.error,
                                                     modifier = Modifier.size(18.dp)
                                                 )
@@ -452,18 +454,18 @@ fun CreateRuleScreen(
                                     ) {
                                         TextField(
                                             value = when (condition.field) {
-                                                TransactionField.AMOUNT -> "Amount"
-                                                TransactionField.MERCHANT -> "Merchant"
-                                                TransactionField.CATEGORY -> "Category"
-                                                TransactionField.SMS_TEXT -> "SMS Text"
-                                                TransactionField.TYPE -> "Transaction Type"
-                                                TransactionField.SUBCATEGORY -> "Subcategory"
-                                                TransactionField.BANK_NAME -> "Bank Name"
-                                                else -> "Field"
+                                                TransactionField.AMOUNT -> stringResource(R.string.field_amount)
+                                                TransactionField.MERCHANT -> stringResource(R.string.field_merchant)
+                                                TransactionField.CATEGORY -> stringResource(R.string.field_category)
+                                                TransactionField.SMS_TEXT -> stringResource(R.string.field_sms_text)
+                                                TransactionField.TYPE -> stringResource(R.string.field_transaction_type)
+                                                TransactionField.SUBCATEGORY -> stringResource(R.string.field_subcategory)
+                                                TransactionField.BANK_NAME -> stringResource(R.string.field_bank_name)
+                                                else -> stringResource(R.string.field_label)
                                             },
                                             onValueChange = { },
                                             readOnly = true,
-                                            label = { Text("Field") },
+                                            label = { Text(stringResource(R.string.field_label)) },
                                             colors = TextFieldDefaults.colors(
                                                 focusedContainerColor = MaterialTheme.colorScheme.surface,
                                                 unfocusedContainerColor = MaterialTheme.colorScheme.surface,
@@ -491,13 +493,13 @@ fun CreateRuleScreen(
                                             shape = MaterialTheme.shapes.large
                                         ) {
                                             val menuItems = listOf(
-                                                TransactionField.AMOUNT to "Amount",
-                                                TransactionField.TYPE to "Transaction Type",
-                                                TransactionField.CATEGORY to "Category",
-                                                TransactionField.SUBCATEGORY to "Subcategory",
-                                                TransactionField.MERCHANT to "Merchant",
-                                                TransactionField.SMS_TEXT to "SMS Text",
-                                                TransactionField.BANK_NAME to "Bank Name"
+                                                TransactionField.AMOUNT to stringResource(R.string.field_amount),
+                                                TransactionField.TYPE to stringResource(R.string.field_transaction_type),
+                                                TransactionField.CATEGORY to stringResource(R.string.field_category),
+                                                TransactionField.SUBCATEGORY to stringResource(R.string.field_subcategory),
+                                                TransactionField.MERCHANT to stringResource(R.string.field_merchant),
+                                                TransactionField.SMS_TEXT to stringResource(R.string.field_sms_text),
+                                                TransactionField.BANK_NAME to stringResource(R.string.field_bank_name)
                                             )
                                             menuItems.forEachIndexed { i, (field, label) ->
                                                 val isFirstItem = i == 0
@@ -596,7 +598,7 @@ fun CreateRuleScreen(
                                                         this[index] = this[index].copy(value = newValue)
                                                     }
                                                 },
-                                                label = { Text("Value") },
+                                                label = { Text(stringResource(R.string.value_label)) },
                                                 placeholder = {
                                                     Text(
                                                         when (condition.field) {
@@ -656,7 +658,7 @@ fun CreateRuleScreen(
                                     tint = MaterialTheme.colorScheme.primary
                                 )
                                 Text(
-                                    text = "Then",
+                                    text = stringResource(R.string.then_title),
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.Medium
                                 )
@@ -671,17 +673,17 @@ fun CreateRuleScreen(
                             ) {
                                 TextField(
                                     value = when (actionType) {
-                                        ActionType.BLOCK -> "Block Transaction"
-                                        ActionType.SET -> "Set Field"
+                                        ActionType.BLOCK -> stringResource(R.string.action_block_transaction)
+                                        ActionType.SET -> stringResource(R.string.action_set_field)
                                         ActionType.APPEND -> "Append to Field"
                                         ActionType.PREPEND -> "Prepend to Field"
-                                        ActionType.CLEAR -> "Clear Field"
+                                        ActionType.CLEAR -> stringResource(R.string.action_clear_field)
                                         ActionType.ADD_TAG -> "Add Tag"
                                         ActionType.REMOVE_TAG -> "Remove Tag"
                                     },
                                     onValueChange = { },
                                     readOnly = true,
-                                    label = { Text("Action Type") },
+                                    label = { Text(stringResource(R.string.action_type_label)) },
                                     colors = TextFieldDefaults.colors(
                                         focusedContainerColor = MaterialTheme.colorScheme.surface,
                                         unfocusedContainerColor = MaterialTheme.colorScheme.surface,
@@ -707,9 +709,9 @@ fun CreateRuleScreen(
                                     shape = MaterialTheme.shapes.large
                                 ) {
                                     val menuItems = listOf(
-                                        ActionType.BLOCK to "Block Transaction",
-                                        ActionType.SET to "Set Field",
-                                        ActionType.CLEAR to "Clear Field"
+                                        ActionType.BLOCK to stringResource(R.string.action_block_transaction),
+                                        ActionType.SET to stringResource(R.string.action_set_field),
+                                        ActionType.CLEAR to stringResource(R.string.action_clear_field)
                                     )
                                     menuItems.forEachIndexed { index, (type, label) ->
                                         val isFirstItem = index == 0
@@ -760,7 +762,7 @@ fun CreateRuleScreen(
                                             tint = MaterialTheme.colorScheme.onErrorContainer
                                         )
                                         Text(
-                                            text = "Transactions matching this rule will be blocked and not saved",
+                                            text = stringResource(R.string.block_message),
                                             style = MaterialTheme.typography.bodyMedium,
                                             color = MaterialTheme.colorScheme.onErrorContainer
                                         )
@@ -776,16 +778,16 @@ fun CreateRuleScreen(
                                 ) {
                                     TextField(
                                         value = when (actionField) {
-                                            TransactionField.CATEGORY -> "Set Category"
-                                            TransactionField.SUBCATEGORY -> "Set Subcategory"
-                                            TransactionField.MERCHANT -> "Set Merchant Name"
-                                            TransactionField.TYPE -> "Set Transaction Type"
+                                            TransactionField.CATEGORY -> stringResource(R.string.action_set_category)
+                                            TransactionField.SUBCATEGORY -> stringResource(R.string.action_set_subcategory)
+                                            TransactionField.MERCHANT -> stringResource(R.string.action_set_merchant)
+                                            TransactionField.TYPE -> stringResource(R.string.action_set_type)
                                             TransactionField.NARRATION -> "Set Description"
-                                            else -> "Set Field"
+                                            else -> stringResource(R.string.action_set_field)
                                         },
                                         onValueChange = { },
                                         readOnly = true,
-                                        label = { Text("Action") },
+                                        label = { Text(stringResource(R.string.action_label)) },
                                         trailingIcon = {
                                             ExposedDropdownMenuDefaults.TrailingIcon(
                                                 expanded = actionFieldDropdownExpanded
@@ -811,10 +813,10 @@ fun CreateRuleScreen(
                                         shape = MaterialTheme.shapes.large
                                     ) {
                                         val menuItems = listOf(
-                                            TransactionField.CATEGORY to "Set Category",
-                                            TransactionField.SUBCATEGORY to "Set Subcategory",
-                                            TransactionField.MERCHANT to "Set Merchant Name",
-                                            TransactionField.TYPE to "Set Transaction Type",
+                                            TransactionField.CATEGORY to stringResource(R.string.action_set_category),
+                                            TransactionField.SUBCATEGORY to stringResource(R.string.action_set_subcategory),
+                                            TransactionField.MERCHANT to stringResource(R.string.action_set_merchant),
+                                            TransactionField.TYPE to stringResource(R.string.action_set_type),
                                             // NARRATION removed as requested
                                         )
                                         menuItems.forEachIndexed { index, (field, label) ->
@@ -849,7 +851,7 @@ fun CreateRuleScreen(
                                         ListItem(
                                             headlineContent = {
                                                 Text(
-                                                    if (actionValue.isBlank()) "Choose Category" else actionValue,
+                                                    if (actionValue.isBlank()) stringResource(R.string.choose_category) else actionValue,
                                                     style = MaterialTheme.typography.bodyLarge,
                                                     color = if (actionValue.isBlank()) 
                                                         MaterialTheme.colorScheme.onSurfaceVariant 
@@ -1183,7 +1185,7 @@ fun CreateRuleScreen(
                             (actionType == ActionType.BLOCK || actionValue.isNotBlank())
                 ) {
                     Text(
-                        text = "Save",
+                        text = stringResource(R.string.save),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
                     )

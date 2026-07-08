@@ -1,11 +1,13 @@
 package com.ritesh.cashiro.presentation.navigation
 
+import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Chat
 import androidx.compose.material.icons.filled.Analytics
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.presentation.ui.icons.AiCommentary
 import com.ritesh.cashiro.presentation.ui.icons.FavoriteChart
 import com.ritesh.cashiro.presentation.ui.icons.Home
@@ -18,14 +20,14 @@ import com.ritesh.cashiro.presentation.navigation.Transactions as TransactionsDe
 
 sealed class BottomNavItem(
     val route: String,
-    val title: String,
+    @StringRes val titleRes: Int,
     val icon: ImageVector,
     val destination: Any,
     val destinationType: KClass<*>
 ) {
     data object Home : BottomNavItem(
         route = "home",
-        title = "Home",
+        titleRes = R.string.home_title,
         icon = Iconax.Home,
         destination = HomeDestination,
         destinationType = HomeDestination::class
@@ -33,7 +35,7 @@ sealed class BottomNavItem(
     
     data object Analytics : BottomNavItem(
         route = "analytics",
-        title = "Analytics",
+        titleRes = R.string.analytics,
         icon = Iconax.FavoriteChart,
         destination = AnalyticsDestination,
         destinationType = AnalyticsDestination::class
@@ -41,7 +43,7 @@ sealed class BottomNavItem(
 
     data object Transactions : BottomNavItem(
         route = "transactions",
-        title = "Transactions",
+        titleRes = R.string.transactions,
         icon = Iconax.ReceiptItem,
         destination = TransactionsDestination(),
         destinationType = TransactionsDestination::class

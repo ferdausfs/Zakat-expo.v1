@@ -118,6 +118,26 @@ class SmsReaderWorker @AssistedInject constructor(
                     val thirtyDaysAgo = LocalDateTime.now().minusDays(30)
                     val isRecentMessage = smsDateTime.isAfter(thirtyDaysAgo)
                     
+                    // Check if it's a generic balance update notification
+                    if (firstParser.isBalanceUpdateNotification(sms.body)) {
+                        val balanceUpdateInfo = firstParser.parseBalanceUpdate(sms.body)
+                        if (balanceUpdateInfo != null) {
+                            try {
+                                accountBalanceRepository.insertBalanceUpdate(
+                                    bankName = balanceUpdateInfo.bankName,
+                                    accountLast4 = balanceUpdateInfo.accountLast4,
+                                    balance = balanceUpdateInfo.balance,
+                                    timestamp = balanceUpdateInfo.asOfDate ?: smsDateTime,
+                                    currency = firstParser.getCurrency()
+                                )
+                                Log.d(TAG, "Saved balance update for ${balanceUpdateInfo.bankName} (isCreditCard=${balanceUpdateInfo.isCreditCard})")
+                            } catch (e: Exception) {
+                                Log.e(TAG, "Error saving balance update: ${e.message}")
+                            }
+                        }
+                        continue // Skip transaction parsing
+                    }
+
                     // Check if it's a mandate/subscription notification
                     // Only process subscription messages from the last 30 days
                     when (firstParser) {
@@ -193,49 +213,8 @@ class SmsReaderWorker @AssistedInject constructor(
                                 continue // Skip transaction parsing for future debit
                             }
                             
-                            // Check for Balance Update notifications
-                            if (firstParser.isBalanceUpdateNotification(sms.body)) {
-                                val balanceUpdateInfo = firstParser.parseBalanceUpdate(sms.body)
-                                if (balanceUpdateInfo != null) {
-                                    try {
-                                        // Save to account_balances table
-                                        accountBalanceRepository.insertBalanceUpdate(
-                                            bankName = balanceUpdateInfo.bankName,
-                                            accountLast4 = balanceUpdateInfo.accountLast4,
-                                            balance = balanceUpdateInfo.balance,
-                                            timestamp = balanceUpdateInfo.asOfDate ?: smsDateTime,
-                                            currency = firstParser.getCurrency()
-                                        )
-                                        Log.d(TAG, "Saved balance update for ${balanceUpdateInfo.bankName}")
-                                    } catch (e: Exception) {
-                                        Log.e(TAG, "Error saving balance update: ${e.message}")
-                                    }
-                                }
-                                continue // Skip transaction parsing
-                            }
                         }
-                        is IndusIndBankParser -> {
-                            // Balance-only updates for IndusInd (same flow as HDFC)
-                            if (firstParser.isBalanceUpdateNotification(sms.body)) {
-                                val balanceUpdateInfo = firstParser.parseBalanceUpdate(sms.body)
-                                if (balanceUpdateInfo != null) {
-                                    try {
-                                        accountBalanceRepository.insertBalanceUpdate(
-                                            bankName = balanceUpdateInfo.bankName,
-                                            accountLast4 = balanceUpdateInfo.accountLast4,
-                                            balance = balanceUpdateInfo.balance,
 
-                                            timestamp = balanceUpdateInfo.asOfDate ?: smsDateTime,
-                                            currency = firstParser.getCurrency()
-                                        )
-                                        Log.d(TAG, "Saved balance update for ${balanceUpdateInfo.bankName}")
-                                    } catch (e: Exception) {
-                                        Log.e(TAG, "Error saving IndusInd balance update: ${e.message}")
-                                    }
-                                }
-                                continue // Skip transaction parsing
-                            }
-                        }
                         is IndianBankParser -> {
                             if (firstParser.isMandateNotification(sms.body)) {
                                 if (!isRecentMessage) {

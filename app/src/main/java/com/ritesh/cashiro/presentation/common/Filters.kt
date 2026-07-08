@@ -1,23 +1,25 @@
 package com.ritesh.cashiro.presentation.common
 
+import androidx.annotation.StringRes
+import com.ritesh.cashiro.R
 import java.time.LocalDate
 import java.time.YearMonth
 
-enum class TimePeriod(val label: String) {
-    THIS_MONTH("This Month"),
-    LAST_MONTH("Last Month"),
-    CURRENT_FY("Current FY"),
-    ALL("All Time"),
-    CUSTOM("Custom Range")
+enum class TimePeriod(@StringRes val labelRes: Int) {
+    THIS_MONTH(R.string.time_period_this_month),
+    LAST_MONTH(R.string.time_period_last_month),
+    CURRENT_FY(R.string.time_period_current_fy),
+    ALL(R.string.time_period_all_time),
+    CUSTOM(R.string.time_period_custom_range)
 }
 
-enum class TransactionTypeFilter(val label: String) {
-    ALL("All"),
-    INCOME("Income"),
-    EXPENSE("Expense"),
-    CREDIT("Credit"),
-    TRANSFER("Transfer"),
-    INVESTMENT("Investment")
+enum class TransactionTypeFilter(@StringRes val labelRes: Int) {
+    ALL(R.string.type_all),
+    INCOME(R.string.type_income),
+    EXPENSE(R.string.type_expense),
+    CREDIT(R.string.type_credit),
+    TRANSFER(R.string.type_transfer),
+    INVESTMENT(R.string.type_investment)
 }
 
 fun getDateRangeForPeriod(period: TimePeriod): Pair<LocalDate, LocalDate>? {

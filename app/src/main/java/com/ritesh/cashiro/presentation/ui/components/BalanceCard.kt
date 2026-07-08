@@ -43,6 +43,8 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.presentation.effects.BlurredAnimatedVisibility
 import com.ritesh.cashiro.presentation.ui.icons.Iconax
 import com.ritesh.cashiro.presentation.ui.icons.LongArrow
@@ -148,7 +150,7 @@ fun BalanceCard(
                                     modifier = Modifier.size(20.dp)
                                 )
                                 Text(
-                                    text = "${if (monthlyChangePercent >= 0) "+" else ""}$monthlyChangePercent% this month",
+                                    text = stringResource(R.string.percent_this_month_format, if (monthlyChangePercent >= 0) "+" else "", monthlyChangePercent.toString()),
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurface,
                                     modifier = Modifier.alpha(0.6f),
@@ -210,7 +212,7 @@ fun BalanceCard(
                                         fontWeight = FontWeight.Medium
                                     )
                                     Text(
-                                        text = "Net worth",
+                                        text = stringResource(R.string.net_worth_label),
                                         style = MaterialTheme.typography.bodyMedium,
                                         color = MaterialTheme.colorScheme.onSurface,
                                         modifier = Modifier.alpha(0.4f),
@@ -303,18 +305,18 @@ fun BalanceCard(
                             horizontalArrangement = Arrangement.SpaceAround,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            SummaryItem(label = "THIS MONTH", value = thisMonthValue)
+                            SummaryItem(label = stringResource(R.string.this_month_lbl), value = thisMonthValue)
                             VerticalDivider(
                                 modifier = Modifier.height(30.dp),
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
                             )
-                            SummaryItem(label = "THIS YEAR", value = thisYearValue)
+                            SummaryItem(label = stringResource(R.string.this_year_lbl), value = thisYearValue)
                             VerticalDivider(
                                 modifier = Modifier.height(30.dp),
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
                             )
                             SummaryItem(
-                                label = "BALANCE",
+                                label = stringResource(R.string.balance_label),
                                 value = CurrencyFormatter.formatCurrency(totalBalance, currency)
                             )
                         }
@@ -326,7 +328,7 @@ fun BalanceCard(
         // Collapse/Expand Icon
         Icon(
             imageVector = Iconax.LongArrow,
-            contentDescription = if (isExpanded) "Collapse" else "Expand",
+            contentDescription = if (isExpanded) stringResource(R.string.collapse) else stringResource(R.string.expand),
             tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
             modifier = Modifier
                 .align(Alignment.BottomCenter)

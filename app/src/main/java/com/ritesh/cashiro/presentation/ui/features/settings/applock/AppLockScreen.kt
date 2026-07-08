@@ -15,6 +15,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ritesh.cashiro.domain.security.BiometricCapability
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
 import com.ritesh.cashiro.presentation.ui.components.CustomTitleTopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -63,7 +65,7 @@ fun AppLockScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CustomTitleTopAppBar(
-                title = "App Lock",
+                title = stringResource(R.string.app_lock),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehaviorSmall,
                 hazeState = hazeState,
@@ -87,7 +89,7 @@ fun AppLockScreen(
                 // Lock icon
                 Icon(
                     imageVector = Iconax.Padlock,
-                    contentDescription = "App Locked",
+                    contentDescription = stringResource(R.string.app_locked_title),
                     modifier = Modifier.size(120.dp),
                     tint = MaterialTheme.colorScheme.primary
                 )
@@ -96,7 +98,7 @@ fun AppLockScreen(
 
                 // Title
                 Text(
-                    text = "Cashiro is Locked",
+                    text = stringResource(R.string.app_locked_title),
                     style = MaterialTheme.typography.headlineMedium,
                     textAlign = TextAlign.Center
                 )
@@ -105,7 +107,7 @@ fun AppLockScreen(
 
                 // Description
                 Text(
-                    text = "Authenticate to access your expense data",
+                    text = stringResource(R.string.authenticate_desc),
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -145,7 +147,7 @@ fun AppLockScreen(
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("Unlock")
+                            Text(stringResource(R.string.unlock))
                         }
                     }
                     else -> {
@@ -160,7 +162,7 @@ fun AppLockScreen(
                                 modifier = Modifier.padding(Spacing.md)
                             ) {
                                 Text(
-                                    text = "Biometric authentication unavailable",
+                                    text = stringResource(R.string.biometric_unavailable_title),
                                     style = MaterialTheme.typography.titleSmall,
                                     color = MaterialTheme.colorScheme.onErrorContainer
                                 )
@@ -172,7 +174,7 @@ fun AppLockScreen(
                                 )
                                 Spacer(modifier = Modifier.height(Spacing.sm))
                                 Text(
-                                    text = "Please disable app lock in device settings or set up biometric authentication.",
+                                    text = stringResource(R.string.biometric_setup_desc),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onErrorContainer
                                 )
@@ -185,13 +187,13 @@ fun AppLockScreen(
 
                 // Privacy note
                 Text(
-                    text = "Your data is protected with ${
+                    text = stringResource(R.string.data_protected_format,
                         when (uiState.timeoutMinutes) {
-                            0 -> "immediate locking"
-                            1 -> "1 minute timeout"
-                            else -> "${uiState.timeoutMinutes} minute timeout"
+                            0 -> stringResource(R.string.immediate_locking)
+                            1 -> stringResource(R.string.minute_timeout_format, 1)
+                            else -> stringResource(R.string.minute_timeout_format, uiState.timeoutMinutes)
                         }
-                    }",
+                    ),
                     style = MaterialTheme.typography.bodySmall,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurfaceVariant

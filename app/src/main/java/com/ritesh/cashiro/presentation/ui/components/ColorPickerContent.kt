@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -136,7 +137,7 @@ fun ColorPickerContent(
     ) {
 
         Text(
-            text =  "Colors",
+            text =  stringResource(R.string.colors),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(horizontal = Spacing.md).padding(top = Spacing.md)
@@ -154,7 +155,7 @@ fun ColorPickerContent(
                 item {
                     Icon(
                         painter = painterResource(R.drawable.color_picker),
-                        contentDescription = "color picker button",
+                        contentDescription = stringResource(R.string.color_picker_button_desc),
                         tint = Color.Unspecified,
                         modifier = Modifier
                             .clip(CircleShape)
@@ -189,7 +190,7 @@ fun ColorPickerContent(
                         if (isSelected) {
                             Icon(
                                 imageVector = Icons.Rounded.Check,
-                                contentDescription = "Selected",
+                                contentDescription = stringResource(R.string.selected_cd),
                                 tint = Color.White,
                                 modifier = Modifier.size(24.dp)
                             )

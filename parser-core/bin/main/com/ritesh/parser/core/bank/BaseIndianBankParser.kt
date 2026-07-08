@@ -5,6 +5,7 @@ import com.ritesh.parser.core.MandateInfo
 import com.ritesh.parser.core.TransactionType
 import java.math.BigDecimal
 import java.time.LocalDateTime
+import com.ritesh.parser.core.bank.BankParser.Companion.BalanceUpdateInfo
 
 /**
  * Base abstract class for Indian bank parsers.
@@ -172,7 +173,7 @@ abstract class BaseIndianBankParser : BankParser() {
     /**
      * Checks if this is a balance update notification (not a transaction).
      */
-    open fun isBalanceUpdateNotification(message: String): Boolean {
+    override fun isBalanceUpdateNotification(message: String): Boolean {
         val lowerMessage = message.lowercase()
 
         // Check for balance update patterns
@@ -204,7 +205,7 @@ abstract class BaseIndianBankParser : BankParser() {
     /**
      * Parses generic balance update notification.
      */
-    open fun parseBalanceUpdate(message: String): BaseBalanceUpdateInfo? {
+    override fun parseBalanceUpdate(message: String): BalanceUpdateInfo? {
         if (!isBalanceUpdateNotification(message)) {
             return null
         }
@@ -216,9 +217,9 @@ abstract class BaseIndianBankParser : BankParser() {
         // Patterns: "is Rs. 12,345", "Avl Bal Rs 12345"
         val balance = extractBalance(message) ?: return null
 
-        return BaseBalanceUpdateInfo(
+        return BalanceUpdateInfo(
             bankName = getBankName(),
-            accountLast4 = accountLast4,
+            accountLast4 = accountLast4 ?: "",
             balance = balance
         )
     }

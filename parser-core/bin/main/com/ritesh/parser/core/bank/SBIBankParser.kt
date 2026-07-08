@@ -4,6 +4,8 @@ import com.ritesh.parser.core.MandateInfo
 import com.ritesh.parser.core.ParsedTransaction
 import com.ritesh.parser.core.TransactionType
 import java.math.BigDecimal
+import java.time.LocalDateTime
+import com.ritesh.parser.core.bank.BankParser.Companion.BalanceUpdateInfo
 
 /**
  * Parser for State Bank of India (SBI) SMS messages
@@ -84,7 +86,8 @@ class SBIBankParser : BankParser() {
                 accountLast4 = cardLast4,
                 type = transactionType,
                 merchant = merchant ?: parsed.merchant,
-                creditLimit = creditLimit
+                creditLimit = creditLimit,
+                isFromCard = true  // SBI Credit Card messages are always from a card
             )
         }
 
@@ -740,5 +743,84 @@ class SBIBankParser : BankParser() {
     ) : MandateInfo {
         // SBI uses dd/MM/yy format
         override val dateFormat = "dd/MM/yy"
+    }
+
+    /**
+     * Detects SBI Credit Card monthly statement messages.
+     * These contain the authoritative "Total Amount Due" which serves as an anchor
+     * for CC outstanding balance, replacing the drift-prone running-sum approach.
+     *
+     * Example message:
+     *   "Your SBI Card statement is generated for card ending with 1234.
+     *    Total Amount Due: Rs.5,420.00. Payment Due Date: 15 Aug 25.
+     *    Available credit limit: Rs.94,580.00"
+     */
+    override fun isBalanceUpdateNotification(message: String): Boolean {
+        val lower = message.lowercase()
+        val isStatement = lower.contains("statement is generated") ||
+            (lower.contains("statement") && lower.contains("generated"))
+        val hasAmountDue = lower.contains("total amount due") ||
+            lower.contains("total due") ||
+            lower.contains("minimum amount due")
+        return isStatement && hasAmountDue
+    }
+
+    /**
+     * Parses an SBI CC statement message to extract the Total Amount Due as the
+     * CC outstanding anchor balance.
+     */
+    override fun parseBalanceUpdate(message: String): BalanceUpdateInfo? {
+        if (!isBalanceUpdateNotification(message)) return null
+
+        // Extract card last 4 digits from statement
+        val cardLast4 = extractCreditCardLast4(message) ?: return null
+
+        // Try to extract Total Amount Due first (most authoritative)
+        val totalDuePatterns = listOf(
+            Regex("""Total\s+Amount\s+Due:?\s*Rs\.?\s*([0-9,]+(?:\.\d{2})?)""", RegexOption.IGNORE_CASE),
+            Regex("""Total\s+Due:?\s*Rs\.?\s*([0-9,]+(?:\.\d{2})?)""", RegexOption.IGNORE_CASE),
+            Regex("""Total\s+Amount\s+Due:?\s*INR\s*([0-9,]+(?:\.\d{2})?)""", RegexOption.IGNORE_CASE)
+        )
+
+        val outstanding = totalDuePatterns.firstNotNullOfOrNull { pattern ->
+            pattern.find(message)?.let { match ->
+                runCatching { BigDecimal(match.groupValues[1].replace(",", "")) }.getOrNull()
+            }
+        } ?: return null
+
+        // Try to extract Payment Due Date as the timestamp anchor
+        val dueDatePattern = Regex(
+            """(?:Payment\s+Due\s+Date|Due\s+Date):?\s*(\d{1,2}\s+[A-Za-z]{3}\s+\d{2,4})""",
+            RegexOption.IGNORE_CASE
+        )
+        val asOfDate = dueDatePattern.find(message)?.let { match ->
+            runCatching {
+                val parts = match.groupValues[1].trim().split("\\s+".toRegex())
+                if (parts.size >= 3) {
+                    val day = parts[0].toInt()
+                    val month = getMonthNumber(parts[1])
+                    val yearStr = parts[2]
+                    val year = if (yearStr.length == 2) 2000 + yearStr.toInt() else yearStr.toInt()
+                    LocalDateTime.of(year, month, day, 0, 0)
+                } else null
+            }.getOrNull()
+        }
+
+        return BalanceUpdateInfo(
+            bankName = getBankName(),
+            accountLast4 = cardLast4,
+            balance = outstanding,
+            asOfDate = asOfDate,
+            isCreditCard = true
+        )
+    }
+
+    private fun getMonthNumber(monthAbbr: String): Int {
+        return when (monthAbbr.uppercase()) {
+            "JAN" -> 1; "FEB" -> 2; "MAR" -> 3; "APR" -> 4
+            "MAY" -> 5; "JUN" -> 6; "JUL" -> 7; "AUG" -> 8
+            "SEP" -> 9; "OCT" -> 10; "NOV" -> 11; "DEC" -> 12
+            else -> 1
+        }
     }
 }

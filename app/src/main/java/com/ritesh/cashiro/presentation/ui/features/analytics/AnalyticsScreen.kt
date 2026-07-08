@@ -215,7 +215,7 @@ fun SharedTransitionScope.AnalyticsScreen(
                                             if (period == TimePeriod.CUSTOM && customRangeLabel != null) {
                                                 customRangeLabel
                                             } else {
-                                                period.label
+                                                stringResource(period.labelRes)
                                             }
                                         )
                                     },
@@ -260,7 +260,7 @@ fun SharedTransitionScope.AnalyticsScreen(
                                     FilterChip(
                                         selected = transactionTypeFilter.contains(typeFilter),
                                         onClick = { analyticsViewModel.toggleTransactionTypeFilter(typeFilter) },
-                                        label = { Text(typeFilter.label) },
+                                        label = { Text(stringResource(typeFilter.labelRes)) },
                                         leadingIcon = if (transactionTypeFilter.contains(typeFilter)) {
                                             {
                                                 TypeFilterIcon(typeFilter)

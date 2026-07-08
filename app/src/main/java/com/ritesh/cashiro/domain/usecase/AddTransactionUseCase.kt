@@ -2,7 +2,6 @@ package com.ritesh.cashiro.domain.usecase
 
 import com.ritesh.cashiro.utils.SubscriptionUtils
 
-import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
 import com.ritesh.cashiro.data.database.entity.SubscriptionEntity
 import com.ritesh.cashiro.data.database.entity.SubscriptionState
 import com.ritesh.cashiro.data.database.entity.TransactionEntity
@@ -60,6 +59,8 @@ constructor(
                         bankName = bankName ?: "Manual Entry",
                         smsSender = null, // null indicates manual entry
                         accountNumber = accountLast4,
+                        fromAccount = accountLast4,
+                        toAccount = targetAccountLast4,
                         balanceAfter = null,
                         transactionHash = transactionHash,
                         isRecurring = isRecurring,
@@ -76,123 +77,59 @@ constructor(
         // Update account balances based on transaction type
         if (bankName != null && accountLast4 != null) {
             when (type) {
-                TransactionType.INCOME -> {
-                    val currentBalance = accountBalanceRepository.getLatestBalance(bankName, accountLast4)
-                    val newBalance = (currentBalance?.balance ?: BigDecimal.ZERO) + amount
-                    accountBalanceRepository.insertBalance(
-                        AccountBalanceEntity(
-                            bankName = bankName,
-                            accountLast4 = accountLast4,
-                            balance = newBalance,
-                            timestamp = date,
-                            transactionId = transactionId,
-                            sourceType = "MANUAL",
-                            iconResId = currentBalance?.iconResId ?: 0,
-                            isCreditCard = currentBalance?.isCreditCard ?: false,
-                            creditLimit = currentBalance?.creditLimit,
-                            currency = currency
-                        )
-                    )
-                }
-                TransactionType.EXPENSE -> {
-                    // Subtract amount from the selected account
-                    val currentBalance = accountBalanceRepository.getLatestBalance(bankName, accountLast4)
-                    val newBalance = (currentBalance?.balance ?: BigDecimal.ZERO) - amount
-                    accountBalanceRepository.insertBalance(
-                        AccountBalanceEntity(
-                            bankName = bankName,
-                            accountLast4 = accountLast4,
-                            balance = newBalance,
-                            timestamp = date,
-                            transactionId = transactionId,
-                            sourceType = "MANUAL",
-                            iconResId = currentBalance?.iconResId ?: 0,
-                            isCreditCard = currentBalance?.isCreditCard ?: false,
-                            creditLimit = currentBalance?.creditLimit,
-                            currency = currency
-                        )
-                    )
-                }
-                TransactionType.CREDIT -> {
-                    // Credit transactions: add to outstanding balance (credit usage)
-                    val currentBalance = accountBalanceRepository.getLatestBalance(bankName, accountLast4)
-                    val newBalance = (currentBalance?.balance ?: BigDecimal.ZERO) + amount
-                    accountBalanceRepository.insertBalance(
-                        AccountBalanceEntity(
-                            bankName = bankName,
-                            accountLast4 = accountLast4,
-                            balance = newBalance,
-                            timestamp = date,
-                            transactionId = transactionId,
-                            sourceType = "MANUAL",
-                            iconResId = currentBalance?.iconResId ?: 0,
-                            isCreditCard = currentBalance?.isCreditCard ?: false,
-                            creditLimit = currentBalance?.creditLimit,
-                            currency = currency
-                        )
-                    )
-                }
                 TransactionType.TRANSFER -> {
                     // Transfer: subtract from source, add to target
                     if (targetAccountBankName != null && targetAccountLast4 != null) {
-                        // Subtract from source account
-                        val sourceBalance = accountBalanceRepository.getLatestBalance(bankName, accountLast4)
-                        val newSourceBalance = (sourceBalance?.balance ?: BigDecimal.ZERO) - amount
-                        accountBalanceRepository.insertBalance(
-                            AccountBalanceEntity(
-                                bankName = bankName,
-                                accountLast4 = accountLast4,
-                                balance = newSourceBalance,
-                                timestamp = date,
-                                transactionId = transactionId,
-                                sourceType = "MANUAL",
-                                iconResId = sourceBalance?.iconResId ?: 0,
-                                isCreditCard = sourceBalance?.isCreditCard ?: false,
-                                creditLimit = sourceBalance?.creditLimit,
-                                currency = currency
-                            )
+                        accountBalanceRepository.insertTransactionBalance(
+                            bankName = bankName,
+                            accountLast4 = accountLast4,
+                            amount = amount,
+                            transactionType = TransactionType.EXPENSE,
+                            explicitBalance = null,
+                            timestamp = date,
+                            transactionId = transactionId,
+                            creditLimit = null,
+                            isCreditCard = false,
+                            smsSource = null,
+                            currency = currency
                         )
-                        
-                        // Add to target account
-                        val targetBalance = accountBalanceRepository.getLatestBalance(targetAccountBankName, targetAccountLast4)
-                        val newTargetBalance = (targetBalance?.balance ?: BigDecimal.ZERO) + amount
-                        accountBalanceRepository.insertBalance(
-                            AccountBalanceEntity(
-                                bankName = targetAccountBankName,
-                                accountLast4 = targetAccountLast4,
-                                balance = newTargetBalance,
-                                timestamp = date,
-                                transactionId = transactionId,
-                                sourceType = "MANUAL",
-                                iconResId = targetBalance?.iconResId ?: 0,
-                                isCreditCard = targetBalance?.isCreditCard ?: false,
-                                creditLimit = targetBalance?.creditLimit,
-                                currency = currency
-                            )
+                        accountBalanceRepository.insertTransactionBalance(
+                            bankName = targetAccountBankName,
+                            accountLast4 = targetAccountLast4,
+                            amount = amount,
+                            transactionType = TransactionType.INCOME,
+                            explicitBalance = null,
+                            timestamp = date,
+                            transactionId = transactionId,
+                            creditLimit = null,
+                            isCreditCard = false,
+                            smsSource = null,
+                            currency = currency
                         )
                     }
                 }
-                TransactionType.INVESTMENT -> {
-                    // Investment transactions: subtract from balance
-                    val currentBalance = accountBalanceRepository.getLatestBalance(bankName, accountLast4)
-                    val newBalance = (currentBalance?.balance ?: BigDecimal.ZERO) - amount
-                    accountBalanceRepository.insertBalance(
-                        AccountBalanceEntity(
-                            bankName = bankName,
-                            accountLast4 = accountLast4,
-                            balance = newBalance,
-                            timestamp = date,
-                            transactionId = transactionId,
-                            sourceType = "MANUAL",
-                            iconResId = currentBalance?.iconResId ?: 0,
-                            isCreditCard = currentBalance?.isCreditCard ?: false,
-                            creditLimit = currentBalance?.creditLimit,
-                            currency = currency
-                        )
-                    )
-                }
                 TransactionType.BALANCE_UPDATE -> {
                     // Balance update already comes with its own balance, no adjustment needed
+                }
+                else -> {
+                    // INCOME, EXPENSE, CREDIT, INVESTMENT:
+                    // Use insertTransactionBalance which correctly:
+                    // (1) finds the balance AT the transaction date (not the latest),
+                    // (2) computes the new balance relative to that point, and
+                    // (3) recalculates all subsequent balance entries to propagate the change forward.
+                    accountBalanceRepository.insertTransactionBalance(
+                        bankName = bankName,
+                        accountLast4 = accountLast4,
+                        amount = amount,
+                        transactionType = type,
+                        explicitBalance = null,
+                        timestamp = date,
+                        transactionId = transactionId,
+                        creditLimit = null,
+                        isCreditCard = false,
+                        smsSource = null,
+                        currency = currency
+                    )
                 }
             }
         }

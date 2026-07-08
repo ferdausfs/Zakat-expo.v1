@@ -59,6 +59,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import com.ritesh.cashiro.R
 import com.ritesh.cashiro.data.preferences.AccentColor
 import com.ritesh.cashiro.data.preferences.AppIcon
@@ -94,7 +95,7 @@ fun AppearanceScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CustomTitleTopAppBar(
-                title = "Appearance",
+                title = stringResource(R.string.appearance_title),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
                 hazeState = hazeState,
@@ -172,7 +173,7 @@ fun AppearanceScreen(
                                     modifier = Modifier.size(20.dp)
                                 )
                                 Text(
-                                    text = "System",
+                                    text = stringResource(R.string.theme_system),
                                     style = MaterialTheme.typography.bodySmall,
                                     textAlign = TextAlign.Center,
                                     color = if(themeUiState.isDarkTheme == null)
@@ -226,7 +227,7 @@ fun AppearanceScreen(
                                     modifier = Modifier.size(20.dp)
                                 )
                                 Text(
-                                    text = "Light",
+                                    text = stringResource(R.string.theme_light),
                                     style = MaterialTheme.typography.bodySmall,
                                     textAlign = TextAlign.Center,
                                     color = if(themeUiState.isDarkTheme == false)
@@ -279,7 +280,7 @@ fun AppearanceScreen(
                                     modifier = Modifier.size(20.dp)
                                 )
                                 Text(
-                                    text = "Dark",
+                                    text = stringResource(R.string.theme_dark),
                                     style = MaterialTheme.typography.bodySmall,
                                     textAlign = TextAlign.Center,
                                     color = if(themeUiState.isDarkTheme == true)
@@ -316,7 +317,7 @@ fun AppearanceScreen(
                             ) {
                                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                     Text(
-                                        text = "Dynamic",
+                                        text = stringResource(R.string.style_dynamic),
                                         style = MaterialTheme.typography.bodyMedium,
                                         fontWeight = FontWeight.Bold,
                                         color = if (themeUiState.themeStyle == ThemeStyle.DYNAMIC)
@@ -324,7 +325,7 @@ fun AppearanceScreen(
                                         else MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                     Text(
-                                        text = "Wallpaper Colors",
+                                        text = stringResource(R.string.style_dynamic_sub),
                                         style = MaterialTheme.typography.labelSmall,
                                         color = if (themeUiState.themeStyle == ThemeStyle.DYNAMIC)
                                             MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
@@ -351,7 +352,7 @@ fun AppearanceScreen(
                             ) {
                                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                     Text(
-                                        text = "Default",
+                                        text = stringResource(R.string.style_default),
                                         style = MaterialTheme.typography.bodyMedium,
                                         fontWeight = FontWeight.Bold,
                                         color = if (themeUiState.themeStyle == ThemeStyle.DEFAULT)
@@ -359,7 +360,7 @@ fun AppearanceScreen(
                                         else MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                     Text(
-                                        text = "Default Colors",
+                                        text = stringResource(R.string.style_default_sub),
                                         style = MaterialTheme.typography.labelSmall,
                                         color = if (themeUiState.themeStyle == ThemeStyle.DEFAULT)
                                             MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
@@ -407,8 +408,8 @@ fun AppearanceScreen(
                     ) {
                         if (themeUiState.isDarkTheme != false) {
                             PreferenceSwitch(
-                                title = "Amoled Black",
-                                subtitle = "Use pure black background for deeper contrast",
+                                title = stringResource(R.string.amoled_black),
+                                subtitle = stringResource(R.string.amoled_black_desc),
                                 checked = themeUiState.isAmoledMode,
                                 onCheckedChange = { themeViewModel.updateAmoledMode(it) },
                                 leadingIcon = {
@@ -440,8 +441,8 @@ fun AppearanceScreen(
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                             PreferenceSwitch(
-                                title = "Blur Effects",
-                                subtitle = "Enable glassmorphism blur effects in UI components",
+                                title = stringResource(R.string.blur_effects),
+                                subtitle = stringResource(R.string.blur_effects_desc),
                                 checked = themeUiState.blurEffects,
                                 onCheckedChange = { themeViewModel.updateBlurEffects(it) },
                                 padding = PaddingValues(horizontal = Spacing.md),
@@ -465,7 +466,7 @@ fun AppearanceScreen(
                 ) {
                     item {
                         AppLogoOption(
-                            name = "Original",
+                            name = stringResource(R.string.logo_original),
                             icon = AppIcon.ORIGINAL,
                             backgroundColor = Color(0xFF1F1F1F),
                             drawableResId = R.drawable.cashiro_original,
@@ -478,7 +479,7 @@ fun AppearanceScreen(
                     }
                     item {
                         AppLogoOption(
-                            name = "Anarchy",
+                            name = stringResource(R.string.logo_anarchy),
                             icon = AppIcon.ANARCHY,
                             backgroundColor = Color(0xFFF5EEE5),
                             drawableResId = R.drawable.cashiro_anarchy,
@@ -491,7 +492,7 @@ fun AppearanceScreen(
                     }
                     item {
                         AppLogoOption(
-                            name = "Comic",
+                            name = stringResource(R.string.logo_comic),
                             icon = AppIcon.COMIC,
                             backgroundColor = Color.Transparent,
                             drawableResId = R.drawable.cashiro_comic,
@@ -505,7 +506,7 @@ fun AppearanceScreen(
                     }
                     item {
                         AppLogoOption(
-                            name = "Zenith",
+                            name = stringResource(R.string.logo_zenith),
                             icon = AppIcon.ZENITH,
                             backgroundColor = Color(0xFFE6E6E6),
                             drawableResId = R.drawable.cashiro_zenith,
@@ -518,7 +519,7 @@ fun AppearanceScreen(
                     }
                     item {
                         AppLogoOption(
-                            name = "Monochrome",
+                            name = stringResource(R.string.logo_monochrome),
                             icon = AppIcon.MONOCHROME,
                             backgroundColor = MaterialTheme.colorScheme.primaryContainer,
                             drawableResId = R.drawable.cashiro_monochrome,
@@ -535,7 +536,7 @@ fun AppearanceScreen(
 
                 // Navigation Style Section
                 SectionHeader(
-                    title = "Navigation",
+                    title = stringResource(R.string.navigation_style),
                     modifier = Modifier.padding(start = Spacing.xl, top = Spacing.md)
                 )
                 Column(
@@ -574,7 +575,7 @@ fun AppearanceScreen(
                         ) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Text(
-                                    text = "Floating",
+                                    text = stringResource(R.string.nav_floating),
                                     style = MaterialTheme.typography.bodyMedium,
                                     fontWeight = FontWeight.Bold,
                                     color = if (themeUiState.navigationBarStyle == NavigationBarStyle.FLOATING)
@@ -582,7 +583,7 @@ fun AppearanceScreen(
                                     else MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                                 Text(
-                                    text = "Modern & Sleek",
+                                    text = stringResource(R.string.nav_floating_sub),
                                     style = MaterialTheme.typography.labelSmall,
                                     color = if (themeUiState.navigationBarStyle == NavigationBarStyle.FLOATING)
                                         MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.7f)
@@ -614,7 +615,7 @@ fun AppearanceScreen(
                         ) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Text(
-                                    text = "Normal",
+                                    text = stringResource(R.string.nav_normal),
                                     style = MaterialTheme.typography.bodyMedium,
                                     fontWeight = FontWeight.Bold,
                                     color = if (themeUiState.navigationBarStyle == NavigationBarStyle.NORMAL)
@@ -622,7 +623,7 @@ fun AppearanceScreen(
                                     else MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                                 Text(
-                                    text = "Standard M3",
+                                    text = stringResource(R.string.nav_normal_sub),
                                     style = MaterialTheme.typography.labelSmall,
                                     color = if (themeUiState.navigationBarStyle == NavigationBarStyle.NORMAL)
                                         MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.7f)
@@ -642,16 +643,16 @@ fun AppearanceScreen(
                             verticalArrangement = Arrangement.spacedBy(1.5.dp)
                         ) {
                             PreferenceSwitch(
-                                title = "Hide Navigation Labels",
-                                subtitle = "Hide labels in the navigation bar",
+                                title = stringResource(R.string.hide_nav_labels),
+                                subtitle = stringResource(R.string.hide_nav_labels_desc),
                                 checked = themeUiState.hideNavigationLabels,
                                 onCheckedChange = { themeViewModel.updateHideNavigationLabels(it) },
                                 padding = PaddingValues(0.dp),
                                 isFirst = true
                             )
                             PreferenceSwitch(
-                                title = "Hide Pill Indicator",
-                                subtitle = "Hide the selection indicator in the navigation bar",
+                                title = stringResource(R.string.hide_pill_indicator),
+                                subtitle = stringResource(R.string.hide_pill_indicator_desc),
                                 checked = themeUiState.hidePillIndicator,
                                 onCheckedChange = { themeViewModel.updateHidePillIndicator(it) },
                                 padding = PaddingValues(0.dp),
@@ -663,7 +664,7 @@ fun AppearanceScreen(
                 
                 // Font Family Section
                 SectionHeader(
-                    title = "Fonts",
+                    title = stringResource(R.string.fonts_title),
                     modifier = Modifier.padding(start = Spacing.xl)
                 )
 
@@ -698,7 +699,7 @@ fun AppearanceScreen(
                         ) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Text(
-                                    text = "Default",
+                                    text = stringResource(R.string.style_default),
                                     style = MaterialTheme.typography.bodyMedium,
                                     fontWeight = FontWeight.Bold,
                                     fontFamily = FontFamily.Default,
@@ -707,7 +708,7 @@ fun AppearanceScreen(
                                     else MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                                 Text(
-                                    text = "System",
+                                    text = stringResource(R.string.font_default_sub),
                                     style = MaterialTheme.typography.labelSmall,
                                     fontFamily = FontFamily.Default,
                                     color = if (themeUiState.appFont == AppFont.SYSTEM)
@@ -741,7 +742,7 @@ fun AppearanceScreen(
                         ) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Text(
-                                    text = "SN Pro",
+                                    text = stringResource(R.string.font_snpro),
                                     style = MaterialTheme.typography.bodyMedium,
                                     fontWeight = FontWeight.Bold,
                                     fontFamily = SNProFontFamily,
@@ -750,7 +751,7 @@ fun AppearanceScreen(
                                     else MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                                 Text(
-                                    text = "Modern Mono",
+                                    text = stringResource(R.string.font_snpro_sub),
                                     style = MaterialTheme.typography.labelSmall,
                                     fontFamily = SNProFontFamily,
                                     color = if (themeUiState.appFont == AppFont.SN_PRO)

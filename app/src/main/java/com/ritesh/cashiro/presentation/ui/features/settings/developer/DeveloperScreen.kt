@@ -30,9 +30,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.presentation.ui.components.CustomTitleTopAppBar
 import com.ritesh.cashiro.presentation.ui.components.ListItem
 import com.ritesh.cashiro.presentation.ui.components.ListItemPosition
@@ -96,8 +98,8 @@ fun DeveloperScreen(
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            CustomTitleTopAppBar(
-                title = "Developer Options",
+                CustomTitleTopAppBar(
+                title = stringResource(R.string.developer_options),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
                 hazeState = hazeState,
@@ -123,8 +125,8 @@ fun DeveloperScreen(
                 verticalArrangement = Arrangement.spacedBy(1.5.dp)
             ) {
                 PreferenceSwitch(
-                    title = "Webhooks",
-                    subtitle = "Enable BYOAPI webhook sync",
+                    title = stringResource(R.string.webhook_mode),
+                    subtitle = stringResource(R.string.webhook_mode_desc),
                     checked = isWebhookModeEnabled,
                     onCheckedChange = { settingsViewModel.toggleWebhookMode(it) },
                     leadingIcon = {
@@ -150,8 +152,8 @@ fun DeveloperScreen(
                 )
                 
                 PreferenceSwitch(
-                    title = "Chat Token Info",
-                    subtitle = "Show technical information in chat",
+                    title = stringResource(R.string.token_info),
+                    subtitle = stringResource(R.string.token_info_desc),
                     checked = isTokenInfoEnabled,
                     onCheckedChange = { settingsViewModel.toggleTokenInfoMode(it) },
                     leadingIcon = {
@@ -177,8 +179,8 @@ fun DeveloperScreen(
                 )
                 
                 PreferenceSwitch(
-                    title = "Test Notification Alerts",
-                    subtitle = "Send test notifications periodically",
+                    title = stringResource(R.string.test_notification_alerts),
+                    subtitle = stringResource(R.string.test_notification_alerts_desc),
                     checked = isTestNotificationAlertsEnabled,
                     onCheckedChange = { settingsViewModel.toggleTestNotificationAlerts(it) },
                     leadingIcon = {
@@ -204,8 +206,8 @@ fun DeveloperScreen(
                 )
 
                 PreferenceSwitch(
-                    title = "Sample Data",
-                    subtitle = "Create dummy accounts and transactions",
+                    title = stringResource(R.string.sample_data),
+                    subtitle = stringResource(R.string.sample_data_desc),
                     checked = isSampleDataSeeded,
                     onCheckedChange = { if (!uiState.isSeeding) settingsViewModel.toggleSampleData(it) },
                     leadingIcon = {

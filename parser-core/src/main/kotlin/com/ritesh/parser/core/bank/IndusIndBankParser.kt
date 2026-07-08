@@ -3,6 +3,7 @@ package com.ritesh.parser.core.bank
 import com.ritesh.parser.core.TransactionType
 import java.math.BigDecimal
 import java.time.LocalDateTime
+import com.ritesh.parser.core.bank.BankParser.Companion.BalanceUpdateInfo
 
 /**
  * Parser for IndusInd Bank SMS messages (India)
@@ -60,21 +61,11 @@ class IndusIndBankParser : BankParser() {
     }
 
     /**
-     * Balance update information (similar to HDFC's BalanceUpdateInfo)
-     */
-    data class BalanceUpdateInfo(
-        val bankName: String,
-        val accountLast4: String,
-        val balance: BigDecimal,
-        val asOfDate: LocalDateTime? = null
-    )
-
-    /**
      * Detect balance-only notifications (not transactions).
      * Examples:
      *  - "Your A/C 2134***12345 has Avl BAL of INR 1,234.56 as on 05/10/25 04:10 AM ..."
      */
-    fun isBalanceUpdateNotification(message: String): Boolean {
+    override fun isBalanceUpdateNotification(message: String): Boolean {
         val lower = message.lowercase()
         val hasBalanceCue = lower.contains("avl bal") ||
                 lower.contains("available bal") ||
@@ -88,7 +79,7 @@ class IndusIndBankParser : BankParser() {
     /**
      * Parse balance-only notifications.
      */
-    fun parseBalanceUpdate(message: String): BalanceUpdateInfo? {
+    override fun parseBalanceUpdate(message: String): BalanceUpdateInfo? {
         if (!isBalanceUpdateNotification(message)) return null
 
         // Extract account last4 using existing helper

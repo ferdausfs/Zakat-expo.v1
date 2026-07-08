@@ -14,10 +14,10 @@ private const val SOURCE_MANUAL_EDIT = "MANUAL_EDIT"
 private const val SOURCE_SMS_BALANCE = "SMS_BALANCE"
 
 @Dao
-interface AccountBalanceDao {
+abstract class AccountBalanceDao {
     
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertBalance(balance: AccountBalanceEntity): Long
+    abstract suspend fun insertBalance(balance: AccountBalanceEntity): Long
     
     @Query("""
         SELECT * FROM account_balances 
@@ -25,7 +25,7 @@ interface AccountBalanceDao {
         ORDER BY timestamp DESC
         LIMIT 1
     """)
-    suspend fun getLatestBalance(bankName: String, accountLast4: String): AccountBalanceEntity?
+    abstract suspend fun getLatestBalance(bankName: String, accountLast4: String): AccountBalanceEntity?
 
     @Query("""
         SELECT DISTINCT account_last4 FROM account_balances
@@ -33,7 +33,7 @@ interface AccountBalanceDao {
         AND LENGTH(account_last4) >= 4
         AND account_last4 LIKE '%' || :suffix
     """)
-    suspend fun getAccountLast4sEndingWith(bankName: String, suffix: String): List<String>
+    abstract suspend fun getAccountLast4sEndingWith(bankName: String, suffix: String): List<String>
 
     @Query("""
         SELECT * FROM account_balances
@@ -42,7 +42,7 @@ interface AccountBalanceDao {
         ORDER BY timestamp DESC, id DESC
         LIMIT 1
     """)
-    suspend fun getLatestBalanceOnOrBefore(
+    abstract suspend fun getLatestBalanceOnOrBefore(
         bankName: String,
         accountLast4: String,
         timestamp: LocalDateTime
@@ -57,14 +57,15 @@ interface AccountBalanceDao {
             ab.transaction_id AS transactionId,
             t.amount AS transactionAmount,
             t.transaction_type AS transactionType,
-            t.balance_after AS transactionBalanceAfter
+            t.balance_after AS transactionBalanceAfter,
+            t.is_deleted AS isDeleted
         FROM account_balances ab
         LEFT JOIN transactions t ON t.id = ab.transaction_id
         WHERE ab.bank_name = :bankName AND ab.account_last4 = :accountLast4
         AND ab.timestamp > :timestamp
         ORDER BY ab.timestamp ASC, ab.id ASC
     """)
-    suspend fun getBalancesAfterWithTransactions(
+    abstract suspend fun getBalancesAfterWithTransactions(
         bankName: String,
         accountLast4: String,
         timestamp: LocalDateTime
@@ -86,7 +87,7 @@ interface AccountBalanceDao {
      * @param currency The transaction currency.
      */
     @Transaction
-    suspend fun insertTransactionBalance(
+    open suspend fun insertTransactionBalance(
         bankName: String,
         accountLast4: String,
         amount: BigDecimal,
@@ -101,9 +102,18 @@ interface AccountBalanceDao {
     ): Long {
         val latest = getLatestBalance(bankName, accountLast4)
         val previous = getLatestBalanceOnOrBefore(bankName, accountLast4, timestamp)
-        val accountIsCreditCard = isCreditCard || (previous?.isCreditCard ?: false)
+
+        // Fix for manually-created accounts: when the account was set up today (MANUAL entry),
+        // backdated transactions have no prior entry. Fall back to the earliest MANUAL balance
+        // so the calculation is based on the user's initial balance, not zero.
+        val previousForBalance = previous ?: run {
+            val earliest = getEarliestBalance(bankName, accountLast4)
+            if (earliest?.sourceType == SOURCE_MANUAL) earliest else null
+        }
+
+        val accountIsCreditCard = isCreditCard || (previousForBalance?.isCreditCard ?: false)
         val newBalance = explicitBalance ?: calculateTransactionBalance(
-            currentBalance = previous?.balance ?: BigDecimal.ZERO,
+            currentBalance = previousForBalance?.balance ?: BigDecimal.ZERO,
             amount = amount,
             transactionType = transactionType,
             isCreditCard = accountIsCreditCard
@@ -117,9 +127,9 @@ interface AccountBalanceDao {
                 timestamp = timestamp,
                 transactionId = transactionId,
                 creditLimit = if (accountIsCreditCard) {
-                    creditLimit?.add(newBalance) ?: previous?.creditLimit ?: latest?.creditLimit
+                    creditLimit?.add(newBalance) ?: previousForBalance?.creditLimit ?: latest?.creditLimit
                 } else {
-                    previous?.creditLimit ?: latest?.creditLimit
+                    previousForBalance?.creditLimit ?: latest?.creditLimit
                 },
                 isCreditCard = accountIsCreditCard,
                 smsSource = smsSource?.take(500),
@@ -129,10 +139,10 @@ interface AccountBalanceDao {
                     SOURCE_TRANSACTION_CALCULATED
                 },
                 currency = currency,
-                iconResId = previous?.iconResId ?: latest?.iconResId ?: 0,
-                iconName = previous?.iconName ?: latest?.iconName ?: "",
-                isWallet = previous?.isWallet ?: latest?.isWallet ?: false,
-                color = previous?.color ?: latest?.color ?: "#33B5E5"
+                iconResId = previousForBalance?.iconResId ?: latest?.iconResId ?: 0,
+                iconName = previousForBalance?.iconName ?: latest?.iconName ?: "",
+                isWallet = previousForBalance?.isWallet ?: latest?.isWallet ?: false,
+                color = previousForBalance?.color ?: latest?.color ?: "#33B5E5"
             )
         )
 
@@ -140,46 +150,92 @@ interface AccountBalanceDao {
         return balanceId
     }
 
-    private suspend fun recalculateBalancesAfter(
+    open suspend fun recalculateBalancesAfter(
+        bankName: String,
+        accountLast4: String,
+        timestamp: LocalDateTime,
+        startingBalance: BigDecimal
+    ) {
+        recalculateBalancesAfterInternal(bankName, accountLast4, timestamp, startingBalance)
+    }
+
+    private suspend fun recalculateBalancesAfterInternal(
         bankName: String,
         accountLast4: String,
         timestamp: LocalDateTime,
         startingBalance: BigDecimal
     ) {
         var runningBalance = startingBalance
-        // synthesised: use regular for loop to support breaking when boundaries are hit
         for (row in getBalancesAfterWithTransactions(bankName, accountLast4, timestamp)) {
             val sourceType = row.sourceType
-            val hasExplicitBalance = row.transactionBalanceAfter != null ||
-                    sourceType == SOURCE_TRANSACTION_SMS_BALANCE ||
-                    sourceType == SOURCE_SMS_BALANCE ||
-                    sourceType == SOURCE_MANUAL ||
-                    sourceType == SOURCE_MANUAL_EDIT
 
-            // synthesised: stop recalculation when encountering explicit balance or manual boundaries
-            if (hasExplicitBalance || row.transactionId == null) {
+            // MANUAL entries (user-created account setup) are NOT hard stops.
+            // When a backdated transaction is added before a MANUAL entry, the cascade
+            // must continue past it so that subsequent TRANSACTION_CALCULATED entries
+            // (e.g., today's expenses) are correctly updated to reflect the backdated change.
+            // The MANUAL entry itself is updated to carry the accumulated delta.
+            if (sourceType == SOURCE_MANUAL) {
+                if (runningBalance != row.balance) {
+                    updateAndInvalidate(row.id, runningBalance)
+                }
+                continue
+            }
+
+            // Bank-reported explicit balances (SMS) are authoritative anchors — stop here.
+            val isExplicitBalance = row.transactionBalanceAfter != null ||
+                    sourceType == SOURCE_TRANSACTION_SMS_BALANCE ||
+                    sourceType == SOURCE_SMS_BALANCE
+
+            if (isExplicitBalance) {
                 break
+            }
+
+            if (row.transactionId == null) {
+                val isCalculatedSnapshot = sourceType == SOURCE_MANUAL_EDIT ||
+                        sourceType == "DELETE_REVERSAL" ||
+                        sourceType == "UNDO_REVERSAL"
+                if (!isCalculatedSnapshot) {
+                    break
+                }
+                if (runningBalance != row.balance) {
+                    updateAndInvalidate(row.id, runningBalance)
+                }
+                continue
             }
 
             val amount = row.transactionAmount
             val transactionType = row.transactionType?.let { runCatching { TransactionType.valueOf(it) }.getOrNull() }
-            if (amount == null || transactionType == null) {
-                break
+            val isDeleted = row.isDeleted == true
+            
+            val recalculated = if (amount != null && transactionType != null && !isDeleted) {
+                calculateTransactionBalance(
+                    currentBalance = runningBalance,
+                    amount = amount,
+                    transactionType = transactionType,
+                    isCreditCard = row.isCreditCard
+                )
+            } else {
+                runningBalance
             }
 
-            val recalculated = calculateTransactionBalance(
-                currentBalance = runningBalance,
-                amount = amount,
-                transactionType = transactionType,
-                isCreditCard = row.isCreditCard
-            )
-
             if (recalculated != row.balance) {
-                updateBalanceById(row.id, recalculated)
+                updateAndInvalidate(row.id, recalculated)
             }
             runningBalance = recalculated
         }
     }
+
+    /**
+     * Updates a balance entry by fetching the full entity first, then using @Update
+     * so that Room properly invalidates Flow observers and the UI refreshes.
+     */
+    private suspend fun updateAndInvalidate(id: Long, newBalance: BigDecimal) {
+        val entity = getBalanceById(id) ?: return
+        updateBalance(entity.copy(balance = newBalance))
+    }
+
+    @Query("SELECT * FROM account_balances WHERE id = :id LIMIT 1")
+    abstract suspend fun getBalanceById(id: Long): AccountBalanceEntity?
     
     @Query("""
         SELECT * FROM account_balances 
@@ -187,7 +243,7 @@ interface AccountBalanceDao {
         ORDER BY timestamp DESC
         LIMIT 1
     """)
-    fun getLatestBalanceFlow(bankName: String, accountLast4: String): Flow<AccountBalanceEntity?>
+    abstract fun getLatestBalanceFlow(bankName: String, accountLast4: String): Flow<AccountBalanceEntity?>
     
     @Query("""
         SELECT DISTINCT 
@@ -219,16 +275,16 @@ interface AccountBalanceDao {
         AND ab1.timestamp = ab2.max_timestamp
         ORDER BY ab1.balance DESC
     """)
-    fun getAllLatestBalances(): Flow<List<AccountBalanceEntity>>
+    abstract fun getAllLatestBalances(): Flow<List<AccountBalanceEntity>>
     
     @Query("SELECT * FROM account_balances ORDER BY timestamp DESC")
-    fun getAllBalances(): Flow<List<AccountBalanceEntity>>
+    abstract fun getAllBalances(): Flow<List<AccountBalanceEntity>>
     
     @Query("DELETE FROM account_balances")
-    suspend fun deleteAllBalances()
+    abstract suspend fun deleteAllBalances()
     
     @Query("DELETE FROM account_balances WHERE is_sample = 1")
-    suspend fun deleteSampleBalances()
+    abstract suspend fun deleteSampleBalances()
     
     @Query("""
         SELECT DISTINCT 
@@ -261,7 +317,7 @@ interface AccountBalanceDao {
         AND ab1.timestamp = ab2.max_timestamp
         ORDER BY ab1.balance DESC
     """)
-    fun getCurrentMonthLatestBalances(): Flow<List<AccountBalanceEntity>>
+    abstract fun getCurrentMonthLatestBalances(): Flow<List<AccountBalanceEntity>>
     
     @Query("""
         SELECT SUM(balance) as total FROM (
@@ -278,7 +334,7 @@ interface AccountBalanceDao {
             AND ab1.timestamp = ab2.max_timestamp
         )
     """)
-    fun getTotalBalance(): Flow<BigDecimal?>
+    abstract fun getTotalBalance(): Flow<BigDecimal?>
     
     @Query("""
         SELECT * FROM account_balances
@@ -286,7 +342,7 @@ interface AccountBalanceDao {
         AND timestamp >= :startDate AND timestamp <= :endDate
         ORDER BY timestamp DESC
     """)
-    fun getBalanceHistory(
+    abstract fun getBalanceHistory(
         bankName: String,
         accountLast4: String,
         startDate: LocalDateTime,
@@ -296,38 +352,41 @@ interface AccountBalanceDao {
     @Query("""
         SELECT COUNT(DISTINCT bank_name || account_last4) FROM account_balances
     """)
-    fun getAccountCount(): Flow<Int>
+    abstract fun getAccountCount(): Flow<Int>
     
     @Query("DELETE FROM account_balances WHERE timestamp < :beforeDate")
-    suspend fun deleteOldBalances(beforeDate: LocalDateTime): Int
+    abstract suspend fun deleteOldBalances(beforeDate: LocalDateTime): Int
     
     @Update
-    suspend fun updateBalance(balance: AccountBalanceEntity)
+    abstract suspend fun updateBalance(balance: AccountBalanceEntity)
     
     @Delete
-    suspend fun deleteBalance(balance: AccountBalanceEntity)
+    abstract suspend fun deleteBalance(balance: AccountBalanceEntity)
     
     @Query("""SELECT * FROM account_balances 
         WHERE bank_name = :bankName AND account_last4 = :accountLast4
         ORDER BY timestamp DESC""")
-    suspend fun getBalanceHistoryForAccount(bankName: String, accountLast4: String): List<AccountBalanceEntity>
+    abstract suspend fun getBalanceHistoryForAccount(bankName: String, accountLast4: String): List<AccountBalanceEntity>
     
     @Query("DELETE FROM account_balances WHERE id = :id")
-    suspend fun deleteBalanceById(id: Long)
+    abstract suspend fun deleteBalanceById(id: Long)
     
     @Query("UPDATE account_balances SET balance = :newBalance WHERE id = :id")
-    suspend fun updateBalanceById(id: Long, newBalance: BigDecimal)
+    abstract suspend fun updateBalanceById(id: Long, newBalance: BigDecimal)
     
     @Query("""SELECT COUNT(*) FROM account_balances
         WHERE bank_name = :bankName AND account_last4 = :accountLast4""")
-    suspend fun getBalanceCountForAccount(bankName: String, accountLast4: String): Int
+    abstract suspend fun getBalanceCountForAccount(bankName: String, accountLast4: String): Int
  
     @Query("DELETE FROM account_balances WHERE bank_name = :bankName AND account_last4 = :accountLast4")
-    suspend fun deleteAccount(bankName: String, accountLast4: String): Int
+    abstract suspend fun deleteAccount(bankName: String, accountLast4: String): Int
  
     @Query("UPDATE account_balances SET bank_name = :newBankName WHERE bank_name = :oldBankName AND account_last4 = :accountLast4")
-    suspend fun updateAccountBankName(oldBankName: String, accountLast4: String, newBankName: String): Int
+    abstract suspend fun updateAccountBankName(oldBankName: String, accountLast4: String, newBankName: String): Int
  
+    @Query("SELECT * FROM account_balances WHERE transaction_id = :transactionId LIMIT 1")
+    abstract suspend fun getBalanceByTransactionId(transactionId: Long): AccountBalanceEntity?
+
     /** Finds the latest account record for a given last-4 digits, regardless of bank name. */
     @Query("""
         SELECT * FROM account_balances
@@ -335,8 +394,19 @@ interface AccountBalanceDao {
         ORDER BY timestamp DESC
         LIMIT 1
     """)
-    suspend fun getAccountByLast4(accountLast4: String): AccountBalanceEntity?
+    abstract suspend fun getAccountByLast4(accountLast4: String): AccountBalanceEntity?
+
+    /** Returns the oldest balance entry for an account, used as a fallback when no prior entry
+     *  exists for a backdated transaction (e.g. for manually-created accounts). */
+    @Query("""
+        SELECT * FROM account_balances
+        WHERE bank_name = :bankName AND account_last4 = :accountLast4
+        ORDER BY timestamp ASC, id ASC
+        LIMIT 1
+    """)
+    abstract suspend fun getEarliestBalance(bankName: String, accountLast4: String): AccountBalanceEntity?
 }
+
 
 data class AccountBalanceTransactionInfo(
     val id: Long,
@@ -346,7 +416,8 @@ data class AccountBalanceTransactionInfo(
     val transactionId: Long?,
     val transactionAmount: BigDecimal?,
     val transactionType: String?,
-    val transactionBalanceAfter: BigDecimal?
+    val transactionBalanceAfter: BigDecimal?,
+    val isDeleted: Boolean?
 )
 
 private fun calculateTransactionBalance(
@@ -355,16 +426,12 @@ private fun calculateTransactionBalance(
     transactionType: TransactionType,
     isCreditCard: Boolean
 ): BigDecimal {
-    val type = when (transactionType) {
-        TransactionType.CREDIT -> TransactionType.INCOME
-        else -> transactionType
-    }
     return when {
-        isCreditCard && type == TransactionType.INCOME ->
+        isCreditCard && transactionType == TransactionType.INCOME ->
             (currentBalance - amount).max(BigDecimal.ZERO)
         isCreditCard -> currentBalance + amount
-        type == TransactionType.INCOME -> currentBalance + amount
-        type == TransactionType.EXPENSE || type == TransactionType.INVESTMENT ->
+        transactionType == TransactionType.INCOME || transactionType == TransactionType.CREDIT -> currentBalance + amount
+        transactionType == TransactionType.EXPENSE || transactionType == TransactionType.INVESTMENT ->
             (currentBalance - amount).max(BigDecimal.ZERO)
         else -> currentBalance
     }

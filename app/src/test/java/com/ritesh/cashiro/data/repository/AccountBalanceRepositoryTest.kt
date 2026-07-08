@@ -45,8 +45,21 @@ class AccountBalanceRepositoryTest {
                     transactionId = 22,
                     transactionAmount = BigDecimal("10.00"),
                     transactionType = TransactionType.EXPENSE.name,
-                    transactionBalanceAfter = null
+                    transactionBalanceAfter = null,
+                    isDeleted = false
                 )
+            )
+        )
+        dao.seedBalance(
+            AccountBalanceEntity(
+                id = 2,
+                bankName = "Test Bank",
+                accountLast4 = "1234",
+                balance = BigDecimal("90.00"),
+                timestamp = transactionTime.plusMinutes(5),
+                sourceType = "TRANSACTION_CALCULATED",
+                isCreditCard = false,
+                transactionId = 22
             )
         )
         val repository = AccountBalanceRepository(dao, ContextWrapper(null))
@@ -98,7 +111,8 @@ class AccountBalanceRepositoryTest {
                     transactionId = 22,
                     transactionAmount = BigDecimal("10.00"),
                     transactionType = TransactionType.EXPENSE.name,
-                    transactionBalanceAfter = BigDecimal("200.00")
+                    transactionBalanceAfter = BigDecimal("200.00"),
+                    isDeleted = false
                 )
             )
         )
@@ -150,7 +164,8 @@ class AccountBalanceRepositoryTest {
                     transactionId = 22,
                     transactionAmount = BigDecimal("10.00"),
                     transactionType = TransactionType.EXPENSE.name,
-                    transactionBalanceAfter = null
+                    transactionBalanceAfter = null,
+                    isDeleted = false
                 )
             )
         )
@@ -440,7 +455,7 @@ class AccountBalanceRepositoryTest {
         private val balanceAtOrBefore: AccountBalanceEntity? = null,
         private val balancesAfter: List<AccountBalanceTransactionInfo> = emptyList(),
         private val suffixMatches: Map<String, Map<String, List<String>>> = emptyMap()
-    ) : AccountBalanceDao {
+    ) : AccountBalanceDao() {
         val insertedBalances = mutableListOf<AccountBalanceEntity>()
         val updatedBalances = mutableMapOf<Long, BigDecimal>()
         var suffixLookupCount = 0
@@ -458,6 +473,14 @@ class AccountBalanceRepositoryTest {
             if (balances.none { it.id == entity.id && entity.id != 0L }) {
                 balances.add(entity.copy(id = entity.id.takeIf { it != 0L } ?: nextId++))
             }
+        }
+
+                override suspend fun getBalanceByTransactionId(transactionId: Long): AccountBalanceEntity? {
+            return balances.find { it.transactionId == transactionId }
+        }
+
+        override suspend fun getBalanceById(id: Long): AccountBalanceEntity? {
+            return balances.find { it.id == id }
         }
 
         override suspend fun insertBalance(balance: AccountBalanceEntity): Long {
@@ -507,7 +530,8 @@ class AccountBalanceRepositoryTest {
                      transactionId = bal.transactionId,
                      transactionAmount = tx?.first,
                      transactionType = tx?.second,
-                     transactionBalanceAfter = null
+                     transactionBalanceAfter = null,
+                     isDeleted = false
                  )
              }
         }
@@ -545,7 +569,13 @@ class AccountBalanceRepositoryTest {
 
         override suspend fun deleteOldBalances(beforeDate: LocalDateTime): Int = 0
 
-        override suspend fun updateBalance(balance: AccountBalanceEntity) = Unit
+        override suspend fun updateBalance(balance: AccountBalanceEntity) {
+            updatedBalances[balance.id] = balance.balance
+            val index = balances.indexOfFirst { it.id == balance.id }
+            if (index != -1) {
+                balances[index] = balance
+            }
+        }
 
         override suspend fun deleteBalance(balance: AccountBalanceEntity) = Unit
 
@@ -579,6 +609,11 @@ class AccountBalanceRepositoryTest {
         ): Int = 0
 
         override suspend fun getAccountByLast4(accountLast4: String): AccountBalanceEntity? = null
+
+        override suspend fun getEarliestBalance(bankName: String, accountLast4: String): AccountBalanceEntity? {
+            return balances.filter { it.bankName == bankName && it.accountLast4 == accountLast4 }
+                .minByOrNull { it.timestamp }
+        }
     }
 
     private companion object {
