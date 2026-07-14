@@ -175,6 +175,7 @@ import com.ritesh.cashiro.presentation.common.icons.BrandIcons
 import com.ritesh.cashiro.presentation.common.icons.CategoryMapping
 import com.ritesh.cashiro.presentation.effects.BlurredAnimatedVisibility
 import com.ritesh.cashiro.presentation.effects.overScrollVertical
+import com.ritesh.cashiro.utils.capitalizeFirst
 import com.ritesh.cashiro.presentation.ui.components.AccountSelectionSheet
 import com.ritesh.cashiro.presentation.ui.components.AttachmentSection
 import com.ritesh.cashiro.presentation.ui.components.BrandIcon
@@ -2395,7 +2396,7 @@ private fun TransactionReceipt(
 
                     ReceiptInfoRow(
                         label = stringResource(R.string.type),
-                        value = transaction.transactionType.name.lowercase().replaceFirstChar { it.uppercase() }
+                        value = transaction.transactionType.name.lowercase().capitalizeFirst()
                     )
 
                     val subcategoryValue = transaction.subcategory

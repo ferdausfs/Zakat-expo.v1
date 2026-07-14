@@ -134,11 +134,7 @@ fun TransactionsFilterBottomSheet(
                                 leadingIcon = if (if (type == TransactionTypeFilter.ALL) typeFilter.isEmpty() else typeFilter.contains(type)) {
                                     { TypeFilterIcon(type) }
                                 } else null,
-                                label = {
-                                    Text(
-                                        type.name.lowercase()
-                                            .replaceFirstChar { it.titlecase(Locale.getDefault()) })
-                                },
+                                label = { Text(stringResource(type.labelRes)) },
                                 colors = FilterChipDefaults.filterChipColors(
                                     selectedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
                                     selectedLabelColor = MaterialTheme.colorScheme.onTertiaryContainer
@@ -165,7 +161,7 @@ fun TransactionsFilterBottomSheet(
                         ) {
                             item {
                                 FilterCategoryItem(
-                                    name = "All",
+                                    name = stringResource(R.string.all),
                                     color = MaterialTheme.colorScheme.surfaceContainerHigh,
                                     iconVector = Iconax.Category2,
                                     isSelected = categoryFilter.isEmpty(),
@@ -223,7 +219,7 @@ fun TransactionsFilterBottomSheet(
                             ) {
                                 item {
                                     FilterCategoryItem(
-                                        name = "All",
+                                        name = stringResource(R.string.all),
                                         color = MaterialTheme.colorScheme.surfaceVariant,
                                         iconVector = Iconax.Category2,
                                         isSelected = subcategoryFilter.isEmpty(),

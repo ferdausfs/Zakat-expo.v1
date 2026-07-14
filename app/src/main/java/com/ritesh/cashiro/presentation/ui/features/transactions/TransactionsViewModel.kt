@@ -242,7 +242,7 @@ class TransactionsViewModel @Inject constructor(
     // Calculate the absolute maximum transaction amount across all transactions
     val maxTransactionAmount: StateFlow<Float> = transactionRepository.getAllTransactions()
         .map { transactions ->
-            transactions.maxOfOrNull { it.amount.toDouble() }?.toFloat() ?: 0f
+            transactions.maxOfOrNull<com.ritesh.cashiro.data.database.entity.TransactionEntity, java.math.BigDecimal> { tx -> tx.amount }?.toFloat() ?: 0f
         }
         .stateIn(
             scope = viewModelScope,
@@ -857,28 +857,23 @@ class TransactionsViewModel @Inject constructor(
         val totalsByCurrency = transactionsByCurrency.mapValues { (currency, currencyTransactions) ->
             val income = currencyTransactions
                 .filter { it.transactionType == TransactionType.INCOME }
-                .sumOf { it.amount.toDouble() }
-                .toBigDecimal()
+                .fold(BigDecimal.ZERO) { acc, tx -> acc + tx.amount }
 
             val expenses = currencyTransactions
                 .filter { it.transactionType == TransactionType.EXPENSE }
-                .sumOf { it.amount.toDouble() }
-                .toBigDecimal()
+                .fold(BigDecimal.ZERO) { acc, tx -> acc + tx.amount }
 
             val credit = currencyTransactions
                 .filter { it.transactionType == TransactionType.CREDIT }
-                .sumOf { it.amount.toDouble() }
-                .toBigDecimal()
+                .fold(BigDecimal.ZERO) { acc, tx -> acc + tx.amount }
 
             val transfer = currencyTransactions
                 .filter { it.transactionType == TransactionType.TRANSFER }
-                .sumOf { it.amount.toDouble() }
-                .toBigDecimal()
+                .fold(BigDecimal.ZERO) { acc, tx -> acc + tx.amount }
 
             val investment = currencyTransactions
                 .filter { it.transactionType == TransactionType.INVESTMENT }
-                .sumOf { it.amount.toDouble() }
-                .toBigDecimal()
+                .fold(BigDecimal.ZERO) { acc, tx -> acc + tx.amount }
 
             CurrencyTotals(
                 currency = currency,

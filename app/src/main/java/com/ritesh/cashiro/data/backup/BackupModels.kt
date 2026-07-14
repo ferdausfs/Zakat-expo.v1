@@ -18,6 +18,9 @@ data class CashiroBackup(
     @SerializedName("_created")
     val created: String = LocalDateTime.now().toString(),
     
+    @SerializedName("_checksum")
+    val checksum: String = "",
+    
     @SerializedName("metadata")
     val metadata: BackupMetadata,
     
@@ -374,3 +377,30 @@ data class BackupConfiguration(
     val includeBudgets: Boolean = true,
     val includeAppPreferences: Boolean = true
 )
+
+/**
+ * Filter specifying which entity types to include during a SELECTIVE import.
+ * All flags default to `true`, meaning import everything.
+ */
+data class SelectiveImportFilter(
+    val includeTransactions: Boolean = true,
+    val includeCategories: Boolean = true,
+    val includeSubcategories: Boolean = true,
+    val includeCards: Boolean = true,
+    val includeAccountBalances: Boolean = true,
+    val includeSubscriptions: Boolean = true,
+    val includeMerchantMappings: Boolean = true,
+    val includeUnrecognizedSms: Boolean = true,
+    val includeBudgets: Boolean = true,
+    val includeRules: Boolean = true,
+    val includeRuleApplications: Boolean = true,
+    val includeWebhookProfiles: Boolean = true,
+    val includeChatMessages: Boolean = true,
+    val includeExchangeRates: Boolean = true,
+    val includePreferences: Boolean = true
+) {
+    companion object {
+        /** Import everything — identical to MERGE behaviour. */
+        val ALL = SelectiveImportFilter()
+    }
+}

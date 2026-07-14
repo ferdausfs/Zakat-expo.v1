@@ -202,6 +202,8 @@ dependencies {
 
     // Biometric Authentication
     implementation(libs.androidx.biometric)
+    implementation(libs.androidx.security.crypto)
+    implementation(libs.play.services.auth)
 
     // Hilt
     implementation(libs.hilt.android)

@@ -1,6 +1,18 @@
 package com.ritesh.cashiro.presentation.ui.features.settings
 
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +33,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.rounded.AccountBalance
 import androidx.compose.material.icons.rounded.ChevronRight
+import androidx.compose.material.icons.rounded.CloudSync
 import androidx.compose.material.icons.rounded.Error
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Refresh
@@ -109,6 +122,7 @@ fun SettingsScreen(
     onNavigateToWebhooks: () -> Unit = {},
     onNavigateToBudgets: () -> Unit = {},
     onNavigateToDataPrivacy: () -> Unit = {},
+    onNavigateToCloudBackup: () -> Unit = {},
     onNavigateToAbout: () -> Unit = {},
     onNavigateToCurrency: () -> Unit = {},
     settingsViewModel: SettingsViewModel = hiltViewModel(),
@@ -118,6 +132,7 @@ fun SettingsScreen(
     val downloadState = uiState.downloadStatus
     val downloadProgress = uiState.downloadProgress
     val totalTransactionsCount by settingsViewModel.totalTransactions.collectAsStateWithLifecycle()
+    val googleDriveEmail by settingsViewModel.googleDriveEmail.collectAsStateWithLifecycle()
     val userPreferences by settingsViewModel.userPreferences.collectAsStateWithLifecycle(initialValue = null)
     val isWebhookModeEnabled = userPreferences?.isWebhookModeEnabled == true
     var showDeleteModelDialog by remember { mutableStateOf(false) }
@@ -236,18 +251,40 @@ fun SettingsScreen(
                 ListItem(
                     headline = {
                         Text(
-                            text = userPreferences?.userName ?: "User",
+                            text = userPreferences?.userName ?: stringResource(R.string.default_user_name),
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.Medium,
                             color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                     },
                     supporting = {
-                        Text(
-                            text = stringResource(R.string.transactions_count_short, totalTransactionsCount),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(0.8f)
+                        val infiniteTransition = rememberInfiniteTransition(label = "profileText")
+                        val targetIndex by infiniteTransition.animateFloat(
+                            initialValue = 0f,
+                            targetValue = 1f,
+                            animationSpec = infiniteRepeatable(
+                                animation = tween(durationMillis = 5000, easing = LinearEasing),
+                                repeatMode = RepeatMode.Reverse
+                            ),
+                            label = "profileTextTarget"
                         )
+
+                        AnimatedContent(
+                            targetState = (targetIndex > 0.5f) to googleDriveEmail,
+//                            transitionSpec = { fadeIn() togetherWith fadeOut() },
+                            transitionSpec = {
+                                slideInVertically { height -> height } + fadeIn() togetherWith
+                                        slideOutVertically { height -> -height } + fadeOut()
+                            },
+                            label = "profileTextContent"
+                        ) { (showGmail, gmail) ->
+                            Text(
+                                text = if (showGmail && !gmail.isNullOrBlank()) gmail
+                                       else stringResource(R.string.transactions_count_short, totalTransactionsCount),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(0.8f)
+                            )
+                        }
                     },
                     leading = {
                         Box(
@@ -261,14 +298,14 @@ fun SettingsScreen(
                             if (profileImageUri != null) {
                                 AsyncImage(
                                     model = profileImageUri,
-                                    contentDescription = "Profile",
+                                    contentDescription = stringResource(R.string.profile),
                                     modifier = Modifier.fillMaxSize(),
                                     contentScale = ContentScale.Crop
                                 )
                             } else {
                                 Image(
                                     painter = painterResource(id = R.drawable.avatar_1),
-                                    contentDescription = "Profile",
+                                    contentDescription = stringResource(R.string.profile),
                                     modifier = Modifier.fillMaxSize(),
                                     contentScale = ContentScale.Crop
                                 )
@@ -643,6 +680,51 @@ fun SettingsScreen(
                             )
                         },
                         onClick = { onNavigateToDataPrivacy() },
+                        shape = ListItemPosition.Middle.toShape(),
+                        padding = PaddingValues(0.dp)
+                    )
+
+                    // Backup & Sync
+                    ListItem(
+                        headline = {
+                            Text(
+                                text = stringResource(R.string.backup_sync_title),
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontWeight = FontWeight.Medium
+                            )
+                        },
+                        supporting = {
+                            Text(
+                                text = stringResource(R.string.backup_sync_subtitle),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        },
+                        leading = {
+                            Box(
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .background(
+                                        color = cyan_light,
+                                        shape = CircleShape
+                                    ),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    Icons.Rounded.CloudSync,
+                                    contentDescription = null,
+                                    tint = cyan_dark
+                                )
+                            }
+                        },
+                        trailing = {
+                            Icon(
+                                Icons.Rounded.ChevronRight,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        },
+                        onClick = { onNavigateToCloudBackup() },
                         shape = ListItemPosition.Bottom.toShape(),
                         padding = PaddingValues(0.dp)
                     )
@@ -700,7 +782,7 @@ fun SettingsScreen(
                                 DownloadState.NOT_DOWNLOADED -> {
                                     Icon(
                                         Iconax.ImportArrow01,
-                                        contentDescription = "Download",
+                                        contentDescription = stringResource(R.string.download),
                                         tint = MaterialTheme.colorScheme.primary
                                     )
                                 }
@@ -713,21 +795,21 @@ fun SettingsScreen(
                                 DownloadState.PAUSED, DownloadState.FAILED -> {
                                     Icon(
                                         Icons.Rounded.Refresh,
-                                        contentDescription = "Retry",
+                                        contentDescription = stringResource(R.string.retry),
                                         tint = MaterialTheme.colorScheme.primary
                                     )
                                 }
                                 DownloadState.COMPLETED -> {
                                     Icon(
                                         Iconax.Bag,
-                                        contentDescription = "Delete",
+                                        contentDescription = stringResource(R.string.delete),
                                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                 }
                                 DownloadState.ERROR_INSUFFICIENT_SPACE -> {
                                     Icon(
                                         Icons.Rounded.Error,
-                                        contentDescription = "Error",
+                                        contentDescription = stringResource(R.string.error),
                                         tint = MaterialTheme.colorScheme.error
                                     )
                                 }
@@ -913,7 +995,7 @@ fun SettingsScreen(
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.cashiro),
-                                contentDescription = "Cashiro Logo",
+                                contentDescription = stringResource(R.string.cashiro_logo_cd),
                                 colorFilter = ColorFilter.tint(orange_dark),
                                 modifier = Modifier.size(24.dp)
                             )

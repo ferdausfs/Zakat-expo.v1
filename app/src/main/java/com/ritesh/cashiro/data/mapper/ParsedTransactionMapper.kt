@@ -4,6 +4,7 @@ import com.ritesh.parser.core.ParsedTransaction
 import com.ritesh.cashiro.data.database.entity.TransactionEntity
 import com.ritesh.cashiro.data.database.entity.TransactionType
 import com.ritesh.cashiro.presentation.common.icons.CategoryMapping
+import com.ritesh.cashiro.utils.capitalizeFirst
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -64,7 +65,7 @@ private fun normalizeMerchantName(name: String): String {
     // If it's all uppercase, convert to proper case
     return if (trimmed == trimmed.uppercase()) {
         trimmed.lowercase().split(" ").joinToString(" ") { word ->
-            word.replaceFirstChar { it.uppercase() }
+            word.capitalizeFirst()
         }
     } else {
         // Already has mixed case, keep as is

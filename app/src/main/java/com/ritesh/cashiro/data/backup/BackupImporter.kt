@@ -51,6 +51,14 @@ class BackupImporter @Inject constructor(
         uri: Uri,
         strategy: ImportStrategy = ImportStrategy.MERGE
     ): ImportResult = withContext(Dispatchers.IO) {
+        importBackup(uri, strategy, SelectiveImportFilter.ALL)
+    }
+
+    suspend fun importBackup(
+        uri: Uri,
+        strategy: ImportStrategy,
+        filter: SelectiveImportFilter
+    ): ImportResult = withContext(Dispatchers.IO) {
         try {
             // Read and parse the backup file
             val backup = readBackupFile(uri)
@@ -60,11 +68,12 @@ class BackupImporter @Inject constructor(
                 return@withContext ImportResult.Error("Incompatible backup version")
             }
             
+            
             // Import based on strategy
             when (strategy) {
                 ImportStrategy.REPLACE_ALL -> replaceAllData(backup)
                 ImportStrategy.MERGE -> mergeData(backup)
-                ImportStrategy.SELECTIVE -> mergeData(backup) // For now, same as merge
+                ImportStrategy.SELECTIVE -> selectiveImport(backup, filter)
             }
         } catch (e: Exception) {
             Log.e("BackupImporter", "Import failed", e)
@@ -387,6 +396,141 @@ class BackupImporter @Inject constructor(
         }
     }
     
+    /**
+     * Selective import: merge only the entity types selected in [filter].
+     */
+    private suspend fun selectiveImport(
+        backup: CashiroBackup,
+        filter: SelectiveImportFilter
+    ): ImportResult {
+        var importedTransactions = 0
+        var importedCategories = 0
+        var skippedDuplicates = 0
+
+        return database.withTransaction {
+            try {
+                val existingTransactionsMap = database.transactionDao()
+                    .getAllTransactions().first()
+                    .associateBy { it.transactionHash }
+
+                val existingCategories = database.categoryDao()
+                    .getAllCategories().first()
+                    .map { it.name }
+                    .toSet()
+
+                val categoryIdMap = mutableMapOf<Long, Long>()
+
+                if (filter.includeCategories) {
+                    backup.database.categories.forEach { category ->
+                        val sanitizedCategory = category.sanitize()
+                        val existingCategory = database.categoryDao().getCategoryByName(sanitizedCategory.name)
+                        if (existingCategory == null) {
+                            val newCategory = sanitizedCategory.copy(id = 0)
+                            val newId = database.categoryDao().insertCategory(newCategory)
+                            categoryIdMap[sanitizedCategory.id] = newId
+                            importedCategories++
+                        } else {
+                            categoryIdMap[sanitizedCategory.id] = existingCategory.id
+                        }
+                    }
+                }
+
+                if (filter.includeSubcategories) {
+                    backup.database.subcategories.forEach { subcategory ->
+                        val sanitizedSubcategory = subcategory.sanitize()
+                        val newCategoryId = categoryIdMap[sanitizedSubcategory.categoryId] ?: return@forEach
+                        val existingSubcategories = database.subcategoryDao()
+                            .getSubcategoriesByCategoryId(newCategoryId).first()
+                        val alreadyExists = existingSubcategories.any { it.name == sanitizedSubcategory.name }
+                        if (!alreadyExists) {
+                            val newSubcategory = sanitizedSubcategory.copy(id = 0, categoryId = newCategoryId)
+                            database.subcategoryDao().insertSubcategory(newSubcategory)
+                        }
+                    }
+                }
+
+                val transactionIdMap = mutableMapOf<Long, Long>()
+
+                if (filter.includeTransactions) {
+                    backup.database.transactions.forEach { backupTxn ->
+                        val sanitizedTxn = backupTxn.sanitize()
+                        val existingTxn = existingTransactionsMap[sanitizedTxn.transactionHash]
+                        if (existingTxn == null) {
+                            val newTransaction = sanitizedTxn.copy(id = 0)
+                            val newId = database.transactionDao().insertTransaction(newTransaction)
+                            transactionIdMap[sanitizedTxn.id] = newId
+                            importedTransactions++
+                        } else {
+                            transactionIdMap[sanitizedTxn.id] = existingTxn.id
+                            val shouldUpdate = when {
+                                sanitizedTxn.updatedAt.isAfter(existingTxn.updatedAt) -> true
+                                sanitizedTxn.updatedAt.isAfter(sanitizedTxn.dateTime) &&
+                                        !existingTxn.updatedAt.isAfter(existingTxn.dateTime) -> true
+                                else -> false
+                            }
+                            if (shouldUpdate) {
+                                val updatedTxn = sanitizedTxn.copy(id = existingTxn.id)
+                                database.transactionDao().updateTransaction(updatedTxn)
+                                importedTransactions++
+                            } else {
+                                skippedDuplicates++
+                            }
+                        }
+                    }
+                }
+
+                if (filter.includeRules) {
+                    backup.database.rules.forEach { rule ->
+                        database.ruleDao().insertRule(rule)
+                    }
+                }
+
+                if (filter.includeRuleApplications) {
+                    backup.database.ruleApplications.forEach { app ->
+                        val newTxId = transactionIdMap[app.transactionId.toLongOrNull() ?: -1L]
+                        if (newTxId != null) {
+                            val newApp = app.copy(transactionId = newTxId.toString())
+                            database.ruleApplicationDao().insertApplication(newApp)
+                        }
+                    }
+                }
+
+                if (filter.includeCards) {
+                    importCardsWithMerge(backup.database.cards)
+                }
+                if (filter.includeAccountBalances) {
+                    importAccountBalancesWithMerge(backup.database.accountBalances)
+                }
+                if (filter.includeSubscriptions) {
+                    importSubscriptionsWithMerge(backup.database.subscriptions)
+                }
+                if (filter.includeMerchantMappings) {
+                    importMerchantMappingsWithMerge(backup.database.merchantMappings)
+                }
+                if (filter.includeBudgets) {
+                    importBudgetsWithMerge(backup.database.budgets, backup.database.budgetCategoryLimits)
+                }
+                if (filter.includeWebhookProfiles) {
+                    importWebhookProfilesWithMerge(backup.database.webhookProfiles)
+                }
+                if (filter.includeExchangeRates) {
+                    importExchangeRatesWithMerge(backup.database.exchangeRates)
+                }
+                if (filter.includePreferences) {
+                    importPreferences(backup.preferences)
+                }
+
+                ImportResult.Success(
+                    importedTransactions = importedTransactions,
+                    importedCategories = importedCategories,
+                    skippedDuplicates = skippedDuplicates
+                )
+            } catch (e: Exception) {
+                throw e
+            }
+        }
+    }
+
     /**
      * Import cards with duplicate checking
      */

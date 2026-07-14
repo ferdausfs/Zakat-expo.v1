@@ -1,5 +1,6 @@
 package com.ritesh.cashiro.presentation.ui.features.accounts
 
+import com.ritesh.cashiro.utils.sumOfBigDecimal
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -910,7 +911,7 @@ fun ManageAccountsScreen(
             onOptionSelected = { option ->
                 when (option) {
                     BalanceMergeOption.SUM -> {
-                        val sumBalance = selectedMergeAccounts.sumOf { it.balance } + accountForMerge!!.balance
+                        val sumBalance = selectedMergeAccounts.sumOfBigDecimal { acc: AccountBalanceEntity -> acc.balance } + accountForMerge!!.balance
                         mergeNewBalance = sumBalance
                         showMergeBalanceOption = false
                         showMergeConfirmation = true

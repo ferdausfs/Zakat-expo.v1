@@ -32,6 +32,7 @@ import com.ritesh.cashiro.data.database.entity.UnrecognizedSmsEntity
 import com.ritesh.cashiro.data.preferences.UserPreferencesRepository
 import com.ritesh.cashiro.utils.CurrencyFormatter
 import com.ritesh.cashiro.utils.PiiRedactor
+import com.ritesh.cashiro.utils.capitalizeFirst
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
@@ -730,7 +731,7 @@ class SmsReaderWorker @AssistedInject constructor(
             agentPattern.find(decodedString)?.let { match ->
                 // Convert agent ID to readable name (e.g., "ask_apollo" -> "Ask Apollo")
                 return match.groupValues[1].split("_").joinToString(" ") { 
-                    it.replaceFirstChar { char -> char.uppercase() }
+                    it.capitalizeFirst()
                 }
             }
             

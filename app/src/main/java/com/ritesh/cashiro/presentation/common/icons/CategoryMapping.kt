@@ -920,7 +920,12 @@ object CategoryMapping {
 
     //find duplicates in each rule and print it from RULES
     public fun findDuplicateKeywords(): Set<String> {
-        val duplicates = RULES.flatMap { it.includes + it.excludes }.groupingBy { it }.eachCount()
+        val allKeywords = mutableListOf<String>()
+        for (rule in RULES) {
+            allKeywords.addAll(rule.includes)
+            allKeywords.addAll(rule.excludes)
+        }
+        val duplicates = allKeywords.groupingBy { it }.eachCount()
             .filter { it.value > 1 }.keys
         if (duplicates.isNotEmpty()) {
             println("Duplicate keywords found across categories: $duplicates")

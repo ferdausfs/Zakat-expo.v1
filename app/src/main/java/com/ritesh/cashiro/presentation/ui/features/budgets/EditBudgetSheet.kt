@@ -84,6 +84,7 @@ import com.ritesh.cashiro.data.database.entity.CategoryEntity
 import com.ritesh.cashiro.data.database.entity.SubcategoryEntity
 import com.ritesh.cashiro.presentation.common.icons.CategoryMapping
 import com.ritesh.cashiro.presentation.effects.overScrollVertical
+import com.ritesh.cashiro.utils.titlecaseFirst
 import com.ritesh.cashiro.presentation.ui.components.BrandIcon
 import com.ritesh.cashiro.presentation.ui.components.BudgetAnimatedGradientMeshCard
 import com.ritesh.cashiro.presentation.ui.components.CategorySelectionSheet
@@ -398,9 +399,7 @@ fun EditBudgetSheet(
                             icon = {},
                             label = { 
                                 Text(
-                                    period.name.lowercase().replaceFirstChar {
-                                        if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString()
-                                    },
+                                    period.name.lowercase().titlecaseFirst(),
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
                                     fontSize = 12.sp

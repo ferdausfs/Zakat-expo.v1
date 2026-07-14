@@ -178,7 +178,7 @@ private fun IconFlowLayout(
             contentPadding = PaddingValues(bottom = 32.dp)
     ) {
         groupedIcons.forEach { (category, iconsInCategory) ->
-            stickyHeader(key = "$category header") {
+            stickyItemHeader(key = "$category header") {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -1144,4 +1144,13 @@ private fun getAllIcons(context: Context): List<IconItem> {
     addIcon("zenith bank", "Brand", R.drawable.ic_brand_zenith_bank)
 
     return icons
+}
+
+@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
+private fun androidx.compose.foundation.lazy.LazyListScope.stickyItemHeader(
+    key: Any? = null,
+    contentType: Any? = null,
+    content: @Composable androidx.compose.foundation.lazy.LazyItemScope.(Int) -> Unit
+) {
+    stickyHeader(key = key, contentType = contentType, content = content)
 }

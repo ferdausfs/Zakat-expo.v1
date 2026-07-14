@@ -222,7 +222,7 @@ fun PdfImportSheet(
                     }
 
                     // Transactions Section
-                    stickyHeader {
+                    stickyItemHeader {
                         Column(modifier = Modifier
                             .background(
                                 Brush.verticalGradient(
@@ -803,4 +803,13 @@ private fun formatTimestamp(timestamp: Long): String {
 
 private fun formatLocalDateTime(dateTime: LocalDateTime): String {
     return dateTime.format(DateTimeFormatter.ofPattern("MMM dd, yyyy · hh:mm a"))
+}
+
+@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
+private fun androidx.compose.foundation.lazy.LazyListScope.stickyItemHeader(
+    key: Any? = null,
+    contentType: Any? = null,
+    content: @Composable androidx.compose.foundation.lazy.LazyItemScope.(Int) -> Unit
+) {
+    stickyHeader(key = key, contentType = contentType, content = content)
 }

@@ -28,6 +28,7 @@ import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.ArrowDropDown
 import com.ritesh.cashiro.presentation.ui.components.CurrencyBottomSheet
 import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.utils.capitalizeFirst
 import com.ritesh.cashiro.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -106,7 +107,7 @@ fun AddAccountScreen(
         ) {
             OutlinedTextField(
                 value = formState.accountType.name.lowercase()
-                    .replaceFirstChar { it.uppercase() },
+                    .capitalizeFirst(),
                 onValueChange = {},
                 readOnly = true,
                 label = { Text(stringResource(R.string.account_type_label)) },
@@ -134,7 +135,7 @@ fun AddAccountScreen(
                     DropdownMenuItem(
                         text = {
                             Text(
-                                type.name.lowercase().replaceFirstChar { it.uppercase() }
+                                type.name.lowercase().capitalizeFirst()
                             )
                         },
                         onClick = {

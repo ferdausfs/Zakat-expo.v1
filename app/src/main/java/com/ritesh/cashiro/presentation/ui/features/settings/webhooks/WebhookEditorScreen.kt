@@ -170,13 +170,13 @@ fun WebhookEditorScreen(
                     .hazeSource(hazeState)
                     .fillMaxSize()
                     .overScrollVertical()
+                    .imePadding()
                     .verticalScroll(state = rememberScrollState())
                     .padding(
                         start = Dimensions.Padding.content,
                         end = Dimensions.Padding.content,
                         top = Dimensions.Padding.content + paddingValues.calculateTopPadding()
-                    )
-                    .imePadding(),
+                    ),
                 verticalArrangement = Arrangement.spacedBy(Spacing.md)
             ) {
                 SectionHeader(title = stringResource(R.string.webhook_endpoint_section))

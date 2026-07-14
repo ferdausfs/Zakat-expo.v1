@@ -99,6 +99,7 @@ import com.ritesh.cashiro.data.database.entity.SubscriptionEntity
 import com.ritesh.cashiro.data.preferences.HomeWidget
 import com.ritesh.cashiro.presentation.effects.overScrollVertical
 import com.ritesh.cashiro.presentation.effects.rememberOverscrollFlingBehavior
+import com.ritesh.cashiro.utils.capitalizeFirst
 import com.ritesh.cashiro.presentation.navigation.AccountDetail
 import com.ritesh.cashiro.presentation.navigation.NotificationSettings
 import com.ritesh.cashiro.presentation.navigation.UnrecognizedSms
@@ -891,9 +892,9 @@ private fun BreakdownDialog(
     onDismiss: () -> Unit
 ) {
     val now = LocalDate.now()
-    val currentPeriod = "${now.month.name.lowercase().replaceFirstChar { it.uppercase() }} 1-${now.dayOfMonth}"
+    val currentPeriod = "${now.month.name.lowercase().capitalizeFirst()} 1-${now.dayOfMonth}"
     val lastMonth = now.minusMonths(1)
-    val lastPeriod = "${lastMonth.month.name.lowercase().replaceFirstChar { it.uppercase() }} 1-${now.dayOfMonth}"
+    val lastPeriod = "${lastMonth.month.name.lowercase().capitalizeFirst()} 1-${now.dayOfMonth}"
 
     Dialog(onDismissRequest = onDismiss) {
         Card(

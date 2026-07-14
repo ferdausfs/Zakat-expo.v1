@@ -68,19 +68,12 @@ import com.ritesh.cashiro.presentation.ui.components.SectionHeader
 import com.ritesh.cashiro.presentation.ui.components.toShape
 import com.ritesh.cashiro.presentation.ui.features.categories.NavigationContent
 import com.ritesh.cashiro.presentation.ui.features.settings.applock.AppLockViewModel
-import com.ritesh.cashiro.presentation.ui.icons.DirectboxReceive
-import com.ritesh.cashiro.presentation.ui.icons.DirectboxSend
 import com.ritesh.cashiro.presentation.ui.icons.Iconax
-import com.ritesh.cashiro.presentation.ui.icons.Information
 import com.ritesh.cashiro.presentation.ui.icons.Padlock
 import com.ritesh.cashiro.presentation.ui.theme.Dimensions
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
 import com.ritesh.cashiro.presentation.ui.theme.green_dark
 import com.ritesh.cashiro.presentation.ui.theme.green_light
-import com.ritesh.cashiro.presentation.ui.theme.orange_dark
-import com.ritesh.cashiro.presentation.ui.theme.orange_light
-import com.ritesh.cashiro.presentation.ui.theme.yellow_dark
-import com.ritesh.cashiro.presentation.ui.theme.yellow_light
 import dev.chrisbanes.haze.ExperimentalHazeApi
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeEffectScope
@@ -95,12 +88,10 @@ import kotlinx.coroutines.launch
 @Composable
 fun DataPrivacyScreen(
     onNavigateBack: () -> Unit,
-    onNavigateToAccounts: () -> Unit,
-    viewModel: DataPrivacyViewModel = hiltViewModel(),
+    onNavigateToAccounts: () -> Unit = {},
     appLockViewModel: AppLockViewModel = hiltViewModel(),
     blurEffects: Boolean
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val appLockUiState by appLockViewModel.uiState.collectAsStateWithLifecycle()
     
     val snackbarHostState = remember { SnackbarHostState() }
@@ -109,51 +100,7 @@ fun DataPrivacyScreen(
     val scrollBehaviorSmall = TopAppBarDefaults.pinnedScrollBehavior()
     val hazeState = remember { HazeState() }
     
-    var showExportDialog by remember { mutableStateOf(false) }
     var showTimeoutDialog by remember { mutableStateOf(false) }
-
-    // File launchers
-    val exportLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.CreateDocument("application/zip"),
-        onResult = { uri -> 
-            uri?.let { viewModel.saveBackupToFile(it) }
-            if (uri == null) viewModel.clearExportedFile() // Clear if canceled
-        }
-    )
-
-    val importLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent(),
-        onResult = { uri -> uri?.let { viewModel.importBackup(it) } }
-    )
-
-    val pdfImportLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent(),
-        onResult = { uri -> uri?.let { viewModel.analyzePdfStatement(it) } }
-    )
-
-    // Handle export completion
-    LaunchedEffect(uiState.exportedBackupFile) {
-        uiState.exportedBackupFile?.let { file ->
-            exportLauncher.launch(file.name)
-        }
-    }
-
-    // Handle messages
-    LaunchedEffect(uiState.importExportMessage) {
-        uiState.importExportMessage?.let { message ->
-            scope.launch {
-                val result = snackbarHostState.showSnackbar(
-                    message = message,
-                    actionLabel = if (uiState.hasNewAccountsCreated) "Review" else null,
-                    withDismissAction = true
-                )
-                if (result == SnackbarResult.ActionPerformed) {
-                    onNavigateToAccounts()
-                }
-                viewModel.clearImportExportMessage()
-            }
-        }
-    }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -263,160 +210,10 @@ fun DataPrivacyScreen(
                     }
                 }
 
-                // Data Management Section
-                SectionHeader(
-                    title = stringResource(R.string.data_management_section),
-                    modifier = Modifier.padding(start = Spacing.md)
-                )
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(1.5.dp)
-                ) {
-                    // Export Data
-                    ListItem(
-                        headline = { Text(stringResource(R.string.export_data)) },
-                        supporting = { Text(stringResource(R.string.export_data_sub)) },
-                        leading = {
-                            Box(
-                                modifier = Modifier
-                                    .size(48.dp)
-                                    .background(yellow_light, CircleShape),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(
-                                    Iconax.DirectboxSend,
-                                    contentDescription = null,
-                                    tint = yellow_dark
-                                )
-                            }
-                        },
-                        trailing = {
-                            Icon(
-                                Icons.Default.ChevronRight,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        },
-                        onClick = { showExportDialog = true },
-                        shape = ListItemPosition.Top.toShape(),
-                        padding = PaddingValues(0.dp)
-                    )
-
-                    // Import Data
-                    ListItem(
-                        headline = { Text(stringResource(R.string.import_data)) },
-                        supporting = { Text(stringResource(R.string.import_data_sub)) },
-                        leading = {
-                            Box(
-                                modifier = Modifier
-                                    .size(48.dp)
-                                    .background(green_light, CircleShape),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(
-                                    Iconax.DirectboxReceive,
-                                    contentDescription = null,
-                                    tint = green_dark
-                                )
-                            }
-                        },
-                        trailing = {
-                            Icon(
-                                Icons.Default.ChevronRight,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        },
-                        onClick = { importLauncher.launch("*/*") },
-                        shape = ListItemPosition.Middle.toShape(),
-                        padding = PaddingValues(0.dp)
-                    )
-
-                    // Import PDF Statement
-                    ListItem(
-                        headline = { Text(stringResource(R.string.import_pdf_statement)) },
-                        supporting = { Text(stringResource(R.string.import_pdf_statement_sub)) },
-                        leading = {
-                            Box(
-                                modifier = Modifier
-                                    .size(48.dp)
-                                    .background(orange_light, CircleShape),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Rounded.PictureAsPdf,
-                                    contentDescription = null,
-                                    tint = orange_dark
-                                )
-                            }
-                        },
-                        trailing = {
-                            Icon(
-                                Icons.Default.ChevronRight,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        },
-                        onClick = { pdfImportLauncher.launch("application/pdf") },
-                        shape = ListItemPosition.Bottom.toShape(),
-                        padding = PaddingValues(0.dp)
-                    )
-
-                    // PDF Support Warning
-                    Surface(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = Spacing.sm),
-                        color = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.7f),
-                        shape = MaterialTheme.shapes.large,
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(Spacing.md),
-                            verticalAlignment = Alignment.Top,
-                            horizontalArrangement = Arrangement.spacedBy(Spacing.md)
-                        ) {
-                            Icon(
-                                imageVector = Iconax.Information,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onErrorContainer,
-                                modifier = Modifier.size(24.dp)
-                            )
-                            Column(
-                                verticalArrangement = Arrangement.spacedBy(Spacing.xs)
-                            ) {
-                                Text(
-                                    text = stringResource(R.string.pdf_support_warning_title),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.onErrorContainer,
-                                    fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold
-                                )
-                                Text(
-                                    text = stringResource(R.string.pdf_support_warning_sub),
-                                    style = MaterialTheme.typography.labelMedium,
-                                    color = MaterialTheme.colorScheme.onErrorContainer.copy(0.8f)
-                                )
-                            }
-                        }
-                    }
-                }
-                
                 // Add bottom spacing
                 Spacer(modifier = Modifier.size(Spacing.xl))
             }
         }
-    }
-    
-    // Export Options Dialog
-    if (showExportDialog) {
-        ExportOptionsDialog(
-            onDismiss = { showExportDialog = false },
-            onConfirm = { config ->
-                viewModel.exportBackup(config)
-                showExportDialog = false
-            },
-            blurEffects = blurEffects,
-            hazeState = hazeState
-        )
     }
     
     // Timeout Dialog
@@ -496,174 +293,6 @@ fun DataPrivacyScreen(
                     ) else Modifier
                 ),
             shape = RoundedCornerShape(16.dp),
-        )
-    }
-
-    // PDF Processing / Error dialog
-    if (uiState.isPdfProcessing || uiState.pdfProcessingError != null) {
-        PdfProcessingDialog(
-            isVisible = uiState.isPdfProcessing,
-            error = uiState.pdfProcessingError,
-            onDismissError = { viewModel.dismissPdfImport() },
-            blurEffects = blurEffects,
-            hazeState = hazeState
-        )
-    }
-
-    // PDF Import Review BottomSheet (Unified review of accounts and transactions)
-    uiState.pdfAnalysisResult?.let { result ->
-        PdfImportSheet(
-            analysisResult = result,
-            onConfirm = { transactionDecisions, accountDecisions -> 
-                viewModel.confirmPdfImport(accountDecisions, transactionDecisions)
-            },
-            onDismiss = { viewModel.dismissPdfImport() }
-        )
-    }
-}
-
-@OptIn(ExperimentalHazeApi::class)
-@Composable
-fun ExportOptionsDialog(
-    onDismiss: () -> Unit,
-    onConfirm: (BackupConfiguration) -> Unit,
-    blurEffects: Boolean ,
-    hazeState: HazeState = remember { HazeState() }
-) {
-    var includeTransactional by remember { mutableStateOf(true) }
-    var includeProfile by remember { mutableStateOf(true) }
-    var includeBudgets by remember { mutableStateOf(true) }
-    var includePreferences by remember { mutableStateOf(true) }
-    val containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-    
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.export_data)) },
-        text = {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Text(
-                    stringResource(R.string.select_data_to_backup),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                ExportCheckbox(stringResource(R.string.transactional_data), includeTransactional) { includeTransactional = it }
-                ExportCheckbox(stringResource(R.string.profile_data), includeProfile) { includeProfile = it }
-                ExportCheckbox(stringResource(R.string.budgets), includeBudgets) { includeBudgets = it }
-                ExportCheckbox(stringResource(R.string.app_preferences), includePreferences) { includePreferences = it }
-            }
-        },
-        confirmButton = {
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Row(
-                    modifier = Modifier.align(Alignment.Center),
-                    horizontalArrangement = Arrangement.spacedBy(1.5.dp),
-                ) {
-                    Button(
-                        onClick = onDismiss,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.surface.copy(0.5f),
-                            contentColor = MaterialTheme.colorScheme.onSurface
-                        ),
-                        shape = RoundedCornerShape(
-                            topStart = Dimensions.Radius.xxl,
-                            topEnd = Dimensions.Radius.xs,
-                            bottomStart = Dimensions.Radius.xxl,
-                            bottomEnd = Dimensions.Radius.xs
-                        ),
-                        modifier = Modifier
-                            .padding(start = Spacing.xl)
-                            .weight(1f)
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            text = stringResource(R.string.cancel),
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    }
-                    Button(
-                        onClick = {
-                            onConfirm(
-                            BackupConfiguration(
-                                includeTransactionalData = includeTransactional,
-                                includeProfileData = includeProfile,
-                                includeBudgets = includeBudgets,
-                                includeAppPreferences = includePreferences
-                            ))},
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer,
-                            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                        ),
-                        shape = RoundedCornerShape(
-                            topStart = Dimensions.Radius.xs,
-                            topEnd = Dimensions.Radius.xxl,
-                            bottomStart = Dimensions.Radius.xs,
-                            bottomEnd = Dimensions.Radius.xxl
-                        ),
-                        modifier = Modifier
-                            .padding(end = Spacing.xl)
-                            .weight(1f)
-                            .fillMaxWidth()
-                    ) {
-                            Text(
-                                text = stringResource(R.string.export),
-                                style = MaterialTheme.typography.titleMedium
-                            )
-
-                    }
-
-                }
-            }
-        },
-        containerColor = if (blurEffects)
-            MaterialTheme.colorScheme.surfaceContainerLow.copy(0.5f)
-        else MaterialTheme.colorScheme.surfaceContainerLow,
-        modifier = Modifier
-            .clip(RoundedCornerShape(16.dp))
-            .then(
-                if (blurEffects) Modifier.hazeEffect(
-                    state = hazeState,
-                    block = fun HazeEffectScope.() {
-                        style = HazeDefaults.style(
-                            backgroundColor = Color.Transparent,
-                            tint = HazeDefaults.tint(containerColor),
-                            blurRadius = 20.dp,
-                            noiseFactor = -1f,
-                        )
-                        blurredEdgeTreatment = BlurredEdgeTreatment.Unbounded
-                    }
-                ) else Modifier
-            ),
-        shape = RoundedCornerShape(16.dp),
-        dismissButton = {},
-
-    )
-}
-
-@Composable
-fun ExportCheckbox(
-    text: String,
-    checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp)
-            .toggleable(
-                value = checked,
-                onValueChange = onCheckedChange
-            ),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        CashiroCheckbox(checked = checked, onCheckedChange = null)
-        Text(
-            text = text,
-            modifier = Modifier.padding(start = 8.dp),
-            style = MaterialTheme.typography.bodyLarge
         )
     }
 }

@@ -1,5 +1,7 @@
 package com.ritesh.cashiro.presentation.ui.features.analytics
 
+import com.ritesh.cashiro.utils.maxDoubleOrNull
+import com.ritesh.cashiro.utils.sumOfDouble
 import androidx.compose.animation.core.*
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -232,7 +234,7 @@ fun SpendingBarChart(
         }
     }
 
-    val maxValue = remember(data) { (data.maxOfOrNull { it.balance.toDouble() } ?: 0.0) * 1.2 }
+    val maxValue = remember(data) { (data.maxDoubleOrNull { point: BalancePoint -> point.balance.toDouble() } ?: 0.0) * 1.2 }
 
     ColumnChart(
         modifier = Modifier
@@ -320,7 +322,7 @@ fun CategoryPieChart(
 ) {
     if (categories.isEmpty()) return
 
-    val total = categories.sumOf { it.amount }.toDouble()
+    val total = categories.sumOfDouble { cat: CategoryData -> cat.amount.toDouble() }
     if (total == 0.0) return
 
     val pieData = remember(categories) {
@@ -483,7 +485,7 @@ fun SpendingHeatmap(
 ) {
     if (data.isEmpty()) return
 
-    val maxAmount = remember(data) { data.maxOfOrNull { it.balance.toDouble() } ?: 1.0 }
+    val maxAmount = remember(data) { data.maxDoubleOrNull { point: BalancePoint -> point.balance.toDouble() } ?: 1.0 }
     val groupedData = remember(data) {
         data.associate { it.timestamp.toLocalDate() to it.balance.toDouble() }
     }

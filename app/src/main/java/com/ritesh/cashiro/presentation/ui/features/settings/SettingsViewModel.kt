@@ -26,6 +26,7 @@ import com.ritesh.cashiro.data.repository.ModelRepository
 import com.ritesh.cashiro.data.repository.ModelState
 import com.ritesh.cashiro.data.repository.SubscriptionRepository
 import com.ritesh.cashiro.data.repository.UnrecognizedSmsRepository
+import com.ritesh.cashiro.data.cloud.security.CloudCredentialStore
 import com.ritesh.cashiro.data.preferences.UserPreferencesRepository
 import com.ritesh.cashiro.data.backup.BackupExporter
 import com.ritesh.cashiro.data.backup.BackupImporter
@@ -39,6 +40,7 @@ import android.content.Intent
 import androidx.core.content.FileProvider
 import com.ritesh.cashiro.core.Constants
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import java.net.URLEncoder
@@ -84,7 +86,8 @@ class SettingsViewModel @Inject constructor(
     private val backupExporter: BackupExporter,
     private val backupImporter: BackupImporter,
     private val database: CashiroDatabase,
-    private val webhookSyncScheduler: WebhookSyncScheduler
+    private val webhookSyncScheduler: WebhookSyncScheduler,
+    private val cloudCredentialStore: CloudCredentialStore
 ) : ViewModel() {
 
     val databaseVersion: Int
@@ -97,6 +100,14 @@ class SettingsViewModel @Inject constructor(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = 0
+        )
+
+    val googleDriveEmail: StateFlow<String?> = cloudCredentialStore.googleDriveConfigFlow
+        .map { it.accountEmail.ifBlank { null } }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = null
         )
 
     private val downloadManager =

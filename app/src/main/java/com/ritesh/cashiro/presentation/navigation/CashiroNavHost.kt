@@ -91,6 +91,7 @@ import com.ritesh.cashiro.presentation.ui.features.settings.appearance.Appearanc
 import com.ritesh.cashiro.presentation.ui.features.settings.appearance.ThemeViewModel
 import com.ritesh.cashiro.presentation.ui.features.settings.applock.AppLockScreen
 import com.ritesh.cashiro.presentation.ui.features.settings.dataprivacy.DataPrivacyScreen
+import com.ritesh.cashiro.presentation.ui.features.settings.cloudbackup.BackupSyncScreen
 import com.ritesh.cashiro.presentation.ui.features.settings.developer.DeveloperScreen
 import com.ritesh.cashiro.presentation.ui.features.settings.notifications.NotificationScreen
 import com.ritesh.cashiro.presentation.ui.features.settings.rules.CreateRuleScreen
@@ -301,6 +302,7 @@ fun CashiroNavHost(
                         onNavigateToWebhooks = { navController.safeNavigate(Webhooks) },
                         onNavigateToBudgets = { navController.safeNavigate(Budgets()) },
                         onNavigateToDataPrivacy = { navController.safeNavigate(DataPrivacy) },
+                        onNavigateToCloudBackup = { navController.safeNavigate(CloudBackup) },
                         onNavigateToAbout = { navController.safeNavigate(About) },
                         onNavigateToCurrency = { navController.safeNavigate(CurrencySettings) },
                         blurEffects = themeUiState.blurEffects
@@ -366,6 +368,19 @@ fun CashiroNavHost(
                     popExitTransition = CashiroTransitions.horizontalSlidePopExit
                 ) {
                     DataPrivacyScreen(
+                        onNavigateBack = { navController.safePopBackStack() },
+                        onNavigateToAccounts = { navController.safeNavigate(ManageAccounts) },
+                        blurEffects = themeUiState.blurEffects
+                    )
+                }
+
+                composable<CloudBackup>(
+                    enterTransition = CashiroTransitions.horizontalSlideEnter,
+                    exitTransition = CashiroTransitions.horizontalSlideExit,
+                    popEnterTransition = CashiroTransitions.horizontalSlidePopEnter,
+                    popExitTransition = CashiroTransitions.horizontalSlidePopExit
+                ) {
+                    BackupSyncScreen(
                         onNavigateBack = { navController.safePopBackStack() },
                         onNavigateToAccounts = { navController.safeNavigate(ManageAccounts) },
                         blurEffects = themeUiState.blurEffects

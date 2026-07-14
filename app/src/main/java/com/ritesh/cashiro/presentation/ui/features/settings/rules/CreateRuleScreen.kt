@@ -73,6 +73,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.ritesh.cashiro.domain.model.rule.ActionType
 import com.ritesh.cashiro.domain.model.rule.ConditionOperator
 import com.ritesh.cashiro.domain.model.rule.RuleAction
+import com.ritesh.cashiro.utils.capitalizeFirst
 import com.ritesh.cashiro.domain.model.rule.RuleCondition
 import com.ritesh.cashiro.domain.model.rule.TransactionField
 import com.ritesh.cashiro.domain.model.rule.TransactionRule
@@ -582,7 +583,7 @@ fun CreateRuleScreen(
                                                         },
                                                         label = {
                                                             Text(
-                                                                type.lowercase().replaceFirstChar { it.uppercase() },
+                                                                type.lowercase().capitalizeFirst(),
                                                                 style = MaterialTheme.typography.bodySmall
                                                             )
                                                         }
@@ -951,7 +952,7 @@ fun CreateRuleScreen(
                                                     label = {
                                                         Text(
                                                             type.lowercase()
-                                                                .replaceFirstChar { it.uppercase() },
+                                                                .capitalizeFirst(),
                                                             style = MaterialTheme.typography.bodySmall
                                                         )
                                                     }
@@ -980,7 +981,8 @@ fun CreateRuleScreen(
                                                             merchant,
                                                             style = MaterialTheme.typography.bodySmall
                                                         )
-                                                    }
+                                                    },
+                                                    border = AssistChipDefaults.assistChipBorder(enabled = true)
                                                 )
                                             }
                                         }

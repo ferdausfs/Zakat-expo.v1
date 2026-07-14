@@ -4,6 +4,7 @@ import com.ritesh.cashiro.data.currency.CurrencyConversionService
 import com.ritesh.cashiro.data.database.dao.SubscriptionDao
 import com.ritesh.cashiro.data.database.dao.TransactionDao
 import com.ritesh.cashiro.data.database.entity.SubscriptionState
+import com.ritesh.cashiro.data.database.entity.TransactionEntity
 import com.ritesh.cashiro.data.database.entity.TransactionType
 import com.ritesh.cashiro.data.model.*
 import kotlinx.coroutines.async
@@ -249,10 +250,13 @@ class AiContextRepository @Inject constructor(
         val expenses = transactions.filter { it.transactionType == TransactionType.EXPENSE }
         
         // Calculate average daily spending
-        val totalExpense = expenses.sumOf { it.amount.toDouble() }.toBigDecimal()
+        var totalExpense = BigDecimal.ZERO
+        for (expense in expenses) {
+            totalExpense += expense.amount
+        }
         val daysElapsed = currentDate.dayOfMonth
         val avgDailySpending = if (daysElapsed > 0) {
-            totalExpense.divide(BigDecimal(daysElapsed), 2, RoundingMode.HALF_UP)
+            totalExpense.divide(BigDecimal.valueOf(daysElapsed.toLong()), 2, RoundingMode.HALF_UP)
         } else BigDecimal.ZERO
         
         // Find largest expense

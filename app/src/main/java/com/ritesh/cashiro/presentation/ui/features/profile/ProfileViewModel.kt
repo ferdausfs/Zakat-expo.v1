@@ -89,8 +89,9 @@ constructor(
         ) { allBalances, baseCurrency, _ ->
             if (allBalances.isEmpty()) return@combine BigDecimal.ZERO
 
-            allBalances.sumOf { account ->
-                if (account.currency == baseCurrency) {
+            var total = BigDecimal.ZERO
+            for (account in allBalances) {
+                val amt = if (account.currency == baseCurrency) {
                     account.balance
                 } else {
                     currencyConversionService.convertAmount(
@@ -99,11 +100,15 @@ constructor(
                         toCurrency = baseCurrency
                     )
                 }
+                total = total.add(amt)
             }
+            total
         }.onEach { total ->
             _state.update { it.copy(netWorth = total) }
         }.launchIn(viewModelScope)
     }
+
+    private data class MonthlyTotals(val income: BigDecimal, val expense: BigDecimal)
 
     private fun observeMonthlyFinancials() {
         val now = LocalDate.now()
@@ -121,37 +126,28 @@ constructor(
                     !date.isBefore(firstDay) && !date.isAfter(lastDay)
                 }
 
-            val income = monthTransactions
-                .filter { it.transactionType == TransactionType.INCOME }
-                .sumOf { txn ->
-                    if (txn.currency == baseCurrency) {
-                        txn.amount
-                    } else {
-                        currencyConversionService.convertAmount(
-                            amount = txn.amount,
-                            fromCurrency = txn.currency,
-                            toCurrency = baseCurrency
-                        )
-                    }
+            var income = BigDecimal.ZERO
+            var expense = BigDecimal.ZERO
+            for (txn in monthTransactions) {
+                val amt = if (txn.currency == baseCurrency) {
+                    txn.amount
+                } else {
+                    currencyConversionService.convertAmount(
+                        amount = txn.amount,
+                        fromCurrency = txn.currency,
+                        toCurrency = baseCurrency
+                    )
                 }
-
-            val expense = monthTransactions
-                .filter { it.transactionType == TransactionType.EXPENSE }
-                .sumOf { txn ->
-                    if (txn.currency == baseCurrency) {
-                        txn.amount
-                    } else {
-                        currencyConversionService.convertAmount(
-                            amount = txn.amount,
-                            fromCurrency = txn.currency,
-                            toCurrency = baseCurrency
-                        )
-                    }
+                if (txn.transactionType == TransactionType.INCOME) {
+                    income = income.add(amt)
+                } else if (txn.transactionType == TransactionType.EXPENSE) {
+                    expense = expense.add(amt)
                 }
+            }
 
-            income to expense
-        }.onEach { (income, expense) ->
-            _state.update { it.copy(totalIncome = income, totalExpense = expense) }
+            MonthlyTotals(income = income, expense = expense)
+        }.onEach { totals ->
+            _state.update { it.copy(totalIncome = totals.income, totalExpense = totals.expense) }
         }.launchIn(viewModelScope)
     }
 

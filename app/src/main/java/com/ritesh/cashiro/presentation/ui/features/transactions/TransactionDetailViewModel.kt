@@ -26,6 +26,7 @@ import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
 import com.ritesh.cashiro.data.database.entity.SubcategoryEntity
 import com.ritesh.cashiro.utils.CurrencyFormatter
 import com.ritesh.cashiro.utils.DeviceEncryption
+import com.ritesh.cashiro.utils.capitalizeFirst
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -580,7 +581,7 @@ class TransactionDetailViewModel @Inject constructor(
         // If it's all uppercase, convert to proper case
         return if (trimmed == trimmed.uppercase()) {
             trimmed.lowercase().split(" ").joinToString(" ") { word ->
-                word.replaceFirstChar { it.uppercase() }
+                word.capitalizeFirst()
             }
         } else {
             // Already has mixed case, keep as is

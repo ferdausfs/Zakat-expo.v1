@@ -16,6 +16,8 @@
     <string name="lock_timeout_1min">Lock after 1 minute in background</string>
     <string name="lock_timeout_minutes">Lock after %1$d minutes in background</string>
     <string name="data_management_section">Data Management</string>
+    <string name="backup_tab">Backup</string>
+    <string name="local_backup_section">Local Backup</string>
     <string name="export_data">Export Data</string>
     <string name="export_data_sub">Backup your data to a file</string>
     <string name="import_data">Import Data</string>
@@ -735,6 +737,10 @@
     <string name="language">Language</string>
     <string name="language_subtitle">Change application language</string>
     <string name="select_language">Select Language</string>
+    <!-- Settings Screen -->
+    <string name="default_user_name">Aseqdac</string>
+    <string name="backup_sync_subtitle">Iɣewwaṛen n uḥraz, asinag, arrum d umtawi</string>
+    <string name="error">Tuccḍa</string>
     <string name="transactions_count_short">%1$d Transactions</string>
     <string name="appearances">Appearances</string>
     <string name="appearances_subtitle">App\'s personalization settings</string>
@@ -984,4 +990,5 @@
     <string name="pm_lbl">PM</string>
     <string name="merchant_lbl">Merchant</string>
     <string name="options_desc">Options</string>
+    <string name="save_configuration">Sekles</string>
 </resources>

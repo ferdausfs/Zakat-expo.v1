@@ -7,9 +7,11 @@ import com.ritesh.cashiro.data.database.entity.ChatMessage
 import com.ritesh.cashiro.data.database.entity.ChatSession
 import com.ritesh.cashiro.data.database.entity.TransactionType
 import com.ritesh.cashiro.data.model.ChatContext
+import com.ritesh.cashiro.data.model.SubscriptionSummary
 import com.ritesh.cashiro.data.preferences.UserPreferencesRepository
 import com.ritesh.cashiro.domain.service.LlmService
 import com.ritesh.cashiro.utils.CurrencyFormatter
+import java.math.BigDecimal
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.first
@@ -234,7 +236,10 @@ class LlmRepository @Inject constructor(
         val accounts = context.accountBalances
         val categories = context.categories
 
-        val totalSubAmount = activeSubs.sumOf { it.amount.toDouble() }.toBigDecimal()
+        var totalSubAmount = BigDecimal.ZERO
+        for (sub in activeSubs) {
+            totalSubAmount += sub.amount
+        }
         val upcomingPayments = activeSubs.filter { it.nextPaymentDays <= 7 }
 
         val recentLines = context.recentTransactions.take(10).joinToString("\n") { t ->

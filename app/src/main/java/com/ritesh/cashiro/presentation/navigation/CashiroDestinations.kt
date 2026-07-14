@@ -216,6 +216,7 @@ data class Transactions(
 @Serializable object SmsSettings
 
 @Serializable object DataPrivacy
+@Serializable object CloudBackup
 
 
 @Serializable object NotificationSettings

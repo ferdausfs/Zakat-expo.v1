@@ -23,6 +23,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import com.ritesh.cashiro.data.database.entity.*
 import androidx.core.net.toUri
+import java.security.MessageDigest
 
 @Singleton
 class BackupExporter @Inject constructor(
@@ -48,7 +49,17 @@ class BackupExporter @Inject constructor(
     ): ExportResult {
         return try {
             // Collect all data
-            val backup = createBackup(config)
+            var backup = createBackup(config)
+            
+            // Compute checksum over canonical JSON (without checksum field)
+            val canonicalJson = gson.toJson(backup.copy(checksum = ""))
+            val digest = MessageDigest.getInstance("SHA-256")
+            val checksumBytes = digest.digest(canonicalJson.toByteArray(Charsets.UTF_8))
+            val checksum = checksumBytes.joinToString("") { "%02x".format(it) }
+            
+            // Embed checksum and re-serialize
+            backup = backup.copy(checksum = checksum)
+            val backupJson = gson.toJson(backup)
             
             // Create backup file
             val file = createBackupFile()
@@ -57,17 +68,19 @@ class BackupExporter @Inject constructor(
                 // Write JSON to file
                 val jsonEntry = ZipEntry("backup.json")
                 zipOut.putNextEntry(jsonEntry)
-                zipOut.write(gson.toJson(backup).toByteArray())
+                zipOut.write(backupJson.toByteArray())
                 zipOut.closeEntry()
 
                 // Write Attachments
                 if (config.privacy == ExportPrivacy.FULL && config.includeTransactionalData) {
                     val filesDir = context.filesDir
                     // Collect all unique attachment paths
-                    val allAttachments = backup.database.transactions
-                        .flatMap { it.attachments.split(",") }
-                        .filter { it.isNotBlank() }
-                        .toSet()
+                    val allAttachments = mutableSetOf<String>()
+                    for (txn in backup.database.transactions) {
+                        for (part in txn.attachments.split(",")) {
+                            if (part.isNotBlank()) allAttachments.add(part)
+                        }
+                    }
 
                     allAttachments.forEach { path ->
                         // path from DB is like "attachments/filename.ext"

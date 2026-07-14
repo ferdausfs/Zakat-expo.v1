@@ -40,13 +40,15 @@ async function parseXml(xmlStr) {
 
 function extractEnglishStrings(parsed) {
     const map = {};
-    if (!parsed || !parsed.resources) return map;
+    const stringKeys = new Set();
+    if (!parsed || !parsed.resources) return { map, stringKeys };
     
     if (parsed.resources.string) {
         const strings = Array.isArray(parsed.resources.string) ? parsed.resources.string : [parsed.resources.string];
         for (const s of strings) {
             if (s && s.$ && s.$.name) {
                 map[s.$.name] = s._ || (typeof s === 'string' ? s : '');
+                stringKeys.add(s.$.name);
             }
         }
     }
@@ -64,7 +66,7 @@ function extractEnglishStrings(parsed) {
             }
         }
     }
-    return map;
+    return { map, stringKeys };
 }
 
 function fixFormatSpecifiers(text) {
@@ -97,7 +99,7 @@ async function main() {
     console.log("Reading base strings...");
     const baseXmlStr = fs.readFileSync(baseStringsPath, 'utf8');
     const baseParsed = await parseXml(baseXmlStr);
-    const enMap = extractEnglishStrings(baseParsed);
+    const { map: enMap, stringKeys } = extractEnglishStrings(baseParsed);
     
     const valueDirs = glob.sync('values-*', { cwd: resDir });
     console.log(`Found ${valueDirs.length} language directories.`);
@@ -125,6 +127,18 @@ async function main() {
         let modified = false;
         let unsupported = false;
         const toTranslate = [];
+        
+        if (!parsed.resources.string) parsed.resources.string = [];
+        if (!Array.isArray(parsed.resources.string)) parsed.resources.string = [parsed.resources.string];
+        const existingNames = new Set(parsed.resources.string.map(s => s && s.$ && s.$.name));
+        for (const key of stringKeys) {
+            if (!existingNames.has(key)) {
+                parsed.resources.string.push({
+                    $: { name: key },
+                    _: enMap[key]
+                });
+            }
+        }
         
         if (parsed.resources.string) {
             const strings = Array.isArray(parsed.resources.string) ? parsed.resources.string : [parsed.resources.string];

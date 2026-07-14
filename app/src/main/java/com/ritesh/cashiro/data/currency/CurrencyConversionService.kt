@@ -266,7 +266,7 @@ class CurrencyConversionService @Inject constructor(
      */
     suspend fun getStoredConversions(baseCurrency: String): Pair<List<ExchangeRateEntity>, Long> {
         val rates = exchangeRateDao.getAllRatesForCurrency(baseCurrency.uppercase())
-        val lastUpdated = rates.maxOfOrNull { it.updatedAtUnix } ?: 0L
+        val lastUpdated = rates.maxByOrNull { it.updatedAtUnix }?.updatedAtUnix ?: 0L
         return Pair(rates, lastUpdated)
     }
 
@@ -375,7 +375,7 @@ class CurrencyConversionService @Inject constructor(
             hasValidUsdRates = usdRates.isNotEmpty(),
             validUsdRatesCount = usdRates.size,
             latestUpdateTime = latestRate?.updatedAt,
-            latestExpiryTime = usdRates.maxOfOrNull { it.expiresAt },
+            latestExpiryTime = usdRates.maxByOrNull { it.expiresAt }?.expiresAt,
             isStale = areOverallRatesStale(),
             currentTime = currentTime
         )

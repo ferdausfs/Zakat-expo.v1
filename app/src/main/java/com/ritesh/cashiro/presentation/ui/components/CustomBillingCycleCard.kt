@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import com.ritesh.cashiro.presentation.ui.icons.Iconax
 import com.ritesh.cashiro.presentation.ui.icons.RefreshCircle
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
+import com.ritesh.cashiro.utils.capitalizeFirst
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -126,7 +127,7 @@ fun CustomBillingCycleCard(
                                 modifier = Modifier.padding(horizontal = 12.dp)
                             ) {
                                 Text(
-                                    unit.replaceFirstChar { it.uppercase() },
+                                    unit.capitalizeFirst(),
                                     style = MaterialTheme.typography.titleSmall.copy(
                                         fontWeight = FontWeight.Bold
                                     )
@@ -143,7 +144,7 @@ fun CustomBillingCycleCard(
                                 val isFirstItem = index == 0
                                 DropdownMenuItem(
                                     text = {
-                                        Text(u.replaceFirstChar { it.uppercase() })
+                                        Text(u.capitalizeFirst())
                                     },
                                     onClick = {
                                         onUnitSelected(u)

@@ -28,6 +28,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -662,7 +664,7 @@ fun SharedTransitionScope.TransactionsScreen(
                         )
 
                     ) {
-                        stickyHeader {
+                        stickyItemHeader {
                             Surface(
                                 color = MaterialTheme.colorScheme.surface,
                                 modifier = Modifier.fillMaxWidth()
@@ -689,7 +691,7 @@ fun SharedTransitionScope.TransactionsScreen(
                         ).forEach { dateGroup ->
                             uiState.groupedTransactions[dateGroup]?.let { transactions ->
                                 // Date group header
-                                stickyHeader {
+                                stickyItemHeader {
                                     Row(
                                         verticalAlignment = Alignment.CenterVertically,
                                         horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
@@ -865,4 +867,13 @@ private fun EmptyTransactionsState(
             }
         }
     }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+private fun LazyListScope.stickyItemHeader(
+    key: Any? = null,
+    contentType: Any? = null,
+    content: @Composable LazyItemScope.(Int) -> Unit
+) {
+    stickyHeader(key = key, contentType = contentType, content = content)
 }

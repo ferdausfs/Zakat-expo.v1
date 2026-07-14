@@ -1,5 +1,6 @@
 package com.ritesh.cashiro.presentation.ui.features.accounts
 
+import com.ritesh.cashiro.utils.sumOfBigDecimal
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -239,7 +240,7 @@ fun MergeBalanceOptionDialog(
                 fontWeight = FontWeight.Bold
             )
             val totalBalance =
-                currentAccount.balance + selectedAccounts.sumOf { it.balance }
+                currentAccount.balance + selectedAccounts.sumOfBigDecimal { acc: AccountBalanceEntity -> acc.balance }
             MergeOptionItem(
                 title = stringResource(R.string.merge_option_sum),
                 description = stringResource(

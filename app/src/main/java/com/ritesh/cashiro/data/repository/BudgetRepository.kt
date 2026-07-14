@@ -212,12 +212,19 @@ class BudgetRepository @Inject constructor(
             }
         }
 
-        val totalSpending = transactions.sumOf { it.amount }
+        var totalSpending = BigDecimal.ZERO
+        for (txn in transactions) {
+            totalSpending += txn.amount
+        }
 
         // Calculate spending per category
         val categorySpending = transactions
             .groupBy { it.category }
-            .mapValues { (_, txns) -> txns.sumOf { it.amount } }
+            .mapValues { (_, txns) ->
+                var sum = BigDecimal.ZERO
+                for (t in txns) sum += t.amount
+                sum
+            }
 
         val categoryLimits = budgetDao.getCategoryLimitsForBudgetSync(budget.id)
 
@@ -320,12 +327,19 @@ class BudgetRepository @Inject constructor(
         }
 
         // Calculate total spending
-        val totalSpending = transactions.sumOf { it.amount }
+        var totalSpending = BigDecimal.ZERO
+        for (txn in transactions) {
+            totalSpending += txn.amount
+        }
 
         // Calculate spending per category
         val categorySpending = transactions
             .groupBy { it.category }
-            .mapValues { (_, txns) -> txns.sumOf { it.amount } }
+            .mapValues { (_, txns) ->
+                var sum = BigDecimal.ZERO
+                for (t in txns) sum += t.amount
+                sum
+            }
 
         // Get category limits for this budget
         val categoryLimits = allCategoryLimits.filter { it.budgetId == budget.id }
