@@ -1073,4 +1073,24 @@
         <item quantity="one">%1$d बचत गरियो</item>
         <item quantity="other">%1$d बचत गरियो</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">सट झोपा लेनदेनहरू</string>
+    <string name="batch_edit_updating_format">%1$d चयन गरिएका वस्तुहरू अपडेट हुँदै</string>
+    <string name="batch_edit_toggle_hint">छानिएका लेनदेनहरूमा लागू गर्न तलका विकल्पहरू टगल गर्नुहोस्:</string>
+    <string name="batch_edit_date">मिति</string>
+    <string name="batch_edit_pick_date">मिति छान्नुहोस्</string>
+    <string name="batch_edit_time">समय</string>
+    <string name="batch_edit_pick_time">समय छान्नुहोस्</string>
+    <string name="batch_edit_category_subcategory">श्रेणी र उपश्रेणी</string>
+    <string name="batch_edit_select_category">श्रेणी चयन गर्नुहोस्</string>
+    <string name="batch_edit_choose">छान्नुहोस्</string>
+    <string name="batch_edit_amount">रकम</string>
+    <string name="batch_edit_set_amount">रकम सेट गर्नुहोस्</string>
+    <string name="batch_edit_note_description">टिप्पणी / वर्णन</string>
+    <string name="batch_edit_note_placeholder">छानिएका वस्तुहरूमा टिप्पणी प्रविष्ट गर्नुहोस्</string>
+    <string name="batch_edit_apply_format">%1$d लेनदेनहरूमा लागू गर्नुहोस्</string>
+    <string name="batch_edit_check_options">संपादन गर्न माथिका विकल्पहरू जाँच गर्नुहोस्</string>
+    <string name="batch_edit_set_batch_amount">सट रकम सेट गर्नुहोस्</string>
+    <string name="edit_selected_transactions">छानिएका लेनदेनहरू सम्पादन गर्नुहोस्</string>
+    <string name="edit_selected_count_format">सम्पादन — %1$d</string>
 </resources>

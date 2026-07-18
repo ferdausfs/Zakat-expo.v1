@@ -1073,4 +1073,24 @@ Això pot trigar uns segons depenent de l\'historial dels vostres missatges.</st
         <item quantity="one">%1$d desat</item>
         <item quantity="other">%1$d desats</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Edició en bloc de transaccions</string>
+    <string name="batch_edit_updating_format">Actualitzant %1$d elements seleccionats</string>
+    <string name="batch_edit_toggle_hint">Activa les opcions a continuació per aplicar-les a les transaccions seleccionades:</string>
+    <string name="batch_edit_date">Data</string>
+    <string name="batch_edit_pick_date">Selecciona la data</string>
+    <string name="batch_edit_time">Hora</string>
+    <string name="batch_edit_pick_time">Selecciona l\'hora</string>
+    <string name="batch_edit_category_subcategory">Categoria i Subcategoria</string>
+    <string name="batch_edit_select_category">Selecciona Categoria</string>
+    <string name="batch_edit_choose">Tria</string>
+    <string name="batch_edit_amount">Import</string>
+    <string name="batch_edit_set_amount">Estableix import</string>
+    <string name="batch_edit_note_description">Nota / Descripció</string>
+    <string name="batch_edit_note_placeholder">Introdueix una nota per als elements seleccionats</string>
+    <string name="batch_edit_apply_format">Aplica a %1$d Transaccions</string>
+    <string name="batch_edit_check_options">Marca les opcions de dalt per editar</string>
+    <string name="batch_edit_set_batch_amount">Estableix import en bloc</string>
+    <string name="edit_selected_transactions">Edita transaccions seleccionades</string>
+    <string name="edit_selected_count_format">Edita — %1$d</string>
 </resources>

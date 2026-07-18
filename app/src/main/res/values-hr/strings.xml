@@ -1081,4 +1081,24 @@ Ovo može potrajati nekoliko sekundi, ovisno o vašoj povijesti poruka.</string>
         <item quantity="few">%1$d saved</item>
         <item quantity="other">%1$d spremljeno</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Uredi transakcije u seriji</string>
+    <string name="batch_edit_updating_format">Ažuriranje %1$d odabranih stavki</string>
+    <string name="batch_edit_toggle_hint">Prebaci opcije ispod da se primijene na odabrane transakcije:</string>
+    <string name="batch_edit_date">Datum</string>
+    <string name="batch_edit_pick_date">Odaberi datum</string>
+    <string name="batch_edit_time">Vrijeme</string>
+    <string name="batch_edit_pick_time">Odaberi vrijeme</string>
+    <string name="batch_edit_category_subcategory">Kategorija i Potkategorija</string>
+    <string name="batch_edit_select_category">Odaberi kategoriju</string>
+    <string name="batch_edit_choose">Odaberi</string>
+    <string name="batch_edit_amount">Iznos</string>
+    <string name="batch_edit_set_amount">Postavi iznos</string>
+    <string name="batch_edit_note_description">Bilješka / Opis</string>
+    <string name="batch_edit_note_placeholder">Unesi bilješku za odabrane stavke</string>
+    <string name="batch_edit_apply_format">Primijeni na %1$d transakcija</string>
+    <string name="batch_edit_check_options">Provjerite opcije iznad za uređivanje</string>
+    <string name="batch_edit_set_batch_amount">Postavi količinu serije</string>
+    <string name="edit_selected_transactions">Uredi odabrane transakcije</string>
+    <string name="edit_selected_count_format">Uredi — %1$d</string>
 </resources>

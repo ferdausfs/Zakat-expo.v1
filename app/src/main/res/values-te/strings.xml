@@ -1073,4 +1073,24 @@
         <item quantity="one">%1$d సేవ్ చేశారు</item>
         <item quantity="other">%1$d సేవ్ చేశారు</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">బ్యాచ్ సవరించు లావాదేవీలు</string>
+    <string name="batch_edit_updating_format">ఎంచుకున్న %1$d అంశాలను నవీకరిస్తోంది</string>
+    <string name="batch_edit_toggle_hint">ఎంచుకున్న లావాదేవీలపై వర్తింపజేయడానికి క్రింది ఎంపికలను టోగుల్ చేయండి:</string>
+    <string name="batch_edit_date">తేదీ</string>
+    <string name="batch_edit_pick_date">తేదీ ఎంచుకోండి</string>
+    <string name="batch_edit_time">సమయం</string>
+    <string name="batch_edit_pick_time">సమయం ఎంచుకోండి</string>
+    <string name="batch_edit_category_subcategory">వర్గం &amp;amp; ఉపవర్గం</string>
+    <string name="batch_edit_select_category">వర్గం ఎంచుకోండి</string>
+    <string name="batch_edit_choose">ఎంచుకోండి</string>
+    <string name="batch_edit_amount">మొత్తం</string>
+    <string name="batch_edit_set_amount">మొత్తం సెట్ చేయండి</string>
+    <string name="batch_edit_note_description">గమనిక / వివరణ</string>
+    <string name="batch_edit_note_placeholder">ఎంచుకున్న అంశాలపై గమనికను నమోదు చేయండి</string>
+    <string name="batch_edit_apply_format">%1$d లావాదేవీలకు వర్తించు</string>
+    <string name="batch_edit_check_options">సవరించడానికి పై ఎంపికలను తనిఖీ చేయండి</string>
+    <string name="batch_edit_set_batch_amount">బ్యాచ్ మొత్తం సెట్ చేయండి</string>
+    <string name="edit_selected_transactions">ఎంచుకున్న లావాదేవీలను సవరించండి</string>
+    <string name="edit_selected_count_format">సవరించు — %1$d</string>
 </resources>

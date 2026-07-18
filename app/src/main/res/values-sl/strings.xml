@@ -1089,4 +1089,24 @@ To lahko traja nekaj sekund, odvisno od vaše zgodovine sporočil.</string>
         <item quantity="few">%1$d saved</item>
         <item quantity="other">%1$d shranjenih</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Batch Edit Transactions</string>
+    <string name="batch_edit_updating_format">Posodabljanje %1$d izbranih elementov</string>
+    <string name="batch_edit_toggle_hint">Preklopite spodnje možnosti, da jih uporabite na izbranih transakcijah:</string>
+    <string name="batch_edit_date">Datum</string>
+    <string name="batch_edit_pick_date">Izberi datum</string>
+    <string name="batch_edit_time">Čas</string>
+    <string name="batch_edit_pick_time">Izberi čas</string>
+    <string name="batch_edit_category_subcategory">Kategorija in podkategorija</string>
+    <string name="batch_edit_select_category">Izberi kategorijo</string>
+    <string name="batch_edit_choose">Izberi</string>
+    <string name="batch_edit_amount">Znesek</string>
+    <string name="batch_edit_set_amount">Določi znesek</string>
+    <string name="batch_edit_note_description">Opomba / opis</string>
+    <string name="batch_edit_note_placeholder">Vnesite opombo za izbrane elemente</string>
+    <string name="batch_edit_apply_format">Uporabi na %1$d transakcij</string>
+    <string name="batch_edit_check_options">Preverite zgornje možnosti za urejanje</string>
+    <string name="batch_edit_set_batch_amount">Nastavi znesek serije</string>
+    <string name="edit_selected_transactions">Uredi izbrane transakcije</string>
+    <string name="edit_selected_count_format">Uredi — %1$d</string>
 </resources>

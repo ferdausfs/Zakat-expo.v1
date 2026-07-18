@@ -1071,4 +1071,24 @@
         <item quantity="one">%1$d ସଂରକ୍ଷିତ</item>
         <item quantity="other">%1$d ସଂରକ୍ଷିତ</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">ବ୍ୟାଚ୍ ଏଡିଟ୍ ଟ୍ରାଞ୍ଜାକ୍ସନ୍</string>
+    <string name="batch_edit_updating_format">%1$d ଚୟନକୃତ ଆଇଟମ୍ ସଂଶୋଧନ କରୁଛି</string>
+    <string name="batch_edit_toggle_hint">ନିମ୍ନଲିଖିତ ବିକଳ୍ପଗୁଡିକୁ ପରିବର୍ତ୍ତନ କରି ସ୍ଥାନୀୟ ଟ୍ରାଞ୍ଜାକ୍ସନ୍ ଉପରେ ଲାଗୁ କରନ୍ତୁ:</string>
+    <string name="batch_edit_date">ତାରିଖ</string>
+    <string name="batch_edit_pick_date">ତାରିଖ ଚୟନ କରନ୍ତୁ</string>
+    <string name="batch_edit_time">ସମୟ</string>
+    <string name="batch_edit_pick_time">ସମୟ ଚୟନ କରନ୍ତୁ</string>
+    <string name="batch_edit_category_subcategory">ଶ୍ରେଣୀ ଏବଂ ଉପଶ୍ରେଣୀ</string>
+    <string name="batch_edit_select_category">ଶ୍ରେଣୀ ଚୟନ କରନ୍ତୁ</string>
+    <string name="batch_edit_choose">ଚୟନ କରନ୍ତୁ</string>
+    <string name="batch_edit_amount">ରାଶି</string>
+    <string name="batch_edit_set_amount">ରାଶି ସେଟ୍ କରନ୍ତୁ</string>
+    <string name="batch_edit_note_description">ଟୀପ୍ପଣୀ / ବର୍ଣ୍ଣନା</string>
+    <string name="batch_edit_note_placeholder">ଚୟନକୃତ ଆଇଟମ୍ ମାନଙ୍କୁ ଟୀପ୍ପଣୀ ପ୍ରବେଶ କରାନ୍ତୁ</string>
+    <string name="batch_edit_apply_format">%1$d ଟ୍ରାଞ୍ଜାକ୍ସନ୍ ଉପରେ ଲାଗୁ କରନ୍ତୁ</string>
+    <string name="batch_edit_check_options">ସଂଶୋଧନ କରିବା ପାଇଁ ଉପରେ ବିକଳ୍ପଗୁଡିକୁ ଚେକ୍ କରନ୍ତୁ</string>
+    <string name="batch_edit_set_batch_amount">ବ୍ୟାଚ୍ ରାଶି ସେଟ୍ କରନ୍ତୁ</string>
+    <string name="edit_selected_transactions">ଚୟନକୃତ ଟ୍ରାଞ୍ଜାକ୍ସନ୍ ସଂଶୋଧନ କରନ୍ତୁ</string>
+    <string name="edit_selected_count_format">ସଂଶୋଧନ — %1$d</string>
 </resources>

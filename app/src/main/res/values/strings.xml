@@ -1202,4 +1202,24 @@
     <string name="provider_local_only">Local Only</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Batch Edit Transactions</string>
+    <string name="batch_edit_updating_format">Updating %1$d selected items</string>
+    <string name="batch_edit_toggle_hint">Toggle options below to apply across selected transactions:</string>
+    <string name="batch_edit_date">Date</string>
+    <string name="batch_edit_pick_date">Pick Date</string>
+    <string name="batch_edit_time">Time</string>
+    <string name="batch_edit_pick_time">Pick Time</string>
+    <string name="batch_edit_category_subcategory">Category &amp; Subcategory</string>
+    <string name="batch_edit_select_category">Select Category</string>
+    <string name="batch_edit_choose">Choose</string>
+    <string name="batch_edit_amount">Amount</string>
+    <string name="batch_edit_set_amount">Set Amount</string>
+    <string name="batch_edit_note_description">Note / Description</string>
+    <string name="batch_edit_note_placeholder">Enter note across selected items</string>
+    <string name="batch_edit_apply_format">Apply to %1$d Transactions</string>
+    <string name="batch_edit_check_options">Check Options Above to Edit</string>
+    <string name="batch_edit_set_batch_amount">Set Batch Amount</string>
+    <string name="edit_selected_transactions">Edit Selected Transactions</string>
+    <string name="edit_selected_count_format">Edit — %1$d</string>
 </resources>

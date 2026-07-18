@@ -1070,4 +1070,24 @@ Dies kann je nach Verlauf Ihrer Nachrichten einige Sekunden dauern.</string>
         <item quantity="one">%1$d gespeichert</item>
         <item quantity="other">%1$d gespeichert</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Batch-Bearbeitung von Transaktionen</string>
+    <string name="batch_edit_updating_format">Aktualisiere %1$d ausgewählte Elemente</string>
+    <string name="batch_edit_toggle_hint">Umschalten der unten stehenden Optionen, um auf ausgewählte Transaktionen anzuwenden:</string>
+    <string name="batch_edit_date">Datum</string>
+    <string name="batch_edit_pick_date">Datum auswählen</string>
+    <string name="batch_edit_time">Uhrzeit</string>
+    <string name="batch_edit_pick_time">Uhrzeit wählen</string>
+    <string name="batch_edit_category_subcategory">Kategorie &amp;amp; Unterkategorie</string>
+    <string name="batch_edit_select_category">Kategorie auswählen</string>
+    <string name="batch_edit_choose">Auswählen</string>
+    <string name="batch_edit_amount">Betrag</string>
+    <string name="batch_edit_set_amount">Betrag festlegen</string>
+    <string name="batch_edit_note_description">Notiz / Beschreibung</string>
+    <string name="batch_edit_note_placeholder">Notiz für ausgewählte Elemente eingeben</string>
+    <string name="batch_edit_apply_format">Auf %1$d Transaktionen anwenden</string>
+    <string name="batch_edit_check_options">Obige Optionen zum Bearbeiten auswählen</string>
+    <string name="batch_edit_set_batch_amount">Batch-Betrag festlegen</string>
+    <string name="edit_selected_transactions">Ausgewählte Transaktionen bearbeiten</string>
+    <string name="edit_selected_count_format">Bearbeiten — %1$d</string>
 </resources>

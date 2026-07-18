@@ -1073,4 +1073,24 @@ Mesaj geçmişinize bağlı olarak birkaç saniye sürebilir.</string>
         <item quantity="one">%1$d kaydedildi</item>
         <item quantity="other">%1$d kaydedildi</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Toplu İşlem Düzenleme</string>
+    <string name="batch_edit_updating_format">Seçilen %1$d öğe güncelleniyor</string>
+    <string name="batch_edit_toggle_hint">Seçilen işlemler üzerinde uygulamak için aşağıdaki seçenekleri değiştirin:</string>
+    <string name="batch_edit_date">Tarih</string>
+    <string name="batch_edit_pick_date">Tarih Seç</string>
+    <string name="batch_edit_time">Saat</string>
+    <string name="batch_edit_pick_time">Saat Seç</string>
+    <string name="batch_edit_category_subcategory">Kategori ve Alt Kategori</string>
+    <string name="batch_edit_select_category">Kategori Seç</string>
+    <string name="batch_edit_choose">Seç</string>
+    <string name="batch_edit_amount">Tutar</string>
+    <string name="batch_edit_set_amount">Tutar Belirle</string>
+    <string name="batch_edit_note_description">Not / Açıklama</string>
+    <string name="batch_edit_note_placeholder">Seçili öğeler için not girin</string>
+    <string name="batch_edit_apply_format">%1$d İşleme Uygula</string>
+    <string name="batch_edit_check_options">Düzenlemek için Yukarıdaki Seçenekleri İşaretleyin</string>
+    <string name="batch_edit_set_batch_amount">Toplu Tutar Belirle</string>
+    <string name="edit_selected_transactions">Seçili İşlemleri Düzenle</string>
+    <string name="edit_selected_count_format">Düzenle — %1$d</string>
 </resources>

@@ -1073,4 +1073,24 @@
         <item quantity="one">%1$d ذخیره شد</item>
         <item quantity="other">%1$d ذخیره شد</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">ویرایش دسته‌ای تراکنش‌ها</string>
+    <string name="batch_edit_updating_format">در حال بروز رسانی %1$d مورد انتخاب شده</string>
+    <string name="batch_edit_toggle_hint">گزینه‌های زیر را برای اعمال در تراکنش‌های انتخاب شده تغییر دهید:</string>
+    <string name="batch_edit_date">تاریخ</string>
+    <string name="batch_edit_pick_date">انتخاب تاریخ</string>
+    <string name="batch_edit_time">زمان</string>
+    <string name="batch_edit_pick_time">انتخاب زمان</string>
+    <string name="batch_edit_category_subcategory">دسته و زیر دسته</string>
+    <string name="batch_edit_select_category">انتخاب دسته</string>
+    <string name="batch_edit_choose">انتخاب</string>
+    <string name="batch_edit_amount">مبلغ</string>
+    <string name="batch_edit_set_amount">تعیین مبلغ</string>
+    <string name="batch_edit_note_description">یادداشت / توضیحات</string>
+    <string name="batch_edit_note_placeholder">وارد کردن یادداشت برای موارد انتخاب شده</string>
+    <string name="batch_edit_apply_format">اعمال برای %1$d تراکنش</string>
+    <string name="batch_edit_check_options">گزینه‌های فوق را برای ویرایش بررسی کنید</string>
+    <string name="batch_edit_set_batch_amount">تعیین مبلغ دسته‌ای</string>
+    <string name="edit_selected_transactions">ویرایش تراکنش‌های انتخاب شده</string>
+    <string name="edit_selected_count_format">ویرایش — %1$d</string>
 </resources>

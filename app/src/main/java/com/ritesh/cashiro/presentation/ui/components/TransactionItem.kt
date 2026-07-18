@@ -84,7 +84,7 @@ fun SharedTransitionScope.TransactionItem(
     isSelectionMode: Boolean = false,
     isSelected: Boolean = false,
     onSelectionToggle: () -> Unit = {},
-    onLongClick: () -> Unit = {},
+    onLongClick: (() -> Unit)? = null,
     convertedAmount: BigDecimal? = null,
     mainCurrency: String? = null,
     currentAccountContext: String? = null,

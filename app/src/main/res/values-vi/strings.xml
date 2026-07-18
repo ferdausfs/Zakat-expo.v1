@@ -1065,4 +1065,24 @@ Xanh (+) = Tiết kiệm | Đỏ (-) = Chi tiêu vượt mức</string>
     <plurals name="saved_transactions_format">
         <item quantity="other">%1$d đã lưu</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Chỉnh sửa hàng loạt giao dịch</string>
+    <string name="batch_edit_updating_format">Đang cập nhật %1$d mục được chọn</string>
+    <string name="batch_edit_toggle_hint">Bật các tùy chọn dưới đây để áp dụng cho các giao dịch đã chọn:</string>
+    <string name="batch_edit_date">Ngày</string>
+    <string name="batch_edit_pick_date">Chọn ngày</string>
+    <string name="batch_edit_time">Thời gian</string>
+    <string name="batch_edit_pick_time">Chọn thời gian</string>
+    <string name="batch_edit_category_subcategory">Danh mục &amp;amp; Danh mục phụ</string>
+    <string name="batch_edit_select_category">Chọn danh mục</string>
+    <string name="batch_edit_choose">Chọn</string>
+    <string name="batch_edit_amount">Số tiền</string>
+    <string name="batch_edit_set_amount">Đặt số tiền</string>
+    <string name="batch_edit_note_description">Ghi chú / Mô tả</string>
+    <string name="batch_edit_note_placeholder">Nhập ghi chú cho các mục đã chọn</string>
+    <string name="batch_edit_apply_format">Áp dụng cho %1$d Giao dịch</string>
+    <string name="batch_edit_check_options">Kiểm tra các tùy chọn ở trên để chỉnh sửa</string>
+    <string name="batch_edit_set_batch_amount">Đặt số tiền hàng loạt</string>
+    <string name="edit_selected_transactions">Chỉnh sửa các giao dịch đã chọn</string>
+    <string name="edit_selected_count_format">Chỉnh sửa — %1$d</string>
 </resources>

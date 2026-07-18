@@ -1073,4 +1073,24 @@
         <item quantity="one">%1$d जतन केले</item>
         <item quantity="other">%1$d जतन केले</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">बॅच संपादन व्यवहार</string>
+    <string name="batch_edit_updating_format">%1$d निवडलेल्या वस्तू अद्यतनित करत आहे</string>
+    <string name="batch_edit_toggle_hint">निवडलेल्या व्यवहारांवर लागू करण्यासाठी खालील पर्याय पालट करा:</string>
+    <string name="batch_edit_date">तारीख</string>
+    <string name="batch_edit_pick_date">तारीख निवडा</string>
+    <string name="batch_edit_time">वेळ</string>
+    <string name="batch_edit_pick_time">वेळ निवडा</string>
+    <string name="batch_edit_category_subcategory">श्रेणी आणि उपश्रेणी</string>
+    <string name="batch_edit_select_category">श्रेणी निवडा</string>
+    <string name="batch_edit_choose">निवडा</string>
+    <string name="batch_edit_amount">रक्कम</string>
+    <string name="batch_edit_set_amount">रक्कम सेट करा</string>
+    <string name="batch_edit_note_description">टीप / वर्णन</string>
+    <string name="batch_edit_note_placeholder">निवडलेल्या वस्तूंवर नोट प्रविष्ट करा</string>
+    <string name="batch_edit_apply_format">%1$d व्यवहारांवर लागू करा</string>
+    <string name="batch_edit_check_options">संपादनासाठी वरचे पर्याय तपासा</string>
+    <string name="batch_edit_set_batch_amount">बॅच रक्कम सेट करा</string>
+    <string name="edit_selected_transactions">निवडलेले व्यवहार संपादित करा</string>
+    <string name="edit_selected_count_format">संपादित करा — %1$d</string>
 </resources>

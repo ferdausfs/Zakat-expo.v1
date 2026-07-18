@@ -1073,4 +1073,24 @@
         <item quantity="one">%1$d സേവ് ചെയ്‌തു</item>
         <item quantity="other">%1$d സേവ് ചെയ്‌തു</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">ബാച്ച് എഡിറ്റ് ട്രാൻസാക്ഷനുകൾ</string>
+    <string name="batch_edit_updating_format">%1$d തിരഞ്ഞെടുക്കപ്പെട്ട ഇനങ്ങൾ അപ്‌ഡേറ്റ് ചെയ്യുന്നു</string>
+    <string name="batch_edit_toggle_hint">തിരഞ്ഞെടുത്ത ട്രാൻസാക്ഷനുകളിൽ പ്രയോഗിക്കാൻ താഴെ ഓപ്ഷനുകൾ അൺ/ടോഗിൾ ചെയ്യുക:</string>
+    <string name="batch_edit_date">തീയതി</string>
+    <string name="batch_edit_pick_date">തീയതി തിരഞ്ഞെടുക്കുക</string>
+    <string name="batch_edit_time">സമയം</string>
+    <string name="batch_edit_pick_time">സമയം തിരഞ്ഞെടുക്കുക</string>
+    <string name="batch_edit_category_subcategory">വിഭാഗം &amp;amp; ഉപവിഭാഗം</string>
+    <string name="batch_edit_select_category">വിഭാഗം തിരഞ്ഞെടുക്കുക</string>
+    <string name="batch_edit_choose">തിരഞ്ഞെടുക്കുക</string>
+    <string name="batch_edit_amount">റाशി</string>
+    <string name="batch_edit_set_amount">റാശി സെറ്റ് ചെയ്യുക</string>
+    <string name="batch_edit_note_description">കുറിപ്പ് / വിവരണം</string>
+    <string name="batch_edit_note_placeholder">തിരഞ്ഞെടുത്തു ഇനങ്ങളിൽ കുറിപ്പ് നൽകുക</string>
+    <string name="batch_edit_apply_format">%1$d ട്രാൻസാക്ഷനുകളിൽ പ്രയോഗിക്കുക</string>
+    <string name="batch_edit_check_options">എഡിറ്റ് ചെയ്യുന്നതിനായി മേൽ ഓപ്ഷനുകൾ പരിശോധിക്കുക</string>
+    <string name="batch_edit_set_batch_amount">ബാച്ച് റാശി എഡിറ്റ് ചെയ്യുക</string>
+    <string name="edit_selected_transactions">തിരഞ്ഞെടുക്കപ്പെട്ട ട്രാൻസാക്ഷനുകൾ എഡിറ്റ് ചെയ്യുക</string>
+    <string name="edit_selected_count_format">എഡിറ്റ് — %1$d</string>
 </resources>

@@ -1071,4 +1071,24 @@
         <item quantity="one">%1$d સાચવ્યાં</item>
         <item quantity="other">%1$d સાચવ્યાં</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">બેચ ટ્રાન્ઝેક્શન્સ સંપાદિત કરો</string>
+    <string name="batch_edit_updating_format">%1$d પસંદ કરેલા આઇટમ્સ અપડેટ કરી રહ્યા છીએ</string>
+    <string name="batch_edit_toggle_hint">પસંદ કરેલા ટ્રાન્ઝેક્શન્સ પર લાગુ કરવા માટે નીચેના વિકલ્પોને બદલાવો:</string>
+    <string name="batch_edit_date">તારીખ</string>
+    <string name="batch_edit_pick_date">તારીખ પસંદ કરો</string>
+    <string name="batch_edit_time">સમય</string>
+    <string name="batch_edit_pick_time">સમય પસંદ કરો</string>
+    <string name="batch_edit_category_subcategory">શ્રેણી અને ઉપશ્રેણી</string>
+    <string name="batch_edit_select_category">શ્રેણી પસંદ કરો</string>
+    <string name="batch_edit_choose">પસંદ કરો</string>
+    <string name="batch_edit_amount">રાશી</string>
+    <string name="batch_edit_set_amount">રાશી સેટ કરો</string>
+    <string name="batch_edit_note_description">નોંધ / વર્ણન</string>
+    <string name="batch_edit_note_placeholder">પસંદ કરેલા આઇટમ્સ પર નોંધ દાખલ કરો</string>
+    <string name="batch_edit_apply_format">%1$d ટ્રાન્ઝેક્શન્સ પર લાગુ કરો</string>
+    <string name="batch_edit_check_options">સંપાદિત કરવા માટે ઉપરના વિકલ્પો તપાસો</string>
+    <string name="batch_edit_set_batch_amount">બેચ રાશી સેટ કરો</string>
+    <string name="edit_selected_transactions">પસંદ કરેલ ટ્રાન્ઝેક્શન્સ સંપાદિત કરો</string>
+    <string name="edit_selected_count_format">સંપાદિત કરો — %1$d</string>
 </resources>

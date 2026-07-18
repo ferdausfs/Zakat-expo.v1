@@ -1063,4 +1063,24 @@
     <plurals name="saved_transactions_format">
         <item quantity="other">%1$d を保存しました</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">取引を一括編集</string>
+    <string name="batch_edit_updating_format">選択された %1$d 項目を更新中</string>
+    <string name="batch_edit_toggle_hint">以下のオプションを切り替えて、選択した取引に適用:</string>
+    <string name="batch_edit_date">日付</string>
+    <string name="batch_edit_pick_date">日付を選択</string>
+    <string name="batch_edit_time">時間</string>
+    <string name="batch_edit_pick_time">時間を選択</string>
+    <string name="batch_edit_category_subcategory">カテゴリとサブカテゴリ</string>
+    <string name="batch_edit_select_category">カテゴリを選択</string>
+    <string name="batch_edit_choose">選択</string>
+    <string name="batch_edit_amount">金額</string>
+    <string name="batch_edit_set_amount">金額を設定</string>
+    <string name="batch_edit_note_description">メモ / 説明</string>
+    <string name="batch_edit_note_placeholder">選択した項目にメモを入力</string>
+    <string name="batch_edit_apply_format">%1$d 件の取引に適用</string>
+    <string name="batch_edit_check_options">編集するには上記のオプションを確認</string>
+    <string name="batch_edit_set_batch_amount">一括金額を設定</string>
+    <string name="edit_selected_transactions">選択した取引を編集</string>
+    <string name="edit_selected_count_format">編集 — %1$d</string>
 </resources>

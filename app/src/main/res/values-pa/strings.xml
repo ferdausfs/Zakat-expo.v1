@@ -1073,4 +1073,24 @@
         <item quantity="one">%1$d ਸੁਰੱਖਿਅਤ</item>
         <item quantity="other">%1$d ਸੁਰੱਖਿਅਤ</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">ਬੈਚ ਲੈਣ-ਦੇਣ ਸੋਧੋ</string>
+    <string name="batch_edit_updating_format">ਚੁਣੇ ਗਏ %1$d ਆਈਟਮ ਅਪਡੇਟ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
+    <string name="batch_edit_toggle_hint">ਚੁਣੀਆਂ ਗਈਆਂ ਲੈਣ-ਦੇਣਾਂ \'ਤੇ ਲਾਗੂ ਕਰਨ ਲਈ ਹੇਠਾਂ ਦਿੱਖਾਏ ਵਿਕਲਪਾਂ ਨੂੰ ਟੌਗਲ ਕਰੋ:</string>
+    <string name="batch_edit_date">ਤਾਰੀਖ਼</string>
+    <string name="batch_edit_pick_date">ਤਾਰੀਖ਼ ਚੁਣੋ</string>
+    <string name="batch_edit_time">ਸਮਾਂ</string>
+    <string name="batch_edit_pick_time">ਸਮਾਂ ਚੁਣੋ</string>
+    <string name="batch_edit_category_subcategory">ਸ਼੍ਰੇਣੀ ਅਤੇ ਉਪ-ਸ਼੍ਰੇਣੀ</string>
+    <string name="batch_edit_select_category">ਸ਼੍ਰੇਣੀ ਚੁਣੋ</string>
+    <string name="batch_edit_choose">ਚੁਣੋ</string>
+    <string name="batch_edit_amount">ਰਕਮ</string>
+    <string name="batch_edit_set_amount">ਰਕਮ ਸੈੱਟ ਕਰੋ</string>
+    <string name="batch_edit_note_description">ਨੋਟ / ਵੇਰਵਾ</string>
+    <string name="batch_edit_note_placeholder">ਚੁਣੀਆਂ ਗਈਆਂ ਆਈਟਮਾਂ ਵਿੱਚ ਨੋਟ ਦਰਜ ਕਰੋ</string>
+    <string name="batch_edit_apply_format">%1$d ਲੈਣ-ਦੇਣਾਂ \'ਤੇ ਲਾਗੂ ਕਰੋ</string>
+    <string name="batch_edit_check_options">ਸੋਧਣ ਲਈ ਉਪਰ ਦਿੱਤੇ ਵਿਕਲਪ ਚੈੱਕ ਕਰੋ</string>
+    <string name="batch_edit_set_batch_amount">ਬੈਚ ਰਕਮ ਸੈੱਟ ਕਰੋ</string>
+    <string name="edit_selected_transactions">ਚੁਣੀਆਂ ਗਈਆਂ ਲੈਣ-ਦੇਣਾਂ ਸੋਧੋ</string>
+    <string name="edit_selected_count_format">ਸੋਧੋ — %1$d</string>
 </resources>

@@ -1073,4 +1073,24 @@ Detta kan ta några sekunder beroende på din meddelandehistorik.</string>
         <item quantity="one">%1$d sparad</item>
         <item quantity="other">%1$d sparade</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Batch Edit Transactions</string>
+    <string name="batch_edit_updating_format">Uppdaterar %1$d valda objekt</string>
+    <string name="batch_edit_toggle_hint">Växla alternativ nedan för att tillämpa på valda transaktioner:</string>
+    <string name="batch_edit_date">Datum</string>
+    <string name="batch_edit_pick_date">Välj datum</string>
+    <string name="batch_edit_time">Tid</string>
+    <string name="batch_edit_pick_time">Välj tid</string>
+    <string name="batch_edit_category_subcategory">Kategori &amp;amp; Underkategori</string>
+    <string name="batch_edit_select_category">Välj kategori</string>
+    <string name="batch_edit_choose">Välj</string>
+    <string name="batch_edit_amount">Belopp</string>
+    <string name="batch_edit_set_amount">Ange belopp</string>
+    <string name="batch_edit_note_description">Anteckning / Beskrivning</string>
+    <string name="batch_edit_note_placeholder">Ange anteckning för valda objekt</string>
+    <string name="batch_edit_apply_format">Tillämpa på %1$d transaktioner</string>
+    <string name="batch_edit_check_options">Markera alternativ ovan för att redigera</string>
+    <string name="batch_edit_set_batch_amount">Ange batchbelopp</string>
+    <string name="edit_selected_transactions">Redigera valda transaktioner</string>
+    <string name="edit_selected_count_format">Redigera — %1$d</string>
 </resources>

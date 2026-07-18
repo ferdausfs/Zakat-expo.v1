@@ -1073,4 +1073,24 @@ Bu, habar taryhyňyza baglylykda birnäçe sekunt wagty alyp biler.</string>
         <item quantity="one">%1$d halas edildi</item>
         <item quantity="other">%1$d halas edildi</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Ýüjek Hasaplamalary Toparça Üýtgetmek</string>
+    <string name="batch_edit_updating_format">Saýlanan %1$d element täzelilýär</string>
+    <string name="batch_edit_toggle_hint">Aşakdaky opsiýalary çalşyryp saýlanan hasaplamalara ulanmak:</string>
+    <string name="batch_edit_date">Sene</string>
+    <string name="batch_edit_pick_date">Sene Saýla</string>
+    <string name="batch_edit_time">Wagty</string>
+    <string name="batch_edit_pick_time">Wagty Saýla</string>
+    <string name="batch_edit_category_subcategory">Kategoriýa we Kiçi Kategoriýa</string>
+    <string name="batch_edit_select_category">Kategoriýa Saýla</string>
+    <string name="batch_edit_choose">Saýla</string>
+    <string name="batch_edit_amount">Möçber</string>
+    <string name="batch_edit_set_amount">Möçberi Bellemek</string>
+    <string name="batch_edit_note_description">Bellik / Düşündiriş</string>
+    <string name="batch_edit_note_placeholder">Saýlanan elementlerde bellik giriziň</string>
+    <string name="batch_edit_apply_format">%1$d Hasaplamalara Ulamak</string>
+    <string name="batch_edit_check_options">Üstdeki Saýlawlary Redaktirläň</string>
+    <string name="batch_edit_set_batch_amount">Toplum Mukdaryny Kesgitläň</string>
+    <string name="edit_selected_transactions">Saýlanan Amallary Redaktirläň</string>
+    <string name="edit_selected_count_format">Redaktirle — %1$d</string>
 </resources>

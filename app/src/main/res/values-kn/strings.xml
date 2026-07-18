@@ -1073,4 +1073,24 @@
         <item quantity="one">%1$d ಉಳಿಸಲಾಗಿದೆ</item>
         <item quantity="other">%1$d ಉಳಿಸಲಾಗಿದೆ</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">ಗುಚ್ಚು ಸಂಪಾದನೆ ವ್ಯವಹಾರಗಳು</string>
+    <string name="batch_edit_updating_format">ಆಯ್ಕೆ ಮಾಡಿದ %1$d ಘಟಕಗಳನ್ನು अद्यತಿಸಿ</string>
+    <string name="batch_edit_toggle_hint">ಆಯ್ಕೆ ಮಾಡಿದ ವ್ಯವಹಾರಗಳಲ್ಲಿ ಅನ್ವಯಿಸಲು ಕೆಳಗಿನ ಆಯ್ಕೆಗಳನ್ನು ಟಾಗಲ್ ಮಾಡಿ:</string>
+    <string name="batch_edit_date">ದಿನಾಂಕ</string>
+    <string name="batch_edit_pick_date">ದಿನಾಂಕ ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="batch_edit_time">ಸಮಯ</string>
+    <string name="batch_edit_pick_time">ಸಮಯ ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="batch_edit_category_subcategory">ವರ್ಗ &amp;amp; ಉಪವರ್ಗ</string>
+    <string name="batch_edit_select_category">ವರ್ಗ ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="batch_edit_choose">ಏಕರೂಪ ಮಾಡಿಕೊಳ್ಳಿ</string>
+    <string name="batch_edit_amount">ಪ್ರಮಾಣ</string>
+    <string name="batch_edit_set_amount">ಪ್ರಮಾಣವನ್ನು ಹೊಂದಿಸಿ</string>
+    <string name="batch_edit_note_description">ಸೂಚನೆ / ವಿವರಣೆ</string>
+    <string name="batch_edit_note_placeholder">ಆಯ್ಕೆ ಮಾಡಿದ ಘಟಕಗಳಲ್ಲಿ ಟಿಪ್ಪಣಿ ನಮೂದಿಸಿ</string>
+    <string name="batch_edit_apply_format">%1$d ವ್ಯವಹಾರಗಳಿಗೆ ಅನ್ವಯಿಸಿ</string>
+    <string name="batch_edit_check_options">ಸಂಪಾದಿಸಲು ಮೇಲಿನ ಆಯ್ಕೆಗಳನ್ನು ಪರಿಶೀಲಿಸಿ</string>
+    <string name="batch_edit_set_batch_amount">ಗುಚ್ಚು ಪ್ರಮಾಣವನ್ನು ಹೊಂದಿಸಿ</string>
+    <string name="edit_selected_transactions">ಆಯ್ಕೆ ಮಾಡಿದ ವ್ಯವಹಾರಗಳನ್ನು ಸಂಪಾದಿಸಿ</string>
+    <string name="edit_selected_count_format">ಸಂಪಾದನೆ — %1$d</string>
 </resources>

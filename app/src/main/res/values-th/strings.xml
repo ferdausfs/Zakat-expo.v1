@@ -1065,4 +1065,24 @@
     <plurals name="saved_transactions_format">
         <item quantity="other">บันทึก %1$d รายการ</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">แก้ไขธุรกรรมเป็นชุด</string>
+    <string name="batch_edit_updating_format">กำลังอัปเดต %1$d รายการที่เลือก</string>
+    <string name="batch_edit_toggle_hint">สลับตัวเลือกด้านล่างเพื่อใช้กับธุรกรรมที่เลือก:</string>
+    <string name="batch_edit_date">วันที่</string>
+    <string name="batch_edit_pick_date">เลือกวันที่</string>
+    <string name="batch_edit_time">เวลา</string>
+    <string name="batch_edit_pick_time">เลือกเวลา</string>
+    <string name="batch_edit_category_subcategory">หมวดหมู่ &amp;amp; หมู่ย่อย</string>
+    <string name="batch_edit_select_category">เลือกหมวดหมู่</string>
+    <string name="batch_edit_choose">เลือก</string>
+    <string name="batch_edit_amount">จำนวน</string>
+    <string name="batch_edit_set_amount">ตั้งค่าจำนวน</string>
+    <string name="batch_edit_note_description">หมายเหตุ / รายละเอียด</string>
+    <string name="batch_edit_note_placeholder">ป้อนหมายเหตุในรายการที่เลือก</string>
+    <string name="batch_edit_apply_format">ใช้กับ %1$d ธุรกรรม</string>
+    <string name="batch_edit_check_options">ตรวจสอบตัวเลือกด้านบนเพื่อแก้ไข</string>
+    <string name="batch_edit_set_batch_amount">ตั้งค่าจำนวนชุด</string>
+    <string name="edit_selected_transactions">แก้ไขรายการที่เลือก</string>
+    <string name="edit_selected_count_format">แก้ไข — %1$d</string>
 </resources>

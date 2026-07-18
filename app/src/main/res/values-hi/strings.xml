@@ -1073,4 +1073,24 @@
         <item quantity="one">%1$d सहेजा गया</item>
         <item quantity="other">%1$d सहेजे गए</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">बैच संपादित लेन-देन</string>
+    <string name="batch_edit_updating_format">%1$d चयनित वस्तुओं को अपडेट कर रहा है</string>
+    <string name="batch_edit_toggle_hint">नीचे विकल्प बदलकर चयनित लेन-देन पर लागू करें:</string>
+    <string name="batch_edit_date">तारीख</string>
+    <string name="batch_edit_pick_date">तारीख चुनें</string>
+    <string name="batch_edit_time">समय</string>
+    <string name="batch_edit_pick_time">समय चुनें</string>
+    <string name="batch_edit_category_subcategory">श्रेणी और उपश्रेणी</string>
+    <string name="batch_edit_select_category">श्रेणी चुनें</string>
+    <string name="batch_edit_choose">चुनें</string>
+    <string name="batch_edit_amount">राशि</string>
+    <string name="batch_edit_set_amount">राशि सेट करें</string>
+    <string name="batch_edit_note_description">नोट / विवरण</string>
+    <string name="batch_edit_note_placeholder">चयनित वस्तुओं पर नोट दर्ज करें</string>
+    <string name="batch_edit_apply_format">%1$d लेन-देन पर लागू करें</string>
+    <string name="batch_edit_check_options">ऊपर के विकल्प जाँचें संपादित करने के लिए</string>
+    <string name="batch_edit_set_batch_amount">बैच राशि सेट करें</string>
+    <string name="edit_selected_transactions">चयनित लेन-देन संपादित करें</string>
+    <string name="edit_selected_count_format">संपादित करें — %1$d</string>
 </resources>

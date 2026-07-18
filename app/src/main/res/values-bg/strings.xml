@@ -1073,4 +1073,24 @@
         <item quantity="one">%1$d запазено</item>
         <item quantity="other">%1$d запазено</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Редактиране на транзакции на партиди</string>
+    <string name="batch_edit_updating_format">Актуализиране на %1$d избрани елемента</string>
+    <string name="batch_edit_toggle_hint">Превключете опциите по-долу, за да приложите към избраните транзакции:</string>
+    <string name="batch_edit_date">Дата</string>
+    <string name="batch_edit_pick_date">Изберете дата</string>
+    <string name="batch_edit_time">Час</string>
+    <string name="batch_edit_pick_time">Изберете час</string>
+    <string name="batch_edit_category_subcategory">Категория и подкатегория</string>
+    <string name="batch_edit_select_category">Изберете категория</string>
+    <string name="batch_edit_choose">Изберете</string>
+    <string name="batch_edit_amount">Сума</string>
+    <string name="batch_edit_set_amount">Задайте сумата</string>
+    <string name="batch_edit_note_description">Бележка / Описание</string>
+    <string name="batch_edit_note_placeholder">Въведете бележка за избраните елементи</string>
+    <string name="batch_edit_apply_format">Приложете към %1$d транзакции</string>
+    <string name="batch_edit_check_options">Отметнете опциите по-горе за редактиране</string>
+    <string name="batch_edit_set_batch_amount">Задайте сума за партидата</string>
+    <string name="edit_selected_transactions">Редактирайте избраните транзакции</string>
+    <string name="edit_selected_count_format">Редактиране — %1$d</string>
 </resources>

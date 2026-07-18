@@ -1065,4 +1065,24 @@
     <plurals name="saved_transactions_format">
         <item quantity="other">%1$d ཉར་ཚགས་བྱས་ཡོད་</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">ཁག་བགོས་རྩོམ་སྒྲིག་ཉོ་འཚོང་།</string>
+    <string name="batch_edit_updating_format">%1$d བདམས་ཟིན་པའི་རྣམ་གྲངས་གསར་སྒྱུར་བྱེད་བཞིན་འདུག</string>
+    <string name="batch_edit_toggle_hint">གཤམ་གྱི་གདམ་གསེས་བརྗེ་སྤོར་བྱས་ནས་བདམས་པའི་ཉོ་ཚོང་ལ་སྤྱད་འཐུས།</string>
+    <string name="batch_edit_date">ཚེས་གྲངས།</string>
+    <string name="batch_edit_pick_date">འདེམས་པའི་ཚེས་གྲངས།</string>
+    <string name="batch_edit_time">དུས་ཚོད།</string>
+    <string name="batch_edit_pick_time">འདེམས་པའི་དུས་ཚོད་</string>
+    <string name="batch_edit_category_subcategory">Category &amp;amp; Subcategory</string>
+    <string name="batch_edit_select_category">རིགས་འདེམས་སྒྲུག་བྱས་པ།</string>
+    <string name="batch_edit_choose">གདམ་གསེས་བྱས་པ།</string>
+    <string name="batch_edit_amount">གྲངས་འབོར།</string>
+    <string name="batch_edit_set_amount">གྲངས་ཀ་གཏན་འབེབས།</string>
+    <string name="batch_edit_note_description">མཆན་འགྲེལ། / འགྲེལ་བཤད།</string>
+    <string name="batch_edit_note_placeholder">བདམས་ཟིན་པའི་རྣམ་གྲངས་ལ་མཆན་འགྲེལ་འགོད་དགོས།</string>
+    <string name="batch_edit_apply_format">%1$d ཉོ་འཚོང་ལ་སྤྱད་འཐུས།</string>
+    <string name="batch_edit_check_options">གོང་གི་གདམ་གསེས་ལ་ཞིབ་བཤེར་བྱས་ནས་རྩོམ་སྒྲིག་བྱེད་དགོས།</string>
+    <string name="batch_edit_set_batch_amount">ཁག་བགོས་ཀྱི་གྲངས་ཀ་གཏན་འབེབས།</string>
+    <string name="edit_selected_transactions">བདམས་ཟིན་པའི་ཉོ་འཚོང་རྩོམ་སྒྲིག་པ།</string>
+    <string name="edit_selected_count_format">རྩོམ་སྒྲིག་ — %1$d</string>
 </resources>

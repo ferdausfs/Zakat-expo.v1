@@ -1068,4 +1068,24 @@
         <item quantity="one">%1$d i mālama ʻia</item>
         <item quantity="other">%1$d i mālama ʻia</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Nā Kūʻai Hoʻoponopono Puʻupuʻu</string>
+    <string name="batch_edit_updating_format">Hōʻano hou i %1$d mau mea i koho ʻia</string>
+    <string name="batch_edit_toggle_hint">E hoʻololi i nā koho ma lalo nei e hoʻopili i nā kālepa i koho ʻia:</string>
+    <string name="batch_edit_date">Lā</string>
+    <string name="batch_edit_pick_date">La koho</string>
+    <string name="batch_edit_time">Manawa</string>
+    <string name="batch_edit_pick_time">Koho manawa</string>
+    <string name="batch_edit_category_subcategory">Māhele &amp;amp; Māhele</string>
+    <string name="batch_edit_select_category">E koho i ka wae</string>
+    <string name="batch_edit_choose">E koho</string>
+    <string name="batch_edit_amount">Ka nui</string>
+    <string name="batch_edit_set_amount">E hoʻonoho i ka nui</string>
+    <string name="batch_edit_note_description">Nānā / wehewehe</string>
+    <string name="batch_edit_note_placeholder">E hoʻokomo i ka memo ma nā mea i koho ʻia</string>
+    <string name="batch_edit_apply_format">E noi i ka %1$d Nā Kūʻai</string>
+    <string name="batch_edit_check_options">E nānā i nā koho ma luna e hoʻoponopono</string>
+    <string name="batch_edit_set_batch_amount">E hoʻonoho i ka nui o ka hui</string>
+    <string name="edit_selected_transactions">Hoʻoponopono i nā hana i koho ʻia</string>
+    <string name="edit_selected_count_format">Hoʻoponopono — %1$d</string>
 </resources>

@@ -1073,4 +1073,24 @@
         <item quantity="one">%1$d αποθηκεύτηκε</item>
         <item quantity="other">%1$d αποθηκεύτηκαν</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Μαζική Επεξεργασία Συναλλαγών</string>
+    <string name="batch_edit_updating_format">Ενημέρωση %1$d επιλεγμένων στοιχείων</string>
+    <string name="batch_edit_toggle_hint">Εναλλαγή επιλογών παρακάτω για εφαρμογή σε επιλεγμένες συναλλαγές:</string>
+    <string name="batch_edit_date">Ημερομηνία</string>
+    <string name="batch_edit_pick_date">Επιλογή Ημερομηνίας</string>
+    <string name="batch_edit_time">Ώρα</string>
+    <string name="batch_edit_pick_time">Επιλογή Ώρας</string>
+    <string name="batch_edit_category_subcategory">Κατηγορία &amp;amp; Υποκατηγορία</string>
+    <string name="batch_edit_select_category">Επιλέξτε Κατηγορία</string>
+    <string name="batch_edit_choose">Επιλέξτε</string>
+    <string name="batch_edit_amount">Ποσό</string>
+    <string name="batch_edit_set_amount">Ορισμός Ποσού</string>
+    <string name="batch_edit_note_description">Σημείωση / Περιγραφή</string>
+    <string name="batch_edit_note_placeholder">Εισαγάγετε σημείωση για τα επιλεγμένα στοιχεία</string>
+    <string name="batch_edit_apply_format">Εφαρμογή σε %1$d Συναλλαγές</string>
+    <string name="batch_edit_check_options">Ελέγξτε τις επιλογές παραπάνω για να επεξεργαστείτε</string>
+    <string name="batch_edit_set_batch_amount">Ορισμός Μαζικού Ποσού</string>
+    <string name="edit_selected_transactions">Επεξεργασία Επιλεγμένων Συναλλαγών</string>
+    <string name="edit_selected_count_format">Επεξεργασία — %1$d</string>
 </resources>

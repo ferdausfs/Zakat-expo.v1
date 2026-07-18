@@ -35,6 +35,8 @@ import java.math.BigDecimal
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
@@ -222,6 +224,16 @@ class TransactionsViewModel @Inject constructor(
     val subcategories: StateFlow<Map<String, SubcategoryEntity>> = subcategoryRepository.getAllSubcategories()
         .map { subcategoryList ->
             subcategoryList.associateBy { it.name }
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyMap()
+        )
+
+    val allSubcategoriesByCategoryId: StateFlow<Map<Long, List<SubcategoryEntity>>> = subcategoryRepository.getAllSubcategories()
+        .map { subcategoryList ->
+            subcategoryList.groupBy { it.categoryId }
         }
         .stateIn(
             scope = viewModelScope,
@@ -564,6 +576,84 @@ class TransactionsViewModel @Inject constructor(
     
     fun clearDeletedTransactions() {
         _deletedTransactions.value = null
+    }
+
+    fun selectTransactionSet(ids: Set<Long>) {
+        _selectedTransactionIds.value = ids
+    }
+
+    fun batchUpdateTransactions(
+        selectedIds: Set<Long>,
+        newDate: LocalDate?,
+        newTime: LocalTime?,
+        newCategory: String?,
+        newSubcategory: String?,
+        newAmount: BigDecimal?,
+        newNote: String?,
+        onComplete: () -> Unit = {}
+    ) {
+        viewModelScope.launch {
+            val currentTransactions = _uiState.value.transactions.filter { it.id in selectedIds }
+            if (currentTransactions.isEmpty()) {
+                onComplete()
+                return@launch
+            }
+
+            for (txn in currentTransactions) {
+                val oldDateTime = txn.dateTime ?: LocalDateTime.now()
+                val targetDate = newDate ?: oldDateTime.toLocalDate()
+                val targetTime = newTime ?: oldDateTime.toLocalTime()
+                val updatedDateTime = LocalDateTime.of(targetDate, targetTime)
+
+                val updatedCategory = newCategory ?: txn.category
+                val updatedSubcategory = if (newCategory != null) newSubcategory else txn.subcategory
+                val updatedAmount = newAmount ?: txn.amount
+                val updatedDescription = if (newNote != null) {
+                    if (newNote.isBlank()) null else newNote.trim()
+                } else {
+                    txn.description
+                }
+
+                val updatedTxn = txn.copy(
+                    dateTime = updatedDateTime,
+                    category = updatedCategory,
+                    subcategory = updatedSubcategory,
+                    amount = updatedAmount,
+                    description = updatedDescription,
+                    updatedAt = LocalDateTime.now()
+                )
+
+                transactionRepository.updateTransaction(updatedTxn)
+
+                if (newAmount != null && newAmount != txn.amount && txn.bankName != null && txn.accountNumber != null) {
+                    val bankName = txn.bankName
+                    val accountLast4 = txn.accountNumber
+                    val timestamp = updatedDateTime
+
+                    val oldEffect = balanceEffect(txn.amount, txn.transactionType)
+                    val newEffect = balanceEffect(updatedAmount, txn.transactionType)
+
+                    val linkedEntry = accountBalanceRepository.getBalanceByTransactionId(txn.id)
+                    if (linkedEntry != null) {
+                        val newBalance = (linkedEntry.balance - oldEffect + newEffect).max(BigDecimal.ZERO)
+                        accountBalanceRepository.updateBalance(linkedEntry.copy(balance = newBalance))
+                        accountBalanceRepository.recalculateBalancesAfter(bankName, accountLast4, timestamp, newBalance)
+                    }
+                }
+            }
+
+            _selectedTransactionIds.value = emptySet()
+            _selectionMode.value = false
+            onComplete()
+        }
+    }
+
+    private fun balanceEffect(amount: BigDecimal, type: TransactionType): BigDecimal {
+        return when (type) {
+            TransactionType.INCOME, TransactionType.CREDIT -> amount
+            TransactionType.EXPENSE, TransactionType.INVESTMENT -> amount.negate()
+            else -> BigDecimal.ZERO
+        }
     }
 
     fun resetFilters() {

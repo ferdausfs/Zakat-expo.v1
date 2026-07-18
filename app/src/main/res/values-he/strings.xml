@@ -1089,4 +1089,24 @@
         <item quantity="many">%1$d saved</item>
         <item quantity="other">%1$d נשמרים</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">ערוך עסקאות בכמויות</string>
+    <string name="batch_edit_updating_format">עדכון %1$d פריטים שנבחרו</string>
+    <string name="batch_edit_toggle_hint">החלף אפשרויות למטה כדי ליישם על העסקאות שנבחרו:</string>
+    <string name="batch_edit_date">תאריך</string>
+    <string name="batch_edit_pick_date">בחר תאריך</string>
+    <string name="batch_edit_time">שעה</string>
+    <string name="batch_edit_pick_time">בחר שעה</string>
+    <string name="batch_edit_category_subcategory">קטגוריה ותת-קטגוריה</string>
+    <string name="batch_edit_select_category">בחר קטגוריה</string>
+    <string name="batch_edit_choose">בחר</string>
+    <string name="batch_edit_amount">סכום</string>
+    <string name="batch_edit_set_amount">הגדר סכום</string>
+    <string name="batch_edit_note_description">הערה / תיאור</string>
+    <string name="batch_edit_note_placeholder">הזן הערה עבור הפריטים שנבחרו</string>
+    <string name="batch_edit_apply_format">החל על %1$d עסקאות</string>
+    <string name="batch_edit_check_options">סמן אפשרויות למעלה כדי לערוך</string>
+    <string name="batch_edit_set_batch_amount">הגדר סכום בכמות</string>
+    <string name="edit_selected_transactions">ערוך עסקאות שנבחרו</string>
+    <string name="edit_selected_count_format">עריכה — %1$d</string>
 </resources>

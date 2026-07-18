@@ -1089,4 +1089,24 @@
         <item quantity="many">%1$d saved</item>
         <item quantity="other">%1$d сохранено</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Массовое редактирование транзакций</string>
+    <string name="batch_edit_updating_format">Обновление %1$d выбранных элементов</string>
+    <string name="batch_edit_toggle_hint">Переключите параметры ниже, чтобы применить к выбранным транзакциям:</string>
+    <string name="batch_edit_date">Дата</string>
+    <string name="batch_edit_pick_date">Выбрать дату</string>
+    <string name="batch_edit_time">Время</string>
+    <string name="batch_edit_pick_time">Выбрать время</string>
+    <string name="batch_edit_category_subcategory">Категория и подкатегория</string>
+    <string name="batch_edit_select_category">Выбрать категорию</string>
+    <string name="batch_edit_choose">Выбрать</string>
+    <string name="batch_edit_amount">Сумма</string>
+    <string name="batch_edit_set_amount">Установить сумму</string>
+    <string name="batch_edit_note_description">Примечание / Описание</string>
+    <string name="batch_edit_note_placeholder">Введите примечание для выбранных элементов</string>
+    <string name="batch_edit_apply_format">Применить к %1$d транзакциям</string>
+    <string name="batch_edit_check_options">Отметьте параметры выше для редактирования</string>
+    <string name="batch_edit_set_batch_amount">Установить массовую сумму</string>
+    <string name="edit_selected_transactions">Редактировать выбранные транзакции</string>
+    <string name="edit_selected_count_format">Редактировать — %1$d</string>
 </resources>

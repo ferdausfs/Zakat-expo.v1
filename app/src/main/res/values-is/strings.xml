@@ -1073,4 +1073,24 @@ Grænn (+) = Sparnaður | Rauður (-) = Ofureyðsla</string>
         <item quantity="one">%1$d vistað</item>
         <item quantity="other">%1$d vistað</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Breiðsmiðsbreyting viðskipta</string>
+    <string name="batch_edit_updating_format">Uppfæri %1$d valda atriði</string>
+    <string name="batch_edit_toggle_hint">Breyta valkostum hér að neðan til að beita á valdar færslur:</string>
+    <string name="batch_edit_date">Dagsetning</string>
+    <string name="batch_edit_pick_date">Veldu dagsetningu</string>
+    <string name="batch_edit_time">Tími</string>
+    <string name="batch_edit_pick_time">Veldu tíma</string>
+    <string name="batch_edit_category_subcategory">Flokkur &amp;amp; Undirflokkur</string>
+    <string name="batch_edit_select_category">Veldu flokk</string>
+    <string name="batch_edit_choose">Velja</string>
+    <string name="batch_edit_amount">Upphæð</string>
+    <string name="batch_edit_set_amount">Stilla upphæð</string>
+    <string name="batch_edit_note_description">Athugasemd / Lýsing</string>
+    <string name="batch_edit_note_placeholder">Sláðu inn athugasemd fyrir valin atriði</string>
+    <string name="batch_edit_apply_format">Beita á %1$d færslur</string>
+    <string name="batch_edit_check_options">Hakkið við valkosti hér að ofan til að breyta</string>
+    <string name="batch_edit_set_batch_amount">Stilla heildarupphæð</string>
+    <string name="edit_selected_transactions">Breyta völdum færslum</string>
+    <string name="edit_selected_count_format">Breyta — %1$d</string>
 </resources>

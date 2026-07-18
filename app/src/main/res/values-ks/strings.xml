@@ -1073,4 +1073,24 @@
         <item quantity="one">٪1$d محفوظ</item>
         <item quantity="other">٪1$d محفوظ</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">بیچ ایڈیٹ ٹرانزیکشن</string>
+    <string name="batch_edit_updating_format">اپڈیٹ کَرُن ٪1$d ژارنہٕ آمٕتۍ چیٖز</string>
+    <string name="batch_edit_toggle_hint">ژارنہٕ آمٕتۍ لین دین منز لاگو کرنہٕ خٲطرٕ کٔرِو بۄنہٕ کَنہِ دِنہٕ آمٕتۍ آپشَن ٹوگل</string>
+    <string name="batch_edit_date">تٲریخ</string>
+    <string name="batch_edit_pick_date">تُلُن تٲریخ</string>
+    <string name="batch_edit_time">ٹایِم</string>
+    <string name="batch_edit_pick_time">تُلُن ٹایِم</string>
+    <string name="batch_edit_category_subcategory">زمرہٕ تہٕ ذیلی زمرہٕ</string>
+    <string name="batch_edit_select_category">زمرٕ ژٲرِو</string>
+    <string name="batch_edit_choose">ژٲر</string>
+    <string name="batch_edit_amount">رقم</string>
+    <string name="batch_edit_set_amount">رقم کَر سیٹ</string>
+    <string name="batch_edit_note_description">نوٹ / تفصیل</string>
+    <string name="batch_edit_note_placeholder">ژارنہٕ آمٕتۍ چیٖزَن منٛز نوٹ درٕج کٔرِو</string>
+    <string name="batch_edit_apply_format">٪1$d لین دین پیٹھ کٔرِو لاگو</string>
+    <string name="batch_edit_check_options">اؠڈِٹ کَرنہٕ خٲطرٕ کٔرِو بۄنہٕ کَنہِ دِنہٕ آمُ</string>
+    <string name="batch_edit_set_batch_amount">بیچ رقم کَر سیٹ</string>
+    <string name="edit_selected_transactions">ژارنہٕ آمٕتۍ لین دین کٔر ایڈٹ</string>
+    <string name="edit_selected_count_format">اؠڈِٹ — ٪1$d</string>
 </resources>

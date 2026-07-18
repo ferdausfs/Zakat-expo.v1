@@ -1070,4 +1070,24 @@ Dette kan ta noen sekunder avhengig av meldingshistorikken din.</string>
         <item quantity="one">%1$d lagret</item>
         <item quantity="other">%1$d lagret</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Batch Rediger Transaksjoner</string>
+    <string name="batch_edit_updating_format">Oppdaterer %1$d valgte elementer</string>
+    <string name="batch_edit_toggle_hint">Slå på alternativene nedenfor for å bruke på valgte transaksjoner:</string>
+    <string name="batch_edit_date">Dato</string>
+    <string name="batch_edit_pick_date">Velg Dato</string>
+    <string name="batch_edit_time">Tid</string>
+    <string name="batch_edit_pick_time">Velg Tid</string>
+    <string name="batch_edit_category_subcategory">Kategori &amp;amp; Underkategori</string>
+    <string name="batch_edit_select_category">Velg Kategori</string>
+    <string name="batch_edit_choose">Velg</string>
+    <string name="batch_edit_amount">Beløp</string>
+    <string name="batch_edit_set_amount">Sett Beløp</string>
+    <string name="batch_edit_note_description">Notat / Beskrivelse</string>
+    <string name="batch_edit_note_placeholder">Skriv inn notat på tvers av valgte elementer</string>
+    <string name="batch_edit_apply_format">Bruk på %1$d transaksjoner</string>
+    <string name="batch_edit_check_options">Merk alternativene ovenfor for å redigere</string>
+    <string name="batch_edit_set_batch_amount">Angi batchbeløp</string>
+    <string name="edit_selected_transactions">Rediger valgte transaksjoner</string>
+    <string name="edit_selected_count_format">Rediger — %1$d</string>
 </resources>

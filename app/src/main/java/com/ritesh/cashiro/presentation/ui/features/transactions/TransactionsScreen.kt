@@ -78,16 +78,23 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import android.view.HapticFeedbackConstants
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.ritesh.cashiro.R
 import com.ritesh.cashiro.presentation.common.TimePeriod
@@ -103,12 +110,14 @@ import com.ritesh.cashiro.presentation.ui.components.ListItemPosition
 import com.ritesh.cashiro.presentation.ui.components.LoadingCircle
 import com.ritesh.cashiro.presentation.ui.components.SearchBarBox
 import com.ritesh.cashiro.presentation.ui.components.SectionHeader
+import com.ritesh.cashiro.presentation.ui.components.BatchEditTransactionsBottomSheet
 import com.ritesh.cashiro.presentation.ui.components.TransactionItem
 import com.ritesh.cashiro.presentation.ui.components.TransactionTotalsCard
 import com.ritesh.cashiro.presentation.ui.components.toShape
 import com.ritesh.cashiro.presentation.ui.features.categories.NavigationContent
 import com.ritesh.cashiro.presentation.ui.icons.Bag
 import com.ritesh.cashiro.presentation.ui.icons.CloseCircle
+import com.ritesh.cashiro.presentation.ui.icons.Edit2
 import com.ritesh.cashiro.presentation.ui.icons.Folder2
 import com.ritesh.cashiro.presentation.ui.icons.Iconax
 import com.ritesh.cashiro.presentation.ui.icons.Menu
@@ -141,6 +150,7 @@ fun SharedTransitionScope.TransactionsScreen(
     blurEffects: Boolean
 ) {
     val context = LocalContext.current
+    val view = LocalView.current
     val uiState by transactionsViewModel.uiState.collectAsState()
     val searchQuery by transactionsViewModel.searchQuery.collectAsState()
     val selectedPeriod by transactionsViewModel.selectedPeriod.collectAsState()
@@ -149,6 +159,7 @@ fun SharedTransitionScope.TransactionsScreen(
     val deletedTransaction by transactionsViewModel.deletedTransaction.collectAsState()
     val categoriesMap by transactionsViewModel.categories.collectAsState()
     val subcategoriesMap by transactionsViewModel.subcategories.collectAsState()
+    val allSubcategoriesByCategoryId by transactionsViewModel.allSubcategoriesByCategoryId.collectAsState()
     val accountsMap by transactionsViewModel.accountsMap.collectAsState()
     val filteredTotals by transactionsViewModel.filteredTotals.collectAsState()
     val currencyGroupedTotals by transactionsViewModel.currencyGroupedTotals.collectAsState()
@@ -170,6 +181,7 @@ fun SharedTransitionScope.TransactionsScreen(
     var showDateRangePicker by remember { mutableStateOf(false) }
     var showCurrencySheet by remember { mutableStateOf(false) }
     var showDeleteConfirmation by remember { mutableStateOf(false) }
+    var showBatchEditSheet by remember { mutableStateOf(false) }
 
     val hazeState = remember { HazeState() }
 
@@ -416,12 +428,13 @@ fun SharedTransitionScope.TransactionsScreen(
                 }
             ) },
     ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .hazeSource(state = hazeState)
-                .padding(top = paddingValues.calculateTopPadding())
-        ) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .hazeSource(state = hazeState)
+                    .padding(top = paddingValues.calculateTopPadding())
+            ) {
             // Search Bar with Sort Button
             Row(
                 modifier = Modifier
@@ -750,8 +763,11 @@ fun SharedTransitionScope.TransactionsScreen(
                                         isSelected = selectedTransactionIds.contains(transaction.id),
                                         onSelectionToggle = { transactionsViewModel.toggleTransactionSelection(transaction.id) },
                                         onLongClick = {
+                                            view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
                                             if (!selectionMode) {
                                                 transactionsViewModel.toggleSelectionMode()
+                                                transactionsViewModel.selectTransactionSet(setOf(transaction.id))
+                                            } else {
                                                 transactionsViewModel.toggleTransactionSelection(transaction.id)
                                             }
                                         },
@@ -761,6 +777,52 @@ fun SharedTransitionScope.TransactionsScreen(
                                 }
                             }
                         }
+                    }
+                }
+            }
+            }
+
+            // Floating Pill Shape Button for Batch Edit
+            AnimatedVisibility(
+                visible = selectionMode && selectedTransactionIds.isNotEmpty(),
+                enter = fadeIn(spring(stiffness = Spring.StiffnessLow)) + slideInVertically(spring(stiffness = Spring.StiffnessLow)) { it / 2 },
+                exit = fadeOut(spring(stiffness = Spring.StiffnessLow)) + slideOutVertically(spring(stiffness = Spring.StiffnessLow)) { it / 2 },
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 92.dp)
+                    .navigationBarsPadding()
+                    .zIndex(10f)
+            ) {
+                Surface(
+                    onClick = {
+                        view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+                        showBatchEditSheet = true
+                    },
+                    shape = RoundedCornerShape(32.dp),
+                    color = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    shadowElevation = 8.dp,
+                    tonalElevation = 6.dp,
+                    modifier = Modifier
+                        .padding(horizontal = Spacing.md)
+                        .height(48.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = Spacing.lg, vertical = Spacing.sm),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
+                    ) {
+                        Icon(
+                            imageVector = Iconax.Edit2,
+                            contentDescription = stringResource(R.string.edit_selected_transactions),
+                            modifier = Modifier.size(20.dp),
+                            tint = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                        Text(
+                            text = stringResource(R.string.edit_selected_count_format, selectedTransactionIds.size),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
                     }
                 }
             }
@@ -813,6 +875,29 @@ fun SharedTransitionScope.TransactionsScreen(
         TransactionsFilterBottomSheet(
             viewModel = transactionsViewModel,
             onDismiss = { showFilterSheet = false }
+        )
+    }
+
+    if (showBatchEditSheet) {
+        BatchEditTransactionsBottomSheet(
+            selectedIdsCount = selectedTransactionIds.size,
+            categories = categoriesMap,
+            subcategoriesMap = allSubcategoriesByCategoryId,
+            onDismiss = { showBatchEditSheet = false },
+            onApply = { newDate, newTime, newCategory, newSubcategory, newAmount, newNote ->
+                transactionsViewModel.batchUpdateTransactions(
+                    selectedIds = selectedTransactionIds,
+                    newDate = newDate,
+                    newTime = newTime,
+                    newCategory = newCategory,
+                    newSubcategory = newSubcategory,
+                    newAmount = newAmount,
+                    newNote = newNote
+                )
+                transactionsViewModel.toggleSelectionMode()
+            },
+            blurEffects = blurEffects,
+            hazeState = hazeState
         )
     }
 }

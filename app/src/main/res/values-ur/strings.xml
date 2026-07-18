@@ -1073,4 +1073,24 @@
         <item quantity="one">%1$d محفوظ کیا گیا</item>
         <item quantity="other">%1$d محفوظ کیا گیا</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">بیچ میں لین دین کی تدوین</string>
+    <string name="batch_edit_updating_format">منتخب کردہ %1$d آئٹمز کو اپ ڈیٹ کیا جا رہا ہے</string>
+    <string name="batch_edit_toggle_hint">نیچے کے اختیارات کو منتخب شدہ لین دین پر لگانے کے لیے ٹوگل کریں:</string>
+    <string name="batch_edit_date">تاریخ</string>
+    <string name="batch_edit_pick_date">تاریخ منتخب کریں</string>
+    <string name="batch_edit_time">وقت</string>
+    <string name="batch_edit_pick_time">وقت منتخب کریں</string>
+    <string name="batch_edit_category_subcategory">زمرہ اور ذیلی زمرہ</string>
+    <string name="batch_edit_select_category">زمرہ منتخب کریں</string>
+    <string name="batch_edit_choose">چنیں</string>
+    <string name="batch_edit_amount">رقم</string>
+    <string name="batch_edit_set_amount">رقم مقرر کریں</string>
+    <string name="batch_edit_note_description">نوٹ / تفصیل</string>
+    <string name="batch_edit_note_placeholder">منتخب شدہ آئٹمز پر نوٹ درج کریں</string>
+    <string name="batch_edit_apply_format">%1$d لین دین پر اطلاق کریں</string>
+    <string name="batch_edit_check_options">اوپر کے اختیارات منتخب کریں تاکہ تدوین کی جا سکے</string>
+    <string name="batch_edit_set_batch_amount">بیچ رقم مقرر کریں</string>
+    <string name="edit_selected_transactions">منتخب شدہ لین دین کی تدوین کریں</string>
+    <string name="edit_selected_count_format">تدوین — %1$d</string>
 </resources>

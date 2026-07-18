@@ -1064,4 +1064,24 @@ Ini mungkin memerlukan beberapa detik tergantung pada riwayat pesan Anda.</strin
     <plurals name="saved_transactions_format">
         <item quantity="other">%1$d tersimpan</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Edit Transaksi Massal</string>
+    <string name="batch_edit_updating_format">Memperbarui %1$d item terpilih</string>
+    <string name="batch_edit_toggle_hint">Toggle opsi di bawah untuk diterapkan pada transaksi yang dipilih:</string>
+    <string name="batch_edit_date">Tanggal</string>
+    <string name="batch_edit_pick_date">Pilih Tanggal</string>
+    <string name="batch_edit_time">Waktu</string>
+    <string name="batch_edit_pick_time">Pilih Waktu</string>
+    <string name="batch_edit_category_subcategory">Kategori &amp;amp; Subkategori</string>
+    <string name="batch_edit_select_category">Pilih Kategori</string>
+    <string name="batch_edit_choose">Pilih</string>
+    <string name="batch_edit_amount">Jumlah</string>
+    <string name="batch_edit_set_amount">Tetapkan Jumlah</string>
+    <string name="batch_edit_note_description">Catatan / Deskripsi</string>
+    <string name="batch_edit_note_placeholder">Masukkan catatan untuk item yang dipilih</string>
+    <string name="batch_edit_apply_format">Terapkan ke %1$d Transaksi</string>
+    <string name="batch_edit_check_options">Centang Opsi di Atas untuk Mengedit</string>
+    <string name="batch_edit_set_batch_amount">Tetapkan Jumlah Batch</string>
+    <string name="edit_selected_transactions">Edit Transaksi yang Dipilih</string>
+    <string name="edit_selected_count_format">Edit — %1$d</string>
 </resources>

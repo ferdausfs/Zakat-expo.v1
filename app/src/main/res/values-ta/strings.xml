@@ -1073,4 +1073,24 @@
         <item quantity="one">%1$d சேமிக்கப்பட்டது</item>
         <item quantity="other">%1$d சேமிக்கப்பட்டது</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">பேச்சு தொகுக்கப்பட்ட பரிவர்த்தனைகள்</string>
+    <string name="batch_edit_updating_format">%1$d தேர்ந்தெடுக்கப்பட்ட பொருட்களை புதுப்பிக்கிறது</string>
+    <string name="batch_edit_toggle_hint">தேர்ந்தெடுக்கப்பட்ட பரிவர்த்தனைகளில் பிரயோகிக்க கீழ்க்கண்ட விருப்பங்களை மாற்றவும்:</string>
+    <string name="batch_edit_date">தேதி</string>
+    <string name="batch_edit_pick_date">தேதியைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="batch_edit_time">நேரம்</string>
+    <string name="batch_edit_pick_time">நேரத்தைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="batch_edit_category_subcategory">வகை மற்றும் துணை வகை</string>
+    <string name="batch_edit_select_category">வகையைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="batch_edit_choose">தேர்ந்தெடுக்கவும்</string>
+    <string name="batch_edit_amount">தொகை</string>
+    <string name="batch_edit_set_amount">தொகையை அமைக்கவும்</string>
+    <string name="batch_edit_note_description">குறிப்பு / விளக்கம்</string>
+    <string name="batch_edit_note_placeholder">தேர்ந்தெடுக்கப்பட்ட பொருட்களில் குறிப்பு வழங்கவும்</string>
+    <string name="batch_edit_apply_format">%1$d பரிவர்த்தனைகளில் பிரயோகிக்க</string>
+    <string name="batch_edit_check_options">திருத்த விருப்பங்களை மேலே தேர்ந்தெடுக்கவும்</string>
+    <string name="batch_edit_set_batch_amount">தொகுப்பு தொகையை அமைக்கவும்</string>
+    <string name="edit_selected_transactions">தேர்ந்தெற்ற பரிவர்த்தனைகளைத் திருத்தவும்</string>
+    <string name="edit_selected_count_format">திருத்தம் — %1$d</string>
 </resources>

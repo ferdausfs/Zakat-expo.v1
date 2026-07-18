@@ -1070,4 +1070,24 @@ Isso pode levar alguns segundos dependendo do seu histórico de mensagens.</stri
         <item quantity="one">%1$d economizado</item>
         <item quantity="other">%1$d economizado</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Transações de Edição em Lote</string>
+    <string name="batch_edit_updating_format">Atualização de %1$d itens selecionados</string>
+    <string name="batch_edit_toggle_hint">Alterne as opções abaixo para aplicar em transações selecionadas:</string>
+    <string name="batch_edit_date">Data</string>
+    <string name="batch_edit_pick_date">Data de Escolha</string>
+    <string name="batch_edit_time">Tempo</string>
+    <string name="batch_edit_pick_time">Hora da Escolha</string>
+    <string name="batch_edit_category_subcategory">Categoria &amp;amp; Subcategoria</string>
+    <string name="batch_edit_select_category">Selecione a categoria</string>
+    <string name="batch_edit_choose">Escolha</string>
+    <string name="batch_edit_amount">Valor</string>
+    <string name="batch_edit_set_amount">Valor Definido</string>
+    <string name="batch_edit_note_description">Nota / Descrição</string>
+    <string name="batch_edit_note_placeholder">Inserir nota nos itens selecionados</string>
+    <string name="batch_edit_apply_format">Aplicar a %1$d Transações</string>
+    <string name="batch_edit_check_options">Marque as opções acima para editar</string>
+    <string name="batch_edit_set_batch_amount">Definir valor do lote</string>
+    <string name="edit_selected_transactions">Editar transações selecionadas</string>
+    <string name="edit_selected_count_format">Editar — %1$d</string>
 </resources>

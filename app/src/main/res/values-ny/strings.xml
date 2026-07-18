@@ -1068,4 +1068,24 @@
         <item quantity="one">%1$d zasungidwa</item>
         <item quantity="other">%1$d zasungidwa</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Kusintha kwa Batch Transactions</string>
+    <string name="batch_edit_updating_format">Kusintha %1$d zinthu zosankhidwa</string>
+    <string name="batch_edit_toggle_hint">Sinthani zosankha pansipa kuti mugwiritse ntchito pazosankha zosankhidwa:</string>
+    <string name="batch_edit_date">Tsiku</string>
+    <string name="batch_edit_pick_date">Sankhani Tsiku</string>
+    <string name="batch_edit_time">Nthawi</string>
+    <string name="batch_edit_pick_time">Sankhani Nthawi</string>
+    <string name="batch_edit_category_subcategory">Gulu &amp;amp; Kagawo kakang\'ono</string>
+    <string name="batch_edit_select_category">Sankhani Gulu</string>
+    <string name="batch_edit_choose">Sankhani</string>
+    <string name="batch_edit_amount">Ndalama</string>
+    <string name="batch_edit_set_amount">Ikani Ndalama</string>
+    <string name="batch_edit_note_description">Chidziwitso / Kufotokozera</string>
+    <string name="batch_edit_note_placeholder">Lowetsani zolemba pazosankha</string>
+    <string name="batch_edit_apply_format">Lemberani ku %1$d Zochita</string>
+    <string name="batch_edit_check_options">Chongani Zosankha Pamwambapa Kuti Musinthe</string>
+    <string name="batch_edit_set_batch_amount">Khazikitsani Mtengo wa Batch</string>
+    <string name="edit_selected_transactions">Sinthani Zochita Zosankhidwa</string>
+    <string name="edit_selected_count_format">Sinthani — %1$d</string>
 </resources>

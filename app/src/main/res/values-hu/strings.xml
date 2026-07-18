@@ -1073,4 +1073,24 @@ Ez néhány másodpercet vehet igénybe az üzenettörténetétől függően.</s
         <item quantity="one">%1$d mentve</item>
         <item quantity="other">%1$d mentve</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Tranzakciók Tömeges Szerkesztése</string>
+    <string name="batch_edit_updating_format">Frissítés %1$d kiválasztott elem</string>
+    <string name="batch_edit_toggle_hint">Az alábbi opciók bekapcsolásával a kiválasztott tranzakciókra alkalmazhatja:</string>
+    <string name="batch_edit_date">Dátum</string>
+    <string name="batch_edit_pick_date">Dátum Kiválasztása</string>
+    <string name="batch_edit_time">Idő</string>
+    <string name="batch_edit_pick_time">Idő Kiválasztása</string>
+    <string name="batch_edit_category_subcategory">Kategória &amp;amp; Alkategória</string>
+    <string name="batch_edit_select_category">Kategória Kiválasztása</string>
+    <string name="batch_edit_choose">Választ</string>
+    <string name="batch_edit_amount">Összeg</string>
+    <string name="batch_edit_set_amount">Összeg Beállítása</string>
+    <string name="batch_edit_note_description">Megjegyzés / Leírás</string>
+    <string name="batch_edit_note_placeholder">Jegyzet beírása a kiválasztott tételekhez</string>
+    <string name="batch_edit_apply_format">Alkalmazás %1$d tranzakcióra</string>
+    <string name="batch_edit_check_options">Jelölje be a fenti lehetőségeket a szerkesztéshez</string>
+    <string name="batch_edit_set_batch_amount">Csoportos összeg beállítása</string>
+    <string name="edit_selected_transactions">Kiválasztott tranzakciók szerkesztése</string>
+    <string name="edit_selected_count_format">Szerkesztés — %1$d</string>
 </resources>

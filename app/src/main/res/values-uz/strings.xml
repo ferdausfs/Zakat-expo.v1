@@ -1073,4 +1073,24 @@ Bu xabar tarixingizga qarab bir necha soniya davom etishi mumkin.</string>
         <item quantity="one">%1$d saqlandi</item>
         <item quantity="other">%1$d saqlandi</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Batch Edit Transactions</string>
+    <string name="batch_edit_updating_format">Tanlangan %1$d elementlar yangilanmoqda</string>
+    <string name="batch_edit_toggle_hint">Pastdagi variantlarni yoqish tanlangan tranzaksiyalarda qo\'llanadi:</string>
+    <string name="batch_edit_date">Sana</string>
+    <string name="batch_edit_pick_date">Sanani tanlang</string>
+    <string name="batch_edit_time">Vaqt</string>
+    <string name="batch_edit_pick_time">Vaqtni tanlang</string>
+    <string name="batch_edit_category_subcategory">Kategoriya va Kichik kategoriya</string>
+    <string name="batch_edit_select_category">Kategoriya tanlang</string>
+    <string name="batch_edit_choose">Tanlash</string>
+    <string name="batch_edit_amount">Summa</string>
+    <string name="batch_edit_set_amount">Summani belgilang</string>
+    <string name="batch_edit_note_description">Izoh / Tavsif</string>
+    <string name="batch_edit_note_placeholder">Tanlangan elementlarda izoh kiriting</string>
+    <string name="batch_edit_apply_format">%1$d tranzaksiyalarga qo\'llash</string>
+    <string name="batch_edit_check_options">Yuqoridagi variantlarni tahrirlash uchun tekshiring</string>
+    <string name="batch_edit_set_batch_amount">Partiya miqdorini belgilang</string>
+    <string name="edit_selected_transactions">Tanlangan tranzaksiyalarni tahrirlash</string>
+    <string name="edit_selected_count_format">Tahrirlash — %1$d</string>
 </resources>

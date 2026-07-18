@@ -1089,4 +1089,24 @@ Môže to trvať niekoľko sekúnd v závislosti od vašej histórie správ.</st
         <item quantity="many">%1$d saved</item>
         <item quantity="other">%1$d uložené</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Hromadná úprava transakcií</string>
+    <string name="batch_edit_updating_format">Aktualizácia %1$d vybraných položiek</string>
+    <string name="batch_edit_toggle_hint">Prepnite možnosti nižšie, aby sa uplatnili na vybrané transakcie:</string>
+    <string name="batch_edit_date">Dátum</string>
+    <string name="batch_edit_pick_date">Vybrať dátum</string>
+    <string name="batch_edit_time">Čas</string>
+    <string name="batch_edit_pick_time">Vybrať čas</string>
+    <string name="batch_edit_category_subcategory">Kategória a podkategória</string>
+    <string name="batch_edit_select_category">Vybrať kategóriu</string>
+    <string name="batch_edit_choose">Vybrať</string>
+    <string name="batch_edit_amount">Suma</string>
+    <string name="batch_edit_set_amount">Nastaviť sumu</string>
+    <string name="batch_edit_note_description">Poznámka / Popis</string>
+    <string name="batch_edit_note_placeholder">Zadajte poznámku k vybraným položkám</string>
+    <string name="batch_edit_apply_format">Použiť na %1$d transakcií</string>
+    <string name="batch_edit_check_options">Skontrolujte možnosti vyššie na úpravu</string>
+    <string name="batch_edit_set_batch_amount">Nastaviť hromadnú sumu</string>
+    <string name="edit_selected_transactions">Upraviť vybrané transakcie</string>
+    <string name="edit_selected_count_format">Upraviť — %1$d</string>
 </resources>

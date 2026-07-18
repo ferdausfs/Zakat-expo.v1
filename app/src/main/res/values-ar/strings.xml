@@ -1105,4 +1105,24 @@
         <item quantity="many">%1$d saved</item>
         <item quantity="other">تم حفظ %1$d</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">تعديل الدفعة للمعاملات</string>
+    <string name="batch_edit_updating_format">جارٍ تحديث %1$d عناصر محددة</string>
+    <string name="batch_edit_toggle_hint">قم بتبديل الخيارات أدناه لتطبيقها على المعاملات المحددة:</string>
+    <string name="batch_edit_date">التاريخ</string>
+    <string name="batch_edit_pick_date">اختر التاريخ</string>
+    <string name="batch_edit_time">الوقت</string>
+    <string name="batch_edit_pick_time">اختر الوقت</string>
+    <string name="batch_edit_category_subcategory">الفئة والفئة الفرعية</string>
+    <string name="batch_edit_select_category">اختر الفئة</string>
+    <string name="batch_edit_choose">اختر</string>
+    <string name="batch_edit_amount">المبلغ</string>
+    <string name="batch_edit_set_amount">تعيين المبلغ</string>
+    <string name="batch_edit_note_description">ملاحظة / وصف</string>
+    <string name="batch_edit_note_placeholder">أدخل ملاحظة على العناصر المحددة</string>
+    <string name="batch_edit_apply_format">تطبيق على %1$d معاملات</string>
+    <string name="batch_edit_check_options">تحقق من الخيارات أعلاه للتعديل</string>
+    <string name="batch_edit_set_batch_amount">تعيين مبلغ الدفعة</string>
+    <string name="edit_selected_transactions">تعديل المعاملات المحددة</string>
+    <string name="edit_selected_count_format">تعديل — %1$d</string>
 </resources>

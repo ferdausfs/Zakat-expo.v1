@@ -1070,4 +1070,24 @@ Questo potrebbe richiedere qualche secondo a seconda della cronologia dei tuoi m
         <item quantity="one">%1$d salvato</item>
         <item quantity="other">%1$d salvato</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Modifica in blocco le transazioni</string>
+    <string name="batch_edit_updating_format">Aggiornamento di %1$d elementi selezionati</string>
+    <string name="batch_edit_toggle_hint">Attiva le opzioni sottostanti per applicarle alle transazioni selezionate:</string>
+    <string name="batch_edit_date">Data</string>
+    <string name="batch_edit_pick_date">Seleziona data</string>
+    <string name="batch_edit_time">Ora</string>
+    <string name="batch_edit_pick_time">Seleziona ora</string>
+    <string name="batch_edit_category_subcategory">Categoria e Sottocategoria</string>
+    <string name="batch_edit_select_category">Seleziona categoria</string>
+    <string name="batch_edit_choose">Scegli</string>
+    <string name="batch_edit_amount">Importo</string>
+    <string name="batch_edit_set_amount">Imposta importo</string>
+    <string name="batch_edit_note_description">Nota / Descrizione</string>
+    <string name="batch_edit_note_placeholder">Inserisci nota per gli elementi selezionati</string>
+    <string name="batch_edit_apply_format">Applica a %1$d Transazioni</string>
+    <string name="batch_edit_check_options">Controlla le Opzioni Sopra per Modificare</string>
+    <string name="batch_edit_set_batch_amount">Imposta Importo Lotto</string>
+    <string name="edit_selected_transactions">Modifica le Transazioni Selezionate</string>
+    <string name="edit_selected_count_format">Modifica — %1$d</string>
 </resources>

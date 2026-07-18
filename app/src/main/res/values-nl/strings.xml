@@ -1071,4 +1071,24 @@ Dit kan enkele seconden duren, afhankelijk van je berichtenhistorie.</string>
         <item quantity="one">%1$d opgeslagen</item>
         <item quantity="other">%1$d opgeslagen</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Batchbewerk transacties</string>
+    <string name="batch_edit_updating_format">Bezig met bijwerken van %1$d geselecteerde items</string>
+    <string name="batch_edit_toggle_hint">Schakel onderstaande opties in om toe te passen op geselecteerde transacties:</string>
+    <string name="batch_edit_date">Datum</string>
+    <string name="batch_edit_pick_date">Kies datum</string>
+    <string name="batch_edit_time">Tijd</string>
+    <string name="batch_edit_pick_time">Kies tijd</string>
+    <string name="batch_edit_category_subcategory">Categorie &amp;amp; subcategorie</string>
+    <string name="batch_edit_select_category">Selecteer categorie</string>
+    <string name="batch_edit_choose">Kiezen</string>
+    <string name="batch_edit_amount">Bedrag</string>
+    <string name="batch_edit_set_amount">Stel bedrag in</string>
+    <string name="batch_edit_note_description">Notitie / Beschrijving</string>
+    <string name="batch_edit_note_placeholder">Voer notitie in voor geselecteerde items</string>
+    <string name="batch_edit_apply_format">Toepassen op %1$d transacties</string>
+    <string name="batch_edit_check_options">Controleer de bovenstaande opties om te bewerken</string>
+    <string name="batch_edit_set_batch_amount">Batchbedrag instellen</string>
+    <string name="edit_selected_transactions">Geselecteerde transacties bewerken</string>
+    <string name="edit_selected_count_format">Bewerken — %1$d</string>
 </resources>

@@ -1073,4 +1073,24 @@ Mesaj tarixçənizdən asılı olaraq bir neçə saniyə çəkə bilər.</string
         <item quantity="one">%1$d qeyd edildi</item>
         <item quantity="other">%1$d qeyd edildi</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Əməliyyatları Toplu Redaktə Et</string>
+    <string name="batch_edit_updating_format">Seçilmiş %1$d elementi yenilənir</string>
+    <string name="batch_edit_toggle_hint">Aşağıdakı seçimləri dəyişdirərək seçilmiş əməliyyatlara tətbiq edin:</string>
+    <string name="batch_edit_date">Tarix</string>
+    <string name="batch_edit_pick_date">Tarixi Seç</string>
+    <string name="batch_edit_time">Vaxt</string>
+    <string name="batch_edit_pick_time">Vaxtı Seç</string>
+    <string name="batch_edit_category_subcategory">Kateqoriya və Alt kateqoriya</string>
+    <string name="batch_edit_select_category">Kateqoriya Seç</string>
+    <string name="batch_edit_choose">Seç</string>
+    <string name="batch_edit_amount">Məbləğ</string>
+    <string name="batch_edit_set_amount">Məbləği Təyin Et</string>
+    <string name="batch_edit_note_description">Qeyd / Təsvir</string>
+    <string name="batch_edit_note_placeholder">Seçilmiş maddələrə qeyd daxil edin</string>
+    <string name="batch_edit_apply_format">%1$d Əməliyyatlara tətbiq et</string>
+    <string name="batch_edit_check_options">Redaktə etmək üçün yuxarıdakı seçimləri yoxlayın</string>
+    <string name="batch_edit_set_batch_amount">Toplu miqdarı təyin edin</string>
+    <string name="edit_selected_transactions">Seçilmiş əməliyyatları redaktə et</string>
+    <string name="edit_selected_count_format">Redaktə et — %1$d</string>
 </resources>

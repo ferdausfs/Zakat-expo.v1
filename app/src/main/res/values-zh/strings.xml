@@ -1065,4 +1065,24 @@
     <plurals name="saved_transactions_format">
         <item quantity="other">已保存 %1$d</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">批量编辑交易</string>
+    <string name="batch_edit_updating_format">正在更新 %1$d 个已选择的项目</string>
+    <string name="batch_edit_toggle_hint">切换下面的选项以应用到所选交易:</string>
+    <string name="batch_edit_date">日期</string>
+    <string name="batch_edit_pick_date">选择日期</string>
+    <string name="batch_edit_time">时间</string>
+    <string name="batch_edit_pick_time">选择时间</string>
+    <string name="batch_edit_category_subcategory">类别与子类别</string>
+    <string name="batch_edit_select_category">选择类别</string>
+    <string name="batch_edit_choose">选择</string>
+    <string name="batch_edit_amount">金额</string>
+    <string name="batch_edit_set_amount">设置金额</string>
+    <string name="batch_edit_note_description">备注 / 描述</string>
+    <string name="batch_edit_note_placeholder">在所选项目中输入备注</string>
+    <string name="batch_edit_apply_format">应用到 %1$d 笔交易</string>
+    <string name="batch_edit_check_options">勾选上方选项以编辑</string>
+    <string name="batch_edit_set_batch_amount">设置批量金额</string>
+    <string name="edit_selected_transactions">编辑所选交易</string>
+    <string name="edit_selected_count_format">编辑 — %1$d</string>
 </resources>

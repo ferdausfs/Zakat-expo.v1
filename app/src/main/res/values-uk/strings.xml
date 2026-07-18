@@ -1088,4 +1088,24 @@
         <item quantity="many">%1$d saved</item>
         <item quantity="other">%1$d збережено</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Пакетне редагування транзакцій</string>
+    <string name="batch_edit_updating_format">Оновлення %1$d обраних елементів</string>
+    <string name="batch_edit_toggle_hint">Увімкніть параметри нижче для застосування до обраних транзакцій:</string>
+    <string name="batch_edit_date">Дата</string>
+    <string name="batch_edit_pick_date">Вибрати дату</string>
+    <string name="batch_edit_time">Час</string>
+    <string name="batch_edit_pick_time">Вибрати час</string>
+    <string name="batch_edit_category_subcategory">Категорія та підкатегорія</string>
+    <string name="batch_edit_select_category">Вибрати категорію</string>
+    <string name="batch_edit_choose">Обрати</string>
+    <string name="batch_edit_amount">Сума</string>
+    <string name="batch_edit_set_amount">Встановити суму</string>
+    <string name="batch_edit_note_description">Примітка / Опис</string>
+    <string name="batch_edit_note_placeholder">Введіть примітку для обраних елементів</string>
+    <string name="batch_edit_apply_format">Застосувати до %1$d транзакцій</string>
+    <string name="batch_edit_check_options">Виберіть параметри вище для редагування</string>
+    <string name="batch_edit_set_batch_amount">Встановити пакетну суму</string>
+    <string name="edit_selected_transactions">Редагувати обрані транзакції</string>
+    <string name="edit_selected_count_format">Редагувати — %1$d</string>
 </resources>

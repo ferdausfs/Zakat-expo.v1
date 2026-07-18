@@ -1073,4 +1073,24 @@ Hoc potest capere paucis secundis secundum tuum nuntium historiam.</string>
         <item quantity="one">%1$d servatum est</item>
         <item quantity="other">%1$d servata sunt</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Batch Edit Transactions</string>
+    <string name="batch_edit_updating_format">Updating %1$d selected items</string>
+    <string name="batch_edit_toggle_hint">Toggle options below to apply across selected transactions:</string>
+    <string name="batch_edit_date">Date</string>
+    <string name="batch_edit_pick_date">Pick Date</string>
+    <string name="batch_edit_time">Time</string>
+    <string name="batch_edit_pick_time">Pick Time</string>
+    <string name="batch_edit_category_subcategory">Category &amp;amp; Subcategory</string>
+    <string name="batch_edit_select_category">Select Category</string>
+    <string name="batch_edit_choose">Choose</string>
+    <string name="batch_edit_amount">Amount</string>
+    <string name="batch_edit_set_amount">Set Amount</string>
+    <string name="batch_edit_note_description">Note / Description</string>
+    <string name="batch_edit_note_placeholder">Enter note across selected items</string>
+    <string name="batch_edit_apply_format">Apply to %1$d Transactions</string>
+    <string name="batch_edit_check_options">Examina Optiones Supra ad Emendandum</string>
+    <string name="batch_edit_set_batch_amount">Constitue Quantitatem Fasciculi</string>
+    <string name="edit_selected_transactions">Emenda Selecta Transactiones</string>
+    <string name="edit_selected_count_format">Emenda — %1$d</string>
 </resources>

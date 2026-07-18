@@ -1078,4 +1078,24 @@ Acest proces poate dura câteva secunde, în funcție de istoricul mesajelor dvs
         <item quantity="few">%1$d salvat</item>
         <item quantity="other">%1$d salvat</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Editare în Lot a Tranzacțiilor</string>
+    <string name="batch_edit_updating_format">Actualizare %1$d articole selectate</string>
+    <string name="batch_edit_toggle_hint">Comutați opțiunile de mai jos pentru a le aplica pe tranzacțiile selectate:</string>
+    <string name="batch_edit_date">Data</string>
+    <string name="batch_edit_pick_date">Alege Data</string>
+    <string name="batch_edit_time">Ora</string>
+    <string name="batch_edit_pick_time">Alege Ora</string>
+    <string name="batch_edit_category_subcategory">Categorie și Subcategorie</string>
+    <string name="batch_edit_select_category">Selectează Categoria</string>
+    <string name="batch_edit_choose">Alege</string>
+    <string name="batch_edit_amount">Sumă</string>
+    <string name="batch_edit_set_amount">Setează Suma</string>
+    <string name="batch_edit_note_description">Notă / Descriere</string>
+    <string name="batch_edit_note_placeholder">Introdu nota pentru articolele selectate</string>
+    <string name="batch_edit_apply_format">Aplică la %1$d Tranzacții</string>
+    <string name="batch_edit_check_options">Bifează Opțiunile de Mai Sus pentru Editare</string>
+    <string name="batch_edit_set_batch_amount">Setează Suma pentru Lot</string>
+    <string name="edit_selected_transactions">Editează Tranzacțiile Selectate</string>
+    <string name="edit_selected_count_format">Editează — %1$d</string>
 </resources>

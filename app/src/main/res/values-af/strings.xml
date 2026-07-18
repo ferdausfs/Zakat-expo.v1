@@ -1073,4 +1073,24 @@ Dit mag \'n paar sekondes neem, afhangende van jou boodskapgeskiedenis.</string>
         <item quantity="one">%1$d gespaar</item>
         <item quantity="other">%1$d gespaar</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Bondelwysigingstransaksies</string>
+    <string name="batch_edit_updating_format">Opdatering van %1$d geselekteerde items</string>
+    <string name="batch_edit_toggle_hint">Skakel opsies hieronder om oor geselekteerde transaksies toe te pas:</string>
+    <string name="batch_edit_date">Datum</string>
+    <string name="batch_edit_pick_date">Keusedatum</string>
+    <string name="batch_edit_time">Tyd</string>
+    <string name="batch_edit_pick_time">Kiestyd</string>
+    <string name="batch_edit_category_subcategory">Kategorie &amp;amp; Subkategorie</string>
+    <string name="batch_edit_select_category">Geselekteerde Kategorie</string>
+    <string name="batch_edit_choose">Kies</string>
+    <string name="batch_edit_amount">Bedrag</string>
+    <string name="batch_edit_set_amount">Vasgestelde bedrag</string>
+    <string name="batch_edit_note_description">Nota / Beskrywing</string>
+    <string name="batch_edit_note_placeholder">Voer nota oor geselekteerde items in</string>
+    <string name="batch_edit_apply_format">Pas toe op %1$d Transaksies</string>
+    <string name="batch_edit_check_options">Merk opsies hierbo om te wysig</string>
+    <string name="batch_edit_set_batch_amount">Stel Bondelbedrag in</string>
+    <string name="edit_selected_transactions">Wysig Geselekteerde Transaksies</string>
+    <string name="edit_selected_count_format">Wysig — %1$d</string>
 </resources>

@@ -1086,4 +1086,24 @@ Może to potrwać kilka sekund w zależności od historii Twoich wiadomości.</s
         <item quantity="many">%1$d zapisano</item>
         <item quantity="other">%1$d zapisano</item>
     </plurals>
+    <!-- Batch Edit Transactions -->
+    <string name="batch_edit_title">Edytuj masowo transakcje</string>
+    <string name="batch_edit_updating_format">Aktualizowanie %1$d wybranych elementów</string>
+    <string name="batch_edit_toggle_hint">Przełącz poniższe opcje, aby zastosować je do wybranych transakcji:</string>
+    <string name="batch_edit_date">Data</string>
+    <string name="batch_edit_pick_date">Wybierz datę</string>
+    <string name="batch_edit_time">Czas</string>
+    <string name="batch_edit_pick_time">Wybierz czas</string>
+    <string name="batch_edit_category_subcategory">Kategoria i podkategoria</string>
+    <string name="batch_edit_select_category">Wybierz kategorię</string>
+    <string name="batch_edit_choose">Wybierz</string>
+    <string name="batch_edit_amount">Kwota</string>
+    <string name="batch_edit_set_amount">Ustaw kwotę</string>
+    <string name="batch_edit_note_description">Notatka / Opis</string>
+    <string name="batch_edit_note_placeholder">Wprowadź notatkę dla wybranych elementów</string>
+    <string name="batch_edit_apply_format">Zastosuj do %1$d transakcji</string>
+    <string name="batch_edit_check_options">Sprawdź powyższe opcje, aby edytować</string>
+    <string name="batch_edit_set_batch_amount">Ustaw ilość w partii</string>
+    <string name="edit_selected_transactions">Edytuj wybrane transakcje</string>
+    <string name="edit_selected_count_format">Edytuj — %1$d</string>
 </resources>
