@@ -188,8 +188,8 @@ class TransactionRepository @Inject constructor(
         val currentBalance = latestBalance.balance
 
         val reversedBalance = when (transaction.transactionType) {
-            TransactionType.CREDIT, TransactionType.INCOME -> currentBalance - transaction.amount
-            TransactionType.EXPENSE, TransactionType.INVESTMENT -> currentBalance + transaction.amount
+            TransactionType.CREDIT, TransactionType.INCOME, TransactionType.BORROWED -> currentBalance - transaction.amount
+            TransactionType.EXPENSE, TransactionType.INVESTMENT, TransactionType.LENT -> currentBalance + transaction.amount
             else -> currentBalance
         }.max(BigDecimal.ZERO)
 
@@ -218,8 +218,8 @@ class TransactionRepository @Inject constructor(
         val currentBalance = latestBalance.balance
 
         val newBalance = when (transaction.transactionType) {
-            TransactionType.CREDIT, TransactionType.INCOME -> currentBalance + transaction.amount
-            TransactionType.EXPENSE, TransactionType.INVESTMENT -> (currentBalance - transaction.amount).max(BigDecimal.ZERO)
+            TransactionType.CREDIT, TransactionType.INCOME, TransactionType.BORROWED -> currentBalance + transaction.amount
+            TransactionType.EXPENSE, TransactionType.INVESTMENT, TransactionType.LENT -> (currentBalance - transaction.amount).max(BigDecimal.ZERO)
             else -> currentBalance
         }
 
@@ -279,11 +279,11 @@ class TransactionRepository @Inject constructor(
 
         return transactionDao.getTransactionsBetweenDates(startDate, endDate).map { transactions ->
             val income =
-                    transactions.filter { it.transactionType == TransactionType.INCOME }.fold(
+                    transactions.filter { it.transactionType == TransactionType.INCOME || it.transactionType == TransactionType.BORROWED }.fold(
                                     BigDecimal.ZERO
                             ) { acc, transaction -> acc + transaction.amount }
             val expenses =
-                    transactions.filter { it.transactionType == TransactionType.EXPENSE }.fold(
+                    transactions.filter { it.transactionType == TransactionType.EXPENSE || it.transactionType == TransactionType.LENT }.fold(
                                     BigDecimal.ZERO
                             ) { acc, transaction -> acc + transaction.amount }
             MonthlyBreakdown(total = income - expenses, income = income, expenses = expenses)
@@ -306,11 +306,11 @@ class TransactionRepository @Inject constructor(
 
         return transactionDao.getTransactionsBetweenDates(startDate, endDate).map { transactions ->
             val income =
-                    transactions.filter { it.transactionType == TransactionType.INCOME }.fold(
+                    transactions.filter { it.transactionType == TransactionType.INCOME || it.transactionType == TransactionType.BORROWED }.fold(
                                     BigDecimal.ZERO
                             ) { acc, transaction -> acc + transaction.amount }
             val expenses =
-                    transactions.filter { it.transactionType == TransactionType.EXPENSE }.fold(
+                    transactions.filter { it.transactionType == TransactionType.EXPENSE || it.transactionType == TransactionType.LENT }.fold(
                                     BigDecimal.ZERO
                             ) { acc, transaction -> acc + transaction.amount }
             MonthlyBreakdown(total = income - expenses, income = income, expenses = expenses)
@@ -331,13 +331,13 @@ class TransactionRepository @Inject constructor(
             transactions.groupBy { it.currency }.mapValues { (_, currencyTransactions) ->
                 val income =
                         currencyTransactions
-                                .filter { it.transactionType == TransactionType.INCOME }
+                                .filter { it.transactionType == TransactionType.INCOME || it.transactionType == TransactionType.BORROWED }
                                 .fold(BigDecimal.ZERO) { acc, transaction ->
                                     acc + transaction.amount
                                 }
                 val expenses =
                         currencyTransactions
-                                .filter { it.transactionType == TransactionType.EXPENSE }
+                                .filter { it.transactionType == TransactionType.EXPENSE || it.transactionType == TransactionType.LENT }
                                 .fold(BigDecimal.ZERO) { acc, transaction ->
                                     acc + transaction.amount
                                 }
@@ -360,13 +360,13 @@ class TransactionRepository @Inject constructor(
             transactions.groupBy { it.currency }.mapValues { (_, currencyTransactions) ->
                 val income =
                         currencyTransactions
-                                .filter { it.transactionType == TransactionType.INCOME }
+                                .filter { it.transactionType == TransactionType.INCOME || it.transactionType == TransactionType.BORROWED }
                                 .fold(BigDecimal.ZERO) { acc, transaction ->
                                     acc + transaction.amount
                                 }
                 val expenses =
                         currencyTransactions
-                                .filter { it.transactionType == TransactionType.EXPENSE }
+                                .filter { it.transactionType == TransactionType.EXPENSE || it.transactionType == TransactionType.LENT }
                                 .fold(BigDecimal.ZERO) { acc, transaction ->
                                     acc + transaction.amount
                                 }
@@ -384,13 +384,13 @@ class TransactionRepository @Inject constructor(
             transactions.groupBy { it.currency }.mapValues { (_, currencyTransactions) ->
                 val income =
                     currencyTransactions
-                        .filter { it.transactionType == TransactionType.INCOME }
+                        .filter { it.transactionType == TransactionType.INCOME || it.transactionType == TransactionType.BORROWED }
                         .fold(BigDecimal.ZERO) { acc, transaction ->
                             acc + transaction.amount
                         }
                 val expenses =
                     currencyTransactions
-                        .filter { it.transactionType == TransactionType.EXPENSE }
+                        .filter { it.transactionType == TransactionType.EXPENSE || it.transactionType == TransactionType.LENT }
                         .fold(BigDecimal.ZERO) { acc, transaction ->
                             acc + transaction.amount
                         }

@@ -90,13 +90,15 @@ class CsvExporter @Inject constructor(
                             transaction.merchantName,
                             transaction.category,
                             when (transaction.transactionType) {
-                                TransactionType.INCOME -> "Income"
-                                TransactionType.EXPENSE -> "Expense"
-                                TransactionType.CREDIT -> "Credit Card"
-                                TransactionType.TRANSFER -> "Transfer"
-                                TransactionType.INVESTMENT -> "Investment"
-                                TransactionType.BALANCE_UPDATE -> "Balance Update"
-                            },
+                                 TransactionType.INCOME -> "Income"
+                                 TransactionType.EXPENSE -> "Expense"
+                                 TransactionType.CREDIT -> "Credit Card"
+                                 TransactionType.TRANSFER -> "Transfer"
+                                 TransactionType.INVESTMENT -> "Investment"
+                                 TransactionType.BALANCE_UPDATE -> "Balance Update"
+                                 TransactionType.LENT -> "Lent"
+                                 TransactionType.BORROWED -> "Borrowed"
+                             },
                             transaction.amount.toString(),
                             transaction.bankName ?: "",
                             transaction.accountNumber ?: "",
@@ -183,13 +185,15 @@ class CsvExporter @Inject constructor(
                         transaction.merchantName,
                         transaction.category,
                         when (transaction.transactionType) {
-                                TransactionType.INCOME -> "Income"
-                                TransactionType.EXPENSE -> "Expense"
-                                TransactionType.CREDIT -> "Credit Card"
-                                TransactionType.TRANSFER -> "Transfer"
-                                TransactionType.INVESTMENT -> "Investment"
-                                TransactionType.BALANCE_UPDATE -> "Balance Update"
-                            },
+                                 TransactionType.INCOME -> "Income"
+                                 TransactionType.EXPENSE -> "Expense"
+                                 TransactionType.CREDIT -> "Credit Card"
+                                 TransactionType.TRANSFER -> "Transfer"
+                                 TransactionType.INVESTMENT -> "Investment"
+                                 TransactionType.BALANCE_UPDATE -> "Balance Update"
+                                 TransactionType.LENT -> "Lent"
+                                 TransactionType.BORROWED -> "Borrowed"
+                             },
                         transaction.amount.toString(),
                         transaction.bankName ?: "",
                         transaction.accountNumber ?: "",

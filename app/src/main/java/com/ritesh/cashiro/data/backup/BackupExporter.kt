@@ -74,12 +74,17 @@ class BackupExporter @Inject constructor(
                 // Write Attachments
                 if (config.privacy == ExportPrivacy.FULL && config.includeTransactionalData) {
                     val filesDir = context.filesDir
-                    // Collect all unique attachment paths
+                    // Collect all unique attachment paths across both regular and
+                    // lend/borrow transactions. Lend/borrow attachments are stored
+                    // as relative "attachments/filename.ext" paths too.
                     val allAttachments = mutableSetOf<String>()
                     for (txn in backup.database.transactions) {
                         for (part in txn.attachments.split(",")) {
                             if (part.isNotBlank()) allAttachments.add(part)
                         }
+                    }
+                    for (txn in backup.database.lendBorrowTransactions) {
+                        allAttachments.addAll(txn.attachments)
                     }
 
                     allAttachments.forEach { path ->
@@ -90,6 +95,32 @@ class BackupExporter @Inject constructor(
                             val entry = ZipEntry(path)
                             zipOut.putNextEntry(entry)
                             attachmentFile.inputStream().use { input ->
+                                input.copyTo(zipOut)
+                            }
+                            zipOut.closeEntry()
+                        }
+                    }
+
+                    // Write Person Avatar images. They are stored in the database as
+                    // file:// Uris pointing into filesDir/avatars, so translate them
+                    // back to a relative "avatars/filename.ext" zip entry.
+                    val avatarFiles = mutableSetOf<String>()
+                    for (person in backup.database.lendBorrowPersons) {
+                        val avatar = person.avatar ?: continue
+                        val uri = runCatching { Uri.parse(avatar) }.getOrNull() ?: continue
+                        if (uri.scheme != "file") continue
+                        val path = uri.path ?: continue
+                        val file = File(path)
+                        if (file.exists() && path.startsWith("${filesDir.absolutePath}/avatars/")) {
+                            avatarFiles.add("avatars/${file.name}")
+                        }
+                    }
+                    avatarFiles.forEach { entryName ->
+                        val avatarFile = File(filesDir, entryName)
+                        if (avatarFile.exists()) {
+                            val entry = ZipEntry(entryName)
+                            zipOut.putNextEntry(entry)
+                            avatarFile.inputStream().use { input ->
                                 input.copyTo(zipOut)
                             }
                             zipOut.closeEntry()
@@ -187,11 +218,14 @@ class BackupExporter @Inject constructor(
             )}
         }
         
+        val lendBorrowPersons = if (config.includeTransactionalData) database.lendBorrowDao().getAllPersons().first() else emptyList()
+        val lendBorrowTransactions = if (config.includeTransactionalData) database.lendBorrowDao().getAllTransactions().first() else emptyList()
+
         return CashiroBackup(
             metadata = BackupMetadata(
                 exportId = UUID.randomUUID().toString(),
                 appVersion = BuildConfig.VERSION_NAME,
-                databaseVersion = 51,
+                databaseVersion = 57,
                 device = "${Build.MANUFACTURER} ${Build.MODEL}",
                 androidVersion = Build.VERSION.SDK_INT,
                 statistics = BackupStatistics(
@@ -219,7 +253,9 @@ class BackupExporter @Inject constructor(
                 rules = rules,
                 ruleApplications = ruleApplications,
                 webhookProfiles = webhookProfiles,
-                exchangeRates = exchangeRates
+                exchangeRates = exchangeRates,
+                lendBorrowPersons = lendBorrowPersons,
+                lendBorrowTransactions = lendBorrowTransactions
             ),
             preferences = PreferencesSnapshot(
                 theme = ThemePreferences(

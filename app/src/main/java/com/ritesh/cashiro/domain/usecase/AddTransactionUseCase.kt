@@ -40,7 +40,7 @@ constructor(
             billingCycle: String? = null,
             createSubscription: Boolean = true,
             attachments: String = ""
-    ) {
+    ): Long {
         // Generate a unique hash for manual transactions
         val transactionHash =
                 generateManualTransactionHash(amount = amount, merchant = merchant, date = date)
@@ -156,6 +156,7 @@ constructor(
 
             subscriptionRepository.insertSubscription(subscription)
         }
+        return transactionId
     }
 
 

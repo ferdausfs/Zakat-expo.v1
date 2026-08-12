@@ -245,7 +245,7 @@ class LlmRepository @Inject constructor(
         val recentLines = context.recentTransactions.take(10).joinToString("\n") { t ->
             val dateStr = t.dateTime.format(java.time.format.DateTimeFormatter.ofPattern("MMM d"))
             val typeSign = when (t.transactionType) {
-                TransactionType.INCOME -> "+"
+                TransactionType.INCOME, TransactionType.BORROWED -> "+"
                 else -> "-"
             }
             val origFormatted = CurrencyFormatter.formatCurrency(t.amount, t.originalCurrency)

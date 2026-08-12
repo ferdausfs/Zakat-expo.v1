@@ -87,6 +87,8 @@ class AiContextRepository @Inject constructor(
                 TransactionType.TRANSFER -> {} // Transfers don't affect income/expense totals
                 TransactionType.INVESTMENT -> {} // Investments are asset reallocation, not expenses
                 TransactionType.BALANCE_UPDATE -> {} // Balance updates track account balance, not income/expense
+                TransactionType.BORROWED -> totalIncome = totalIncome.add(transaction.amount) // Borrowed money is inflow
+                TransactionType.LENT -> totalExpense = totalExpense.add(transaction.amount) // Lent money is outflow
             }
         }
         
@@ -169,7 +171,7 @@ class AiContextRepository @Inject constructor(
         var totalExpense = BigDecimal.ZERO
         
         transactions
-            .filter { it.transactionType == TransactionType.EXPENSE }
+            .filter { it.transactionType == TransactionType.EXPENSE || it.transactionType == TransactionType.LENT }
             .forEach { transaction ->
                 val category = transaction.category ?: "Miscellaneous"
                 categoryMap.getOrPut(category) { mutableListOf() }.add(transaction.amount)
@@ -247,7 +249,7 @@ class AiContextRepository @Inject constructor(
             endOfMonth.atTime(23, 59, 59)
         )
         
-        val expenses = transactions.filter { it.transactionType == TransactionType.EXPENSE }
+        val expenses = transactions.filter { it.transactionType == TransactionType.EXPENSE || it.transactionType == TransactionType.LENT }
         
         // Calculate average daily spending
         var totalExpense = BigDecimal.ZERO

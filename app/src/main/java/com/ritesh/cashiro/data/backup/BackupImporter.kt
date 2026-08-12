@@ -99,6 +99,8 @@ class BackupImporter @Inject constructor(
                     if (entry != null) {
                         val attachmentsDir = File(context.filesDir, "attachments")
                         if (!attachmentsDir.exists()) attachmentsDir.mkdirs()
+                        val avatarsDir = File(context.filesDir, "avatars")
+                        if (!avatarsDir.exists()) avatarsDir.mkdirs()
 
                         while (entry != null) {
                             val name = entry.name
@@ -111,6 +113,13 @@ class BackupImporter @Inject constructor(
                                 // Extract Attachment
                                 val fileName = File(name).name
                                 val outFile = File(attachmentsDir, fileName)
+                                FileOutputStream(outFile).use { output ->
+                                    zipInput.copyTo(output)
+                                }
+                            } else if (name.startsWith("avatars/") && !entry.isDirectory) {
+                                // Extract Person Avatar
+                                val fileName = File(name).name
+                                val outFile = File(avatarsDir, fileName)
                                 FileOutputStream(outFile).use { output ->
                                     zipInput.copyTo(output)
                                 }
@@ -248,6 +257,14 @@ class BackupImporter @Inject constructor(
                         webhookRepository.saveProfile(profile.toDraft(baseCurrency))
                     }
                 }
+
+                backup.database.lendBorrowPersons.forEach { person ->
+                    database.lendBorrowDao().insertPerson(person)
+                }
+
+                backup.database.lendBorrowTransactions.forEach { tx ->
+                    database.lendBorrowDao().insertTransaction(tx)
+                }
                 
                 // Import preferences
                 importPreferences(backup.preferences)
@@ -381,6 +398,17 @@ class BackupImporter @Inject constructor(
                 importBudgetsWithMerge(backup.database.budgets, backup.database.budgetCategoryLimits)
                 importWebhookProfilesWithMerge(backup.database.webhookProfiles)
                 importExchangeRatesWithMerge(backup.database.exchangeRates)
+
+                backup.database.lendBorrowPersons.forEach { person ->
+                    database.lendBorrowDao().insertPerson(person)
+                }
+
+                backup.database.lendBorrowTransactions.forEach { tx ->
+                    val remappedTx = tx.transactionId?.let { oldId ->
+                        transactionIdMap[oldId]?.let { newId -> tx.copy(transactionId = newId) }
+                    } ?: tx
+                    database.lendBorrowDao().insertTransaction(remappedTx)
+                }
                 
                 // Import preferences (merge with existing)
                 importPreferences(backup.preferences)

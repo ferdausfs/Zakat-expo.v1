@@ -367,7 +367,7 @@ class AccountBalanceRepositoryTest {
     }
 
     @Test
-    fun manualBalanceStopsRecalculation() = runTest {
+    fun manualBoundaryCarriesDeltaAndStopsCascade() = runTest {
         val dao = FakeAccountBalanceDao()
         val repository = AccountBalanceRepository(dao, ContextWrapper(null))
 
@@ -407,10 +407,11 @@ class AccountBalanceRepositoryTest {
         assertNotNull(balanceT2)
         assertEquals(BigDecimal("700"), balanceT2.balance)
 
-        // The subsequent row at T3 (manual boundary) should NOT be changed
+        // MANUAL entries are not authoritative hard stops: the cascade continues
+        // through them and the manual row is updated to carry the running balance.
         val balanceT3 = dao.balances.find { it.timestamp == t3 }
         assertNotNull(balanceT3)
-        assertEquals(BigDecimal("2000"), balanceT3.balance)
+        assertEquals(BigDecimal("700"), balanceT3.balance)
     }
 
     @Test

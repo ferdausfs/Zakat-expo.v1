@@ -138,8 +138,8 @@ class WebhookPayloadBuilder @Inject constructor(
             currency = currency,
             transactionType = null
         ).first().filterNot { it.isSample }
-        val income = transactions.filter { it.transactionType == TransactionType.INCOME }.sumAmounts()
-        val expense = transactions.filter { it.transactionType == TransactionType.EXPENSE }.sumAmounts()
+        val income = transactions.filter { it.transactionType == TransactionType.INCOME || it.transactionType == TransactionType.BORROWED }.sumAmounts()
+        val expense = transactions.filter { it.transactionType == TransactionType.EXPENSE || it.transactionType == TransactionType.LENT }.sumAmounts()
         val categories = transactions
             .groupBy { it.category to it.subcategory }
             .map { (key, items) ->

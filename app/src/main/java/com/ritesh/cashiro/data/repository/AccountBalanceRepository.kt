@@ -252,6 +252,10 @@ class AccountBalanceRepository @Inject constructor(
         return accountBalanceDao.getBalanceByTransactionId(transactionId)
     }
 
+    suspend fun getBalanceById(id: Long): AccountBalanceEntity? {
+        return accountBalanceDao.getBalanceById(id)
+    }
+
     suspend fun recalculateBalancesAfter(
         bankName: String,
         accountLast4: String,

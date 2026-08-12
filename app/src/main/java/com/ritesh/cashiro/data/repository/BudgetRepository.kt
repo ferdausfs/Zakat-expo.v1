@@ -184,9 +184,9 @@ class BudgetRepository @Inject constructor(
             
         // Filter by budget type
         transactions = if (budget.budgetType == BudgetType.EXPENSE) {
-            transactions.filter { it.transactionType == TransactionType.EXPENSE || it.transactionType == TransactionType.CREDIT }
+            transactions.filter { it.transactionType == TransactionType.EXPENSE || it.transactionType == TransactionType.CREDIT || it.transactionType == TransactionType.LENT }
         } else {
-            transactions.filter { it.transactionType == TransactionType.INCOME }
+            transactions.filter { it.transactionType == TransactionType.INCOME || it.transactionType == TransactionType.BORROWED }
         }
         
         // Filter by tracking type
@@ -299,9 +299,9 @@ class BudgetRepository @Inject constructor(
 
         // Filter by budget type
         transactions = if (budget.budgetType == BudgetType.EXPENSE) {
-            transactions.filter { it.transactionType == TransactionType.EXPENSE || it.transactionType == TransactionType.CREDIT }
+            transactions.filter { it.transactionType == TransactionType.EXPENSE || it.transactionType == TransactionType.CREDIT || it.transactionType == TransactionType.LENT }
         } else {
-            transactions.filter { it.transactionType == TransactionType.INCOME }
+            transactions.filter { it.transactionType == TransactionType.INCOME || it.transactionType == TransactionType.BORROWED }
         }
         
         // Filter by tracking type
@@ -388,9 +388,9 @@ class BudgetRepository @Inject constructor(
                 
                 // Filter by budget type
                 filtered = if (budget.budgetType == BudgetType.EXPENSE) {
-                    filtered.filter { it.transactionType == TransactionType.EXPENSE || it.transactionType == TransactionType.CREDIT }
+                    filtered.filter { it.transactionType == TransactionType.EXPENSE || it.transactionType == TransactionType.CREDIT || it.transactionType == TransactionType.LENT }
                 } else {
-                    filtered.filter { it.transactionType == TransactionType.INCOME }
+                    filtered.filter { it.transactionType == TransactionType.INCOME || it.transactionType == TransactionType.BORROWED }
                 }
                 
                 // Filter by tracking type

@@ -138,7 +138,13 @@ data class DatabaseSnapshot(
     val chatMessages: List<ChatMessage>,
 
     @SerializedName("exchange_rates")
-    val exchangeRates: List<ExchangeRateEntity> = emptyList()
+    val exchangeRates: List<ExchangeRateEntity> = emptyList(),
+
+    @SerializedName("lend_borrow_persons")
+    val lendBorrowPersons: List<LendBorrowPersonEntity> = emptyList(),
+
+    @SerializedName("lend_borrow_transactions")
+    val lendBorrowTransactions: List<LendBorrowTransactionEntity> = emptyList()
 )
 
 data class WebhookProfileBackup(

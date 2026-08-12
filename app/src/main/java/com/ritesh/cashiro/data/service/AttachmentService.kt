@@ -21,11 +21,17 @@ class AttachmentService @Inject constructor(
 ) {
     companion object {
         private const val ATTACHMENTS_DIR = "attachments"
+        private const val AVATARS_DIR = "avatars"
     }
 
     private val attachmentsDir: File
         get() = File(context.filesDir, ATTACHMENTS_DIR).also { 
             if (!it.exists()) it.mkdirs() 
+        }
+
+    private val avatarsDir: File
+        get() = File(context.filesDir, AVATARS_DIR).also {
+            if (!it.exists()) it.mkdirs()
         }
 
     /**
@@ -146,5 +152,89 @@ class AttachmentService @Inject constructor(
      */
     fun joinAttachments(paths: List<String>): String {
         return paths.joinToString(",")
+    }
+
+    /**
+     * Persist a person avatar image into app-internal storage.
+     *
+     * The picked image is copied from its transient content:// Uri into the app's
+     * avatars directory. A file:// Uri into internal storage stays valid across
+     * app updates and reinstalls, unlike a content:// image pick.
+     * @param contentUri The content Uri picked from the gallery
+     * @return The file:: Uri string of the saved avatar, or null if save failed
+     */
+    fun persistAvatar(contentUri: Uri): String? {
+        return saveAvatar(contentUri)
+    }
+
+    /**
+     * Save an avatar file from a content Uri into the avatars directory.
+     * @param uri The content Uri of the avatar
+     * @return The file:// Uri string of the saved avatar, or null if save failed
+     */
+    fun saveAvatar(uri: Uri): String? {
+        return try {
+            val inputStream = context.contentResolver.openInputStream(uri) ?: return null
+            val mimeType = context.contentResolver.getType(uri)
+            val extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType) ?: "jpg"
+
+            val fileName = "avatar_${UUID.randomUUID()}.$extension"
+            val outputFile = File(avatarsDir, fileName)
+
+            FileOutputStream(outputFile).use { outputStream ->
+                inputStream.copyTo(outputStream)
+            }
+            inputStream.close()
+
+            Uri.fromFile(outputFile).toString()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    /**
+     * Check whether a stored avatar value points to a file inside the internal
+     * avatars directory.
+     * @param avatarValue The stored avatar value (file:// Uri string)
+     * @return true if the avatar refers to an internal avatar file
+     */
+    fun isInternalAvatar(avatarValue: String?): Boolean {
+        if (avatarValue.isNullOrBlank()) return false
+        return try {
+            val uri = Uri.parse(avatarValue)
+            if (uri.scheme != "file") return false
+            val path = uri.path ?: return false
+            path.startsWith(avatarsDir.absolutePath)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
+
+    /**
+     * Delete an internal avatar file.
+     * @param avatarValue The stored avatar value (file:// Uri string)
+     * @return true if the file was deleted (or nothing to delete)
+     */
+    fun deleteAvatar(avatarValue: String?): Boolean {
+        if (!isInternalAvatar(avatarValue)) return true
+        return try {
+            val uri = Uri.parse(avatarValue)
+            val file = File(uri.path ?: return true)
+            !file.exists() || file.delete()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
+
+    /**
+     * Get all avatar files in the avatars directory.
+     * Useful for backup operations.
+     * @return List of all avatar files
+     */
+    fun getAllAvatarFiles(): List<File> {
+        return avatarsDir.listFiles()?.toList() ?: emptyList()
     }
 }
