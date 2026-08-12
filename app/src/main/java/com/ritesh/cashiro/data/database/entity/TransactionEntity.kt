@@ -44,5 +44,7 @@ enum class TransactionType(@StringRes val labelRes: Int) {
     CREDIT(R.string.type_credit),
     TRANSFER(R.string.type_transfer),
     INVESTMENT(R.string.type_investment),
-    BALANCE_UPDATE(R.string.type_balance_update)
+    BALANCE_UPDATE(R.string.type_balance_update),
+    LENT(R.string.type_lent),
+    BORROWED(R.string.type_borrowed)
 }

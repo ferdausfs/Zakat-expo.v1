@@ -430,8 +430,8 @@ private fun calculateTransactionBalance(
         isCreditCard && transactionType == TransactionType.INCOME ->
             (currentBalance - amount).max(BigDecimal.ZERO)
         isCreditCard -> currentBalance + amount
-        transactionType == TransactionType.INCOME || transactionType == TransactionType.CREDIT -> currentBalance + amount
-        transactionType == TransactionType.EXPENSE || transactionType == TransactionType.INVESTMENT ->
+        transactionType == TransactionType.INCOME || transactionType == TransactionType.CREDIT || transactionType == TransactionType.BORROWED -> currentBalance + amount
+        transactionType == TransactionType.EXPENSE || transactionType == TransactionType.INVESTMENT || transactionType == TransactionType.LENT ->
             (currentBalance - amount).max(BigDecimal.ZERO)
         else -> currentBalance
     }

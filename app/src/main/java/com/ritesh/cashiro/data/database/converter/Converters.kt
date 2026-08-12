@@ -173,4 +173,11 @@ class Converters {
     @TypeConverter
     fun toWebhookSyncReason(value: String): WebhookSyncReason =
         runCatching { WebhookSyncReason.valueOf(value) }.getOrElse { WebhookSyncReason.MANUAL }
+
+    @TypeConverter
+    fun fromLendBorrowType(value: com.ritesh.cashiro.data.database.entity.LendBorrowType): String = value.name
+
+    @TypeConverter
+    fun toLendBorrowType(value: String): com.ritesh.cashiro.data.database.entity.LendBorrowType =
+        runCatching { com.ritesh.cashiro.data.database.entity.LendBorrowType.valueOf(value) }.getOrElse { com.ritesh.cashiro.data.database.entity.LendBorrowType.LENT }
 }

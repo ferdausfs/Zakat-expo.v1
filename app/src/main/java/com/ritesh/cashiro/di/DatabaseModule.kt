@@ -76,7 +76,13 @@ object DatabaseModule {
                     MIGRATION_52_53,
                     MIGRATION_53_54,
                     CashiroDatabase.MIGRATION_54_55,
-                    CashiroDatabase.MIGRATION_55_56
+                    CashiroDatabase.MIGRATION_55_56,
+                    CashiroDatabase.MIGRATION_56_57,
+                    CashiroDatabase.MIGRATION_57_58,
+                    CashiroDatabase.MIGRATION_58_59,
+                    CashiroDatabase.MIGRATION_59_60,
+                    CashiroDatabase.MIGRATION_60_61,
+                    CashiroDatabase.MIGRATION_61_62
                 )
 
                 // Enable auto-migrations
@@ -264,6 +270,12 @@ object DatabaseModule {
     @Singleton
     fun provideChatSessionDao(database: CashiroDatabase): com.ritesh.cashiro.data.database.dao.ChatSessionDao {
         return database.chatSessionDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideLendBorrowDao(database: CashiroDatabase): com.ritesh.cashiro.data.database.dao.LendBorrowDao {
+        return database.lendBorrowDao()
     }
 }
 /** Database callback to seed initial data when database is first created */
@@ -509,6 +521,14 @@ class DatabaseCallback(private val context: Context) : RoomDatabase.Callback() {
                 color = "#4CAF50",
                 isIncome = false,
                 displayOrder = 28
+            ),
+            CategoryData(
+                name = "Borrowed",
+                description = "Money borrowed from others",
+                iconResId = R.drawable.type_finance_deposit,
+                color = "#2196F3",
+                isIncome = true,
+                displayOrder = 29
             ),
             CategoryData(
                 name = "Donation",

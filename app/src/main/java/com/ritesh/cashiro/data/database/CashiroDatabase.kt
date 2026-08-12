@@ -81,9 +81,11 @@ import com.ritesh.cashiro.data.database.entity.WebhookProfileEntity
             WebhookProfileEntity::class,
             WebhookLogEntity::class,
             WebhookCursorEntity::class,
-            BankNotificationEntity::class
+            BankNotificationEntity::class,
+            com.ritesh.cashiro.data.database.entity.LendBorrowPersonEntity::class,
+            com.ritesh.cashiro.data.database.entity.LendBorrowTransactionEntity::class
         ],
-    version = 56,
+        version = 62,
     exportSchema = true,
     autoMigrations =
         [
@@ -130,6 +132,7 @@ abstract class CashiroDatabase : RoomDatabase() {
     abstract fun webhookLogDao(): WebhookLogDao
     abstract fun webhookCursorDao(): WebhookCursorDao
     abstract fun bankNotificationDao(): BankNotificationDao
+    abstract fun lendBorrowDao(): com.ritesh.cashiro.data.database.dao.LendBorrowDao
 
     companion object {
         const val DATABASE_NAME = "pennywise_database"
@@ -164,7 +167,12 @@ abstract class CashiroDatabase : RoomDatabase() {
             MIGRATION_52_53,
             MIGRATION_53_54,
             MIGRATION_54_55,
-            MIGRATION_55_56
+MIGRATION_55_56,
+                                MIGRATION_56_57,
+                                MIGRATION_57_58,
+                                MIGRATION_58_59,
+                                MIGRATION_59_60,
+                                MIGRATION_60_61
                             )
                             .build()
                     INSTANCE = instance
@@ -526,6 +534,141 @@ abstract class CashiroDatabase : RoomDatabase() {
                 }
             }
 
+        /**
+         * Migration from version 56 to 57.
+         * Adds lend_borrow_persons and lend_borrow_transactions tables for Lendings/Borrowings (Khata) tracking.
+         */
+        val MIGRATION_56_57 =
+            object : Migration(56, 57) {
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    db.execSQL(
+                        """
+                        CREATE TABLE IF NOT EXISTS lend_borrow_persons (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                            name TEXT NOT NULL,
+                            phone_number TEXT,
+                            notes TEXT,
+                            color TEXT NOT NULL DEFAULT '#4CAF50',
+                            is_archived INTEGER NOT NULL DEFAULT 0,
+                            created_at TEXT NOT NULL,
+                            updated_at TEXT NOT NULL
+                        )
+                        """.trimIndent()
+                    )
+
+                    db.execSQL(
+                        """
+                        CREATE TABLE IF NOT EXISTS lend_borrow_transactions (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                            person_id INTEGER NOT NULL,
+                            transaction_id INTEGER,
+                            type TEXT NOT NULL,
+                            amount TEXT NOT NULL,
+                            title TEXT NOT NULL,
+                            due_date TEXT,
+                            is_settled INTEGER NOT NULL DEFAULT 0,
+                            date TEXT NOT NULL,
+                            created_at TEXT NOT NULL,
+                            updated_at TEXT NOT NULL,
+                            is_sample INTEGER NOT NULL DEFAULT 0,
+                            FOREIGN KEY(person_id) REFERENCES lend_borrow_persons(id) ON DELETE CASCADE
+                        )
+                        """.trimIndent()
+                    )
+
+                    db.execSQL("CREATE INDEX IF NOT EXISTS index_lend_borrow_transactions_person_id ON lend_borrow_transactions(person_id)")
+                    db.execSQL("CREATE INDEX IF NOT EXISTS index_lend_borrow_transactions_type ON lend_borrow_transactions(type)")
+                    db.execSQL("CREATE INDEX IF NOT EXISTS index_lend_borrow_transactions_date ON lend_borrow_transactions(date)")
+                }
+            }
+
+        /**
+         * Migration from version 57 to 58.
+         * Adds an optional avatar column to lend_borrow_persons so persons can have
+         * a preset image or a photo picked from the gallery.
+         */
+        val MIGRATION_57_58 =
+            object : Migration(57, 58) {
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    db.execSQL("ALTER TABLE lend_borrow_persons ADD COLUMN avatar TEXT")
+                }
+            }
+
+        /**
+         * Migration from version 58 to 59.
+         * Adds an optional category column to lend_borrow_persons so persons can be
+         * grouped (e.g. friend, family, colleague) and filtered in the ledger.
+         */
+        val MIGRATION_58_59 =
+            object : Migration(58, 59) {
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    db.execSQL("ALTER TABLE lend_borrow_persons ADD COLUMN category TEXT")
+                }
+            }
+
+        /**
+         * Migration from version 59 to 60.
+         * Adds account_id, category_name, merchant_name, and attachments columns to lend_borrow_transactions
+         * for enhanced transaction tracking.
+         */
+        val MIGRATION_59_60 =
+            object : Migration(59, 60) {
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    db.execSQL("ALTER TABLE lend_borrow_transactions ADD COLUMN account_id INTEGER")
+                    db.execSQL("ALTER TABLE lend_borrow_transactions ADD COLUMN category_name TEXT")
+                    db.execSQL("ALTER TABLE lend_borrow_transactions ADD COLUMN merchant_name TEXT")
+                    db.execSQL("ALTER TABLE lend_borrow_transactions ADD COLUMN attachments TEXT NOT NULL DEFAULT '[]'")
+                }
+            }
+
+        /**
+         * Migration from version 60 to 61.
+         * Adds a currency column to lend_borrow_transactions. Existing rows are
+         * backfilled from the linked wallet transaction's original currency so
+         * amounts can be converted when the display currency changes.
+         */
+        val MIGRATION_60_61 =
+            object : Migration(60, 61) {
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    db.execSQL("ALTER TABLE lend_borrow_transactions ADD COLUMN currency TEXT NOT NULL DEFAULT 'INR'")
+                    db.execSQL(
+                        """
+                        UPDATE lend_borrow_transactions
+                        SET currency = COALESCE(
+                            (SELECT t.currency FROM transactions t WHERE t.id = lend_borrow_transactions.transaction_id),
+                            'INR'
+                        )
+                        WHERE transaction_id IS NOT NULL
+                        """.trimIndent()
+                    )
+                }
+            }
+
+        /**
+         * Migration from version 61 to 62.
+         * Seeds the new "Borrowed" income category (mirror of the existing "Lent"
+         * expense category) so existing installations expose it for lending/borrowing
+         * entries created via the LENT/BORROWED transaction types.
+         */
+        val MIGRATION_61_62 =
+            object : Migration(61, 62) {
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    db.execSQL(
+                        """
+                        INSERT OR IGNORE INTO categories (
+                            name, color, icon_res_id, icon_name, description, is_system, is_income, display_order,
+                            default_name, default_color, default_icon_res_id, default_icon_name, default_description,
+                            created_at, updated_at
+                        )
+                        VALUES (
+                            'Borrowed', '#2196F3', 0, 'type_finance_deposit', 'Money borrowed from others', 1, 1, 29,
+                            'Borrowed', '#2196F3', 0, 'type_finance_deposit', 'Money borrowed from others',
+                            datetime('now'), datetime('now')
+                        )
+                        """.trimIndent()
+                    )
+                }
+            }
     }
 
     /**
@@ -1259,8 +1402,9 @@ class Migration45To46 : AutoMigrationSpec {
             "Self Transfer" to "type_finance_bank",
             "Savings" to "type_sports_bullseye",
             "Gift" to "type_stationary_wrapped_gift",
-            "Lent" to "type_finance_money_with_wings",
-            "Donation" to "type_health_drop_of_blood",
+             "Lent" to "type_finance_money_with_wings",
+             "Borrowed" to "type_finance_deposit",
+             "Donation" to "type_health_drop_of_blood",
             "Hidden Charges" to "type_animal_goblin",
             "Cash Withdrawal" to "type_finance_dollar_banknote",
             "Income" to "type_finance_money_bag"
