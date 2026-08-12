@@ -14,6 +14,8 @@ object Dimensions {
         val card = 20.dp         // Card internal padding
         val empty = 32.dp        // Empty state padding
         val fab = 16.dp          // FAB padding
+        val balanceRowInset = 34.dp    // Inner top padding of the lower (Borrowed) loan row
+        val balanceRowOverlap = 16.dp  // Negative gap so the Lent row overlaps the Borrowed row
     }
     object Radius {
         val xs = 4.dp
@@ -22,6 +24,7 @@ object Dimensions {
         val lg = 24.dp
         val xl = 32.dp
         val xxl = 48.dp
+        val balanceRow = 22.dp
     }
     
     // Elevation values
@@ -36,6 +39,7 @@ object Dimensions {
     object Alpha {
         const val high = 0.87f
         const val medium = 0.6f
+        const val faint = 0.65f
         const val disabled = 0.38f
         const val divider = 0.12f
         const val surface = 0.7f
@@ -66,6 +70,7 @@ object Dimensions {
         val large = 20.sp
         val title = 24.sp
         val display = 32.sp
+        val balance = 44.sp
     }
     
     // Component specific dimensions

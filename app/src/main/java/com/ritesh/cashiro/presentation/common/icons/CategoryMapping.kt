@@ -1080,6 +1080,11 @@ object CategoryMapping {
             iconResId = R.drawable.type_finance_money_with_wings,
             color = Color(0xFF4CAF50),
         ),
+        "Borrowed" to CategoryInfo(
+            displayName = "Borrowed",
+            iconResId = R.drawable.type_finance_deposit,
+            color = Color(0xFF2196F3),
+        ),
         "Donation" to CategoryInfo(
             displayName = "Donation",
             iconResId = R.drawable.type_health_drop_of_blood,

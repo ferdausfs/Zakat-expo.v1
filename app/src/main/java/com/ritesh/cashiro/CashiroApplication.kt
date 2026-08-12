@@ -2,6 +2,7 @@ package com.ritesh.cashiro
 
 import android.app.Activity
 import android.app.Application
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.hilt.work.HiltWorkerFactory
@@ -60,7 +61,11 @@ class CashiroApplication : Application(), Configuration.Provider {
         // Check if we are running in the isolated :crash process.
         // If so, we skip installing the crash handler (to avoid infinite loops)
         // and skip all background/database initialization which could fail due to multi-process locks.
-        val processName = android.app.Application.getProcessName()
+        val processName = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            Application.getProcessName()
+        } else {
+            null
+        }
         if (processName != null && processName.endsWith(":crash")) {
             Log.d("CashiroApplication", "Started in :crash process. Skipping main initialization.")
             return

@@ -22,6 +22,10 @@ val transfer_dark = Color(0xFFBA68C8)  // Light purple for transfers - readable 
 val investment_light = Color(0xFF00695C) // Teal for investments - good on white
 val investment_dark = Color(0xFF4DB6AC)  // Light teal for investments - readable on dark
 
+// Loan / Lend-Borrow semantic colors (distinct from income/expense/credit)
+val loan_light = Color(0xFF2E5299)  // Indigo blue for loans - good on white
+val loan_dark = Color(0xFF6A93FF)   // Light blue for loans - readable on dark
+
 
 val cyan_light = Color(0xFFbee7fd)
 val cyan_dark = Color(0xFF003f56)
