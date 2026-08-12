@@ -54,6 +54,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalView
@@ -67,6 +68,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.toRoute
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ritesh.cashiro.data.preferences.NavigationBarStyle
 import com.ritesh.cashiro.presentation.ui.components.SmsParsingProgressDialog
 import com.ritesh.cashiro.presentation.ui.features.accounts.AccountDetailScreen
@@ -79,8 +82,11 @@ import com.ritesh.cashiro.presentation.ui.features.budgets.BudgetHistoryScreen
 import com.ritesh.cashiro.presentation.ui.features.budgets.BudgetsScreen
 import com.ritesh.cashiro.presentation.ui.features.categories.CategoriesScreen
 import com.ritesh.cashiro.presentation.ui.features.chat.ChatScreen
+import com.ritesh.cashiro.presentation.ui.features.contacts.ContactsScreen
 import com.ritesh.cashiro.presentation.ui.features.home.HomeScreen
 import com.ritesh.cashiro.presentation.ui.features.home.HomeViewModel
+import com.ritesh.cashiro.presentation.ui.features.lendborrow.LendBorrowScreen
+import com.ritesh.cashiro.presentation.ui.features.lendborrow.PersonDetailScreen
 import com.ritesh.cashiro.presentation.ui.features.onboarding.OnBoardingScreen
 import com.ritesh.cashiro.presentation.ui.features.profile.ProfileScreen
 import com.ritesh.cashiro.presentation.ui.features.settings.SettingsScreen
@@ -238,6 +244,7 @@ fun CashiroNavHost(
                         onNavigateToBudgetHistory = { id ->
                             navController.safeNavigate(BudgetHistory(id))
                         },
+                        onNavigateToLendBorrow = { filter -> navController.safeNavigate(LendBorrow(filter)) },
                         onTransactionClick = { transactionId, key ->
                             navController.safeNavigate(TransactionDetail(transactionId, key))
                         },
@@ -301,6 +308,7 @@ fun CashiroNavHost(
                         onNavigateToNotifications = { navController.safeNavigate(NotificationSettings) },
                         onNavigateToWebhooks = { navController.safeNavigate(Webhooks) },
                         onNavigateToBudgets = { navController.safeNavigate(Budgets()) },
+                        onNavigateToLendBorrow = { navController.safeNavigate(LendBorrow()) },
                         onNavigateToDataPrivacy = { navController.safeNavigate(DataPrivacy) },
                         onNavigateToCloudBackup = { navController.safeNavigate(CloudBackup) },
                         onNavigateToAbout = { navController.safeNavigate(About) },
@@ -429,7 +437,34 @@ fun CashiroNavHost(
                     popExitTransition = CashiroTransitions.horizontalSlidePopExit
                 ) {
                     ProfileScreen(
-                        onNavigateBack = { navController.safePopBackStack() }
+                        onNavigateBack = { navController.safePopBackStack() },
+                        onNavigateToContacts = { navController.safeNavigate(Contacts()) },
+                        onNavigateToPerson = { personId ->
+                            navController.safeNavigate(
+                                PersonDetail(personId, "person_avatar_$personId")
+                            )
+                        },
+                        animatedContentScope = this@composable
+                    )
+                }
+
+                composable<Contacts>(
+                    enterTransition = CashiroTransitions.horizontalSlideEnter,
+                    exitTransition = CashiroTransitions.horizontalSlideExit,
+                    popEnterTransition = CashiroTransitions.horizontalSlidePopEnter,
+                    popExitTransition = CashiroTransitions.horizontalSlidePopExit
+                ) { backStackEntry ->
+                    val contactsRoute = backStackEntry.toRoute<Contacts>()
+                    ContactsScreen(
+                        onNavigateBack = { navController.safePopBackStack() },
+                        onNavigateToPersonDetail = { personId ->
+                            navController.safeNavigate(
+                                PersonDetail(personId, "person_avatar_$personId")
+                            )
+                        },
+                        selectedPersonId = contactsRoute.personId,
+                        animatedContentScope = this@composable,
+                        blurEffects = themeUiState.blurEffects
                     )
                 }
 
@@ -565,6 +600,9 @@ fun CashiroNavHost(
                             onEditComplete()
                             navController.safePopBackStack()
                         },
+                        onNavigateToPersonDetail = { personId ->
+                            navController.safeNavigate(PersonDetail(personId, "person_avatar_$personId"))
+                        },
                         animatedContentScope = this@composable,
                         blurEffects = themeUiState.blurEffects,
                     )
@@ -697,6 +735,41 @@ fun CashiroNavHost(
                                 endDate = end?.toString()
                             ))
                         }
+                    )
+                }
+
+                composable<LendBorrow>(
+                    enterTransition = CashiroTransitions.horizontalSlideEnter,
+                    exitTransition = CashiroTransitions.horizontalSlideExit,
+                    popEnterTransition = CashiroTransitions.horizontalSlidePopEnter,
+                    popExitTransition = CashiroTransitions.horizontalSlidePopExit
+                ) {
+                    LendBorrowScreen(
+                        onNavigateBack = { navController.safePopBackStack() },
+                        onNavigateToPersonDetail = { personId ->
+                            navController.safeNavigate(
+                                PersonDetail(personId, "person_avatar_$personId")
+                            )
+                        },
+                        animatedContentScope = this@composable,
+                        blurEffects = themeUiState.blurEffects
+                    )
+                }
+
+                composable<PersonDetail>(
+                    enterTransition = CashiroTransitions.noneEnter,
+                    exitTransition = CashiroTransitions.noneExit,
+                    popEnterTransition = CashiroTransitions.noneEnter,
+                    popExitTransition = CashiroTransitions.noneExit
+                ) { backStackEntry ->
+                    val personDetail = backStackEntry.toRoute<PersonDetail>()
+                    PersonDetailScreen(
+                        onNavigateBack = { navController.safePopBackStack() },
+                        onTransactionClick = { transactionId, key ->
+                            navController.safeNavigate(TransactionDetail(transactionId, key))
+                        },
+                        sharedElementKey = personDetail.sharedElementKey,
+                        animatedContentScope = this@composable
                     )
                 }
             }
@@ -1115,6 +1188,48 @@ fun CashiroNavHost(
             modifier = Modifier.align(Alignment.BottomCenter),
             hazeState = hazeState,
             fabConfig = fabConfig
+        )
+
+        // Block pointer input while a navigation transition is in progress so a quick tap
+        // meant for the destination screen doesn't hit the still-composed outgoing screen.
+        NavigationTransitionInputBlocker(
+            navController = navController,
+            isAddTransactionScreen = isAddTransactionScreen
+        )
+    }
+}
+
+/**
+ * Overlays a transparent full-screen surface that consumes all pointer input while the current
+ * destination is not yet RESUMED (i.e. a navigation transition is animating). Shared element
+ * transitions hold the outgoing screen composed during the transition, which would otherwise
+ * let a quick tap meant for the list hit a clickable element on the screen being popped.
+ */
+@Composable
+private fun NavigationTransitionInputBlocker(
+    navController: NavHostController,
+    isAddTransactionScreen: Boolean
+) {
+    val entry by navController.currentBackStackEntryAsState()
+    val topState = entry?.lifecycle?.let { lifecycle ->
+        lifecycle.currentStateFlow.collectAsStateWithLifecycle(
+            initialValue = lifecycle.currentState,
+            lifecycle = lifecycle
+        ).value
+    }
+    val shouldBlock = !isAddTransactionScreen &&
+        topState != null && topState != Lifecycle.State.RESUMED
+    if (shouldBlock) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .pointerInput(Unit) {
+                    awaitPointerEventScope {
+                        while (true) {
+                            awaitPointerEvent(PointerEventPass.Initial).changes.forEach { it.consume() }
+                        }
+                    }
+                }
         )
     }
 }

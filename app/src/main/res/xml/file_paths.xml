@@ -19,4 +19,9 @@
     <files-path 
         name="attachments" 
         path="attachments/" />
+
+    <!-- Files directory for person avatars -->
+    <files-path
+        name="avatars"
+        path="avatars/" />
 </paths>

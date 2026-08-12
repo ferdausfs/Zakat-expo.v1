@@ -50,6 +50,7 @@ fun ColorPickerContent(
     initialColor: Int,
     onColorChanged: (Int) -> Unit,
     showCustomOnly: Boolean = false,
+    showTitle: Boolean = false,
 ) {
     var showColors by remember { mutableStateOf(!showCustomOnly) }
     var selectedColor by remember { mutableIntStateOf(initialColor) }
@@ -136,12 +137,14 @@ fun ColorPickerContent(
         verticalArrangement = Arrangement.spacedBy(14.dp),
     ) {
 
-        Text(
-            text =  stringResource(R.string.colors),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(horizontal = Spacing.md).padding(top = Spacing.md)
-        )
+        if(showTitle){
+            Text(
+                text =  stringResource(R.string.colors),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(horizontal = Spacing.md).padding(top = Spacing.md)
+            )
+        }
 
         Column(
             modifier = Modifier.fillMaxWidth()

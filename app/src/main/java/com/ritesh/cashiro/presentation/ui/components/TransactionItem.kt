@@ -5,6 +5,7 @@ import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
@@ -28,6 +29,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.draw.clip
+import coil3.compose.AsyncImage
 import com.ritesh.cashiro.R
 import com.ritesh.cashiro.data.database.entity.CategoryEntity
 import com.ritesh.cashiro.data.database.entity.SubcategoryEntity
@@ -88,7 +92,10 @@ fun SharedTransitionScope.TransactionItem(
     convertedAmount: BigDecimal? = null,
     mainCurrency: String? = null,
     currentAccountContext: String? = null,
-    currentBankNameContext: String? = null
+    currentBankNameContext: String? = null,
+    linkedLoanPersonName: String? = null,
+    linkedLoanPersonColor: String? = null,
+    linkedLoanPersonAvatar: String? = null
 ) {
     val finalMerchantName = merchantName ?: transaction?.merchantName ?: ""
     val finalAmount = amount ?: transaction?.amount ?: BigDecimal.ZERO
@@ -118,6 +125,8 @@ fun SharedTransitionScope.TransactionItem(
                 TransactionType.TRANSFER -> if (!isDark) transfer_light else transfer_dark
                 TransactionType.INVESTMENT -> if (!isDark) investment_light else investment_dark
                 TransactionType.BALANCE_UPDATE -> if (!isDark) transfer_light else transfer_dark
+                TransactionType.BORROWED -> if (!isDark) income_light else income_dark
+                TransactionType.LENT -> if (!isDark) expense_light else expense_dark
             }
         }
     }
@@ -169,24 +178,62 @@ fun SharedTransitionScope.TransactionItem(
             )
         }
         BlurredAnimatedVisibility(!isSelectionMode){
-            BrandIcon(
-                merchantName = finalMerchantName,
-                size = 40.dp,
-                showBackground = true,
-                categoryEntity = categoryEntity,
-                subcategoryEntity = subcategoryEntity,
-                category = transaction?.category,
-                subcategory = transaction?.subcategory,
-                accountIconResId = accountIconResId,
-                accountIconName = accountIconName,
-                accountColorHex = accountColorHex,
-                modifier = if (animatedContentScope != null && transaction != null) {
-                    Modifier.sharedElement(
-                        rememberSharedContentState(key = "brand_icon_${transaction.id}"),
-                        animatedVisibilityScope = animatedContentScope
-                    )
-                } else Modifier
-            )
+            if (!linkedLoanPersonName.isNullOrBlank() || !linkedLoanPersonAvatar.isNullOrBlank()) {
+                val backgroundColor = remember(linkedLoanPersonColor) {
+                    try {
+                        Color(linkedLoanPersonColor?.toColorInt() ?: 0xFF4CAF50.toInt())
+                    } catch (_: Exception) {
+                        Color(0xFF4CAF50)
+                    }
+                }
+                Box(
+                    modifier = (if (animatedContentScope != null && transaction != null) {
+                        Modifier.sharedElement(
+                            rememberSharedContentState(key = "brand_icon_${transaction.id}"),
+                            animatedVisibilityScope = animatedContentScope
+                        )
+                    } else Modifier)
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .background(backgroundColor),
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (!linkedLoanPersonAvatar.isNullOrBlank()) {
+                        AsyncImage(
+                            model = linkedLoanPersonAvatar,
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    } else {
+                        Text(
+                            text = linkedLoanPersonName?.firstOrNull()?.uppercase()?.toString() ?: finalMerchantName.firstOrNull()?.uppercase()?.toString() ?: "?",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+            } else {
+                BrandIcon(
+                    merchantName = finalMerchantName,
+                    size = 40.dp,
+                    showBackground = true,
+                    categoryEntity = categoryEntity,
+                    subcategoryEntity = subcategoryEntity,
+                    category = transaction?.category,
+                    subcategory = transaction?.subcategory,
+                    accountIconResId = accountIconResId,
+                    accountIconName = accountIconName,
+                    accountColorHex = accountColorHex,
+                    modifier = if (animatedContentScope != null && transaction != null) {
+                        Modifier.sharedElement(
+                            rememberSharedContentState(key = "brand_icon_${transaction.id}"),
+                            animatedVisibilityScope = animatedContentScope
+                        )
+                    } else Modifier
+                )
+            }
         }
     }
 
@@ -400,6 +447,20 @@ fun SharedTransitionScope.TransactionItem(
                                     contentDescription = stringResource(R.string.type_balance_update),
                                     modifier = Modifier.size(Dimensions.Icon.small),
                                     tint = if (!isSystemInDarkTheme()) transfer_light else transfer_dark
+                                )
+
+                                TransactionType.LENT -> Icon(
+                                    Icons.AutoMirrored.Filled.TrendingDown,
+                                    contentDescription = stringResource(R.string.type_lent),
+                                    modifier = Modifier.size(Dimensions.Icon.small),
+                                    tint = if (!isSystemInDarkTheme()) expense_light else expense_dark
+                                )
+
+                                TransactionType.BORROWED -> Icon(
+                                    Icons.AutoMirrored.Filled.TrendingUp,
+                                    contentDescription = stringResource(R.string.type_borrowed),
+                                    modifier = Modifier.size(Dimensions.Icon.small),
+                                    tint = if (!isSystemInDarkTheme()) income_light else income_dark
                                 )
                             }
                         }

@@ -62,7 +62,8 @@ fun CustomTitleTopAppBar(
     navigationContent: @Composable () -> Unit = {},
     extraInfoCard: @Composable () -> Unit = {},
     hazeState: HazeState = HazeState(),
-    blurEffects: Boolean = LocalBlurEffects.current
+    blurEffects: Boolean = LocalBlurEffects.current,
+    showTitleInLargeBar: Boolean = true
 ) {
     val collapsedFraction = scrollBehaviorLarge.state.collapsedFraction
 
@@ -78,7 +79,8 @@ fun CustomTitleTopAppBar(
             extraInfoCard = extraInfoCard,
             hazeState = hazeState,
             blurEffects = blurEffects,
-            themeColors = MaterialTheme.colorScheme
+            themeColors = MaterialTheme.colorScheme,
+            showTitleInLargeBar = showTitleInLargeBar
         )
     }
 
@@ -93,7 +95,8 @@ fun CustomTitleTopAppBar(
         collapsedFraction = if(scrollBehaviorLarge != scrollBehaviorSmall)collapsedFraction else 1f,
         modifier = modifier,
         hazeState = hazeState,
-        blurEffects = blurEffects
+        blurEffects = blurEffects,
+        showTitle = showTitleInLargeBar
     )
 
 }
@@ -158,7 +161,7 @@ private fun LargerTopAppBar(
     hazeState: HazeState,
     blurEffects: Boolean = true,
     themeColors: ColorScheme,
-
+    showTitleInLargeBar: Boolean = true
     ){
     LargeTopAppBar(
         title = {
@@ -166,6 +169,7 @@ private fun LargerTopAppBar(
                 title = title,
                 modifier = modifier ,
                 extraInfoCard = extraInfoCard,
+                showTitle = showTitleInLargeBar
             )
         },
         colors = TopAppBarDefaults.topAppBarColors(
@@ -224,13 +228,14 @@ private fun TitleForLargeTopAppBar(
     modifier: Modifier = Modifier,
     title: String,
     extraInfoCard: @Composable () -> Unit = {},
+    showTitle: Boolean = true
 ){
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(Spacing.sm)
     ) {
         BlurredAnimatedVisibility(
-            visible = title != "Cashiro",
+            visible = title != "Cashiro" && showTitle,
             enter = fadeIn() + scaleIn(),
             exit = fadeOut() + scaleOut()
         ) {
@@ -289,7 +294,8 @@ private fun RegularTopAppBar(
     navigationContent: @Composable () -> Unit = {},
     collapsedFraction: Float,
     hazeState: HazeState,
-    blurEffects: Boolean = true
+    blurEffects: Boolean = true,
+    showTitle: Boolean = true
 ){
     BlurredAnimatedVisibility(
         visible = collapsedFraction > 0.01f,
@@ -300,17 +306,23 @@ private fun RegularTopAppBar(
 
         TopAppBar(
             title = {
-                Text(
-                    text = title,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.animatedOffsetModifier(
-                        hasBackButton = hasBackButton,
-                        hasActionButton = hasActionButton,
-                        isHomeScreen = title == "Cashiro",
+                BlurredAnimatedVisibility(
+                    visible = showTitle,
+                    enter = fadeIn(),
+                    exit = fadeOut()
+                ) {
+                    Text(
+                        text = title,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.animatedOffsetModifier(
+                            hasBackButton = hasBackButton,
+                            hasActionButton = hasActionButton,
+                            isHomeScreen = title == "Cashiro",
+                        )
                     )
-                )
+                }
             },
             colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = Color.Transparent,

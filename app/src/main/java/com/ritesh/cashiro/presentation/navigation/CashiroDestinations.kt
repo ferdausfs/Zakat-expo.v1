@@ -213,6 +213,11 @@ data class Transactions(
 
 @Serializable object Profile
 
+@Serializable data class Contacts(
+    val personId: Long? = null,
+    val sharedElementKey: String? = null
+)
+
 @Serializable object SmsSettings
 
 @Serializable object DataPrivacy
@@ -243,6 +248,13 @@ data class Transactions(
 @Serializable object About
 
 @Serializable object Licenses
+
+@Serializable data class LendBorrow(val filter: String? = null)
+
+@Serializable data class PersonDetail(
+    val personId: Long,
+    val sharedElementKey: String? = null
+)
 
 // Routes where bottom navigation should be visible
 val BOTTOM_NAV_ROUTES = setOf(

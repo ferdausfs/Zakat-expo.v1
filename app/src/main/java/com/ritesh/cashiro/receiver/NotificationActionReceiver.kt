@@ -92,22 +92,22 @@ class NotificationActionReceiver : BroadcastReceiver() {
                         val currentBalance = latestBalance.balance
                         val isCreditCard = latestBalance.isCreditCard
 
-                        val reversedBalance = when {
-                            isCreditCard -> {
-                                when (transaction.transactionType) {
-                                    TransactionType.EXPENSE, TransactionType.INVESTMENT -> currentBalance - transaction.amount
-                                    TransactionType.INCOME -> currentBalance + transaction.amount
-                                    else -> currentBalance
-                                }
-                            }
-                            else -> {
-                                when (transaction.transactionType) {
-                                    TransactionType.EXPENSE, TransactionType.INVESTMENT -> currentBalance + transaction.amount
-                                    TransactionType.INCOME -> currentBalance - transaction.amount
-                                    else -> currentBalance
-                                }
-                            }
-                        }.max(BigDecimal.ZERO)
+                         val reversedBalance = when {
+                             isCreditCard -> {
+                                 when (transaction.transactionType) {
+                                     TransactionType.EXPENSE, TransactionType.INVESTMENT, TransactionType.LENT, TransactionType.BORROWED -> currentBalance - transaction.amount
+                                     TransactionType.INCOME -> currentBalance + transaction.amount
+                                     else -> currentBalance
+                                 }
+                             }
+                             else -> {
+                                 when (transaction.transactionType) {
+                                     TransactionType.EXPENSE, TransactionType.INVESTMENT, TransactionType.LENT -> currentBalance + transaction.amount
+                                     TransactionType.INCOME, TransactionType.BORROWED -> currentBalance - transaction.amount
+                                     else -> currentBalance
+                                 }
+                             }
+                         }.max(BigDecimal.ZERO)
 
                         val balanceEntity = AccountBalanceEntity(
                             bankName = bankName,

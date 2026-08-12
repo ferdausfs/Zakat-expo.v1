@@ -19,7 +19,9 @@ enum class TransactionTypeFilter(@StringRes val labelRes: Int) {
     EXPENSE(R.string.type_expense),
     CREDIT(R.string.type_credit),
     TRANSFER(R.string.type_transfer),
-    INVESTMENT(R.string.type_investment)
+    INVESTMENT(R.string.type_investment),
+    LENT(R.string.type_lent),
+    BORROWED(R.string.type_borrowed)
 }
 
 fun getDateRangeForPeriod(period: TimePeriod): Pair<LocalDate, LocalDate>? {

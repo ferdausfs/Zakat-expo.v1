@@ -47,6 +47,18 @@ fun TypeFilterIcon(typeFilter: TransactionTypeFilter) {
             modifier = Modifier.size(Dimensions.Icon.small),
             tint = MaterialTheme.colorScheme.onTertiaryContainer
         )
+        TransactionTypeFilter.LENT -> Icon(
+            Icons.AutoMirrored.Rounded.TrendingDown,
+            contentDescription = null,
+            modifier = Modifier.size(Dimensions.Icon.small),
+            tint = MaterialTheme.colorScheme.onTertiaryContainer
+        )
+        TransactionTypeFilter.BORROWED -> Icon(
+            Icons.AutoMirrored.Rounded.TrendingUp,
+            contentDescription = null,
+            modifier = Modifier.size(Dimensions.Icon.small),
+            tint = MaterialTheme.colorScheme.onTertiaryContainer
+        )
         else -> {}
     }
 }

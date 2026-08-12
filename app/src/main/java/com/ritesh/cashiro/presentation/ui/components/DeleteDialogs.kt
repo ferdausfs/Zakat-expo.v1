@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -259,6 +260,219 @@ fun DeleteMultipleTransactionsDialog(
                 }
             ) else Modifier
         ),
+        shape = MaterialTheme.shapes.large
+    )
+}
+
+@OptIn(ExperimentalHazeApi::class)
+@Composable
+fun DeleteMultiplePersonsDialog(
+    onDelete: () -> Unit,
+    onDismiss: () -> Unit,
+    selectedPersonIds: Set<Long>,
+    blurEffects: Boolean = LocalBlurEffects.current,
+    hazeState: HazeState = remember { HazeState() },
+) {
+    val containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        icon = {
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.error
+            )
+        },
+        title = {
+            Text(text = pluralStringResource(R.plurals.delete_persons_title, selectedPersonIds.size, selectedPersonIds.size))
+        },
+        text = {
+            Text(
+                text = stringResource(R.string.delete_multiple_persons_confirm),
+                style = MaterialTheme.typography.bodyMedium
+            )
+        },
+        confirmButton = {
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Row(
+                    modifier = Modifier.align(Alignment.Center),
+                    horizontalArrangement = Arrangement.spacedBy(1.5.dp),
+                ) {
+                    Button(
+                        onClick = onDismiss,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.surface.copy(0.5f),
+                            contentColor = MaterialTheme.colorScheme.onSurface
+                        ),
+                        shape = RoundedCornerShape(
+                            topStart = Dimensions.Radius.xxl,
+                            topEnd = Dimensions.Radius.xs,
+                            bottomStart = Dimensions.Radius.xxl,
+                            bottomEnd = Dimensions.Radius.xs
+                        ),
+                        modifier = Modifier
+                            .padding(start = Spacing.xl)
+                            .weight(1f)
+                            .fillMaxWidth()
+                    ) {
+                        Text(
+                            text = stringResource(R.string.cancel),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    }
+                    Button(
+                        onClick = onDelete,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.errorContainer,
+                            contentColor = MaterialTheme.colorScheme.onErrorContainer
+                        ),
+                        shape = RoundedCornerShape(
+                            topStart = Dimensions.Radius.xs,
+                            topEnd = Dimensions.Radius.xxl,
+                            bottomStart = Dimensions.Radius.xs,
+                            bottomEnd = Dimensions.Radius.xxl
+                        ),
+                        modifier = Modifier
+                            .padding(end = Spacing.xl)
+                            .weight(1f)
+                            .fillMaxWidth()
+                    ) {
+                        Text(
+                            text = stringResource(R.string.delete),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    }
+
+                }
+            }
+        },
+        containerColor = if (blurEffects) MaterialTheme.colorScheme.surfaceContainerLow.copy(0.5f)
+        else MaterialTheme.colorScheme.surfaceContainerLow,
+        dismissButton = {},
+        modifier = Modifier
+            .clip(RoundedCornerShape(Dimensions.Radius.md))
+            .then(
+                if (blurEffects) Modifier.hazeEffect(
+                    state = hazeState,
+                    block = fun HazeEffectScope.() {
+                        style = HazeDefaults.style(
+                            backgroundColor = Color.Transparent,
+                            tint = HazeDefaults.tint(containerColor),
+                            blurRadius = 20.dp,
+                            noiseFactor = -1f,
+                        )
+                        blurredEdgeTreatment = BlurredEdgeTreatment.Unbounded
+                    }
+                ) else Modifier
+            ),
+        shape = MaterialTheme.shapes.large
+    )
+}
+
+@OptIn(ExperimentalHazeApi::class)
+@Composable
+fun DeleteMultipleRecordsDialog(
+    onDelete: () -> Unit,
+    onDismiss: () -> Unit,
+    selectedRecordIds: Set<Long>,
+    blurEffects: Boolean = LocalBlurEffects.current,
+    hazeState: HazeState = remember { HazeState() },
+) {
+    val containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        icon = {
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.error
+            )
+        },
+        title = {
+            Text(text = pluralStringResource(R.plurals.delete_records_title, selectedRecordIds.size, selectedRecordIds.size))
+        },
+        text = {
+            Text(
+                text = stringResource(R.string.delete_multiple_records_confirm),
+                style = MaterialTheme.typography.bodyMedium
+            )
+        },
+        confirmButton = {
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Row(
+                    modifier = Modifier.align(Alignment.Center),
+                    horizontalArrangement = Arrangement.spacedBy(1.5.dp),
+                ) {
+                    Button(
+                        onClick = onDismiss,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.surface.copy(0.5f),
+                            contentColor = MaterialTheme.colorScheme.onSurface
+                        ),
+                        shape = RoundedCornerShape(
+                            topStart = Dimensions.Radius.xxl,
+                            topEnd = Dimensions.Radius.xs,
+                            bottomStart = Dimensions.Radius.xxl,
+                            bottomEnd = Dimensions.Radius.xs
+                        ),
+                        modifier = Modifier
+                            .padding(start = Spacing.xl)
+                            .weight(1f)
+                            .fillMaxWidth()
+                    ) {
+                        Text(
+                            text = stringResource(R.string.cancel),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    }
+                    Button(
+                        onClick = onDelete,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.errorContainer,
+                            contentColor = MaterialTheme.colorScheme.onErrorContainer
+                        ),
+                        shape = RoundedCornerShape(
+                            topStart = Dimensions.Radius.xs,
+                            topEnd = Dimensions.Radius.xxl,
+                            bottomStart = Dimensions.Radius.xs,
+                            bottomEnd = Dimensions.Radius.xxl
+                        ),
+                        modifier = Modifier
+                            .padding(end = Spacing.xl)
+                            .weight(1f)
+                            .fillMaxWidth()
+                    ) {
+                        Text(
+                            text = stringResource(R.string.delete),
+                            style = MaterialTheme.typography.titleMedium)
+                    }
+
+                }
+            }
+        },
+        containerColor = if (blurEffects) MaterialTheme.colorScheme.surfaceContainerLow.copy(0.5f)
+        else MaterialTheme.colorScheme.surfaceContainerLow,
+        dismissButton = {},
+        modifier = Modifier
+            .clip(RoundedCornerShape(Dimensions.Radius.md))
+            .then(
+                if (blurEffects) Modifier.hazeEffect(
+                    state = hazeState,
+                    block = fun HazeEffectScope.() {
+                        style = HazeDefaults.style(
+                            backgroundColor = Color.Transparent,
+                            tint = HazeDefaults.tint(containerColor),
+                            blurRadius = 20.dp,
+                            noiseFactor = -1f,
+                        )
+                        blurredEdgeTreatment = BlurredEdgeTreatment.Unbounded
+                    }
+                ) else Modifier
+            ),
         shape = MaterialTheme.shapes.large
     )
 }
