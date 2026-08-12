@@ -357,6 +357,7 @@ constructor(
                 iconName = latestBalance?.iconName ?: "",
                 isWallet = latestBalance?.isWallet ?: false,
                 sourceType = "MANUAL",
+                currency = latestBalance?.currency ?: resolveDefaultCurrency(),
                 color = latestBalance?.color ?: "#33B5E5"
             )
             )
@@ -370,6 +371,7 @@ constructor(
             newLimit: BigDecimal
     ) {
         viewModelScope.launch {
+            val latestBalance = accountBalanceRepository.getLatestBalance(bankName, accountLast4)
             accountBalanceRepository.insertBalance(
                 AccountBalanceEntity(
                     bankName = bankName,
@@ -379,8 +381,10 @@ constructor(
                     timestamp = LocalDateTime.now(),
                     isCreditCard = true,
                     sourceType = "MANUAL",
-                    iconName = "type_finance_credit_card",
-                    color = "#E91E63"
+                    iconResId = latestBalance?.iconResId ?: 0,
+                    iconName = latestBalance?.iconName ?: "type_finance_credit_card",
+                    currency = latestBalance?.currency ?: resolveDefaultCurrency(),
+                    color = latestBalance?.color ?: "#E91E63"
                 )
             )
         }
@@ -605,10 +609,15 @@ constructor(
             newIconResId: Int,
             newIconName: String,
             newColorHex: String,
-            newCurrency: String = "INR"
+            newCurrency: String? = null
     ) {
         viewModelScope.launch {
             try {
+                val latestBalance = accountBalanceRepository.getLatestBalance(oldBankName, accountLast4)
+                val effectiveCurrency = newCurrency?.takeIf { it.isNotBlank() }
+                    ?: latestBalance?.currency
+                    ?: resolveDefaultCurrency()
+
                 // Update bank name if changed
                 if (newBankName != oldBankName) {
                     accountBalanceRepository.updateAccountBankName(
@@ -648,7 +657,7 @@ constructor(
                         sourceType = "MANUAL",
                         iconResId = newIconResId,
                         iconName = newIconName,
-                        currency = newCurrency,
+                        currency = effectiveCurrency,
                         color = newColorHex
                     )
                 )
@@ -691,6 +700,7 @@ constructor(
                         sourceType = "MERGE",
                         iconResId = targetAccount.iconResId,
                         iconName = targetAccount.iconName,
+                        currency = targetAccount.currency,
                         color = targetAccount.color
                     )
                     )
