@@ -6,6 +6,7 @@ import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
 import com.ritesh.cashiro.data.database.entity.SubscriptionEntity
 import com.ritesh.cashiro.data.database.entity.TransactionEntity
 import com.ritesh.cashiro.data.repository.BudgetWithSpending
+import com.ritesh.cashiro.domain.model.PersonInfo
 import com.ritesh.cashiro.presentation.ui.components.BalancePoint
 import java.math.BigDecimal
 
@@ -47,4 +48,6 @@ data class HomeUiState(
     val transactionHeatmap: Map<java.time.LocalDate, Int> = emptyMap(),
     val convertedAmounts: Map<Long, BigDecimal> = emptyMap(),
     val baseCurrency: String = "INR",
+    val lendBorrowSummary: com.ritesh.cashiro.domain.model.LendBorrowSummary = com.ritesh.cashiro.domain.model.LendBorrowSummary(),
+    val transactionPersonMapping: Map<Long, PersonInfo> = emptyMap()
 )

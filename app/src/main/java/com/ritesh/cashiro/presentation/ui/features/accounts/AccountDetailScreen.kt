@@ -255,7 +255,10 @@ fun SharedTransitionScope.AccountDetailScreen(
                         shape = shape,
                         modifier = Modifier.padding(horizontal = Dimensions.Padding.content),
                         animatedContentScope = animatedContentScope,
-                        sharedElementKey = "transaction_${transaction.id}"
+                        sharedElementKey = "transaction_${transaction.id}",
+                        linkedLoanPersonName = uiState.transactionPersonMapping[transaction.id]?.name,
+                        linkedLoanPersonColor = uiState.transactionPersonMapping[transaction.id]?.color,
+                        linkedLoanPersonAvatar = uiState.transactionPersonMapping[transaction.id]?.avatar
                     )
                 }
             }

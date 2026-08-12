@@ -45,13 +45,14 @@ fun AmountInput(
     modifier: Modifier = Modifier,
     amountFontSize: Dp = 50.dp,
     contentAlignment: Alignment = Alignment.Center,
+    enabled: Boolean = true,
 ) {
     // Amount input container
     Box(
         contentAlignment = contentAlignment,
         modifier = modifier
             .clip(RoundedCornerShape(10.dp))
-            .clickable { onClick() }
+            .then(if (enabled) Modifier.clickable { onClick() } else Modifier)
             .background(
                 color = MaterialTheme.colorScheme.background,
                 shape = RoundedCornerShape(10.dp)

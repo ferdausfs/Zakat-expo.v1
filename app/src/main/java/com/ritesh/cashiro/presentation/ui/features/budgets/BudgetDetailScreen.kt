@@ -385,7 +385,10 @@ fun SharedTransitionScope.BudgetDetailScreen(
                                 shape = position.toShape(),
                                 sharedElementKey = "budget_txn_${transaction.id}",
                                 convertedAmount = uiState.convertedAmounts[transaction.id],
-                                mainCurrency = uiState.baseCurrency
+                                mainCurrency = uiState.baseCurrency,
+                                linkedLoanPersonName = uiState.transactionPersonMapping[transaction.id]?.name,
+                                linkedLoanPersonColor = uiState.transactionPersonMapping[transaction.id]?.color,
+                                linkedLoanPersonAvatar = uiState.transactionPersonMapping[transaction.id]?.avatar
                             )
                         }
                     }

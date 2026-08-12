@@ -37,6 +37,7 @@ import androidx.compose.material.icons.rounded.CloudSync
 import androidx.compose.material.icons.rounded.Error
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material.icons.rounded.SwapHoriz
 import androidx.compose.material.icons.rounded.Translate
 import androidx.compose.material.icons.rounded.Webhook
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -78,6 +79,7 @@ import com.ritesh.cashiro.presentation.ui.components.ListItemPosition
 import com.ritesh.cashiro.presentation.ui.components.LoadingCircularProgress
 import com.ritesh.cashiro.presentation.ui.components.toShape
 import com.ritesh.cashiro.presentation.ui.features.categories.NavigationContent
+import com.ritesh.cashiro.presentation.ui.icons.ArchiveBook
 import com.ritesh.cashiro.presentation.ui.icons.Bag
 import com.ritesh.cashiro.presentation.ui.icons.Box2
 import com.ritesh.cashiro.presentation.ui.icons.Clock
@@ -121,6 +123,7 @@ fun SettingsScreen(
     onNavigateToNotifications: () -> Unit = {},
     onNavigateToWebhooks: () -> Unit = {},
     onNavigateToBudgets: () -> Unit = {},
+    onNavigateToLendBorrow: () -> Unit = {},
     onNavigateToDataPrivacy: () -> Unit = {},
     onNavigateToCloudBackup: () -> Unit = {},
     onNavigateToAbout: () -> Unit = {},
@@ -545,6 +548,51 @@ fun SettingsScreen(
                             )
                         },
                         onClick = { onNavigateToBudgets() },
+                        shape = ListItemPosition.Middle.toShape(),
+                        padding = PaddingValues(0.dp)
+                    )
+
+                    // Lendings & Borrowings (Khata)
+                    ListItem(
+                        headline = {
+                            Text(
+                                text = stringResource(R.string.lend_borrow_title),
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontWeight = FontWeight.Medium
+                            )
+                        },
+                        supporting = {
+                            Text(
+                                text = stringResource(R.string.loan_description),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        },
+                        leading = {
+                            Box(
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .background(
+                                        color = cyan_light,
+                                        shape = CircleShape
+                                    ),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    Iconax.ArchiveBook,
+                                    contentDescription = null,
+                                    tint = cyan_dark
+                                )
+                            }
+                        },
+                        trailing = {
+                            Icon(
+                                Icons.Rounded.ChevronRight,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        },
+                        onClick = { onNavigateToLendBorrow() },
                         shape = ListItemPosition.Middle.toShape(),
                         padding = PaddingValues(0.dp)
                     )

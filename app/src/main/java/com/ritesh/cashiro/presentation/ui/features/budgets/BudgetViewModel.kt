@@ -10,6 +10,8 @@ import com.ritesh.cashiro.data.database.entity.BudgetPeriod
 import com.ritesh.cashiro.data.database.entity.BudgetTrackType
 import com.ritesh.cashiro.data.database.entity.BudgetType
 import com.ritesh.cashiro.data.repository.CurrencyRepository
+import com.ritesh.cashiro.data.repository.LendBorrowRepository
+import com.ritesh.cashiro.domain.model.PersonInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,7 +33,8 @@ class BudgetViewModel @Inject constructor(
     private val budgetRepository: BudgetRepository,
     private val accountBalanceDao: AccountBalanceDao,
     private val currencyRepository: CurrencyRepository,
-    private val currencyConversionService: CurrencyConversionService
+    private val currencyConversionService: CurrencyConversionService,
+    private val lendBorrowRepository: LendBorrowRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(BudgetUiState())
@@ -207,17 +210,33 @@ class BudgetViewModel @Inject constructor(
                 combine(
                     budgetRepository.getTransactionsForBudget(collectionBudget),
                     currencyRepository.effectiveBaseCurrencyCode,
-                    currencyConversionService.rateChangeTrigger
-                ) { transactions, mainCurrency, _ ->
+                    currencyConversionService.rateChangeTrigger,
+                    lendBorrowRepository.getAllTransactions(),
+                    lendBorrowRepository.getPersons()
+                ) { transactions, mainCurrency, _, lbTransactions, persons ->
                     val converted = transactions
                         .filter { it.currency != mainCurrency }
                         .associate { tx ->
                             tx.id to (currencyConversionService.convertAmount(tx.amount, tx.currency, mainCurrency) ?: tx.amount)
                         }
+
+                    // Create person mapping
+                    val personMap = persons.associateBy { it.id }
+                    val transactionPersonMapping = lbTransactions
+                        .filter { it.transactionId != null }
+                        .associate { lb ->
+                            val person = personMap[lb.personId]
+                            lb.transactionId!! to PersonInfo(
+                                name = person?.name ?: lb.title,
+                                color = person?.color ?: "#4CAF50",
+                                avatar = person?.avatar
+                            )
+                        }
                     
                     _uiState.update { it.copy(
                         selectedBudgetTransactions = transactions,
-                        convertedAmounts = converted
+                        convertedAmounts = converted,
+                        transactionPersonMapping = transactionPersonMapping
                     ) }
                 }.collectLatest { }
             }

@@ -11,6 +11,7 @@ import com.ritesh.cashiro.data.database.entity.CategoryEntity
 import com.ritesh.cashiro.data.repository.CurrencyRepository
 import com.ritesh.cashiro.data.database.entity.TransactionEntity
 import com.ritesh.cashiro.data.database.entity.TransactionType
+import com.ritesh.cashiro.data.database.entity.LendBorrowType
 import com.ritesh.cashiro.data.repository.AccountBalanceRepository
 import com.ritesh.cashiro.data.repository.CategoryRepository
 import com.ritesh.cashiro.data.repository.MerchantMappingRepository
@@ -18,6 +19,15 @@ import com.ritesh.cashiro.data.repository.TransactionRepository
 import com.ritesh.cashiro.data.repository.SubcategoryRepository
 import com.ritesh.cashiro.data.repository.SubscriptionRepository
 import com.ritesh.cashiro.data.preferences.UserPreferencesRepository
+import com.ritesh.cashiro.data.repository.LendBorrowRepository
+import com.ritesh.cashiro.domain.model.LendBorrowPerson
+import com.ritesh.cashiro.domain.model.LendBorrowTransactionItem
+import com.ritesh.cashiro.domain.model.PersonInfo
+import com.ritesh.cashiro.domain.usecase.AddEditLendBorrowPersonUseCase
+import com.ritesh.cashiro.domain.usecase.GetLendBorrowEntryForTransactionUseCase
+import com.ritesh.cashiro.domain.usecase.GetLendBorrowPersonsUseCase
+import com.ritesh.cashiro.domain.usecase.MarkTransactionAsLoanUseCase
+import com.ritesh.cashiro.domain.usecase.UnmarkTransactionAsLoanUseCase
 import com.ritesh.cashiro.data.database.entity.SubscriptionEntity
 import com.ritesh.cashiro.data.database.entity.SubscriptionState
 import com.ritesh.cashiro.data.service.AttachmentService
@@ -51,6 +61,12 @@ class TransactionDetailViewModel @Inject constructor(
     private val currencyConversionService: CurrencyConversionService,
     private val currencyRepository: CurrencyRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
+    private val lendBorrowRepository: LendBorrowRepository,
+    private val getLendBorrowPersonsUseCase: GetLendBorrowPersonsUseCase,
+    private val addEditLendBorrowPersonUseCase: AddEditLendBorrowPersonUseCase,
+    private val getLendBorrowEntryForTransactionUseCase: GetLendBorrowEntryForTransactionUseCase,
+    private val markTransactionAsLoanUseCase: MarkTransactionAsLoanUseCase,
+    private val unmarkTransactionAsLoanUseCase: UnmarkTransactionAsLoanUseCase,
     val attachmentService: AttachmentService,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
@@ -67,23 +83,38 @@ class TransactionDetailViewModel @Inject constructor(
                 ) }
             }
         }
+
+        viewModelScope.launch {
+            combine(
+                lendBorrowRepository.getAllTransactions(),
+                lendBorrowRepository.getPersons()
+            ) { lbTransactions, persons ->
+                val personMap = persons.associateBy { it.id }
+                lbTransactions
+                    .filter { it.transactionId != null }
+                    .associate { lb ->
+                        val person = personMap[lb.personId]
+                        lb.transactionId!! to PersonInfo(
+                            name = person?.name ?: lb.title,
+                            color = person?.color ?: "#4CAF50",
+                            avatar = person?.avatar
+                        )
+                    }
+            }.collect { mapping ->
+                _uiState.update { it.copy(transactionPersonMapping = mapping) }
+            }
+        }
     }
 
-    // Categories should be based on transaction type
-    val categories: StateFlow<List<CategoryEntity>> = _uiState.map { state ->
-        val transaction = state.editableTransaction ?: state.transaction
-        transaction?.transactionType == TransactionType.INCOME
-    }.flatMapLatest { isIncome ->
-        if (isIncome) {
-            categoryRepository.getIncomeCategories()
-        } else {
-            categoryRepository.getExpenseCategories()
-        }
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = emptyList()
-    )
+    // All categories so icon/category lookups stay consistent even when a
+    // transaction's category doesn't belong to its type (e.g. a lend/borrow
+    // wallet transaction typed EXPENSE with an "Income" category).
+    val categories: StateFlow<List<CategoryEntity>> = categoryRepository.getAllCategories()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
 
     // Available accounts for linking (excluding hidden accounts)
     private val sharedPrefs =
@@ -105,6 +136,126 @@ class TransactionDetailViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList()
         )
+
+    // People available for linking a transaction to a lend/borrow (loan) record.
+    val persons: StateFlow<List<LendBorrowPerson>> = getLendBorrowPersonsUseCase()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    private fun loadLinkedLendBorrow(transactionId: Long) {
+        if (transactionId <= 0L) {
+            _uiState.update {
+                it.copy(
+                    linkedLendBorrow = null,
+                    linkedLoanPersonName = null
+                )
+            }
+            return
+        }
+        viewModelScope.launch {
+            val entry = getLendBorrowEntryForTransactionUseCase(transactionId)
+            var personName: String? = null
+            if (entry != null) {
+                personName = lendBorrowRepository.getPersonName(entry.personId)
+            }
+            _uiState.update {
+                it.copy(
+                    linkedLendBorrow = entry,
+                    linkedLoanPersonName = personName
+                )
+            }
+        }
+    }
+
+    fun showMarkAsLoanSheet() {
+        _uiState.update { it.copy(showMarkAsLoanSheet = true) }
+    }
+
+    fun hideMarkAsLoanSheet() {
+        _uiState.update {
+            it.copy(
+                showMarkAsLoanSheet = false,
+                markAsLoanError = null
+            )
+        }
+    }
+
+    fun addPerson(name: String) {
+        viewModelScope.launch { addEditLendBorrowPersonUseCase.addPerson(name = name) }
+    }
+
+    fun markAsLoan(
+        personId: Long,
+        loanType: LendBorrowType,
+        amount: BigDecimal,
+        title: String
+    ) {
+        viewModelScope.launch {
+            try {
+                val txn = _uiState.value.transaction
+                val txnId = txn?.id ?: 0L
+                markTransactionAsLoanUseCase(
+                    transactionId = txnId,
+                    personId = personId,
+                    type = loanType,
+                    amount = amount,
+                    currency = txn?.currency ?: "",
+                    title = title,
+                    date = txn?.dateTime ?: LocalDateTime.now()
+                )
+                _uiState.update {
+                    it.copy(
+                        showMarkAsLoanSheet = false,
+                        showEditLendBorrowSheet = false,
+                        markAsLoanSuccess = true,
+                        markAsLoanError = null
+                    )
+                }
+                loadLinkedLendBorrow(txnId)
+            } catch (e: Exception) {
+                _uiState.update {
+                    it.copy(
+                        markAsLoanError = e.localizedMessage ?: "Failed to link loan"
+                    )
+                }
+            }
+        }
+    }
+
+    fun clearMarkAsLoanResult() {
+        _uiState.update { it.copy(markAsLoanSuccess = false, markAsLoanError = null) }
+    }
+
+    fun showUnmarkLoanConfirm() {
+        _uiState.update { it.copy(showUnmarkLoanConfirm = true) }
+    }
+
+    fun hideUnmarkLoanConfirm() {
+        _uiState.update { it.copy(showUnmarkLoanConfirm = false) }
+    }
+
+    fun unmarkAsLoan() {
+        viewModelScope.launch {
+            val txn = _uiState.value.transaction
+            val txnId = txn?.id ?: 0L
+            try {
+                unmarkTransactionAsLoanUseCase(txnId)
+                _uiState.update {
+                    it.copy(
+                        showUnmarkLoanConfirm = false,
+                        linkedLendBorrow = null,
+                        linkedLoanPersonName = null
+                    )
+                }
+            } catch (e: Exception) {
+                _uiState.update {
+                    it.copy(
+                        showUnmarkLoanConfirm = false,
+                        markAsLoanError = e.localizedMessage ?: "Failed to unlink loan"
+                    )
+                }
+            }
+        }
+    }
 
     val selectedAccount: StateFlow<AccountBalanceEntity?> = _uiState.map { state ->
         val transaction = state.editableTransaction
@@ -140,6 +291,7 @@ class TransactionDetailViewModel @Inject constructor(
                 determinePrimaryCurrency(it)
                 calculateConvertedAmount(it)
                 findLinkedSubscription(it)
+                loadLinkedLendBorrow(it.id)
             }
         }
     }
@@ -361,6 +513,8 @@ class TransactionDetailViewModel @Inject constructor(
 
             TransactionType.INVESTMENT -> "Investment"
             TransactionType.BALANCE_UPDATE -> "Miscellaneous"
+            TransactionType.LENT -> "Lent"
+            TransactionType.BORROWED -> "Borrowed"
         }
 
         updateCategory(newCategory)

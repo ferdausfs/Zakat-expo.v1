@@ -69,6 +69,7 @@ import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.AccountBalanceWallet
 import androidx.compose.material.icons.rounded.ExpandLess
 import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
@@ -93,6 +94,9 @@ import com.ritesh.cashiro.presentation.ui.components.ListItemPosition
 import com.ritesh.cashiro.presentation.ui.components.toShape
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.ExposedDropdownMenuAnchorType
@@ -169,7 +173,10 @@ import com.ritesh.cashiro.data.database.entity.CategoryEntity
 import com.ritesh.cashiro.data.database.entity.SubcategoryEntity
 import com.ritesh.cashiro.data.database.entity.SubscriptionEntity
 import com.ritesh.cashiro.data.database.entity.TransactionEntity
+import com.ritesh.cashiro.domain.model.LendBorrowTransactionItem
+import com.ritesh.cashiro.data.database.entity.LendBorrowType
 import com.ritesh.cashiro.data.database.entity.TransactionType
+import com.ritesh.cashiro.domain.model.PersonInfo
 import com.ritesh.cashiro.data.service.AttachmentService
 import com.ritesh.cashiro.presentation.common.icons.BrandIcons
 import com.ritesh.cashiro.presentation.common.icons.CategoryMapping
@@ -213,6 +220,8 @@ import com.ritesh.cashiro.presentation.ui.theme.Dimensions
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
 import com.ritesh.cashiro.presentation.ui.theme.credit_dark
 import com.ritesh.cashiro.presentation.ui.theme.credit_light
+import com.ritesh.cashiro.presentation.ui.theme.loan_light
+import com.ritesh.cashiro.presentation.ui.theme.loan_dark
 import com.ritesh.cashiro.presentation.ui.theme.expense_dark
 import com.ritesh.cashiro.presentation.ui.theme.expense_light
 import com.ritesh.cashiro.presentation.ui.theme.income_dark
@@ -228,6 +237,13 @@ import com.ritesh.cashiro.utils.formatAmount
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeSource
 import kotlinx.coroutines.launch
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.buildAnnotatedString
+import coil3.compose.AsyncImage
+import coil3.compose.LocalPlatformContext
+import coil3.request.ImageRequest
+import coil3.request.allowHardware
 import java.math.BigDecimal
 import java.time.Instant
 import java.time.LocalDate
@@ -236,6 +252,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import androidx.compose.ui.res.stringResource
 import com.ritesh.cashiro.R
+import com.ritesh.cashiro.presentation.ui.features.lendborrow.AddEditLendBorrowTransactionSheet
 import com.ritesh.cashiro.presentation.ui.icons.Copy
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeEffectScope
@@ -253,6 +270,7 @@ fun SharedTransitionScope.TransactionDetailScreen(
     transactionId: Long,
     sharedElementKey: String? = null,
     onNavigateBack: () -> Unit,
+    onNavigateToPersonDetail: (personId: Long) -> Unit = {},
     transactionDetailViewModel: TransactionDetailViewModel = hiltViewModel(),
     animatedContentScope: AnimatedContentScope? = null,
     blurEffects: Boolean,
@@ -280,6 +298,9 @@ fun SharedTransitionScope.TransactionDetailScreen(
     val categories by transactionDetailViewModel.categories.collectAsStateWithLifecycle()
     val linkedSubscription = uiState.subscription
     val editableAttachments by transactionDetailViewModel.editableAttachments.collectAsStateWithLifecycle()
+    val persons by transactionDetailViewModel.persons.collectAsStateWithLifecycle()
+
+    val markedAsLoanSuccessStr = stringResource(R.string.marked_as_loan_success)
 
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -301,6 +322,14 @@ fun SharedTransitionScope.TransactionDetailScreen(
     val hazeState = remember { HazeState() }
 
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
+    val personColor = remember(uiState.linkedLendBorrow, persons) {
+        persons.find { it.id == uiState.linkedLendBorrow?.personId }?.color
+    }
+
+    val personAvatar = remember(uiState.linkedLendBorrow, persons) {
+        persons.find { it.id == uiState.linkedLendBorrow?.personId }?.avatar
+    }
 
     // Custom Billing Cycle Count Pad
     if (showCustomCountPad && isEditMode) {
@@ -380,6 +409,23 @@ fun SharedTransitionScope.TransactionDetailScreen(
             scope.launch {
                 snackbarHostState.showSnackbar(context.getString(R.string.transaction_duplicated))
                 transactionDetailViewModel.clearDuplicateSuccess()
+            }
+        }
+    }
+
+    // Handle mark-as-loan success / error
+    LaunchedEffect(uiState.markAsLoanSuccess, uiState.markAsLoanError) {
+        val loanSuccess = uiState.markAsLoanSuccess
+        val loanError = uiState.markAsLoanError
+        if (loanSuccess) {
+            scope.launch {
+                snackbarHostState.showSnackbar(markedAsLoanSuccessStr)
+                transactionDetailViewModel.clearMarkAsLoanResult()
+            }
+        } else if (!loanError.isNullOrBlank()) {
+            scope.launch {
+                snackbarHostState.showSnackbar(loanError)
+                transactionDetailViewModel.clearMarkAsLoanResult()
             }
         }
     }
@@ -492,9 +538,14 @@ fun SharedTransitionScope.TransactionDetailScreen(
                     accountIconName = uiState.accountIconName,
                     isAmoledMode = isAmoledMode,
                     isDarkTheme = isDarkTheme,
-                    animatedContentScope = animatedContentScope,
-                    sharedTransitionScope = this@TransactionDetailScreen
-                )
+                     animatedContentScope = animatedContentScope,
+                     sharedTransitionScope = this@TransactionDetailScreen,
+                     linkedLendBorrow = uiState.linkedLendBorrow,
+                     linkedLoanPersonName = uiState.linkedLoanPersonName,
+                     linkedLoanPersonColor = personColor,
+                     linkedLoanPersonAvatar = personAvatar,
+                     onNavigateToPersonDetail = onNavigateToPersonDetail
+                 )
             }
 
             if (isEditMode) {
@@ -559,7 +610,11 @@ fun SharedTransitionScope.TransactionDetailScreen(
                                     availableAccounts = availableAccounts,
                                     attachmentService = transactionDetailViewModel.attachmentService,
                                     isDarkTheme = isDarkTheme,
-                                    isAmoledMode = isAmoledMode
+                                    isAmoledMode = isAmoledMode,
+                                    linkedLendBorrow = uiState.linkedLendBorrow,
+                                    linkedLoanPersonName = uiState.linkedLoanPersonName,
+                                    linkedLoanPersonColor = personColor,
+                                    linkedLoanPersonAvatar = personAvatar
                                 )
                                 shareReceiptAsPng(
                                     context = context,
@@ -668,6 +723,36 @@ fun SharedTransitionScope.TransactionDetailScreen(
                                         transactionDetailViewModel.showDeleteDialog()
                                     },
                                     leadingIcon = { Icon(Iconax.Bag, contentDescription = null) }
+                                )
+
+                                HorizontalDivider(
+                                    thickness = 1.5.dp,
+                                    color = MaterialTheme.colorScheme.surface.copy(0.6f)
+                                )
+                                DropdownMenuItem(
+                                    text = {
+                                        Text(
+                                            if (uiState.linkedLendBorrow != null) {
+                                                stringResource(R.string.unmark_as_loan)
+                                            } else {
+                                                stringResource(R.string.mark_as_loan)
+                                            }
+                                        )
+                                    },
+                                    onClick = {
+                                        showMoreMenu = false
+                                        if (uiState.linkedLendBorrow != null) {
+                                            transactionDetailViewModel.showUnmarkLoanConfirm()
+                                        } else {
+                                            transactionDetailViewModel.showMarkAsLoanSheet()
+                                        }
+                                    },
+                                    leadingIcon = {
+                                        Icon(
+                                            imageVector = Icons.Rounded.AccountBalanceWallet,
+                                            contentDescription = null
+                                        )
+                                    }
                                 )
                             }
                         }
@@ -784,7 +869,8 @@ fun SharedTransitionScope.TransactionDetailScreen(
                 },
                 onDismiss = { transactionDetailViewModel.hideMatchPreviewSheet() },
                 newCategory = editableTransaction?.category ?: "",
-                isDarkTheme = uiState.darkThemeConfig ?: isSystemInDarkTheme()
+                isDarkTheme = uiState.darkThemeConfig ?: isSystemInDarkTheme(),
+                transactionPersonMapping = uiState.transactionPersonMapping
             )
         }
     }
@@ -797,6 +883,53 @@ fun SharedTransitionScope.TransactionDetailScreen(
             isDeleting = isDeleting,
             blurEffects = blurEffects,
             hazeState = hazeState
+        )
+    }
+
+    // Mark as loan: lend/borrow entry sheet
+    if (uiState.showMarkAsLoanSheet) {
+        AddEditLendBorrowTransactionSheet(
+            personsList = persons,
+            initialPerson = null,
+            accounts = availableAccounts,
+            categories = categories,
+            attachmentService = transactionDetailViewModel.attachmentService,
+            showPersonSelection = true,
+            transactionToEdit = null,
+            initialType = when (transaction?.transactionType) {
+                TransactionType.LENT -> LendBorrowType.LENT
+                TransactionType.BORROWED -> LendBorrowType.BORROWED
+                TransactionType.EXPENSE -> LendBorrowType.LENT
+                else -> LendBorrowType.BORROWED
+            },
+            initialAmount = transaction?.amount,
+            initialTitle = transaction?.merchantName,
+            blurEffects = blurEffects,
+            onDismiss = { transactionDetailViewModel.hideMarkAsLoanSheet() },
+            onAddPerson = { name, _, _, _, _, _ -> transactionDetailViewModel.addPerson(name) },
+            onSave = { personId, type, amount, title, _, _, _, _, _ ->
+                transactionDetailViewModel.markAsLoan(personId, type, amount, title)
+            }
+        )
+    }
+
+    // Unmark as loan confirmation
+    if (uiState.showUnmarkLoanConfirm) {
+        AlertDialog(
+            onDismissRequest = { transactionDetailViewModel.hideUnmarkLoanConfirm() },
+            title = { Text(stringResource(R.string.unmark_loan_confirm_title)) },
+            text = { Text(stringResource(R.string.unmark_loan_confirm_desc)) },
+            confirmButton = {
+                TextButton(onClick = { transactionDetailViewModel.unmarkAsLoan() }) {
+                    Text(stringResource(R.string.unmark_as_loan))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { transactionDetailViewModel.hideUnmarkLoanConfirm() }) {
+                    Text(stringResource(R.string.cancel))
+                }
+            },
+            shape = RoundedCornerShape(24.dp)
         )
     }
 }
@@ -893,12 +1026,17 @@ private fun TransactionDetailContent(
     onRemoveAttachment: (String) -> Unit = {},
     blurEffects: Boolean,
     hazeState: HazeState = remember { HazeState()},
-    accountIconName: String?,
-    isAmoledMode: Boolean,
-    isDarkTheme: Boolean,
-    animatedContentScope: AnimatedContentScope? = null,
-    sharedTransitionScope: SharedTransitionScope? = null
-) {
+     accountIconName: String?,
+     isAmoledMode: Boolean,
+     isDarkTheme: Boolean,
+     animatedContentScope: AnimatedContentScope? = null,
+     sharedTransitionScope: SharedTransitionScope? = null,
+     linkedLendBorrow: LendBorrowTransactionItem? = null,
+     linkedLoanPersonName: String? = null,
+     linkedLoanPersonColor: String? = null,
+     linkedLoanPersonAvatar: String? = null,
+     onNavigateToPersonDetail: (Long) -> Unit = {}
+ ) {
 
     val receiptContainerColor = if (isAmoledMode) {
         MaterialTheme.colorScheme.surfaceContainerLow
@@ -947,7 +1085,11 @@ private fun TransactionDetailContent(
                     subcategoryEntity = subcategoryEntity,
                     blurEffects = blurEffects,
                     hazeState = hazeState,
-                    accountIconName = accountIconName
+                    accountIconName = accountIconName,
+                    linkedLendBorrow = linkedLendBorrow,
+                    linkedLoanPersonName = linkedLoanPersonName,
+                    linkedLoanPersonColor = linkedLoanPersonColor,
+                    linkedLoanPersonAvatar = linkedLoanPersonAvatar
                 )
                 Spacer(modifier = Modifier.height(Spacing.lg))
                 // SMS Body - Always read-only
@@ -1053,7 +1195,11 @@ private fun TransactionDetailContent(
                         linkedSubscription = linkedSubscription,
                         attachmentService = viewModel.attachmentService,
                         animatedContentScope = animatedContentScope,
-                        sharedTransitionScope = sharedTransitionScope
+                        sharedTransitionScope = sharedTransitionScope,
+                        linkedLendBorrow = linkedLendBorrow,
+                        linkedLoanPersonName = linkedLoanPersonName,
+                        linkedLoanPersonColor = linkedLoanPersonColor,
+                        linkedLoanPersonAvatar = linkedLoanPersonAvatar
                     )
                     Box(
                         modifier = Modifier
@@ -1149,7 +1295,11 @@ private fun EditableTransactionHeader(
     subcategoryEntity: SubcategoryEntity? = null,
     blurEffects: Boolean,
     hazeState: HazeState = remember { HazeState()},
-    accountIconName: String?
+    accountIconName: String?,
+    linkedLendBorrow: LendBorrowTransactionItem? = null,
+    linkedLoanPersonName: String? = null,
+    linkedLoanPersonColor: String? = null,
+    linkedLoanPersonAvatar: String? = null
 ) {
     CashiroCard(
         modifier = Modifier.fillMaxWidth(),
@@ -1190,14 +1340,16 @@ private fun EditableTransactionHeader(
                             leadingIcon = if (transaction.transactionType == type) {
                                 {
                                     Icon(
-                                        imageVector = when (type) {
-                                            TransactionType.INCOME -> Icons.AutoMirrored.Filled.TrendingUp
-                                            TransactionType.EXPENSE -> Icons.AutoMirrored.Filled.TrendingDown
-                                            TransactionType.CREDIT -> Iconax.Card
-                                            TransactionType.TRANSFER -> Icons.Rounded.SwapHoriz
-                                            TransactionType.INVESTMENT -> Icons.AutoMirrored.Filled.ShowChart
-                                            TransactionType.BALANCE_UPDATE -> Icons.Rounded.SwapHoriz
-                                        },
+                                         imageVector = when (type) {
+                                             TransactionType.INCOME -> Icons.AutoMirrored.Filled.TrendingUp
+                                             TransactionType.EXPENSE -> Icons.AutoMirrored.Filled.TrendingDown
+                                             TransactionType.CREDIT -> Iconax.Card
+                                             TransactionType.TRANSFER -> Icons.Rounded.SwapHoriz
+                                             TransactionType.INVESTMENT -> Icons.AutoMirrored.Filled.ShowChart
+                                             TransactionType.BALANCE_UPDATE -> Icons.Rounded.SwapHoriz
+                                             TransactionType.LENT -> Icons.AutoMirrored.Filled.TrendingDown
+                                             TransactionType.BORROWED -> Icons.AutoMirrored.Filled.TrendingUp
+                                         },
                                         contentDescription = null,
                                         modifier = Modifier.size(Dimensions.Icon.small)
                                     )
@@ -1246,14 +1398,46 @@ private fun EditableTransactionHeader(
                         bottomEnd = 4.dp
                     ),
                     leadingIcon = {
-                        BrandIcon(
-                            merchantName = transaction.merchantName,
-                            size = 26.dp,
-                            showBackground = false,
-                            categoryEntity = categoryEntity,
-                            subcategoryEntity = subcategoryEntity,
-                            accountIconName = accountIconName
-                        )
+                        if (linkedLendBorrow != null) {
+                            val displayName = linkedLoanPersonName ?: transaction.merchantName
+                            val backgroundColor = try {
+                                Color(linkedLoanPersonColor?.toColorInt() ?: 0xFF4CAF50.toInt())
+                            } catch (_: Exception) {
+                                Color(0xFF4CAF50)
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .size(26.dp)
+                                    .clip(CircleShape)
+                                    .background(backgroundColor),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                if (!linkedLoanPersonAvatar.isNullOrBlank()) {
+                                    AsyncImage(
+                                        model = linkedLoanPersonAvatar,
+                                        contentDescription = null,
+                                        modifier = Modifier.fillMaxSize(),
+                                        contentScale = ContentScale.Crop
+                                    )
+                                } else {
+                                    Text(
+                                        text = displayName.firstOrNull()?.uppercase()?.toString() ?: "?",
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = Color.White,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+                        } else {
+                            BrandIcon(
+                                merchantName = transaction.merchantName,
+                                size = 26.dp,
+                                showBackground = false,
+                                categoryEntity = categoryEntity,
+                                subcategoryEntity = subcategoryEntity,
+                                accountIconName = accountIconName
+                            )
+                        }
                     },
                     isError = transaction.merchantName.isBlank(),
                     colors = TextFieldDefaults.colors(
@@ -2223,7 +2407,12 @@ private fun TransactionReceipt(
     containerColor: Color = MaterialTheme.colorScheme.surfaceContainerLow,
     animatedContentScope: AnimatedContentScope? = null,
     sharedTransitionScope: SharedTransitionScope? = null,
-    showAttachments: Boolean = true
+    showAttachments: Boolean = true,
+    linkedLendBorrow: LendBorrowTransactionItem? = null,
+    linkedLoanPersonName: String? = null,
+    linkedLoanPersonColor: String? = null,
+    linkedLoanPersonAvatar: String? = null,
+    isCapture: Boolean = false
 ) {
     val density = LocalDensity.current
     var cutoutOffsetPx by remember { mutableFloatStateOf(with(density) { 420.dp.toPx() }) }
@@ -2282,9 +2471,16 @@ private fun TransactionReceipt(
                         merchantName = transaction.merchantName,
                         categoryEntity = categoryEntity,
                         subcategoryEntity = subcategoryEntity,
+                        category = transaction.category,
+                        subcategory = transaction.subcategory,
                         transactionId = transaction.id,
                         animatedContentScope = animatedContentScope,
-                        sharedTransitionScope = sharedTransitionScope
+                        sharedTransitionScope = sharedTransitionScope,
+                        linkedLendBorrow = linkedLendBorrow,
+                        personName = linkedLoanPersonName,
+                        personColor = linkedLoanPersonColor,
+                        personAvatar = linkedLoanPersonAvatar,
+                        isCapture = isCapture
                     )
                     DashedLine(
                         modifier = Modifier.weight(1f),
@@ -2396,7 +2592,8 @@ private fun TransactionReceipt(
 
                     ReceiptInfoRow(
                         label = stringResource(R.string.type),
-                        value = transaction.transactionType.name.lowercase().capitalizeFirst()
+                        value = transaction.transactionType.name.lowercase().capitalizeFirst(),
+                        linkedLendBorrow = linkedLendBorrow
                     )
 
                     val subcategoryValue = transaction.subcategory
@@ -2686,6 +2883,8 @@ private fun TransactionReceipt(
                     TransactionType.TRANSFER -> Color(0xFF9C27B0)  // Purple for transfer
                     TransactionType.INVESTMENT -> Color(0xFF00796B)  // Teal for investment
                     TransactionType.BALANCE_UPDATE -> Color(0xFF9C27B0)  // Purple for balance update
+                    TransactionType.LENT -> MaterialTheme.colorScheme.error
+                    TransactionType.BORROWED -> Color(0xFF4CAF50)
                 }
                 val sign = when (transaction.transactionType) {
                     TransactionType.INCOME -> "+"
@@ -2694,6 +2893,8 @@ private fun TransactionReceipt(
                     TransactionType.TRANSFER -> "↔"
                     TransactionType.INVESTMENT -> "📈"
                     TransactionType.BALANCE_UPDATE -> "↔"
+                    TransactionType.LENT -> "-"
+                    TransactionType.BORROWED -> "+"
                 }
 
                 Text(
@@ -2770,9 +2971,16 @@ private fun ReceiptBadge(
     merchantName: String,
     categoryEntity: CategoryEntity? = null,
     subcategoryEntity: SubcategoryEntity? = null,
+    category: String? = null,
+    subcategory: String? = null,
     transactionId: Long = -1L,
     animatedContentScope: AnimatedContentScope? = null,
-    sharedTransitionScope: SharedTransitionScope? = null
+    sharedTransitionScope: SharedTransitionScope? = null,
+    linkedLendBorrow: LendBorrowTransactionItem? = null,
+    personName: String? = null,
+    personColor: String? = null,
+    personAvatar: String? = null,
+    isCapture: Boolean = false
 ) {
     Surface(
         shape = RoundedCornerShape(24.dp),
@@ -2799,20 +3007,67 @@ private fun ReceiptBadge(
                 }
             } else Modifier
 
-            BrandIcon(
-                merchantName = merchantName,
-                size = 34.dp,
-                showBackground = true,
-                categoryEntity = categoryEntity,
-                subcategoryEntity = subcategoryEntity,
-                accountIconName = null, // Not an account icon in this context
-                modifier = brandIconModifier
-            )
-            Text(
-                text = merchantName,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-            )
+            if (linkedLendBorrow != null) {
+                val displayName = personName ?: merchantName
+                val backgroundColor = remember(personColor) {
+                    try {
+                        Color(personColor?.toColorInt() ?: 0xFF4CAF50.toInt())
+                    } catch (_: Exception) {
+                        Color(0xFF4CAF50)
+                    }
+                }
+                Box(
+                    modifier = brandIconModifier
+                        .size(34.dp)
+                        .clip(CircleShape)
+                        .background(backgroundColor),
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (!personAvatar.isNullOrBlank()) {
+                        val avatarModel: Any = if (isCapture) {
+                            ImageRequest.Builder(LocalPlatformContext.current)
+                                .data(personAvatar)
+                                .allowHardware(false)
+                                .build()
+                        } else personAvatar
+                        AsyncImage(
+                            model = avatarModel,
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    } else {
+                        Text(
+                            text = displayName.firstOrNull()?.uppercase()?.toString() ?: "?",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+                Text(
+                    text = displayName,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                )
+            } else {
+                BrandIcon(
+                    merchantName = merchantName,
+                    size = 34.dp,
+                    showBackground = true,
+                    categoryEntity = categoryEntity,
+                    subcategoryEntity = subcategoryEntity,
+                    category = category,
+                    subcategory = subcategory,
+                    accountIconName = null, // Not an account icon in this context
+                    modifier = brandIconModifier
+                )
+                Text(
+                    text = merchantName,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
         }
     }
 }
@@ -2827,7 +3082,8 @@ private fun ReceiptInfoRow(
     subBankName: String? = null,
     icon: (@Composable () -> Unit)? = null,
     subIcon: (@Composable () -> Unit)? = null,
-    subcategoryColor: Color? = null
+    subcategoryColor: Color? = null,
+    linkedLendBorrow: LendBorrowTransactionItem? = null
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -2835,6 +3091,15 @@ private fun ReceiptInfoRow(
     ) {
         when (label) {
             stringResource(R.string.type), stringResource(R.string.balance), stringResource(R.string.next_billing) -> {
+                val displayValue = if (label == stringResource(R.string.type) && linkedLendBorrow != null) {
+                    when (linkedLendBorrow.type) {
+                        LendBorrowType.LENT -> stringResource(R.string.loan_type_lent)
+                        LendBorrowType.BORROWED -> stringResource(R.string.loan_type_borrowed)
+                        LendBorrowType.SETTLEMENT_LENT -> stringResource(R.string.settlement_received)
+                        LendBorrowType.SETTLEMENT_BORROWED -> stringResource(R.string.settlement_paid)
+                    }
+                } else value
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
@@ -2864,7 +3129,7 @@ private fun ReceiptInfoRow(
                             }
                             Spacer(modifier = Modifier.width(Spacing.xs))
                             Text(
-                                text = value,
+                                text = displayValue,
                                 style = MaterialTheme.typography.bodySmall,
                                 fontWeight = FontWeight.SemiBold,
                             )
@@ -3237,7 +3502,8 @@ private fun MatchPreviewSheetContent(
     onApply: () -> Unit,
     onDismiss: () -> Unit,
     newCategory: String,
-    isDarkTheme: Boolean
+    isDarkTheme: Boolean,
+    transactionPersonMapping: Map<Long, PersonInfo> = emptyMap()
 ) {
 
     val isDark = isDarkTheme
@@ -3404,13 +3670,45 @@ private fun MatchPreviewSheetContent(
                                     }
                                 },
                                 leading = {
-                                    BrandIcon(
-                                        merchantName = txn.merchantName,
-                                        category = txn.category,
-                                        subcategory = txn.subcategory,
-                                        size = 32.dp,
-                                        showBackground = true
-                                    )
+                                    val personInfo = transactionPersonMapping[txn.id]
+                                    if (personInfo != null) {
+                                        val backgroundColor = try {
+                                            Color(personInfo.color.toColorInt())
+                                        } catch (_: Exception) {
+                                            Color(0xFF4CAF50)
+                                        }
+                                        Box(
+                                            modifier = Modifier
+                                                .size(32.dp)
+                                                .clip(CircleShape)
+                                                .background(backgroundColor),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            if (!personInfo.avatar.isNullOrBlank()) {
+                                                AsyncImage(
+                                                    model = personInfo.avatar,
+                                                    contentDescription = null,
+                                                    modifier = Modifier.fillMaxSize(),
+                                                    contentScale = ContentScale.Crop
+                                                )
+                                            } else {
+                                                Text(
+                                                    text = personInfo.name.firstOrNull()?.uppercase()?.toString() ?: "?",
+                                                    style = MaterialTheme.typography.bodySmall,
+                                                    color = Color.White,
+                                                    fontWeight = FontWeight.Bold
+                                                )
+                                            }
+                                        }
+                                    } else {
+                                        BrandIcon(
+                                            merchantName = txn.merchantName,
+                                            category = txn.category,
+                                            subcategory = txn.subcategory,
+                                            size = 32.dp,
+                                            showBackground = true
+                                        )
+                                    }
                                 },
                                 trailing = {
                                     Row(
@@ -3426,6 +3724,7 @@ private fun MatchPreviewSheetContent(
                                             fontWeight = FontWeight.SemiBold,
                                             color = when (txn.transactionType) {
                                                 TransactionType.INCOME -> MaterialTheme.colorScheme.tertiary
+                                                TransactionType.BORROWED -> MaterialTheme.colorScheme.tertiary
                                                 else -> MaterialTheme.colorScheme.error
                                             }
                                         )
@@ -3507,13 +3806,45 @@ private fun MatchPreviewSheetContent(
                                 }
                             },
                             leading = {
-                                BrandIcon(
-                                    merchantName = txn.merchantName,
-                                    category = txn.category,
-                                    subcategory = txn.subcategory,
-                                    size = 32.dp,
-                                    showBackground = true
-                                )
+                                val personInfo = transactionPersonMapping[txn.id]
+                                if (personInfo != null) {
+                                    val backgroundColor = try {
+                                        Color(personInfo.color.toColorInt())
+                                    } catch (_: Exception) {
+                                        Color(0xFF4CAF50)
+                                    }
+                                    Box(
+                                        modifier = Modifier
+                                            .size(32.dp)
+                                            .clip(CircleShape)
+                                            .background(backgroundColor),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        if (!personInfo.avatar.isNullOrBlank()) {
+                                            AsyncImage(
+                                                model = personInfo.avatar,
+                                                contentDescription = null,
+                                                modifier = Modifier.fillMaxSize(),
+                                                contentScale = ContentScale.Crop
+                                            )
+                                        } else {
+                                            Text(
+                                                text = personInfo.name.firstOrNull()?.uppercase()?.toString() ?: "?",
+                                                style = MaterialTheme.typography.bodySmall,
+                                                color = Color.White,
+                                                fontWeight = FontWeight.Bold
+                                            )
+                                        }
+                                    }
+                                } else {
+                                    BrandIcon(
+                                        merchantName = txn.merchantName,
+                                        category = txn.category,
+                                        subcategory = txn.subcategory,
+                                        size = 32.dp,
+                                        showBackground = true
+                                    )
+                                }
                             },
                             trailing = {
                                 Row(
@@ -3534,6 +3865,8 @@ private fun MatchPreviewSheetContent(
                                             TransactionType.TRANSFER -> if (!isDark) transfer_light else transfer_dark
                                             TransactionType.INVESTMENT -> if (!isDark) investment_light else investment_dark
                                             TransactionType.BALANCE_UPDATE -> if (!isDark) transfer_light else transfer_dark
+                                            TransactionType.LENT -> if (!isDark) expense_light else expense_dark
+                                            TransactionType.BORROWED -> if (!isDark) income_light else income_dark
                                         }
                                     )
 
@@ -3613,7 +3946,11 @@ private fun captureReceiptToBitmap(
     availableAccounts: List<AccountBalanceEntity>,
     attachmentService: AttachmentService,
     isDarkTheme: Boolean,
-    isAmoledMode: Boolean
+    isAmoledMode: Boolean,
+    linkedLendBorrow: LendBorrowTransactionItem? = null,
+    linkedLoanPersonName: String? = null,
+    linkedLoanPersonColor: String? = null,
+    linkedLoanPersonAvatar: String? = null
 ): Bitmap {
     val density = context.resources.displayMetrics.density
     val widthDp = 360f
@@ -3647,7 +3984,12 @@ private fun captureReceiptToBitmap(
                     subcategoriesMap = subcategoriesMap,
                     linkedSubscription = linkedSubscription,
                     attachmentService = attachmentService,
-                    showAttachments = false
+                    showAttachments = false,
+                    linkedLendBorrow = linkedLendBorrow,
+                    linkedLoanPersonName = linkedLoanPersonName,
+                    linkedLoanPersonColor = linkedLoanPersonColor,
+                    linkedLoanPersonAvatar = linkedLoanPersonAvatar,
+                    isCapture = true
                 )
             }
         }

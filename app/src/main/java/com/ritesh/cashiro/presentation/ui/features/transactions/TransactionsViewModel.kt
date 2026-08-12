@@ -25,6 +25,8 @@ import com.ritesh.cashiro.data.repository.SubcategoryRepository
 import com.ritesh.cashiro.data.currency.CurrencyConversionService
 import com.ritesh.cashiro.utils.CurrencyUtils
 import com.ritesh.cashiro.utils.DeviceEncryption
+import com.ritesh.cashiro.data.repository.LendBorrowRepository
+import com.ritesh.cashiro.domain.model.PersonInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -49,6 +51,7 @@ class TransactionsViewModel @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val currencyRepository: CurrencyRepository,
     private val currencyConversionService: CurrencyConversionService,
+    private val lendBorrowRepository: LendBorrowRepository,
     private val savedStateHandle: SavedStateHandle,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
@@ -174,6 +177,8 @@ class TransactionsViewModel @Inject constructor(
                 TransactionType.CREDIT -> credit += valAmount
                 TransactionType.TRANSFER -> transfer += valAmount
                 TransactionType.INVESTMENT -> investment += valAmount
+                TransactionType.LENT -> expenses += valAmount
+                TransactionType.BORROWED -> income += valAmount
                 else -> {}
             }
         }
@@ -330,7 +335,8 @@ class TransactionsViewModel @Inject constructor(
                     sortOption.map { "sort" },
                     customDateRange.map { "customDate" },
                     baseCurrency.map { "baseCurrency" },
-                    currencyConversionService.rateChangeTrigger.map { "rates" }
+                    currencyConversionService.rateChangeTrigger.map { "rates" },
+                    lendBorrowRepository.getAllTransactions().map { "lendBorrow" }
                 )
             }
             .transformLatest { trigger ->
@@ -348,25 +354,44 @@ class TransactionsViewModel @Inject constructor(
                 val sort = sortOption.value
  
                  // Get filtered transactions
-                 getFilteredTransactions(query, period, category, subcategory, amountRange, accounts, filterCurrencies, typeFilter)
-                     .collect { transactions ->
-                         // No longer filtering by selectedCurrency. Show all unless explicitly filtered via filter sheet
-                         val currencyFilteredTransactions = transactions
-                         
-                         // Calculate converted amounts for shown transactions if transaction currency differs from base (main) currency
-                         val converted = currencyFilteredTransactions.filter { !it.currency.equals(baseCurrencyCode, ignoreCase = true) }
-                             .associate { tx ->
-                                 tx.id to currencyConversionService.convertAmount(tx.amount, tx.currency, baseCurrencyCode)
-                             }
-                         
-                         emit(Pair(sortTransactions(currencyFilteredTransactions, sort), converted))
-                     }
+                 combine(
+                     getFilteredTransactions(query, period, category, subcategory, amountRange, accounts, filterCurrencies, typeFilter),
+                     lendBorrowRepository.getAllTransactions(),
+                     lendBorrowRepository.getPersons()
+                 ) { transactions, lbTransactions, persons ->
+                     // No longer filtering by selectedCurrency. Show all unless explicitly filtered via filter sheet
+                     val currencyFilteredTransactions = transactions
+                     
+                     // Calculate converted amounts for shown transactions if transaction currency differs from base (main) currency
+                     val converted = currencyFilteredTransactions.filter { !it.currency.equals(baseCurrencyCode, ignoreCase = true) }
+                         .associate { tx ->
+                             tx.id to currencyConversionService.convertAmount(tx.amount, tx.currency, baseCurrencyCode)
+                         }
+
+                     // Create person mapping
+                     val personMap = persons.associateBy { it.id }
+                     val transactionPersonMapping = lbTransactions
+                         .filter { it.transactionId != null }
+                         .associate { lb ->
+                             val person = personMap[lb.personId]
+                             lb.transactionId!! to PersonInfo(
+                                 name = person?.name ?: lb.title,
+                                 color = person?.color ?: "#4CAF50",
+                                 avatar = person?.avatar
+                             )
+                         }
+                     
+                     Triple(sortTransactions(currencyFilteredTransactions, sort), converted, transactionPersonMapping)
+                 }.collect { (transactions, converted, personMapping) ->
+                     emit(Triple(transactions, converted, personMapping))
+                 }
             }
-            .onEach { (transactions, converted) ->
+            .onEach { (transactions, converted, personMapping) ->
                 _uiState.value = _uiState.value.copy(
                     transactions = transactions,
                     groupedTransactions = groupTransactionsByDate(transactions),
                     convertedAmounts = converted,
+                    transactionPersonMapping = personMapping,
                     isLoading = false
                 )
                 // Calculate totals for filtered transactions
@@ -847,12 +872,14 @@ class TransactionsViewModel @Inject constructor(
                 transactions.filter { tx ->
                     typeFilter.any { filter ->
                         when (filter) {
-                            TransactionTypeFilter.ALL -> true
-                            TransactionTypeFilter.INCOME -> tx.transactionType == TransactionType.INCOME
-                            TransactionTypeFilter.EXPENSE -> tx.transactionType == TransactionType.EXPENSE
-                            TransactionTypeFilter.CREDIT -> tx.transactionType == TransactionType.CREDIT
-                            TransactionTypeFilter.TRANSFER -> tx.transactionType == TransactionType.TRANSFER
-                            TransactionTypeFilter.INVESTMENT -> tx.transactionType == TransactionType.INVESTMENT
+                             TransactionTypeFilter.ALL -> true
+                             TransactionTypeFilter.INCOME -> tx.transactionType == TransactionType.INCOME
+                             TransactionTypeFilter.EXPENSE -> tx.transactionType == TransactionType.EXPENSE
+                             TransactionTypeFilter.CREDIT -> tx.transactionType == TransactionType.CREDIT
+                             TransactionTypeFilter.TRANSFER -> tx.transactionType == TransactionType.TRANSFER
+                             TransactionTypeFilter.INVESTMENT -> tx.transactionType == TransactionType.INVESTMENT
+                             TransactionTypeFilter.LENT -> tx.transactionType == TransactionType.LENT
+                             TransactionTypeFilter.BORROWED -> tx.transactionType == TransactionType.BORROWED
                         }
                     }
                 }
@@ -946,11 +973,11 @@ class TransactionsViewModel @Inject constructor(
 
         val totalsByCurrency = transactionsByCurrency.mapValues { (currency, currencyTransactions) ->
             val income = currencyTransactions
-                .filter { it.transactionType == TransactionType.INCOME }
+                .filter { it.transactionType == TransactionType.INCOME || it.transactionType == TransactionType.BORROWED }
                 .fold(BigDecimal.ZERO) { acc, tx -> acc + tx.amount }
 
             val expenses = currencyTransactions
-                .filter { it.transactionType == TransactionType.EXPENSE }
+                .filter { it.transactionType == TransactionType.EXPENSE || it.transactionType == TransactionType.LENT }
                 .fold(BigDecimal.ZERO) { acc, tx -> acc + tx.amount }
 
             val credit = currencyTransactions

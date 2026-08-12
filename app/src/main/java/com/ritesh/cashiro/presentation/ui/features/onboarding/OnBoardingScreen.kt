@@ -590,7 +590,8 @@ fun ProfileStep(
         ) {
             ColorPickerContent(
                 initialColor = state.editedProfileBackgroundColor.toArgb(),
-                onColorChanged = { onBackgroundColorChange(Color(it)) }
+                onColorChanged = { onBackgroundColorChange(Color(it)) },
+                showTitle = true
             )
         }
     }

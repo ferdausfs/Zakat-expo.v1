@@ -192,20 +192,10 @@ fun EditProfileSheet(
             }
 
             // Background Color Selection
-            Box(
-
-                modifier = Modifier
-                    .padding(horizontal = Dimensions.Padding.content)
-                    .background(
-                        color = MaterialTheme.colorScheme.surfaceContainerLow,
-                        shape = RoundedCornerShape(Dimensions.Radius.md)
-                    )
-            ) {
-                ColorPickerContent(
-                    initialColor = state.editedProfileBackgroundColor.toArgb(),
-                    onColorChanged = { onBackgroundColorChange(Color(it)) }
-                )
-            }
+            ColorPickerContent(
+                initialColor = state.editedProfileBackgroundColor.toArgb(),
+                onColorChanged = { onBackgroundColorChange(Color(it)) }
+            )
 
 
 

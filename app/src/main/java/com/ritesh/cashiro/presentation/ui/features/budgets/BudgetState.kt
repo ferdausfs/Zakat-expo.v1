@@ -7,6 +7,7 @@ import com.ritesh.cashiro.data.database.entity.BudgetPeriod
 import com.ritesh.cashiro.data.database.entity.BudgetTrackType
 import com.ritesh.cashiro.data.database.entity.BudgetType
 import com.ritesh.cashiro.data.database.entity.TransactionEntity
+import com.ritesh.cashiro.domain.model.PersonInfo
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.time.format.TextStyle
@@ -22,6 +23,7 @@ data class BudgetUiState(
     val allAccounts: List<AccountBalanceEntity> = emptyList(),
     val convertedAmounts: Map<Long, BigDecimal> = emptyMap(),
     val baseCurrency: String = "INR",
+    val transactionPersonMapping: Map<Long, PersonInfo> = emptyMap(),
     val error: String? = null
 )
 

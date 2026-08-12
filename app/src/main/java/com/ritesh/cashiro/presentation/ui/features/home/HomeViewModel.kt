@@ -31,6 +31,7 @@ import com.ritesh.cashiro.data.repository.SubcategoryRepository
 import com.ritesh.cashiro.data.repository.SubscriptionRepository
 import com.ritesh.cashiro.data.repository.TransactionRepository
 import com.ritesh.cashiro.data.repository.UnrecognizedSmsRepository
+import com.ritesh.cashiro.domain.model.PersonInfo
 import com.ritesh.cashiro.presentation.ui.components.BalancePoint
 import com.ritesh.cashiro.worker.OptimizedSmsReaderWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -68,6 +69,7 @@ class HomeViewModel @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val subcategoryRepository: SubcategoryRepository,
     private val budgetRepository: BudgetRepository,
+    private val lendBorrowRepository: com.ritesh.cashiro.data.repository.LendBorrowRepository,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
@@ -531,6 +533,33 @@ class HomeViewModel @Inject constructor(
                 _uiState.update { it.copy(
                     balanceHistory = dailyPortfolioHistory
                 ) }
+            }
+        }
+
+        viewModelScope.launch {
+            lendBorrowRepository.getSummary().collect { summary ->
+                _uiState.update { it.copy(lendBorrowSummary = summary) }
+            }
+        }
+
+        viewModelScope.launch {
+            combine(
+                lendBorrowRepository.getAllTransactions(),
+                lendBorrowRepository.getPersons()
+            ) { lbTransactions, persons ->
+                val personMap = persons.associateBy { it.id }
+                lbTransactions
+                    .filter { it.transactionId != null }
+                    .associate { lb ->
+                        val person = personMap[lb.personId]
+                        lb.transactionId!! to PersonInfo(
+                            name = person?.name ?: lb.title,
+                            color = person?.color ?: "#4CAF50",
+                            avatar = person?.avatar
+                        )
+                    }
+            }.collect { mapping ->
+                _uiState.update { it.copy(transactionPersonMapping = mapping) }
             }
         }
     }

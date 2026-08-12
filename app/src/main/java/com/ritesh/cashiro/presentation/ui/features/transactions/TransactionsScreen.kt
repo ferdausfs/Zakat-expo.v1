@@ -1,5 +1,6 @@
 package com.ritesh.cashiro.presentation.ui.features.transactions
 
+import android.view.HapticFeedbackConstants
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
@@ -11,8 +12,8 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +25,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -39,6 +41,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Deselect
 import androidx.compose.material.icons.rounded.MoreHoriz
 import androidx.compose.material.icons.rounded.SelectAll
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -64,11 +67,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -78,15 +81,12 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
-import android.view.HapticFeedbackConstants
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
@@ -101,6 +101,7 @@ import com.ritesh.cashiro.presentation.common.TimePeriod
 import com.ritesh.cashiro.presentation.effects.BlurredAnimatedVisibility
 import com.ritesh.cashiro.presentation.effects.overScrollVertical
 import com.ritesh.cashiro.presentation.effects.rememberOverscrollFlingBehavior
+import com.ritesh.cashiro.presentation.ui.components.BatchEditTransactionsBottomSheet
 import com.ritesh.cashiro.presentation.ui.components.CashiroCard
 import com.ritesh.cashiro.presentation.ui.components.CurrencySelectionBottomSheet
 import com.ritesh.cashiro.presentation.ui.components.CustomTitleTopAppBar
@@ -110,7 +111,6 @@ import com.ritesh.cashiro.presentation.ui.components.ListItemPosition
 import com.ritesh.cashiro.presentation.ui.components.LoadingCircle
 import com.ritesh.cashiro.presentation.ui.components.SearchBarBox
 import com.ritesh.cashiro.presentation.ui.components.SectionHeader
-import com.ritesh.cashiro.presentation.ui.components.BatchEditTransactionsBottomSheet
 import com.ritesh.cashiro.presentation.ui.components.TransactionItem
 import com.ritesh.cashiro.presentation.ui.components.TransactionTotalsCard
 import com.ritesh.cashiro.presentation.ui.components.toShape
@@ -772,7 +772,10 @@ fun SharedTransitionScope.TransactionsScreen(
                                             }
                                         },
                                         convertedAmount = uiState.convertedAmounts[transaction.id],
-                                        mainCurrency = baseCurrency
+                                        mainCurrency = baseCurrency,
+                                        linkedLoanPersonName = uiState.transactionPersonMapping[transaction.id]?.name,
+                                        linkedLoanPersonColor = uiState.transactionPersonMapping[transaction.id]?.color,
+                                        linkedLoanPersonAvatar = uiState.transactionPersonMapping[transaction.id]?.avatar
                                     )
                                 }
                             }
@@ -917,6 +920,9 @@ private fun EmptyTransactionsState(
         contentAlignment = Alignment.Center
     ) {
         CashiroCard(
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            ),
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(
@@ -928,7 +934,7 @@ private fun EmptyTransactionsState(
                 Icon(
                     imageVector = Iconax.ReceiptItem,
                     contentDescription = null,
-                    modifier = Modifier.size(48.dp),
+                    modifier = Modifier.size(140.dp),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Spacer(modifier = Modifier.height(Spacing.md))

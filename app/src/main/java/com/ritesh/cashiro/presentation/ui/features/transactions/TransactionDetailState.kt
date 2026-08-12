@@ -2,6 +2,8 @@ package com.ritesh.cashiro.presentation.ui.features.transactions
 
 import com.ritesh.cashiro.data.database.entity.SubscriptionEntity
 import com.ritesh.cashiro.data.database.entity.TransactionEntity
+import com.ritesh.cashiro.domain.model.LendBorrowTransactionItem
+import com.ritesh.cashiro.domain.model.PersonInfo
 import java.math.BigDecimal
 import java.time.LocalDate
 
@@ -36,4 +38,15 @@ data class TransactionDetailUiState(
     val matchSearchResults: List<TransactionEntity> = emptyList(),
     val isAmoledMode: Boolean = false,
     val darkThemeConfig: Boolean? = null,
+    // Loan (lend/borrow) linking
+    val showMarkAsLoanSheet: Boolean = false,
+    val showEditLendBorrowSheet: Boolean = false,
+    val showUnmarkLoanConfirm: Boolean = false,
+    // Lend/borrow entry linked to this transaction (if marked as a loan)
+    val linkedLendBorrow: LendBorrowTransactionItem? = null,
+    val linkedLoanPersonName: String? = null,
+    val linkedLoanPersonAvatar: String? = null,
+    val markAsLoanSuccess: Boolean = false,
+    val markAsLoanError: String? = null,
+    val transactionPersonMapping: Map<Long, PersonInfo> = emptyMap()
 )

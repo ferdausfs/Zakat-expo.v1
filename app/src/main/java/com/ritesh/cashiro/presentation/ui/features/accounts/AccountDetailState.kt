@@ -2,6 +2,7 @@ package com.ritesh.cashiro.presentation.ui.features.accounts
 
 import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
 import com.ritesh.cashiro.data.database.entity.TransactionEntity
+import com.ritesh.cashiro.domain.model.PersonInfo
 import com.ritesh.cashiro.presentation.ui.components.BalancePoint
 import java.math.BigDecimal
 
@@ -19,6 +20,7 @@ data class AccountDetailUiState(
     val baseCurrency: String = "INR",
     val hasMultipleCurrencies: Boolean = false,
     val convertedAmounts: Map<Long, BigDecimal> = emptyMap(),
+    val transactionPersonMapping: Map<Long, PersonInfo> = emptyMap(),
     val isLoading: Boolean = true
 )
 

@@ -2,6 +2,7 @@ package com.ritesh.cashiro.presentation.ui.features.profile
 
 import android.net.Uri
 import androidx.compose.ui.graphics.Color
+import com.ritesh.cashiro.domain.model.LendBorrowPerson
 import java.math.BigDecimal
 
 data class ProfileScreenState(
@@ -15,9 +16,11 @@ data class ProfileScreenState(
     val totalExpense: BigDecimal = BigDecimal.ZERO,
     val activeSubscriptions: Int = 0,
     val baseCurrency: String = "INR",
+    val contacts: List<LendBorrowPerson> = emptyList(),
     val isLoading: Boolean = false,
     val isEditSheetOpen: Boolean = false,
     val hasStoragePermission: Boolean = false,
+    val isAddPersonSheetOpen: Boolean = false,
     val editState: EditProfileState = EditProfileState()
 )
 

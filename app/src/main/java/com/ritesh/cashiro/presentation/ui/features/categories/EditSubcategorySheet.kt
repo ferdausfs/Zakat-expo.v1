@@ -205,22 +205,12 @@ fun EditSubcategorySheet(
 
             // Color Picker Section
             item {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(24.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-                    )
-                ) {
-                    Column {
-                        ColorPickerContent(
-                            initialColor = colorHex.toColorInt(),
-                            onColorChanged = { colorInt ->
-                                colorHex = String.format("#%06X", 0xFFFFFF and colorInt)
-                            }
-                        )
+                ColorPickerContent(
+                    initialColor = colorHex.toColorInt(),
+                    onColorChanged = { colorInt ->
+                        colorHex = String.format("#%06X", 0xFFFFFF and colorInt)
                     }
-                }
+                )
             }
 
             item {

@@ -13,6 +13,10 @@ import com.ritesh.cashiro.data.repository.AccountBalanceRepository
 import com.ritesh.cashiro.data.repository.CurrencyRepository
 import com.ritesh.cashiro.data.repository.SubscriptionRepository
 import com.ritesh.cashiro.data.repository.TransactionRepository
+import com.ritesh.cashiro.data.service.AttachmentService
+import com.ritesh.cashiro.domain.model.PersonCategory
+import com.ritesh.cashiro.domain.usecase.AddEditLendBorrowPersonUseCase
+import com.ritesh.cashiro.domain.usecase.GetLendBorrowPersonsUseCase
 import com.ritesh.cashiro.utils.ImageUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -32,7 +36,10 @@ constructor(
     private val transactionRepository: TransactionRepository,
     private val subscriptionRepository: SubscriptionRepository,
     private val currencyRepository: CurrencyRepository,
-    private val currencyConversionService: CurrencyConversionService
+    private val currencyConversionService: CurrencyConversionService,
+    private val getLendBorrowPersonsUseCase: GetLendBorrowPersonsUseCase,
+    private val addEditPersonUseCase: AddEditLendBorrowPersonUseCase,
+    val attachmentService: AttachmentService
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ProfileScreenState())
@@ -45,6 +52,15 @@ constructor(
         observeNetWorth()
         observeMonthlyFinancials()
         observeActiveSubscriptions()
+        observeContacts()
+    }
+
+    private fun observeContacts() {
+        getLendBorrowPersonsUseCase()
+            .onEach { persons ->
+                _state.update { it.copy(contacts = persons) }
+            }
+            .launchIn(viewModelScope)
     }
 
     private fun observeBaseCurrency() {
@@ -138,9 +154,9 @@ constructor(
                         toCurrency = baseCurrency
                     )
                 }
-                if (txn.transactionType == TransactionType.INCOME) {
+                if (txn.transactionType == TransactionType.INCOME || txn.transactionType == TransactionType.BORROWED) {
                     income = income.add(amt)
-                } else if (txn.transactionType == TransactionType.EXPENSE) {
+                } else if (txn.transactionType == TransactionType.EXPENSE || txn.transactionType == TransactionType.LENT) {
                     expense = expense.add(amt)
                 }
             }
@@ -183,6 +199,24 @@ constructor(
 
     fun dismissEditSheet() {
         _state.update { it.copy(isEditSheetOpen = false) }
+    }
+
+    fun showAddPersonSheet(show: Boolean) {
+        _state.update { it.copy(isAddPersonSheetOpen = show) }
+    }
+
+    fun addPerson(
+        name: String,
+        phone: String?,
+        notes: String?,
+        color: String,
+        avatar: String?,
+        category: PersonCategory?
+    ) {
+        viewModelScope.launch {
+            addEditPersonUseCase.addPerson(name, phone, notes, color, avatar, category)
+            showAddPersonSheet(false)
+        }
     }
 
     fun updateEditUserName(name: String) {

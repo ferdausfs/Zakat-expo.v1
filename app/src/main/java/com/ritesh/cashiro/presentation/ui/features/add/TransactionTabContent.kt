@@ -5,6 +5,10 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,6 +29,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Category
@@ -68,6 +73,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.ritesh.cashiro.R
+import com.ritesh.cashiro.presentation.ui.features.lendborrow.AddEditPersonSheet
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
@@ -79,6 +85,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.layout.ContentScale
+import coil3.compose.AsyncImage
 import androidx.core.graphics.toColorInt
 import com.ritesh.cashiro.data.database.entity.TransactionType
 import com.ritesh.cashiro.presentation.effects.BlurredAnimatedVisibility
@@ -100,6 +108,7 @@ import com.ritesh.cashiro.presentation.ui.theme.Dimensions
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
 import com.ritesh.cashiro.utils.CurrencyFormatter
 import com.ritesh.cashiro.utils.IconResolutionUtils
+import com.ritesh.cashiro.utils.horizontalFadingEdge
 import dev.chrisbanes.haze.HazeState
 import kotlinx.coroutines.delay
 import java.time.ZoneOffset
@@ -119,6 +128,7 @@ fun TransactionTabContent(
     val categories by viewModel.categories.collectAsState()
     val transactionSubcategories by viewModel.transactionSubcategories.collectAsState()
     val transactionAttachments by viewModel.transactionAttachments.collectAsState()
+    val persons by viewModel.persons.collectAsState()
 
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
@@ -347,6 +357,235 @@ fun TransactionTabContent(
                                 fontSize = 14.sp,
                             )
                         }
+                    }
+                }
+            }
+
+            // Due Date (only relevant for Lent / Borrowed loans)
+            BlurredAnimatedVisibility(
+                uiState.transactionType == TransactionType.LENT ||
+                    uiState.transactionType == TransactionType.BORROWED
+            ) {
+                var showDueDatePicker by remember { mutableStateOf(false) }
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(
+                            color = MaterialTheme.colorScheme.surfaceContainerLow,
+                            shape = RoundedCornerShape(Dimensions.Radius.md)
+                        )
+                        .clip(RoundedCornerShape(Dimensions.Radius.md))
+                        .clickable { showDueDatePicker = true }
+                        .padding(12.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Icon(
+                            imageVector = Iconax.Calendar,
+                            contentDescription = null,
+                            tint = if (uiState.dueDate != null) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = stringResource(R.string.due_date),
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Text(
+                                text = uiState.dueDate?.format(DateTimeFormatter.ofPattern("dd MMMM, yyyy"))
+                                    ?: stringResource(R.string.no_due_date),
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = if (uiState.dueDate != null) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                modifier = Modifier.basicMarquee()
+                            )
+                        }
+                        if (uiState.dueDate != null) {
+                            Icon(
+                                imageVector = Icons.Rounded.KeyboardArrowDown,
+                                contentDescription = stringResource(R.string.clear_due_date),
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .clickable {
+                                        showDueDatePicker = false
+                                        viewModel.updateTransactionDueDate(null)
+                                    },
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
+                }
+
+                if (showDueDatePicker) {
+                    val dueDatePickerState = rememberDatePickerState(
+                        initialSelectedDateMillis = (uiState.dueDate ?: java.time.LocalDateTime.now())
+                            .atZone(java.time.ZoneId.systemDefault())
+                            .toInstant()
+                            .toEpochMilli()
+                    )
+                    DatePicker(
+                        onDismiss = { showDueDatePicker = false },
+                        onConfirm = {
+                            dueDatePickerState.selectedDateMillis?.let { millis ->
+                                viewModel.updateTransactionDueDate(
+                                    java.time.Instant.ofEpochMilli(millis)
+                                        .atZone(java.time.ZoneId.systemDefault())
+                                        .toLocalDateTime()
+                                )
+                            }
+                            showDueDatePicker = false
+                        },
+                        datePickerState = dueDatePickerState,
+                        blurEffects = blurEffects,
+                        hazeState = hazeState
+                    )
+                }
+            }
+
+            // Person Selection for Lent / Borrowed
+            BlurredAnimatedVisibility(
+                uiState.transactionType == TransactionType.LENT ||
+                    uiState.transactionType == TransactionType.BORROWED
+            ) {
+                var showAddPersonSheet by remember { mutableStateOf(false) }
+                var lastAddedPersonName by remember { mutableStateOf<String?>(null) }
+
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.select_person),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+
+                    val personLazyListState = rememberLazyListState()
+                    LazyRow(
+                        state = personLazyListState,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .horizontalFadingEdge(
+                                canScrollBackward = personLazyListState.canScrollBackward,
+                                canScrollForward = personLazyListState.canScrollForward
+                            )
+                    ) {
+                        item {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .clickable { showAddPersonSheet = true }
+                                    .padding(4.dp)
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(56.dp)
+                                        .background(
+                                            MaterialTheme.colorScheme.surfaceContainerHigh,
+                                            CircleShape
+                                        ),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Add,
+                                        contentDescription = stringResource(R.string.add_person),
+                                        tint = MaterialTheme.colorScheme.primary
+                                    )
+                                }
+                                Text(
+                                    text = stringResource(R.string.add_new),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    modifier = Modifier.padding(top = 4.dp),
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
+
+                        items(persons, key = { it.id }) { person ->
+                            val isSelected = uiState.selectedPersonId == person.id
+                            val colorInt = try {
+                                android.graphics.Color.parseColor(person.color)
+                            } catch (_: Exception) {
+                                android.graphics.Color.parseColor("#4CAF50")
+                            }
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .clickable { viewModel.updateTransactionPersonId(person.id) }
+                                    .padding(4.dp)
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(56.dp)
+                                        .clip(CircleShape)
+                                        .background(Color(colorInt))
+                                        .border(
+                                            width = if (isSelected) 2.dp else 0.dp,
+                                            color = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
+                                            shape = CircleShape
+                                        ),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    if (person.avatar != null) {
+                                        AsyncImage(
+                                            model = person.avatar,
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .size(56.dp)
+                                                .clip(CircleShape),
+                                            contentScale = ContentScale.Crop
+                                        )
+                                    } else {
+                                        Text(
+                                            text = person.name.take(1).uppercase(),
+                                            style = MaterialTheme.typography.titleLarge,
+                                            fontWeight = FontWeight.Bold,
+                                            color = Color.White
+                                        )
+                                    }
+                                }
+                                Text(
+                                    text = person.name,
+                                    style = MaterialTheme.typography.labelSmall,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                    modifier = Modifier.width(56.dp).padding(top = 4.dp),
+                                    textAlign = TextAlign.Center,
+                                    color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                        }
+                    }
+                }
+
+                if (showAddPersonSheet) {
+                    AddEditPersonSheet(
+                        attachmentService = viewModel.attachmentService,
+                        onDismiss = { showAddPersonSheet = false },
+                        onSave = { name, phone, notes, color, avatar, category ->
+                            lastAddedPersonName = name
+                            viewModel.addPerson(name, phone, notes, color, avatar, category)
+                            showAddPersonSheet = false
+                        }
+                    )
+                }
+
+                LaunchedEffect(persons) {
+                    val lastAdded = lastAddedPersonName
+                    if (lastAdded != null) {
+                        persons.firstOrNull { it.name == lastAdded }?.let {
+                            viewModel.updateTransactionPersonId(it.id)
+                        }
+                        lastAddedPersonName = null
                     }
                 }
             }
@@ -930,6 +1169,10 @@ fun TransactionTabContent(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(1.5.dp)
             ) {
+                BlurredAnimatedVisibility(
+                    uiState.transactionType != TransactionType.LENT &&
+                        uiState.transactionType != TransactionType.BORROWED
+                ) {
                 // Merchant Name Input
                 TextField(
                     value = uiState.merchant,
@@ -957,20 +1200,23 @@ fun TransactionTabContent(
                     ),
                     supportingText = uiState.merchantError?.let { { Text(it) } },
                 )
+                }
 
                 // Notes/Description (Optional)
                 TextField(
                     value = uiState.notes,
                     onValueChange = viewModel::updateTransactionNotes,
-                    label = { Text(stringResource(R.string.notes_optional), fontWeight = FontWeight.SemiBold) },
-                    modifier = Modifier.fillMaxWidth(),
-                    shape =
-                        RoundedCornerShape(
-                            topStart = 4.dp,
-                            topEnd = 4.dp,
-                            bottomStart = 16.dp,
-                            bottomEnd = 16.dp
-                        ),
+                label = { Text(stringResource(R.string.notes_optional), fontWeight = FontWeight.SemiBold) },
+                modifier = Modifier.fillMaxWidth(),
+                shape = if (uiState.transactionType == TransactionType.LENT ||
+                    uiState.transactionType == TransactionType.BORROWED
+                ) RoundedCornerShape(16.dp) else
+                    RoundedCornerShape(
+                        topStart = 4.dp,
+                        topEnd = 4.dp,
+                        bottomStart = 16.dp,
+                        bottomEnd = 16.dp
+                    ),
                     leadingIcon = {
                         Icon(Iconax.DocumentText2, contentDescription = null)
                     },

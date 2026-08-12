@@ -15,6 +15,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -88,6 +89,7 @@ import com.ritesh.cashiro.presentation.ui.components.CustomTitleTopAppBar
 import com.ritesh.cashiro.presentation.ui.components.DeleteCategoryDialog
 import com.ritesh.cashiro.presentation.ui.components.SearchBarBox
 import com.ritesh.cashiro.presentation.ui.components.SectionHeader
+import com.ritesh.cashiro.presentation.ui.icons.ArrowLeft02
 import com.ritesh.cashiro.presentation.ui.icons.Bag
 import com.ritesh.cashiro.presentation.ui.icons.CloseCircle
 import com.ritesh.cashiro.presentation.ui.icons.Iconax
@@ -191,11 +193,37 @@ fun CategoriesScreen(
                         showMenu = showFilterMenu,
                         onActionClick = { showFilterMenu = true },
                         onDismissMenu = { showFilterMenu = false },
-                        onFilterSelected = { filter ->
-                            selectedFilter = filter
-                            showFilterMenu = false
-                        }
-                    )
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.all)) },
+                            onClick = {
+                                selectedFilter = "All"
+                                showFilterMenu = false
+                            },
+                        )
+                        HorizontalDivider(
+                            thickness = 1.5.dp,
+                            color = MaterialTheme.colorScheme.surface
+                        )
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.expense)) },
+                            onClick = {
+                                selectedFilter = "Expense"
+                                showFilterMenu = false
+                            },
+                        )
+                        HorizontalDivider(
+                            thickness = 1.5.dp,
+                            color = MaterialTheme.colorScheme.surface
+                        )
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.income)) },
+                            onClick = {
+                                selectedFilter = "Income"
+                                showFilterMenu = false
+                            },
+                        )
+                    }
                 }
             )
         },
@@ -628,7 +656,7 @@ fun NavigationContent(onNavigateBack: () -> Unit) {
             shapes =  IconButtonDefaults.shapes()
         ) {
             Icon(
-                    imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
+                    imageVector = Iconax.ArrowLeft02,
                     contentDescription = "Back Button",
             )
         }
@@ -638,10 +666,10 @@ fun NavigationContent(onNavigateBack: () -> Unit) {
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ActionContent(
-        showMenu: Boolean,
-        onActionClick: () -> Unit,
-        onDismissMenu: () -> Unit,
-        onFilterSelected: (String) -> Unit
+    showMenu: Boolean,
+    onActionClick: () -> Unit,
+    onDismissMenu: () -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -671,27 +699,7 @@ fun ActionContent(
             expanded = showMenu,
             onDismissRequest = onDismissMenu,
             shape = MaterialTheme.shapes.large,
-        ) {
-            DropdownMenuItem(
-                text = { Text(stringResource(R.string.all)) },
-                onClick = { onFilterSelected("All") },
-            )
-            HorizontalDivider(
-                thickness = 1.5.dp,
-                color = MaterialTheme.colorScheme.surface
-            )
-            DropdownMenuItem(
-                text = { Text(stringResource(R.string.expense)) },
-                onClick = { onFilterSelected("Expense") },
-            )
-            HorizontalDivider(
-                thickness = 1.5.dp,
-                color = MaterialTheme.colorScheme.surface
-            )
-            DropdownMenuItem(
-                text = { Text(stringResource(R.string.income)) },
-                onClick = { onFilterSelected("Income") },
-            )
-        }
+            content = content
+        )
     }
 }

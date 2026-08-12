@@ -3,6 +3,7 @@ package com.ritesh.cashiro.presentation.ui.features.transactions
 import androidx.annotation.StringRes
 import com.ritesh.cashiro.R
 import com.ritesh.cashiro.data.database.entity.TransactionEntity
+import com.ritesh.cashiro.domain.model.PersonInfo
 import com.ritesh.cashiro.presentation.common.TimePeriod
 import com.ritesh.cashiro.presentation.common.TransactionTypeFilter
 import java.math.BigDecimal
@@ -11,7 +12,8 @@ data class TransactionsUiState(
     val transactions: List<TransactionEntity> = emptyList(),
     val groupedTransactions: Map<DateGroup, List<TransactionEntity>> = emptyMap(),
     val convertedAmounts: Map<Long, BigDecimal> = emptyMap(),
-    val isLoading: Boolean = true
+    val isLoading: Boolean = true,
+    val transactionPersonMapping: Map<Long, PersonInfo> = emptyMap()
 )
 
 data class FilterParams(

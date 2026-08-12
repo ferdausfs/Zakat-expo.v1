@@ -228,7 +228,8 @@ fun EditBudgetSheet(
                     onColorChanged = { colorInt ->
                         onColorChange(String.format("#%06X", 0xFFFFFF and colorInt))
                         showColorPicker = false
-                    }
+                    },
+                    showTitle = true
                 )
             }
         }

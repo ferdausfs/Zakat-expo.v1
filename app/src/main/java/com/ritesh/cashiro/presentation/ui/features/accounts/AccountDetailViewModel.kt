@@ -10,6 +10,12 @@ import com.ritesh.cashiro.data.repository.CategoryRepository
 import com.ritesh.cashiro.data.repository.SubcategoryRepository
 import com.ritesh.cashiro.data.repository.TransactionRepository
 import com.ritesh.cashiro.data.repository.CurrencyRepository
+import com.ritesh.cashiro.data.repository.LendBorrowRepository
+import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
+import com.ritesh.cashiro.data.database.entity.TransactionEntity
+import com.ritesh.cashiro.domain.model.LendBorrowPerson
+import com.ritesh.cashiro.domain.model.LendBorrowTransactionItem
+import com.ritesh.cashiro.domain.model.PersonInfo
 import com.ritesh.cashiro.presentation.ui.components.BalancePoint
 import com.ritesh.cashiro.utils.CurrencyFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,7 +35,8 @@ class AccountDetailViewModel @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val subcategoryRepository: SubcategoryRepository,
     private val currencyRepository: CurrencyRepository,
-    private val currencyConversionService: CurrencyConversionService
+    private val currencyConversionService: CurrencyConversionService,
+    private val lendBorrowRepository: LendBorrowRepository
 ) : ViewModel() {
     
     private val bankName: String = savedStateHandle.get<String>("bankName") ?: ""
@@ -71,8 +78,17 @@ class AccountDetailViewModel @Inject constructor(
                 transactionRepository.getTransactionsByAccount(bankName, accountLast4),
                 currencyRepository.effectiveBaseCurrencyCode,
                 accountBalanceRepository.getLatestBalanceFlow(bankName, accountLast4),
-                currencyConversionService.rateChangeTrigger
-            ) { dateRange, allTransactions, mainCurrency, latestBalance, _ ->
+                currencyConversionService.rateChangeTrigger,
+                lendBorrowRepository.getAllTransactions(),
+                lendBorrowRepository.getPersons()
+            ) { args: Array<Any?> ->
+                val dateRange = args[0] as DateRange
+                val allTransactions = args[1] as List<TransactionEntity>
+                val mainCurrency = args[2] as String
+                val latestBalance = args[3] as AccountBalanceEntity?
+                val lbTransactions = args[5] as List<LendBorrowTransactionItem>
+                val persons = args[6] as List<LendBorrowPerson>
+
                 val (startDate, endDate) = getDateRangeValues(dateRange)
 
                 val filteredTransactions = if (dateRange == DateRange.ALL_TIME) {
@@ -85,10 +101,7 @@ class AccountDetailViewModel @Inject constructor(
                 }
 
                 val accountPrimaryCurrency = latestBalance?.currency ?: getPrimaryCurrencyForAccount(bankName)
-                val hasMultipleCurrencies = filteredTransactions
-                    .map { it.currency }
-                    .distinct()
-                    .size > 1
+                val hasMultipleCurrencies = filteredTransactions.map { it.currency }.distinct().size > 1
 
                 // Refresh exchange rates if we have multiple currencies
                 if (hasMultipleCurrencies) {
@@ -111,16 +124,11 @@ class AccountDetailViewModel @Inject constructor(
                         transaction.amount
                     }
 
-                    if (transaction.transactionType == TransactionType.INCOME) {
+                    if (transaction.transactionType == TransactionType.INCOME || transaction.transactionType == TransactionType.BORROWED) {
                         totalIncome += convertedAmount
                     } else if (transaction.transactionType == TransactionType.TRANSFER) {
-                        // For self transfers, we must check bankName AND accountLast4 to disambiguate correctly
-                        // transaction.bankName is always the sender's bank.
                         val isSender = transaction.bankName == bankName && 
                             (transaction.accountNumber == accountLast4 || transaction.fromAccount == accountLast4)
-                        
-                        // If it's a transfer and we are not the sender, but this transaction was fetched 
-                        // for our account, we must be the receiver.
                         val isReceiver = !isSender && transaction.toAccount == accountLast4
 
                         if (isReceiver) {
@@ -128,14 +136,23 @@ class AccountDetailViewModel @Inject constructor(
                         } else if (isSender) {
                             totalExpenses += convertedAmount
                         }
-                    } else if (transaction.transactionType == TransactionType.CREDIT || transaction.transactionType == TransactionType.BALANCE_UPDATE) {
-                        // Optional: do credit or balance update affect total income/expenses? 
-                        // Currently everything not INCOME goes to EXPENSE, but leaving it as-is for backward compatibility
-                        totalExpenses += convertedAmount
                     } else {
                         totalExpenses += convertedAmount
                     }
                 }
+
+                // Create person mapping
+                val personMap = persons.associateBy { it.id }
+                val transactionPersonMapping = lbTransactions
+                    .filter { it.transactionId != null }
+                    .associate { lb ->
+                        val person = personMap[lb.personId]
+                        lb.transactionId!! to PersonInfo(
+                            name = person?.name ?: lb.title,
+                            color = person?.color ?: "#4CAF50",
+                            avatar = person?.avatar
+                        )
+                    }
 
                 // Calculate converted amounts for the UI (TransactionItem) based on Main App Currency
                 val converted = filteredTransactions
@@ -150,10 +167,11 @@ class AccountDetailViewModel @Inject constructor(
                         totalIncome = totalIncome,
                         totalExpenses = totalExpenses,
                         netBalance = totalIncome - totalExpenses,
-                        primaryCurrency = mainCurrency,
+                        primaryCurrency = accountPrimaryCurrency,
                         baseCurrency = mainCurrency,
                         hasMultipleCurrencies = hasMultipleCurrencies,
                         convertedAmounts = converted,
+                        transactionPersonMapping = transactionPersonMapping,
                         isLoading = false
                     )
                 }

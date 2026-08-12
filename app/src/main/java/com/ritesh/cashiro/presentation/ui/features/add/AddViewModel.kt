@@ -13,10 +13,15 @@ import com.ritesh.cashiro.data.database.entity.TransactionType
 import com.ritesh.cashiro.data.repository.AccountBalanceRepository
 import com.ritesh.cashiro.data.repository.SubcategoryRepository
 import com.ritesh.cashiro.data.service.AttachmentService
+import com.ritesh.cashiro.domain.usecase.AddEditLendBorrowPersonUseCase
 import com.ritesh.cashiro.domain.usecase.AddSubscriptionUseCase
 import com.ritesh.cashiro.domain.usecase.AddTransactionUseCase
 import com.ritesh.cashiro.domain.usecase.GetCategoriesUseCase
+import com.ritesh.cashiro.domain.usecase.GetLendBorrowPersonsUseCase
+import com.ritesh.cashiro.domain.usecase.MarkTransactionAsLoanUseCase
 import com.ritesh.cashiro.domain.usecase.UpdateSubscriptionUseCase
+import com.ritesh.cashiro.domain.model.PersonCategory
+import com.ritesh.cashiro.data.database.entity.LendBorrowType
 import com.ritesh.cashiro.data.repository.SubscriptionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -37,6 +42,9 @@ class AddViewModel
 constructor(
     private val addTransactionUseCase: AddTransactionUseCase,
     private val addSubscriptionUseCase: AddSubscriptionUseCase,
+    private val addEditLendBorrowPersonUseCase: AddEditLendBorrowPersonUseCase,
+    private val getLendBorrowPersonsUseCase: GetLendBorrowPersonsUseCase,
+    private val markTransactionAsLoanUseCase: MarkTransactionAsLoanUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val subcategoryRepository: SubcategoryRepository,
     private val accountBalanceRepository: AccountBalanceRepository,
@@ -65,6 +73,15 @@ constructor(
     val categories =
         getCategoriesUseCase
             .execute()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = emptyList()
+            )
+
+    // People available for linking LENT/BORROWED transactions to a Khata person.
+    val persons =
+        getLendBorrowPersonsUseCase()
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5000),
@@ -162,6 +179,8 @@ constructor(
             TransactionType.INVESTMENT -> "Investment"
             TransactionType.CREDIT -> "Shopping"
             TransactionType.TRANSFER -> "Self Transfer"
+            TransactionType.LENT -> "Lent"
+            TransactionType.BORROWED -> "Borrowed"
             else -> _transactionUiState.value.category
         }
 
@@ -240,8 +259,10 @@ constructor(
     fun saveTransaction(onSuccess: () -> Unit) {
         val state = _transactionUiState.value
 
+        val isLoanType = state.transactionType == TransactionType.LENT ||
+            state.transactionType == TransactionType.BORROWED
         val amountError = validateAmount(state.amount)
-        val merchantError = validateMerchant(state.merchant)
+        val merchantError = if (!isLoanType) validateMerchant(state.merchant) else null
         val categoryError = validateCategory(state.category)
 
         // Additional validation for Transfer transactions
@@ -282,7 +303,7 @@ constructor(
 
                 val amount = BigDecimal(state.amount)
 
-                addTransactionUseCase.execute(
+                val transactionId = addTransactionUseCase.execute(
                     amount = amount,
                     merchant = state.merchant.trim(),
                     category = state.category,
@@ -299,6 +320,28 @@ constructor(
                     targetAccountLast4 = state.targetAccount?.accountLast4,
                     attachments = attachmentService.joinAttachments(_transactionAttachments.value)
                 )
+
+                if (isLoanType && state.selectedPersonId != null) {
+                    val selectedPerson = persons.value.find { it.id == state.selectedPersonId }
+                    val loanTitle = selectedPerson?.name ?: state.merchant.trim()
+                    markTransactionAsLoanUseCase(
+                        transactionId = transactionId,
+                        personId = state.selectedPersonId,
+                        type = if (state.transactionType == TransactionType.LENT) {
+                            LendBorrowType.LENT
+                        } else {
+                            LendBorrowType.BORROWED
+                        },
+                        amount = amount,
+                        currency = state.currency,
+                        title = loanTitle,
+                        merchant = loanTitle,
+                        category = state.category,
+                        date = state.date,
+                        dueDate = state.dueDate,
+                        accountId = state.selectedAccount?.id
+                    )
+                }
 
                 onSuccess()
             } catch (e: Exception) {
@@ -327,6 +370,29 @@ constructor(
         account: AccountBalanceEntity?
     ) {
         _transactionUiState.update { currentState -> currentState.copy(targetAccount = account) }
+    }
+
+    fun updateTransactionPersonId(personId: Long?) {
+        _transactionUiState.update { currentState -> currentState.copy(selectedPersonId = personId) }
+    }
+
+    fun updateTransactionDueDate(dueDate: LocalDateTime?) {
+        _transactionUiState.update { currentState -> currentState.copy(dueDate = dueDate) }
+    }
+
+    fun addPerson(
+        name: String,
+        phone: String?,
+        notes: String?,
+        color: String,
+        avatar: String?,
+        category: PersonCategory?
+    ) {
+        viewModelScope.launch {
+            addEditLendBorrowPersonUseCase.addPerson(
+                name, phone, notes, color, avatar, category
+            )
+        }
     }
 
     // Attachment management for transactions
@@ -673,18 +739,28 @@ data class TransactionUiState(
     val targetAccount: AccountBalanceEntity? = null,
     val currency: String = "INR",
     val isLoading: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
+    val selectedPersonId: Long? = null,
+    val dueDate: LocalDateTime? = null
 ) {
+    private val isLoanType: Boolean
+        get() = transactionType == TransactionType.LENT ||
+            transactionType == TransactionType.BORROWED
+
     val isValid: Boolean
-        get() =
-            amount.isNotBlank() &&
+        get() {
+            val baseValid = amount.isNotBlank() &&
                     amount.toDoubleOrNull() != null &&
                     amount.toDouble() > 0 &&
-                    merchant.isNotBlank() &&
                     category.isNotBlank() &&
                     amountError == null &&
-                    merchantError == null &&
                     categoryError == null
+            return if (isLoanType) {
+                baseValid && selectedPersonId != null
+            } else {
+                baseValid && merchant.isNotBlank() && merchantError == null
+            }
+        }
 }
 
 data class SubscriptionUiState(

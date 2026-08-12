@@ -148,6 +148,8 @@ import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.presentation.ui.components.LendBorrowCard
+import com.ritesh.cashiro.presentation.ui.features.lendborrow.LendBorrowFilter
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class,
     ExperimentalHazeApi::class
@@ -164,6 +166,7 @@ fun SharedTransitionScope.HomeScreen(
     onNavigateToSubscriptions: () -> Unit = {},
     onNavigateToBudgets: (Long?) -> Unit = {},
     onNavigateToBudgetHistory: (Long) -> Unit = {},
+    onNavigateToLendBorrow: (String?) -> Unit = { _ -> },
     onTransactionClick: (Long, String) -> Unit = { _, _ -> },
     onFullResyncClick: () -> Unit = {},
     animatedContentScope: AnimatedContentScope? = null,
@@ -444,6 +447,21 @@ fun SharedTransitionScope.HomeScreen(
                                     )
                                 }
                             }
+                            HomeWidget.LOANS -> {
+                                item(key = "loans") {
+                                    LendBorrowCard(
+                                        summary = uiState.lendBorrowSummary,
+                                        onClick = { onNavigateToLendBorrow(null) },
+                                        onLentClick = { onNavigateToLendBorrow(LendBorrowFilter.YOU_GET.name) },
+                                        onBorrowedClick = { onNavigateToLendBorrow(LendBorrowFilter.YOU_OWE.name) },
+                                        modifier = Modifier.padding(horizontal = Dimensions.Padding.content),
+                                        currency = uiState.baseCurrency,
+                                        blurEffects = blurEffects && uiState.showBannerImage,
+                                        hazeState = hazeStateBanner,
+                                        animatedContentScope = animatedContentScope
+                                    )
+                                }
+                            }
                             HomeWidget.TRANSACTION_HEATMAP -> {
                                 item(key = "transaction_heatmap") {
                                     HeatmapWidget(
@@ -696,7 +714,10 @@ fun SharedTransitionScope.HomeScreen(
                                                             shape = position.toShape(),
                                                             modifier = Modifier.fillMaxWidth(),
                                                             animatedContentScope = animatedContentScope,
-                                                            sharedElementKey = "transaction_${transaction.id}"
+                                                            sharedElementKey = "transaction_${transaction.id}",
+                                                            linkedLoanPersonName = uiState.transactionPersonMapping[transaction.id]?.name,
+                                                            linkedLoanPersonColor = uiState.transactionPersonMapping[transaction.id]?.color,
+                                                            linkedLoanPersonAvatar = uiState.transactionPersonMapping[transaction.id]?.avatar
                                                         )
                                                     }
                                                 }

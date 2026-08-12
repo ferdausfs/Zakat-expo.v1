@@ -149,12 +149,14 @@ class AnalyticsViewModel @Inject constructor(
                 // Convert TransactionTypeFilter to TransactionType for memory filtering
                 val dbTransactionTypes = filterState.typeFilter.mapNotNull { type ->
                     when (type) {
-                        TransactionTypeFilter.ALL -> null
-                        TransactionTypeFilter.INCOME -> TransactionType.INCOME
-                        TransactionTypeFilter.EXPENSE -> TransactionType.EXPENSE
-                        TransactionTypeFilter.CREDIT -> TransactionType.CREDIT
-                        TransactionTypeFilter.TRANSFER -> TransactionType.TRANSFER
-                        TransactionTypeFilter.INVESTMENT -> TransactionType.INVESTMENT
+                         TransactionTypeFilter.ALL -> null
+                         TransactionTypeFilter.INCOME -> TransactionType.INCOME
+                         TransactionTypeFilter.EXPENSE -> TransactionType.EXPENSE
+                         TransactionTypeFilter.CREDIT -> TransactionType.CREDIT
+                         TransactionTypeFilter.TRANSFER -> TransactionType.TRANSFER
+                         TransactionTypeFilter.INVESTMENT -> TransactionType.INVESTMENT
+                         TransactionTypeFilter.LENT -> TransactionType.LENT
+                         TransactionTypeFilter.BORROWED -> TransactionType.BORROWED
                     }
                 }.toSet()
 
