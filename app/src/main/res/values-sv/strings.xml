@@ -740,7 +740,6 @@ Grön (+) = Sparande | Röd (-) = Överspending</string>
     <string name="language">Språk</string>
     <string name="language_subtitle">Byt applikationsspråk</string>
     <string name="select_language">Välj språk</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">Användare</string>
     <string name="backup_sync_subtitle">Inställningar för säkerhetskopiering, moln, återställning och synkronisering</string>
     <string name="error">Fel</string>
@@ -1041,39 +1040,6 @@ Detta kan ta några sekunder beroende på din meddelandehistorik.</string>
     <string name="provider_local_only">Endast lokalt</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d licens</item>
-        <item quantity="other">%1$d licenser</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">%1$d meddelande från potentiella banker</item>
-        <item quantity="other">%1$d meddelanden från potentiella banker</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d fil</item>
-        <item quantity="other">%1$d filer</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d underkategori</item>
-        <item quantity="other">%1$d underkategorier</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">Ta bort %1$d transaktion?</item>
-        <item quantity="other">Ta bort %1$d transaktioner?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%1$d dag kvar i %2$s</item>
-        <item quantity="other">%1$d dagar kvar i %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d transaktion analyserad</item>
-        <item quantity="other">%1$d transaktioner analyserade</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d sparad</item>
-        <item quantity="other">%1$d sparade</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Batch Edit Transactions</string>
     <string name="batch_edit_updating_format">Uppdaterar %1$d valda objekt</string>
     <string name="batch_edit_toggle_hint">Växla alternativ nedan för att tillämpa på valda transaktioner:</string>
@@ -1093,7 +1059,6 @@ Detta kan ta några sekunder beroende på din meddelandehistorik.</string>
     <string name="batch_edit_set_batch_amount">Ange batchbelopp</string>
     <string name="edit_selected_transactions">Redigera valda transaktioner</string>
     <string name="edit_selected_count_format">Redigera — %1$d</string>
-
     <string name="active_tab">Personer</string>
     <string name="add_entry">Lägg till post</string>
     <string name="add_person">Lägg till person</string>
@@ -1169,4 +1134,132 @@ Detta kan ta några sekunder beroende på din meddelandehistorik.</string>
     <string name="type_lent">Utlånat</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">Hantera poster för utlånade och lånade pengar</string>
+    <string name="import_cashew_backup">Importera från Cashew</string>
+    <string name="import_cashew_backup_sub">Importera SQLite- eller CSV-filer från Cashew-appen</string>
+    <string name="typing">Tänker på din begäran...</string>
+    <string name="app_crashed">Appen kraschade</string>
+    <string name="share_crash_report">Dela kraschrapport</string>
+    <string name="unexpected_crash">Oväntad krasch</string>
+    <string name="crash_report">Kraschrapport</string>
+    <string name="extracted_from_pdf">Extraherad från PDF</string>
+    <string name="existing_in_database">Finns redan i databasen</string>
+    <string name="search_chats">Sök i chattar...</string>
+    <string name="regenerate">Generera på nytt</string>
+    <string name="tokens_usage">Tokenanvändning</string>
+    <string name="screen_content">Skärminnehåll</string>
+    <string name="copied_text">Kopierad text</string>
+    <string name="english">Engelska</string>
+    <string name="afrikaans">Afrikaans</string>
+    <string name="arabic">Arabiska</string>
+    <string name="azerbaijani">Azerbajdzjanska</string>
+    <string name="bulgarian">Bulgariska</string>
+    <string name="bengali">Bengali</string>
+    <string name="tibetan">Tibetan</string>
+    <string name="catalan">Katalanska</string>
+    <string name="czech">Tjeckiska</string>
+    <string name="danish">Danska</string>
+    <string name="german">Tyska</string>
+    <string name="dzongkha">Dzongkha</string>
+    <string name="greek">Grekiska</string>
+    <string name="spanish">Spanska</string>
+    <string name="persian">Persiska</string>
+    <string name="french">Franska</string>
+    <string name="gujarati">Gujarati</string>
+    <string name="hawaiian">Hawaiska</string>
+    <string name="hebrew">Hebreiska</string>
+    <string name="hindi">Hindi</string>
+    <string name="croatian">Kroatiska</string>
+    <string name="hungarian">Ungerska</string>
+    <string name="indonesian">Indonesiska</string>
+    <string name="icelandic">Isländska</string>
+    <string name="italiano">Italienska</string>
+    <string name="japanese">Japanska</string>
+    <string name="kabyle">Taqbaylit</string>
+    <string name="kannada">Kannada</string>
+    <string name="kashmiri">Kashmiri</string>
+    <string name="latin">Latin</string>
+    <string name="malayalam">Malayalam</string>
+    <string name="marathi">Marathi</string>
+    <string name="nepali">Nepali</string>
+    <string name="dutch">Nederländska</string>
+    <string name="norwegian">Norska</string>
+    <string name="chichewa">Chichewa</string>
+    <string name="odia">Odia</string>
+    <string name="iron">Iron</string>
+    <string name="punjabi">Punjabi</string>
+    <string name="polish">Polska</string>
+    <string name="portuguese">Portugisiska</string>
+    <string name="romanian">Rumänska</string>
+    <string name="russian">Ryska</string>
+    <string name="slovak">Slovakiska</string>
+    <string name="slovenian">Slovenska</string>
+    <string name="swedish">Svenska</string>
+    <string name="tamil">Tamil</string>
+    <string name="telugu">Telugu</string>
+    <string name="thai">Thailändska</string>
+    <string name="turkmençe">Turkmenska</string>
+    <string name="turkish">Turkiska</string>
+    <string name="ukrainian">Ukrainska</string>
+    <string name="urdu">Urdu</string>
+    <string name="uzbek">Uzbekiska</string>
+    <string name="valencian">Valencianska</string>
+    <string name="vietnamese">Vietnamesiska</string>
+    <string name="chinese">Kinesiska</string>
+    <string name="delete_multiple_records_confirm">Är du säker på att du vill ta bort de valda posterna?</string>
+    <string name="import_pdf">Importera</string>
+    <string name="loan_type_borrowed">Lånat</string>
+    <string name="loan_type_lent">Utlånat</string>
+    <string name="mark_as_loan">Markera som lån</string>
+    <string name="marked_as_loan_success">Markerad som lån</string>
+    <string name="persons_deleted_format">%1$d personer borttagna</string>
+    <string name="records_deleted_format">%1$d poster borttagna</string>
+    <string name="select">Välj</string>
+    <string name="select_color">Välj färg</string>
+    <string name="select_multiple">Välj flera</string>
+    <string name="share_logs">Dela loggar</string>
+    <string name="stop">Stopp</string>
+    <string name="unmark_as_loan">Avmarkera som lån</string>
+    <string name="unmark_loan_confirm_desc">Detta kommer att ta bort låneassociationen från denna transaktion.</string>
+    <string name="unmark_loan_confirm_title">Avmarkera som lån?</string>
+    <string name="view_on_drive">Visa på Drive</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d licens</item>
+        <item quantity="other">%1$d licenser</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">%1$d meddelande från potentiella banker</item>
+        <item quantity="other">%1$d meddelanden från potentiella banker</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d fil</item>
+        <item quantity="other">%1$d filer</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d underkategori</item>
+        <item quantity="other">%1$d underkategorier</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">Ta bort %1$d transaktion?</item>
+        <item quantity="other">Ta bort %1$d transaktioner?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%1$d dag kvar i %2$s</item>
+        <item quantity="other">%1$d dagar kvar i %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d transaktion analyserad</item>
+        <item quantity="other">%1$d transaktioner analyserade</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d sparad</item>
+        <item quantity="other">%1$d sparade</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Ta bort person?</item>
+        <item quantity="other">Ta bort %1$d personer?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Ta bort post?</item>
+        <item quantity="other">Ta bort %1$d poster?</item>
+    </plurals>
 </resources>

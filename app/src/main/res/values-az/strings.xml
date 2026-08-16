@@ -175,7 +175,7 @@
     <string name="transaction_type_required">Əməliyyat növü *</string>
     <string name="select_source_account">Mənbə Hesabını Seç</string>
     <string name="select_target_account">Hədəf Hesabı Seç</string>
-    <string name="transfer_desc">Transfer</string>
+    <string name="transfer_desc">Köçürmə</string>
     <string name="merchant_description">Tacir / Təsvir</string>
     <string name="where_did_you_spend">Bunu harada xərclədin?</string>
     <string name="merchant_placeholder">məsələn, Target, Walmart</string>
@@ -489,7 +489,7 @@ Yaşıl (+) = Əmanət | Qırmızı (-) = Artıq xərcləmə</string>
     <string name="github">Github</string>
     <string name="discord">Discord</string>
     <string name="join_community">İcmağımıza qoşulun</string>
-    <string name="faq">FAQ</string>
+    <string name="faq">Tez-tez verilən suallar</string>
     <string name="faq_desc">Tez-tez verilən suallar</string>
     <string name="guides">Bələdçilər</string>
     <string name="guides_desc">Cashiro-dan necə istifadə etmək olar</string>
@@ -740,7 +740,6 @@ Yaşıl (+) = Əmanət | Qırmızı (-) = Artıq xərcləmə</string>
     <string name="language">Dil</string>
     <string name="language_subtitle">Tətbiq dilini dəyiş</string>
     <string name="select_language">Dil seç</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">İstifadəçi</string>
     <string name="backup_sync_subtitle">Yedəkləmə, Bulud, Bərpa və Sinxronizasiya tənzimləmələri</string>
     <string name="error">Xəta</string>
@@ -1041,39 +1040,6 @@ Mesaj tarixçənizdən asılı olaraq bir neçə saniyə çəkə bilər.</string
     <string name="provider_local_only">Yalnız Yerli</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d lisenziya</item>
-        <item quantity="other">%1$d lisenziyalar</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">%1$d potensial bankdan mesaj</item>
-        <item quantity="other">%1$d potensial bankdan mesajlar</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d fayl</item>
-        <item quantity="other">%1$d fayllar</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d alt kateqoriya</item>
-        <item quantity="other">%1$d alt kateqoriyalar</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">%1$d əməliyyatı silmək?</item>
-        <item quantity="other">%1$d əməliyyatları silmək?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%1$d gün qaldı, %2$s-də</item>
-        <item quantity="other">%1$d gün qaldı, %2$s-də</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d əməliyyat işlənib</item>
-        <item quantity="other">%1$d əməliyyatlar işlənib</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d qeyd edildi</item>
-        <item quantity="other">%1$d qeyd edildi</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Əməliyyatları Toplu Redaktə Et</string>
     <string name="batch_edit_updating_format">Seçilmiş %1$d elementi yenilənir</string>
     <string name="batch_edit_toggle_hint">Aşağıdakı seçimləri dəyişdirərək seçilmiş əməliyyatlara tətbiq edin:</string>
@@ -1093,7 +1059,6 @@ Mesaj tarixçənizdən asılı olaraq bir neçə saniyə çəkə bilər.</string
     <string name="batch_edit_set_batch_amount">Toplu miqdarı təyin edin</string>
     <string name="edit_selected_transactions">Seçilmiş əməliyyatları redaktə et</string>
     <string name="edit_selected_count_format">Redaktə et — %1$d</string>
-
     <string name="active_tab">İnsanlar</string>
     <string name="add_entry">Qeyd Əlavə et</string>
     <string name="add_person">Şəxs Əlavə et</string>
@@ -1169,4 +1134,132 @@ Mesaj tarixçənizdən asılı olaraq bir neçə saniyə çəkə bilər.</string
     <string name="type_lent">Borc verildi</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">Borca verilən və alınan qeydləri idarə edin</string>
+    <string name="import_cashew_backup">Cashew-dan idxal et</string>
+    <string name="import_cashew_backup_sub">Cashew tətbiqindən SQLite və ya CSV fayllarını idxal et</string>
+    <string name="typing">\nSorğunuz barədə düşünülür...</string>
+    <string name="app_crashed">Tətbiq Çökdü</string>
+    <string name="share_crash_report">Çöküntü hesabatını paylaş</string>
+    <string name="unexpected_crash">Gözlənilməz Çöküş</string>
+    <string name="crash_report">Çöküntü Hesabatı</string>
+    <string name="extracted_from_pdf">PDF-dən çıxarılıb</string>
+    <string name="existing_in_database">Verilənlər bazasında mövcuddur</string>
+    <string name="search_chats">Çatlarda axtar...</string>
+    <string name="regenerate">Yenidən yarat</string>
+    <string name="tokens_usage">Tokenlərin istifadəsi</string>
+    <string name="screen_content">Ekran Məzmunu</string>
+    <string name="copied_text">Kopyalanmış Mətn</string>
+    <string name="english">İngilis</string>
+    <string name="afrikaans">Afrikaans</string>
+    <string name="arabic">العربية</string>
+    <string name="azerbaijani">Azərbaycan</string>
+    <string name="bulgarian">Български</string>
+    <string name="bengali">বাংলা</string>
+    <string name="tibetan">བོད་སྐད་</string>
+    <string name="catalan">Català</string>
+    <string name="czech">Čeština</string>
+    <string name="danish">Danimarka</string>
+    <string name="german">Alman</string>
+    <string name="dzongkha">Dzongka</string>
+    <string name="greek">Yunan</string>
+    <string name="spanish">İspan</string>
+    <string name="persian">Fars</string>
+    <string name="french">Fransız</string>
+    <string name="gujarati">Gucarat</string>
+    <string name="hawaiian">Havay</string>
+    <string name="hebrew">İvrit</string>
+    <string name="hindi">Hindi</string>
+    <string name="croatian">Xorvat</string>
+    <string name="hungarian">Macar</string>
+    <string name="indonesian">İndoneziya</string>
+    <string name="icelandic">İsland</string>
+    <string name="italiano">İtalyan</string>
+    <string name="japanese">Yapon</string>
+    <string name="kabyle">Takbailt</string>
+    <string name="kannada">Kannada</string>
+    <string name="kashmiri">Kaşmir</string>
+    <string name="latin">Latınca</string>
+    <string name="malayalam">Malayalam</string>
+    <string name="marathi">Marathi</string>
+    <string name="nepali">Nepali</string>
+    <string name="dutch">Niderland</string>
+    <string name="norwegian">Norveç</string>
+    <string name="chichewa">Çicheva</string>
+    <string name="odia">Odiya</string>
+    <string name="iron">İron</string>
+    <string name="punjabi">Panjabi</string>
+    <string name="polish">Polyak</string>
+    <string name="portuguese">Portuqal</string>
+    <string name="romanian">Rumın</string>
+    <string name="russian">Rus</string>
+    <string name="slovak">Slovak</string>
+    <string name="slovenian">Slovenciya</string>
+    <string name="swedish">İsveç</string>
+    <string name="tamil">Tamil</string>
+    <string name="telugu">Teluq</string>
+    <string name="thai">Tay</string>
+    <string name="turkmençe">Türkmən</string>
+    <string name="turkish">Türk</string>
+    <string name="ukrainian">Ukrayna</string>
+    <string name="urdu">Urdu</string>
+    <string name="uzbek">Özbek</string>
+    <string name="valencian">Valensiya</string>
+    <string name="vietnamese">Vyetnam</string>
+    <string name="chinese">Çin</string>
+    <string name="delete_multiple_records_confirm">Seçilmiş qeydləri silmək istədiyinizdən əminsiniz?</string>
+    <string name="import_pdf">İdxal et</string>
+    <string name="loan_type_borrowed">Borclu</string>
+    <string name="loan_type_lent">Verilmiş</string>
+    <string name="mark_as_loan">Kredit kimi qeyd et</string>
+    <string name="marked_as_loan_success">Kredit kimi qeyd olundu</string>
+    <string name="persons_deleted_format">%1$d şəxs silindi</string>
+    <string name="records_deleted_format">%1$d qeyd silindi</string>
+    <string name="select">Seç</string>
+    <string name="select_color">Rəngi seç</string>
+    <string name="select_multiple">Çoxlu seç</string>
+    <string name="share_logs">Qeydləri paylaş</string>
+    <string name="stop">Dayandır</string>
+    <string name="unmark_as_loan">Kredit kimi qeydi çıxar</string>
+    <string name="unmark_loan_confirm_desc">Bu əməliyyatdan kredit əlaqəsini siləcək.</string>
+    <string name="unmark_loan_confirm_title">Kredit kimi qeydi çıxarmaq istəyirsiniz?</string>
+    <string name="view_on_drive">Drive-da bax</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d lisenziya</item>
+        <item quantity="other">%1$d lisenziyalar</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">%1$d potensial bankdan mesaj</item>
+        <item quantity="other">%1$d potensial bankdan mesajlar</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d fayl</item>
+        <item quantity="other">%1$d fayllar</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d alt kateqoriya</item>
+        <item quantity="other">%1$d alt kateqoriyalar</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">%1$d əməliyyatı silmək?</item>
+        <item quantity="other">%1$d əməliyyatları silmək?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%1$d gün qaldı, %2$s-də</item>
+        <item quantity="other">%1$d gün qaldı, %2$s-də</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d əməliyyat işlənib</item>
+        <item quantity="other">%1$d əməliyyatlar işlənib</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d qeyd edildi</item>
+        <item quantity="other">%1$d qeyd edildi</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Şəxsi sil?</item>
+        <item quantity="other">%1$d şəxsi sil?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Qeydi sil?</item>
+        <item quantity="other">%1$d qeydi sil?</item>
+    </plurals>
 </resources>

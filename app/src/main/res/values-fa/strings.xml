@@ -740,7 +740,6 @@
     <string name="language">زبان</string>
     <string name="language_subtitle">تغییر زبان برنامه</string>
     <string name="select_language">انتخاب زبان</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">کاربر</string>
     <string name="backup_sync_subtitle">تنظیمات پشتیبان‌گیری، ابری، بازیابی و همگام‌سازی</string>
     <string name="error">خطا</string>
@@ -1041,39 +1040,6 @@
     <string name="provider_local_only">تنها محلی</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">گوگل درایو</string>
-    <plurals name="licenses_count">
-        <item quantity="one">مجوز %1$d</item>
-        <item quantity="other">مجوزهای %1$d</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">%1$d پیام از بانک‌های بالقوه</item>
-        <item quantity="other">%1$d پیام از بانک‌های بالقوه</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d فایل</item>
-        <item quantity="other">%1$d فایل‌ها</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d زیرشاخه</item>
-        <item quantity="other">%1$d زیرشاخه‌ها</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">حذف %1$d تراکنش؟</item>
-        <item quantity="other">حذف %1$d تراکنش‌ها؟</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">یک روز مانده در %2$s</item>
-        <item quantity="other">%1$d روز مانده در %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d تراکنش پردازش شد</item>
-        <item quantity="other">%1$d تراکنش پردازش شد</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d ذخیره شد</item>
-        <item quantity="other">%1$d ذخیره شد</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">ویرایش دسته‌ای تراکنش‌ها</string>
     <string name="batch_edit_updating_format">در حال بروز رسانی %1$d مورد انتخاب شده</string>
     <string name="batch_edit_toggle_hint">گزینه‌های زیر را برای اعمال در تراکنش‌های انتخاب شده تغییر دهید:</string>
@@ -1093,7 +1059,6 @@
     <string name="batch_edit_set_batch_amount">تعیین مبلغ دسته‌ای</string>
     <string name="edit_selected_transactions">ویرایش تراکنش‌های انتخاب شده</string>
     <string name="edit_selected_count_format">ویرایش — %1$d</string>
-
     <string name="active_tab">افراد</string>
     <string name="add_entry">افزودن رکورد</string>
     <string name="add_person">افزودن شخص</string>
@@ -1169,4 +1134,132 @@
     <string name="type_lent">قرض داده</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">مدیریت سوابق قرض دادن و قرض گرفتن</string>
+    <string name="import_cashew_backup">وارد کردن از Cashew</string>
+    <string name="import_cashew_backup_sub">وارد کردن فایل‌های SQLite یا CSV از برنامه Cashew</string>
+    <string name="typing">در حال فکر کردن به درخواست شما...</string>
+    <string name="app_crashed">برنامه متوقف شد</string>
+    <string name="share_crash_report">گزارش خرابی را به اشتراک بگذارید</string>
+    <string name="unexpected_crash">خرابی پیش‌بینی‌نشده</string>
+    <string name="crash_report">گزارش خرابی</string>
+    <string name="extracted_from_pdf">استخراج شده از PDF</string>
+    <string name="existing_in_database">موجود در پایگاه داده</string>
+    <string name="search_chats">جستجوی چت‌ها...</string>
+    <string name="regenerate">بازتولید</string>
+    <string name="tokens_usage">استفاده از توکن‌ها</string>
+    <string name="screen_content">محتوای صفحه</string>
+    <string name="copied_text">متن کپی شده</string>
+    <string name="english">انگلیسی</string>
+    <string name="afrikaans">آفریکانس</string>
+    <string name="arabic">العربية</string>
+    <string name="azerbaijani">آذربایجانی</string>
+    <string name="bulgarian">بلغاری</string>
+    <string name="bengali">بنگالی</string>
+    <string name="tibetan">تبتی</string>
+    <string name="catalan">کاتالان</string>
+    <string name="czech">چکی</string>
+    <string name="danish">دانمارکی</string>
+    <string name="german">آلمانی</string>
+    <string name="dzongkha">جنوبی تبتی</string>
+    <string name="greek">یونانی</string>
+    <string name="spanish">اسپانیایی</string>
+    <string name="persian">فارسی</string>
+    <string name="french">فرانسوی</string>
+    <string name="gujarati">گجراتی</string>
+    <string name="hawaiian">هاوایی</string>
+    <string name="hebrew">عبری</string>
+    <string name="hindi">هندی</string>
+    <string name="croatian">کرواتی</string>
+    <string name="hungarian">مجارستانی</string>
+    <string name="indonesian">اندونزیایی</string>
+    <string name="icelandic">ایسلندی</string>
+    <string name="italiano">ایتالیایی</string>
+    <string name="japanese">ژاپنی</string>
+    <string name="kabyle">تاقبایلیت</string>
+    <string name="kannada">کاننادا</string>
+    <string name="kashmiri">کشمیری</string>
+    <string name="latin">لاتین</string>
+    <string name="malayalam">مالایالام</string>
+    <string name="marathi">مراتی</string>
+    <string name="nepali">نپالی</string>
+    <string name="dutch">هلندی</string>
+    <string name="norwegian">نروژی</string>
+    <string name="chichewa">چیچه‌وا</string>
+    <string name="odia">اودیا</string>
+    <string name="iron">ایرون</string>
+    <string name="punjabi">پنجابی</string>
+    <string name="polish">لهستانی</string>
+    <string name="portuguese">پرتغالی</string>
+    <string name="romanian">رومانیایی</string>
+    <string name="russian">روسی</string>
+    <string name="slovak">اسلواکی</string>
+    <string name="slovenian">اسلوونیایی</string>
+    <string name="swedish">سوئدی</string>
+    <string name="tamil">تامیل</string>
+    <string name="telugu">تلوگو</string>
+    <string name="thai">تایلندی</string>
+    <string name="turkmençe">ترکمن</string>
+    <string name="turkish">ترکی</string>
+    <string name="ukrainian">اوکراینی</string>
+    <string name="urdu">اردو</string>
+    <string name="uzbek">ازبکی</string>
+    <string name="valencian">والنسیا</string>
+    <string name="vietnamese">ویتنامی</string>
+    <string name="chinese">چینی</string>
+    <string name="delete_multiple_records_confirm">آیا مطمئن هستید که می‌خواهید رکوردهای انتخاب شده را حذف کنید؟</string>
+    <string name="import_pdf">وارد کردن</string>
+    <string name="loan_type_borrowed">قرض گرفته شده</string>
+    <string name="loan_type_lent">قرض داده شده</string>
+    <string name="mark_as_loan">علامت‌گذاری به عنوان وام</string>
+    <string name="marked_as_loan_success">به عنوان وام علامت‌گذاری شد</string>
+    <string name="persons_deleted_format">%1$d نفر حذف شدند</string>
+    <string name="records_deleted_format">%1$d رکورد حذف شدند</string>
+    <string name="select">انتخاب</string>
+    <string name="select_color">انتخاب رنگ</string>
+    <string name="select_multiple">انتخاب چندگانه</string>
+    <string name="share_logs">اشتراک‌گذاری لاگ‌ها</string>
+    <string name="stop">توقف</string>
+    <string name="unmark_as_loan">لغو علامت وام</string>
+    <string name="unmark_loan_confirm_desc">این عمل ارتباط وام را از این تراکنش حذف می‌کند.</string>
+    <string name="unmark_loan_confirm_title">لغو علامت وام؟</string>
+    <string name="view_on_drive">مشاهده در درایو</string>
+    <plurals name="licenses_count">
+        <item quantity="one">مجوز %1$d</item>
+        <item quantity="other">مجوزهای %1$d</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">%1$d پیام از بانک‌های بالقوه</item>
+        <item quantity="other">%1$d پیام از بانک‌های بالقوه</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d فایل</item>
+        <item quantity="other">%1$d فایل‌ها</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d زیرشاخه</item>
+        <item quantity="other">%1$d زیرشاخه‌ها</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">حذف %1$d تراکنش؟</item>
+        <item quantity="other">حذف %1$d تراکنش‌ها؟</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">یک روز مانده در %2$s</item>
+        <item quantity="other">%1$d روز مانده در %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d تراکنش پردازش شد</item>
+        <item quantity="other">%1$d تراکنش پردازش شد</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d ذخیره شد</item>
+        <item quantity="other">%1$d ذخیره شد</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">حذف شخص؟</item>
+        <item quantity="other">حذف %1$d نفر؟</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">حذف رکورد؟</item>
+        <item quantity="other">حذف %1$d رکورد؟</item>
+    </plurals>
 </resources>

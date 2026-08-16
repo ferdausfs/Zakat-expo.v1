@@ -142,7 +142,7 @@
     <string name="credit_card">เครดิต</string>
     <string name="debit_card">เดบิต</string>
     <string name="last_balance">ยอดคงเหลือล่าสุด: %1$s</string>
-    <string name="sms_source_formatted">SMS: %1$s</string>
+    <string name="sms_source_formatted">ข้อความ SMS: %1$s</string>
     <string name="sms_source_expand">SMS: %1$s... (แตะเพื่อขยาย)</string>
     <string name="link_card_title">เชื่อมบัตร</string>
     <string name="no_accounts_found_link">ไม่พบบัญชี %1$s กรุณาเพิ่มบัญชีธนาคารที่สอดคล้องกันก่อน</string>
@@ -740,7 +740,6 @@
     <string name="language">ภาษา</string>
     <string name="language_subtitle">เปลี่ยนภาษาของแอป</string>
     <string name="select_language">เลือกภาษา</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">ผู้ใช้</string>
     <string name="backup_sync_subtitle">การตั้งค่าสำรองข้อมูล, คลาวด์, กู้คืน และซิงค์</string>
     <string name="error">ข้อผิดพลาด</string>
@@ -1041,31 +1040,6 @@
     <string name="provider_local_only">เฉพาะในเครื่อง</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="other">ใบอนุญาต %1$d</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="other">ข้อความจากธนาคารที่มีศักยภาพ %1$d ข้อความ</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="other">%1$d ไฟล์</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="other">%1$d หมวดหมู่ย่อย</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="other">ลบธุรกรรม %1$d รายการหรือไม่?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="other">เหลือ %1$d วันใน %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="other">ประมวลผลธุรกรรม %1$d รายการ</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="other">บันทึก %1$d รายการ</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">แก้ไขธุรกรรมเป็นชุด</string>
     <string name="batch_edit_updating_format">กำลังอัปเดต %1$d รายการที่เลือก</string>
     <string name="batch_edit_toggle_hint">สลับตัวเลือกด้านล่างเพื่อใช้กับธุรกรรมที่เลือก:</string>
@@ -1085,7 +1059,6 @@
     <string name="batch_edit_set_batch_amount">ตั้งค่าจำนวนชุด</string>
     <string name="edit_selected_transactions">แก้ไขรายการที่เลือก</string>
     <string name="edit_selected_count_format">แก้ไข — %1$d</string>
-
     <string name="active_tab">ผู้คน</string>
     <string name="add_entry">เพิ่มรายการ</string>
     <string name="add_person">เพิ่มบุคคล</string>
@@ -1161,4 +1134,124 @@
     <string name="type_lent">ให้ยืม</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">จัดการบันทึกการให้ยืมและขอยืม</string>
+    <string name="import_cashew_backup">นำเข้าจาก Cashew</string>
+    <string name="import_cashew_backup_sub">นำเข้าไฟล์ SQLite หรือ CSV จากแอป Cashew</string>
+    <string name="typing">กำลังคิดเกี่ยวกับคำขอของคุณ...</string>
+    <string name="app_crashed">แอปพลิเคชันหยุดทำงาน</string>
+    <string name="share_crash_report">แชร์รายงานการล่ม</string>
+    <string name="unexpected_crash">เกิดข้อผิดพลาดที่ไม่คาดคิด</string>
+    <string name="crash_report">รายงานการล่ม</string>
+    <string name="extracted_from_pdf">สกัดจาก PDF</string>
+    <string name="existing_in_database">มีอยู่ในฐานข้อมูล</string>
+    <string name="search_chats">ค้นหาแชท...</string>
+    <string name="regenerate">สร้างใหม่</string>
+    <string name="tokens_usage">การใช้งานโทเคน</string>
+    <string name="screen_content">เนื้อหาหน้าจอ</string>
+    <string name="copied_text">คัดลอกข้อความ</string>
+    <string name="english">ภาษาอังกฤษ</string>
+    <string name="afrikaans">แอฟริกัน</string>
+    <string name="arabic">อาหรับ</string>
+    <string name="azerbaijani">อาเซอร์ไบจาน</string>
+    <string name="bulgarian">บัลแกเรีย</string>
+    <string name="bengali">เบงกาลี</string>
+    <string name="tibetan">ทิเบต</string>
+    <string name="catalan">คาตาลัน</string>
+    <string name="czech">เช็ก</string>
+    <string name="danish">เดนมาร์ก</string>
+    <string name="german">เยอรมัน</string>
+    <string name="dzongkha">ทิเบต</string>
+    <string name="greek">กรีก</string>
+    <string name="spanish">สเปน</string>
+    <string name="persian">ฟาร์ซี</string>
+    <string name="french">ฝรั่งเศส</string>
+    <string name="gujarati">กุจราตี</string>
+    <string name="hawaiian">ฮาวาย</string>
+    <string name="hebrew">ฮีบรู</string>
+    <string name="hindi">ฮินดี</string>
+    <string name="croatian">โครเอเชีย</string>
+    <string name="hungarian">ฮังการี</string>
+    <string name="indonesian">อินโดนีเซีย</string>
+    <string name="icelandic">ไอซ์แลนด์</string>
+    <string name="italiano">อิตาลี</string>
+    <string name="japanese">ญี่ปุ่น</string>
+    <string name="kabyle">แทคไบบลิต</string>
+    <string name="kannada">กันนาดา</string>
+    <string name="kashmiri">คัชเมียร์</string>
+    <string name="latin">ลาติน</string>
+    <string name="malayalam">มาลายาลัม</string>
+    <string name="marathi">มราฐี</string>
+    <string name="nepali">เนปาลี</string>
+    <string name="dutch">ดัตช์</string>
+    <string name="norwegian">นอร์เวย์</string>
+    <string name="chichewa">ชิเชวา</string>
+    <string name="odia">โอเดีย</string>
+    <string name="iron">ไอรอน</string>
+    <string name="punjabi">ปัญจาบ</string>
+    <string name="polish">โปแลนด์</string>
+    <string name="portuguese">โปรตุเกส</string>
+    <string name="romanian">โรมาเนีย</string>
+    <string name="russian">รัสเซีย</string>
+    <string name="slovak">สโลวัค</string>
+    <string name="slovenian">สโลวีเนีย</string>
+    <string name="swedish">สวีเดน</string>
+    <string name="tamil">ทมิฬ</string>
+    <string name="telugu">เตลูกู</string>
+    <string name="thai">ไทย</string>
+    <string name="turkmençe">เติร์กเมนิสถาน</string>
+    <string name="turkish">ตุรกี</string>
+    <string name="ukrainian">ยูเครน</string>
+    <string name="urdu">อูรดู</string>
+    <string name="uzbek">อุซเบก</string>
+    <string name="valencian">วาเลนเซียน</string>
+    <string name="vietnamese">เวียดนาม</string>
+    <string name="chinese">จีน</string>
+    <string name="delete_multiple_records_confirm">คุณแน่ใจหรือว่าต้องการลบระเบียนที่เลือก?</string>
+    <string name="import_pdf">นำเข้า</string>
+    <string name="loan_type_borrowed">ยืม</string>
+    <string name="loan_type_lent">ให้ยืม</string>
+    <string name="mark_as_loan">ทำเครื่องหมายเป็นเงินกู้</string>
+    <string name="marked_as_loan_success">ทำเครื่องหมายแล้วว่าเป็นเงินกู้</string>
+    <string name="persons_deleted_format">ลบ %1$d คน</string>
+    <string name="records_deleted_format">ลบ %1$d ระเบียน</string>
+    <string name="select">เลือก</string>
+    <string name="select_color">เลือกสี</string>
+    <string name="select_multiple">เลือกหลายรายการ</string>
+    <string name="share_logs">แชร์บันทึก</string>
+    <string name="stop">หยุด</string>
+    <string name="unmark_as_loan">ยกเลิกการทำเครื่องหมายเป็นเงินกู้</string>
+    <string name="unmark_loan_confirm_desc">สิ่งนี้จะลบความสัมพันธ์เงินกู้จากธุรกรรมนี้</string>
+    <string name="unmark_loan_confirm_title">ยกเลิกการทำเครื่องหมายเป็นเงินกู้?</string>
+    <string name="view_on_drive">ดูบนไดรฟ์</string>
+    <plurals name="licenses_count">
+        <item quantity="other">ใบอนุญาต %1$d</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="other">ข้อความจากธนาคารที่มีศักยภาพ %1$d ข้อความ</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="other">%1$d ไฟล์</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="other">%1$d หมวดหมู่ย่อย</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="other">ลบธุรกรรม %1$d รายการหรือไม่?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="other">เหลือ %1$d วันใน %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="other">ประมวลผลธุรกรรม %1$d รายการ</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="other">บันทึก %1$d รายการ</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">ลบคน?</item>
+        <item quantity="other">ลบ %1$d คน?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">ลบระเบียน?</item>
+        <item quantity="other">ลบ %1$d ระเบียน?</item>
+    </plurals>
 </resources>

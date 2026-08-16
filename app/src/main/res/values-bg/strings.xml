@@ -740,7 +740,6 @@
     <string name="language">Език</string>
     <string name="language_subtitle">Смяна на езика на приложението</string>
     <string name="select_language">Избор на език</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">Потребител</string>
     <string name="backup_sync_subtitle">Настройки за резервно копие, Облак, Възстановяване и Синхронизация</string>
     <string name="error">Грешка</string>
@@ -1041,39 +1040,6 @@
     <string name="provider_local_only">Само локално</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="one">лицензи за %1$d</item>
-        <item quantity="other">лицензи за %1$d</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">%1$d съобщение от потенциални банки</item>
-        <item quantity="other">%1$d съобщения от потенциални банки</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d файл</item>
-        <item quantity="other">%1$d файла</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d подкатегория</item>
-        <item quantity="other">%1$d подкатегории</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">Изтриване на %1$d транзакция?</item>
-        <item quantity="other">Изтриване на %1$d транзакции?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%1$d ден остава в %2$s</item>
-        <item quantity="other">%1$d дни остават в %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d транзакция обработена</item>
-        <item quantity="other">%1$d транзакции обработени</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d запазено</item>
-        <item quantity="other">%1$d запазено</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Редактиране на транзакции на партиди</string>
     <string name="batch_edit_updating_format">Актуализиране на %1$d избрани елемента</string>
     <string name="batch_edit_toggle_hint">Превключете опциите по-долу, за да приложите към избраните транзакции:</string>
@@ -1093,7 +1059,6 @@
     <string name="batch_edit_set_batch_amount">Задайте сума за партидата</string>
     <string name="edit_selected_transactions">Редактирайте избраните транзакции</string>
     <string name="edit_selected_count_format">Редактиране — %1$d</string>
-
     <string name="active_tab">Хора</string>
     <string name="add_entry">Добави запис</string>
     <string name="add_person">Добави човек</string>
@@ -1169,4 +1134,132 @@
     <string name="type_lent">Дадени назаем</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">Управлявайте записите за дадени и взети заеми</string>
+    <string name="import_cashew_backup">Импортиране от Cashew</string>
+    <string name="import_cashew_backup_sub">Импортиране на SQLite или CSV файлове от приложението Cashew</string>
+    <string name="typing">Мисля за вашата заявка...</string>
+    <string name="app_crashed">Приложението се срина</string>
+    <string name="share_crash_report">Сподели доклад за срив</string>
+    <string name="unexpected_crash">Неочакван срив</string>
+    <string name="crash_report">Доклад за срив</string>
+    <string name="extracted_from_pdf">Извлечено от PDF</string>
+    <string name="existing_in_database">Съществува в базата данни</string>
+    <string name="search_chats">Търсене в чатове...</string>
+    <string name="regenerate">Генерирай отново</string>
+    <string name="tokens_usage">Използване на токени</string>
+    <string name="screen_content">Съдържание на екрана</string>
+    <string name="copied_text">Копиран текст</string>
+    <string name="english">Английски</string>
+    <string name="afrikaans">Африкаанс</string>
+    <string name="arabic">العربية</string>
+    <string name="azerbaijani">Азербайджански</string>
+    <string name="bulgarian">Български</string>
+    <string name="bengali">Бенгалски</string>
+    <string name="tibetan">Tибетски</string>
+    <string name="catalan">Каталунски</string>
+    <string name="czech">Чешки</string>
+    <string name="danish">Датски</string>
+    <string name="german">Немски</string>
+    <string name="dzongkha">дзонг-хa</string>
+    <string name="greek">Гръцки</string>
+    <string name="spanish">Испански</string>
+    <string name="persian">персийски</string>
+    <string name="french">френски</string>
+    <string name="gujarati">гуджарати</string>
+    <string name="hawaiian">хавайски</string>
+    <string name="hebrew">иврит</string>
+    <string name="hindi">хинди</string>
+    <string name="croatian">хърватски</string>
+    <string name="hungarian">унгарски</string>
+    <string name="indonesian">индонезийски</string>
+    <string name="icelandic">исландски</string>
+    <string name="italiano">италиански</string>
+    <string name="japanese">японски</string>
+    <string name="kabyle">такбайлит</string>
+    <string name="kannada">каннада</string>
+    <string name="kashmiri">кашмирски</string>
+    <string name="latin">латински</string>
+    <string name="malayalam">малайскиалам</string>
+    <string name="marathi">марати</string>
+    <string name="nepali">непали</string>
+    <string name="dutch">нидерландски</string>
+    <string name="norwegian">норвежки</string>
+    <string name="chichewa">чичева</string>
+    <string name="odia">одиа</string>
+    <string name="iron">ирон</string>
+    <string name="punjabi">панжаби</string>
+    <string name="polish">полски</string>
+    <string name="portuguese">португалски</string>
+    <string name="romanian">румънски</string>
+    <string name="russian">руски</string>
+    <string name="slovak">словашки</string>
+    <string name="slovenian">словенски</string>
+    <string name="swedish">шведски</string>
+    <string name="tamil">тамилски</string>
+    <string name="telugu">телугу</string>
+    <string name="thai">тайски</string>
+    <string name="turkmençe">туркменски</string>
+    <string name="turkish">турски</string>
+    <string name="ukrainian">украински</string>
+    <string name="urdu">урду</string>
+    <string name="uzbek">узбекски</string>
+    <string name="valencian">валенсиански</string>
+    <string name="vietnamese">виетнамски</string>
+    <string name="chinese">китайски</string>
+    <string name="delete_multiple_records_confirm">Сигурни ли сте, че искате да изтриете избраните записи?</string>
+    <string name="import_pdf">Импортиране</string>
+    <string name="loan_type_borrowed">Заето</string>
+    <string name="loan_type_lent">Отстъпено</string>
+    <string name="mark_as_loan">Маркирай като заем</string>
+    <string name="marked_as_loan_success">Маркирано като заем</string>
+    <string name="persons_deleted_format">%1$d лица изтрити</string>
+    <string name="records_deleted_format">%1$d записа изтрити</string>
+    <string name="select">Избери</string>
+    <string name="select_color">Избери цвят</string>
+    <string name="select_multiple">Избери няколко</string>
+    <string name="share_logs">Сподели записи</string>
+    <string name="stop">Спри</string>
+    <string name="unmark_as_loan">Премахни маркировката за заем</string>
+    <string name="unmark_loan_confirm_desc">Това ще премахне асоциацията на заема от тази транзакция.</string>
+    <string name="unmark_loan_confirm_title">Премахване на маркировката за заем?</string>
+    <string name="view_on_drive">Преглед в Диск</string>
+    <plurals name="licenses_count">
+        <item quantity="one">лицензи за %1$d</item>
+        <item quantity="other">лицензи за %1$d</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">%1$d съобщение от потенциални банки</item>
+        <item quantity="other">%1$d съобщения от потенциални банки</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d файл</item>
+        <item quantity="other">%1$d файла</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d подкатегория</item>
+        <item quantity="other">%1$d подкатегории</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">Изтриване на %1$d транзакция?</item>
+        <item quantity="other">Изтриване на %1$d транзакции?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%1$d ден остава в %2$s</item>
+        <item quantity="other">%1$d дни остават в %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d транзакция обработена</item>
+        <item quantity="other">%1$d транзакции обработени</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d запазено</item>
+        <item quantity="other">%1$d запазено</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Изтриване на лицето?</item>
+        <item quantity="other">Изтриване на %1$d лица?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Изтриване на записа?</item>
+        <item quantity="other">Изтриване на %1$d записа?</item>
+    </plurals>
 </resources>

@@ -16,8 +16,8 @@
     <string name="lock_timeout_1min">Laka ma hope o 1 minuke ma hope</string>
     <string name="lock_timeout_minutes">Laka ma hope o %1$d mau minuke ma hope</string>
     <string name="data_management_section">Hooponopono Ikepili</string>
-    <string name="backup_tab">Backup</string>
-    <string name="local_backup_section">Local Backup</string>
+    <string name="backup_tab">Kākoʻo</string>
+    <string name="local_backup_section">Kākoʻo Pūnaewele</string>
     <string name="export_data">Hoʻokuʻu i ka ʻikepili</string>
     <string name="export_data_sub">E hoʻopaʻa i kāu ʻikepili i kahi faila</string>
     <string name="import_data">Hoʻokomo i ka ʻikepili</string>
@@ -737,7 +737,6 @@
     <string name="language">ʻŌlelo</string>
     <string name="language_subtitle">Hoʻololi i ka ʻōlelo noi</string>
     <string name="select_language">E koho i ka ʻōlelo</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">Mea hoʻohana</string>
     <string name="backup_sync_subtitle">Nā hoʻonohonoho o ka papaʻa, ao, hoʻihoʻi a me ka hoʻokahi pūnaewele</string>
     <string name="error">Hewa</string>
@@ -1036,39 +1035,6 @@
     <string name="provider_local_only">Kaiāulu wale nō</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d laikini</item>
-        <item quantity="other">%1$d laikini</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">%1$d memo mai nā panakō</item>
-        <item quantity="other">%1$d memo mai nā panakō</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d waihona</item>
-        <item quantity="other">%1$d waihona</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d māhele ʻāpana</item>
-        <item quantity="other">%1$d mau māhele ʻāpana</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">Holoi i ka hana %1$d?</item>
-        <item quantity="other">Holoi i nā hana %1$d?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%1$d lā i koe i %2$s</item>
-        <item quantity="other">%1$d lā i koe ma %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d pāʻoihana i hoʻopau ʻia</item>
-        <item quantity="other">%1$d nā hana i hoʻopau ʻia</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d i mālama ʻia</item>
-        <item quantity="other">%1$d i mālama ʻia</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Nā Kūʻai Hoʻoponopono Puʻupuʻu</string>
     <string name="batch_edit_updating_format">Hōʻano hou i %1$d mau mea i koho ʻia</string>
     <string name="batch_edit_toggle_hint">E hoʻololi i nā koho ma lalo nei e hoʻopili i nā kālepa i koho ʻia:</string>
@@ -1088,7 +1054,6 @@
     <string name="batch_edit_set_batch_amount">E hoʻonoho i ka nui o ka hui</string>
     <string name="edit_selected_transactions">Hoʻoponopono i nā hana i koho ʻia</string>
     <string name="edit_selected_count_format">Hoʻoponopono — %1$d</string>
-
     <string name="active_tab">Nā Kānaka</string>
     <string name="add_entry">Pākuʻi Moʻolelo</string>
     <string name="add_person">Hoʻohui Kanaka</string>
@@ -1164,4 +1129,132 @@
     <string name="type_lent">Hōʻaiʻē ʻia</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">Hoʻoponopono i nā moʻolelo hōʻaiʻē a ʻaiʻē ʻia</string>
+    <string name="import_cashew_backup">Lawe ʻia mai Cashew</string>
+    <string name="import_cashew_backup_sub">Hoʻokomo i nā faila SQLite a i ʻole CSV mai ka app Cashew</string>
+    <string name="typing">Ke noʻonoʻo nei i kāu noi...</string>
+    <string name="app_crashed">Hāʻule ka polokalamu</string>
+    <string name="share_crash_report">Kaʻana i ka hōʻike pōʻino</string>
+    <string name="unexpected_crash">Hāʻule i manaʻo ʻole ʻia</string>
+    <string name="crash_report">Hōʻike hāʻule</string>
+    <string name="extracted_from_pdf">Wehe ʻia mai PDF</string>
+    <string name="existing_in_database">Aia i loko o ka waihona</string>
+    <string name="search_chats">Huli kamaʻilio...</string>
+    <string name="regenerate">Hana hou</string>
+    <string name="tokens_usage">Hoʻohana ʻia nā hōʻailona</string>
+    <string name="screen_content">Maʻiʻo pale</string>
+    <string name="copied_text">Kikokiko kope</string>
+    <string name="english">Pelekania</string>
+    <string name="afrikaans">ʻApelika</string>
+    <string name="arabic">العربية</string>
+    <string name="azerbaijani">Azərbaycan</string>
+    <string name="bulgarian">Български</string>
+    <string name="bengali">বাংলা</string>
+    <string name="tibetan">བོད་སྐད་</string>
+    <string name="catalan">Català</string>
+    <string name="czech">Čeština</string>
+    <string name="danish">Dansk</string>
+    <string name="german">Deutsch</string>
+    <string name="dzongkha">རྫོང་ཁ་</string>
+    <string name="greek">Ελληνικά</string>
+    <string name="spanish">Paniolo</string>
+    <string name="persian">فارسي</string>
+    <string name="french">Farani</string>
+    <string name="gujarati">ગુજરાતી</string>
+    <string name="hawaiian">ʻŌlelo Hawaiʻi</string>
+    <string name="hebrew">עברית</string>
+    <string name="hindi">हिन्दी</string>
+    <string name="croatian">Hrvatski</string>
+    <string name="hungarian">Magyar</string>
+    <string name="indonesian">Bahasa Indonesia</string>
+    <string name="icelandic">ʻĪslenska</string>
+    <string name="italiano">Italiano</string>
+    <string name="japanese">日本語</string>
+    <string name="kabyle">Taqbaylit</string>
+    <string name="kannada">ಕನ್ನಡ</string>
+    <string name="kashmiri">कश्मीरी</string>
+    <string name="latin">Latina</string>
+    <string name="malayalam">മലയാളം</string>
+    <string name="marathi">मराठी</string>
+    <string name="nepali">नेपाली</string>
+    <string name="dutch">Nederlands</string>
+    <string name="norwegian">Norsk</string>
+    <string name="chichewa">ʻO Chichewa</string>
+    <string name="odia">ଓଡ଼ིଆ</string>
+    <string name="iron">Ирон</string>
+    <string name="punjabi">ਪੰਜਾਬੀ</string>
+    <string name="polish">Polski</string>
+    <string name="portuguese">Pukiki</string>
+    <string name="romanian">Romana</string>
+    <string name="russian">Русский</string>
+    <string name="slovak">Slovenčina</string>
+    <string name="slovenian">Slovenščina</string>
+    <string name="swedish">Svenska</string>
+    <string name="tamil">தமிழ்</string>
+    <string name="telugu">తెలుగు</string>
+    <string name="thai">ไทย</string>
+    <string name="turkmençe">Türkmençe</string>
+    <string name="turkish">Türkçe</string>
+    <string name="ukrainian">Українська</string>
+    <string name="urdu">اردو</string>
+    <string name="uzbek">ʻOʻzbekcha</string>
+    <string name="valencian">Valencian</string>
+    <string name="vietnamese">Tiếng Việt</string>
+    <string name="chinese">中文</string>
+    <string name="delete_multiple_records_confirm">Makemake ʻoe e holoi i nā moʻolelo i koho ʻia?</string>
+    <string name="import_pdf">Lawe mai</string>
+    <string name="loan_type_borrowed">ʻaiʻē</string>
+    <string name="loan_type_lent">Lent</string>
+    <string name="mark_as_loan">E kaha ma ke ano he aie</string>
+    <string name="marked_as_loan_success">Kaha ʻia ma ke ʻano he hōʻaiʻē</string>
+    <string name="persons_deleted_format">%1$d kanaka i holoi ʻia</string>
+    <string name="records_deleted_format">%1$d nā moʻolelo i holoi ʻia</string>
+    <string name="select">E koho</string>
+    <string name="select_color">E koho kala</string>
+    <string name="select_multiple">E koho nui</string>
+    <string name="share_logs">Kaʻana like i nā lāʻau</string>
+    <string name="stop">Kāohi</string>
+    <string name="unmark_as_loan">Wehe i ka hōʻailona ma ke ʻano he hōʻaiʻē</string>
+    <string name="unmark_loan_confirm_desc">E wehe kēia i ka hui hōʻaiʻē mai kēia kālepa.</string>
+    <string name="unmark_loan_confirm_title">Wehe i ka hōʻaiʻē?</string>
+    <string name="view_on_drive">Nānā ma Drive</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d laikini</item>
+        <item quantity="other">%1$d laikini</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">%1$d memo mai nā panakō</item>
+        <item quantity="other">%1$d memo mai nā panakō</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d waihona</item>
+        <item quantity="other">%1$d waihona</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d māhele ʻāpana</item>
+        <item quantity="other">%1$d mau māhele ʻāpana</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">Holoi i ka hana %1$d?</item>
+        <item quantity="other">Holoi i nā hana %1$d?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%1$d lā i koe i %2$s</item>
+        <item quantity="other">%1$d lā i koe ma %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d pāʻoihana i hoʻopau ʻia</item>
+        <item quantity="other">%1$d nā hana i hoʻopau ʻia</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d i mālama ʻia</item>
+        <item quantity="other">%1$d i mālama ʻia</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Holoi kanaka?</item>
+        <item quantity="other">Holoi i %1$d kanaka?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Holoi moʻolelo?</item>
+        <item quantity="other">Holoi i nā moʻolelo %1$d?</item>
+    </plurals>
 </resources>

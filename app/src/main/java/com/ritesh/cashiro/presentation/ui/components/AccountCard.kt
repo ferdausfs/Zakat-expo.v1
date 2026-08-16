@@ -1,5 +1,7 @@
 package com.ritesh.cashiro.presentation.ui.components
 
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -129,7 +131,7 @@ fun AccountCard(
                             ) {
                                 Icon(
                                     imageVector = Icons.Rounded.MoreHoriz,
-                                    contentDescription = "More options",
+                                    contentDescription = stringResource(R.string.more_options),
                                 )
                             }
                             DropdownMenu(
@@ -138,7 +140,7 @@ fun AccountCard(
                                 shape = MaterialTheme.shapes.large,
                             ) {
                                 DropdownMenuItem(
-                                    text = { Text("Update Balance") },
+                                    text = { Text(stringResource(R.string.update_balance)) },
                                     leadingIcon = {
                                         Icon(
                                             Iconax.Balance,
@@ -157,7 +159,7 @@ fun AccountCard(
                                     color = MaterialTheme.colorScheme.surface
                                 )
                                 DropdownMenuItem(
-                                    text = { Text("Edit Details") },
+                                    text = { Text(stringResource(R.string.edit_details)) },
                                     leadingIcon = {
                                         Icon(
                                             Iconax.Edit2,
@@ -176,7 +178,7 @@ fun AccountCard(
                                         color = MaterialTheme.colorScheme.surface
                                     )
                                     DropdownMenuItem(
-                                        text = { Text("Merge Account") },
+                                        text = { Text(stringResource(R.string.merge_account)) },
                                         leadingIcon = {
                                             Icon(
                                                 Iconax.HierarchySquare3,
@@ -195,7 +197,7 @@ fun AccountCard(
                                     color = MaterialTheme.colorScheme.surface
                                 )
                                 DropdownMenuItem(
-                                    text = { Text("History") },
+                                    text = { Text(stringResource(R.string.history)) },
                                     leadingIcon = {
                                         Icon(
                                             Iconax.History,
@@ -214,12 +216,11 @@ fun AccountCard(
                                     color = MaterialTheme.colorScheme.surface
                                 )
                                 DropdownMenuItem(
-                                    text = {
-                                        Text(
-                                            if (isHidden) "Show"
-                                            else "Hide"
-                                        )
-                                    },
+text = {
+                                            Text(
+                                                if (isHidden) stringResource(R.string.show) else stringResource(R.string.hide)
+                                            )
+                                        },
                                     leadingIcon = {
                                         Icon(
                                             if (isHidden)
@@ -240,7 +241,7 @@ fun AccountCard(
                                 )
                                 if (!isMain) {
                                     DropdownMenuItem(
-                                        text = { Text("Set as Main") },
+                                        text = { Text(stringResource(R.string.set_as_main)) },
                                         leadingIcon = {
                                             Icon(
                                                 Icons.Rounded.Star,
@@ -261,7 +262,7 @@ fun AccountCard(
                                 DropdownMenuItem(
                                     text = {
                                         Text(
-                                            "Delete",
+                                            stringResource(R.string.delete),
                                             color = MaterialTheme.colorScheme.error
                                         )
                                     },

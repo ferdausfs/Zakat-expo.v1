@@ -740,7 +740,6 @@ Zeleno (+) = Uštede | Crveno (-) = Prekomerno trošenje</string>
     <string name="language">Jezik</string>
     <string name="language_subtitle">Promijeni jezik aplikacije</string>
     <string name="select_language">Odaberi jezik</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">Korisnik</string>
     <string name="backup_sync_subtitle">Postavke sigurnosne kopije, oblaka, vraćanja i sinkronizacije</string>
     <string name="error">Greška</string>
@@ -1041,47 +1040,6 @@ Ovo može potrajati nekoliko sekundi, ovisno o vašoj povijesti poruka.</string>
     <string name="provider_local_only">Samo lokalno</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d licenca</item>
-        <item quantity="few">%1$d licenses</item>
-        <item quantity="other">%1$d licence</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">%1$d poruka od potencijalnih banaka</item>
-        <item quantity="few">%1$d messages from potential banks</item>
-        <item quantity="other">%1$d poruka od potencijalnih banaka</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d datoteka</item>
-        <item quantity="few">%1$d files</item>
-        <item quantity="other">%1$d datoteka</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d podkategorija</item>
-        <item quantity="few">%1$d subcategories</item>
-        <item quantity="other">%1$d podkategorija</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">Obrisati %1$d transakciju?</item>
-        <item quantity="few">Delete %1$d transactions?</item>
-        <item quantity="other">Obrisati %1$d transakcija?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%1$d dan preostao u %2$s</item>
-        <item quantity="few">%1$d days left in %2$s</item>
-        <item quantity="other">%1$d dana preostalo u %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d transakcija obrađena</item>
-        <item quantity="few">%1$d transactions parsed</item>
-        <item quantity="other">%1$d transakcija obrađeno</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d spremljeno</item>
-        <item quantity="few">%1$d saved</item>
-        <item quantity="other">%1$d spremljeno</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Uredi transakcije u seriji</string>
     <string name="batch_edit_updating_format">Ažuriranje %1$d odabranih stavki</string>
     <string name="batch_edit_toggle_hint">Prebaci opcije ispod da se primijene na odabrane transakcije:</string>
@@ -1101,7 +1059,6 @@ Ovo može potrajati nekoliko sekundi, ovisno o vašoj povijesti poruka.</string>
     <string name="batch_edit_set_batch_amount">Postavi količinu serije</string>
     <string name="edit_selected_transactions">Uredi odabrane transakcije</string>
     <string name="edit_selected_count_format">Uredi — %1$d</string>
-
     <string name="active_tab">Osobe</string>
     <string name="add_entry">Dodaj zapis</string>
     <string name="add_person">Dodaj osobu</string>
@@ -1177,4 +1134,140 @@ Ovo može potrajati nekoliko sekundi, ovisno o vašoj povijesti poruka.</string>
     <string name="type_lent">Dano u zajam</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">Upravljajte zapisima o pozajmljenim i posuđenim novcima</string>
+    <string name="import_cashew_backup">Uvezi iz Cashew</string>
+    <string name="import_cashew_backup_sub">Uvezi SQLite ili CSV datoteke iz Cashew aplikacije</string>
+    <string name="typing">Razmišljam o vašem zahtjevu...</string>
+    <string name="app_crashed">Aplikacija se srušila</string>
+    <string name="share_crash_report">Podijeli izvještaj o padu</string>
+    <string name="unexpected_crash">Neočekivani pad</string>
+    <string name="crash_report">Izvještaj o padu</string>
+    <string name="extracted_from_pdf">Izvučeno iz PDF-a</string>
+    <string name="existing_in_database">Postoji u bazi podataka</string>
+    <string name="search_chats">Pretraži razgovore...</string>
+    <string name="regenerate">Regeneriraj</string>
+    <string name="tokens_usage">Korištenje tokena</string>
+    <string name="screen_content">Sadržaj ekrana</string>
+    <string name="copied_text">Kopirani tekst</string>
+    <string name="english">Engleski</string>
+    <string name="afrikaans">Afrikaans</string>
+    <string name="arabic">العربية</string>
+    <string name="azerbaijani">Azərbaycan</string>
+    <string name="bulgarian">Bugarski</string>
+    <string name="bengali">Bengalski</string>
+    <string name="tibetan">Tibetski</string>
+    <string name="catalan">Katalonski</string>
+    <string name="czech">Češki</string>
+    <string name="danish">Danski</string>
+    <string name="german">Njemački</string>
+    <string name="dzongkha">Dzongkha</string>
+    <string name="greek">Grčki</string>
+    <string name="spanish">Španjolski</string>
+    <string name="persian">Perzijski</string>
+    <string name="french">Francuski</string>
+    <string name="gujarati">Gužaratski</string>
+    <string name="hawaiian">Havajski</string>
+    <string name="hebrew">Hebrejski</string>
+    <string name="hindi">Hindi</string>
+    <string name="croatian">Hrvatski</string>
+    <string name="hungarian">Mađarski</string>
+    <string name="indonesian">Indonezijski</string>
+    <string name="icelandic">Islandski</string>
+    <string name="italiano">Talijanski</string>
+    <string name="japanese">Japanski</string>
+    <string name="kabyle">Taqbaylit</string>
+    <string name="kannada">Kannada</string>
+    <string name="kashmiri">Kašmirski</string>
+    <string name="latin">Latinski</string>
+    <string name="malayalam">Malajalamski</string>
+    <string name="marathi">Maratski</string>
+    <string name="nepali">Nepalski</string>
+    <string name="dutch">Nizozemski</string>
+    <string name="norwegian">Norveški</string>
+    <string name="chichewa">Chichewa</string>
+    <string name="odia">Odia</string>
+    <string name="iron">Iron</string>
+    <string name="punjabi">Pandžapski</string>
+    <string name="polish">Poljski</string>
+    <string name="portuguese">Portugalski</string>
+    <string name="romanian">Rumunjski</string>
+    <string name="russian">Ruski</string>
+    <string name="slovak">Slovački</string>
+    <string name="slovenian">Slovenski</string>
+    <string name="swedish">Švedski</string>
+    <string name="tamil">Tamilski</string>
+    <string name="telugu">Telugu</string>
+    <string name="thai">Tajlandski</string>
+    <string name="turkmençe">Turkmenski</string>
+    <string name="turkish">Turski</string>
+    <string name="ukrainian">Ukrajinski</string>
+    <string name="urdu">Urdu</string>
+    <string name="uzbek">Uzbečki</string>
+    <string name="valencian">Valencijski</string>
+    <string name="vietnamese">Vijetnamski</string>
+    <string name="chinese">Kineski</string>
+    <string name="delete_multiple_records_confirm">Jeste li sigurni da želite izbrisati odabrane zapise?</string>
+    <string name="import_pdf">Uvezi</string>
+    <string name="loan_type_borrowed">Posuđeno</string>
+    <string name="loan_type_lent">Posuđeno</string>
+    <string name="mark_as_loan">Označi kao zajam</string>
+    <string name="marked_as_loan_success">Označeno kao zajam</string>
+    <string name="persons_deleted_format">%1$d osoba obrisano</string>
+    <string name="records_deleted_format">%1$d zapisa obrisano</string>
+    <string name="select">Odaberi</string>
+    <string name="select_color">Odaberi boju</string>
+    <string name="select_multiple">Odaberi više</string>
+    <string name="share_logs">Dijeli zapisnike</string>
+    <string name="stop">Zaustavi</string>
+    <string name="unmark_as_loan">Ukloni oznaku zajma</string>
+    <string name="unmark_loan_confirm_desc">Ovo će ukloniti vezu zajma s ovom transakcijom.</string>
+    <string name="unmark_loan_confirm_title">Ukloniti oznaku zajma?</string>
+    <string name="view_on_drive">Pogledaj na Driveu</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d licenca</item>
+        <item quantity="few">%1$d licenses</item>
+        <item quantity="other">%1$d licence</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">%1$d poruka od potencijalnih banaka</item>
+        <item quantity="few">%1$d messages from potential banks</item>
+        <item quantity="other">%1$d poruka od potencijalnih banaka</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d datoteka</item>
+        <item quantity="few">%1$d files</item>
+        <item quantity="other">%1$d datoteka</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d podkategorija</item>
+        <item quantity="few">%1$d subcategories</item>
+        <item quantity="other">%1$d podkategorija</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">Obrisati %1$d transakciju?</item>
+        <item quantity="few">Delete %1$d transactions?</item>
+        <item quantity="other">Obrisati %1$d transakcija?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%1$d dan preostao u %2$s</item>
+        <item quantity="few">%1$d days left in %2$s</item>
+        <item quantity="other">%1$d dana preostalo u %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d transakcija obrađena</item>
+        <item quantity="few">%1$d transactions parsed</item>
+        <item quantity="other">%1$d transakcija obrađeno</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d spremljeno</item>
+        <item quantity="few">%1$d saved</item>
+        <item quantity="other">%1$d spremljeno</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Obrisati osobu?</item>
+        <item quantity="other">Obrisati %1$d osoba?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Obrisati zapis?</item>
+        <item quantity="other">Obrisati %1$d zapisa?</item>
+    </plurals>
 </resources>

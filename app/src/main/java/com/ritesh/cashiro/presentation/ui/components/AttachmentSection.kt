@@ -57,6 +57,8 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import com.ritesh.cashiro.R
 import com.ritesh.cashiro.presentation.ui.icons.Iconax
+import androidx.compose.material.icons.rounded.Link
+import androidx.compose.ui.text.style.TextAlign
 import com.ritesh.cashiro.presentation.ui.icons.Paperclip2
 import com.ritesh.cashiro.presentation.ui.theme.Dimensions
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
@@ -220,15 +222,16 @@ private fun AttachmentPreviewItem(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
-    val isImage = attachmentService.isImage(attachmentPath)
-    val fileName = attachmentPath.substringAfterLast('/')
-    val fileUri = attachmentService.getAttachmentUri(attachmentPath)
-    val isFileExists = fileUri != null
+    val isUrl = attachmentService.isUrl(attachmentPath)
+    val isImage = !isUrl && attachmentService.isImage(attachmentPath)
+    val fileName = if (isUrl) "Link" else attachmentPath.substringAfterLast('/')
+    val fileUri = if (isUrl) null else attachmentService.getAttachmentUri(attachmentPath)
+    val isFileExists = isUrl || fileUri != null
 
     Card(
         modifier = modifier
             .clickable(
-                enabled = isFileExists,
+                enabled = true,
                 onClick = onClick,
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() }
@@ -254,7 +257,7 @@ private fun AttachmentPreviewItem(
                     modifier = Modifier.fillMaxSize()
                 )
             } else {
-                // Document icon or Error
+                // Document icon or Link icon or Error
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -262,7 +265,21 @@ private fun AttachmentPreviewItem(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    if (isFileExists) {
+                    if (isUrl) {
+                        Icon(
+                            imageVector = Icons.Rounded.Link,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(32.dp)
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = stringResource(R.string.view_on_drive),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.primary,
+                            textAlign = TextAlign.Center
+                        )
+                    } else if (isFileExists) {
                         Icon(
                             imageVector = when {
                                 attachmentPath.endsWith(".pdf") -> Icons.Default.PictureAsPdf

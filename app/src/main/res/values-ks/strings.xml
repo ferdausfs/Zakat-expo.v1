@@ -264,7 +264,7 @@
     <string name="suffix_thousand">k</string>
     <string name="percentage_format">(%1$d٪)</string>
     <string name="total_uppercase">کل</string>
-    <string name="transactions_format">%1$d TXNS</string>
+    <string name="transactions_format">٪1$d TXNS</string>
     <string name="average">اَوسَط</string>
     <string name="per_day">/دۄہ</string>
     <string name="percentage_of_total">%1$d٪ کُل</string>
@@ -509,7 +509,7 @@
     <string name="delete_all_data_confirm_title">تمام ڈیٹا کٔرِو ڈیلیٹ؟</string>
     <string name="delete_all_data_confirm_desc">یہِ عمل کَرِ تُہٕنٛدۍ تمام لین دین، بجٹ، سبسکرپشن، تہٕ سیٹنگ مُستقل پٲٹھۍ ڈیلیٖٹ۔ یہِ ہٮ۪کو نہٕ واپس کٔرِتھ۔</string>
     <string name="delete_all">سٲری کٔرِو ڈیلیٹ</string>
-    <string name="license_version_format">v%1$s, db-v%2$d</string>
+    <string name="license_version_format">v٪1$s, db-v٪2$d</string>
     <string name="license_disclaimer_software">سافٹ وِیَر چھُ کُنہِ تہِ قٕسمٕچ وارنٹی، اظہار یا مضموٗن بغٲر فراہم کرنہٕ آمُت، بشمول تجارتٕچ وارنٹی، کُنہِ خاص مقصدٕ خٲطرٕ فٹنس، تہٕ غٲر خلاف ورزی ہٕنٛز وارنٹی، مگر تِمن تام چھُنہٕ محدود۔ کُنہِ تہِ صورتس منز گژھِ مصنف یا کاپی رائٹ ہولڈر کُنہِ تہِ دعوہ، نقصان، یا باقی ذمہ دٲری ہُند ذمہٕ دار آسُن، چاہے معاہدٕ، ٹارٹ، یا بییس صورتس منز، سافٹ ویئر یا سافٹ ویئرس منز استعمال یا باقی لین دین سٍتۍ پٲدٕ سپدان آسہِ۔</string>
     <string name="license_disclaimer_rates">یَتھ ایپَس منٛز ہاونہٕ آمٕتۍ ایکسچینج ریٹ چھِ صرف معلوماتی مقصدٕ خٲطرٕ تہٕ یِم گژھِ نہٕ سرمایہ کٲری ہٕنٛدِ فٲصلَن خٲطرٕ استعمال کرنہٕ یِنۍ۔ یِم قۭمَت چھِ تخمینہٕ تہٕ ہیکَن نہٕ اصلی شرحَن ہُنٛد عکاس کٔرِتھ۔ یہِ ایپ استعمال کٔرِتھ چھِو تُہۍ تسلیم کران زِ تُہۍ چھِو یِمن حدَن سمجھان تہٕ قبوٗل کران تہٕ تُہۍ چھِو ایپَس منٛز دِنہٕ آمٕژ زانکٲری ہٕنٛدِس بُنیادس پیٹھ کُنہِ تہِ فٲصلٕچ پوٗرٕ ذمہٕ دٲری نِوان۔</string>
     <string name="powered_by">پاورڈ بائی کوٹلن کمپوز</string>
@@ -652,8 +652,8 @@
     <string name="base_currency">بیس</string>
     <string name="rates_relative_format">%1$s سۭتۍ وابستہٕ شرح</string>
     <string name="last_updated_format">آخری اپ ڈیٹ: %1$s</string>
-    <string name="currency_code_symbol_format">%1$s (%2$s)</string>
-    <string name="exchange_rate_formula_format">1 %1$s = %2$s %3$s</string>
+    <string name="currency_code_symbol_format">٪1$s (٪2$s)</string>
+    <string name="exchange_rate_formula_format">1 ٪1$s = ٪2$s ٪3$s</string>
     <string name="currency_inr_name">ہِندوستٲنؠ رۄپیہِ (₹)</string>
     <string name="currency_usd_name">امریکی ڈالر ($)</string>
     <string name="currency_aed_name">متحدہ عرب امارات درہم (AED)</string>
@@ -714,9 +714,9 @@
     <string name="cancel_scan">سکین کینسل کَرُن</string>
     <string name="all_messages_processed">سٲری پٲغام گٔیہِ پروسیس!</string>
     <string name="processed_messages_format">%1$d کْریو پروسیسْہ %2$d میسیجن</string>
-    <string name="duration_hours_minutes">%1$dh %2$dm</string>
-    <string name="duration_minutes_seconds">%1$dm %2$ds</string>
-    <string name="duration_seconds">%1$ds</string>
+    <string name="duration_hours_minutes">٪1$dh ٪2$dm</string>
+    <string name="duration_minutes_seconds">٪1$dm ٪2$ds</string>
+    <string name="duration_seconds">٪1$ds</string>
     <string name="time_left_format">~%1$s باقٕے</string>
     <string name="batch_progress_format">بیچ %1$d of %2$d</string>
     <string name="scan_completed_success">سکین گٔیہِ کامیٲبی سان مُکمل۔</string>
@@ -733,14 +733,13 @@
     <string name="type_investment">سرمایہ کٲری</string>
     <string name="type_income">آمدنی۔</string>
     <string name="type_expense">خرچہٕ</string>
-    <string name="estimated_amount_format">est. %1$s</string>
+    <string name="estimated_amount_format">est. ٪1$s</string>
     <string name="uncategorized">غیر درجہٕ بندی</string>
     <string name="net">نیٹ</string>
     <string name="processing">پروسیسنگ...</string>
     <string name="language">زبان</string>
     <string name="language_subtitle">ایپلیکیشن لینگویج بدلاو</string>
     <string name="select_language">ژٲرِو زبان</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">صارف</string>
     <string name="backup_sync_subtitle">بیک اپ، کلاؤڈ، بحالی اور سنک ترتیبات</string>
     <string name="error">غلطی</string>
@@ -1041,39 +1040,6 @@
     <string name="provider_local_only">صرف لوکل</string>
     <string name="provider_webdav">نیکسٹ کلاؤڈ / WebDAV</string>
     <string name="provider_google_drive">گوگل ڈرائیو</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d لائسنس</item>
-        <item quantity="other">%1$d لاسنہٕ</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">مُمکنہٕ بینکَو پیٹھٕ %1$d پٲغام</item>
-        <item quantity="other">مُمکنہٕ بینکَو پیٹھٕ %1$d پٲغام</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d فایل</item>
-        <item quantity="other">%1$d فایلہٕ</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d ذیلی زمرہٕ</item>
-        <item quantity="other">%1$d ذیلی زمرہٕ</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">%1$d لین دین کٔرِو ڈیلیٹ؟</item>
-        <item quantity="other">%1$d ٹرانزیکشن کٔرِو ڈیلیٹ؟</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%1$d دۄہ باقٕے %2$s منٛز</item>
-        <item quantity="other">%1$d دۄہ باقٕے %2$s منٛز</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d ٹرانزیکشن پارس کرنہٕ آمُت</item>
-        <item quantity="other">%1$d لین دین پارس کْرتھ</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d محفوظ</item>
-        <item quantity="other">%1$d محفوظ</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">بیچ ایڈیٹ ٹرانزیکشن</string>
     <string name="batch_edit_updating_format">اپڈیٹ کَرُن %1$d ژارنہٕ آمٕتۍ چیٖز</string>
     <string name="batch_edit_toggle_hint">ژارنہٕ آمٕتۍ لین دین منز لاگو کرنہٕ خٲطرٕ کٔرِو بۄنہٕ کَنہِ دِنہٕ آمٕتۍ آپشَن ٹوگل</string>
@@ -1093,7 +1059,6 @@
     <string name="batch_edit_set_batch_amount">بیچ رقم کَر سیٹ</string>
     <string name="edit_selected_transactions">ژارنہٕ آمٕتۍ لین دین کٔر ایڈٹ</string>
     <string name="edit_selected_count_format">اؠڈِٹ — %1$d</string>
-
     <string name="active_tab">لوٗکھ</string>
     <string name="add_entry">رِکارڈ شُرُو کٔرِو</string>
     <string name="add_person">ہوکھ شُرُو کٔرِو</string>
@@ -1169,4 +1134,132 @@
     <string name="type_lent">اُدھار دِیُت</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">قرض دینہ اور نؠومت ہُنٛد ریکارڈ منظم کٔرِو</string>
+    <string name="import_cashew_backup">کاجو پٮ۪ٹھٕ درآمد</string>
+    <string name="import_cashew_backup_sub">کاشیو ایپ پٮ۪ٹھٕ کٔرِو SQLite یا CSV فایلہٕ امپورٹ</string>
+    <string name="typing">پننہِ درخواستس مُتلِق سونچُن...</string>
+    <string name="app_crashed">ایپ گٔیہِ کریش</string>
+    <string name="share_crash_report">کریش رپورٹ کٔرِو شییر</string>
+    <string name="unexpected_crash">غیر متوقع کریش</string>
+    <string name="crash_report">کریش رپورٹ</string>
+    <string name="extracted_from_pdf">پی ڈی ایف پٮ۪ٹھٕ کڑنہٕ آمُت</string>
+    <string name="existing_in_database">ڈیٹا بیسَس مَنٛز موجود۔</string>
+    <string name="search_chats">چیٹ تلاش کٔرِو...</string>
+    <string name="regenerate">دُبارٕ پٲدٕ کَرنہٕ</string>
+    <string name="tokens_usage">ٹوکنَن ہُنٛد استعمال</string>
+    <string name="screen_content">سکرین کنٹینٹ</string>
+    <string name="copied_text">کاپی کرنہٕ آمُت متن</string>
+    <string name="english">انٛگریٖزۍ</string>
+    <string name="afrikaans">اَفریٖقی</string>
+    <string name="arabic">العربية</string>
+    <string name="azerbaijani">Azərbaycan</string>
+    <string name="bulgarian">Български</string>
+    <string name="bengali">বাংলা</string>
+    <string name="tibetan">བོད་སྐད་</string>
+    <string name="catalan">کیٹالا</string>
+    <string name="czech">Čeština</string>
+    <string name="danish">ڈانسک</string>
+    <string name="german">ڈوئچ</string>
+    <string name="dzongkha">རྫོང་ཁ་</string>
+    <string name="greek">Ελληνικά</string>
+    <string name="spanish">Español</string>
+    <string name="persian">فارسي</string>
+    <string name="french">فرانسیس</string>
+    <string name="gujarati">ગુજરાતી</string>
+    <string name="hawaiian">ہوایی</string>
+    <string name="hebrew">عبرانی</string>
+    <string name="hindi">ہندی</string>
+    <string name="croatian">کروشِیَن</string>
+    <string name="hungarian">ہنٛگریٲئۍ</string>
+    <string name="indonesian">اِنڈونیشیاہی</string>
+    <string name="icelandic">آئس لینٛڈِی</string>
+    <string name="italiano">اطالوی</string>
+    <string name="japanese">جاپانی</string>
+    <string name="kabyle">تقبیلِت</string>
+    <string name="kannada">کنڈ</string>
+    <string name="kashmiri">کٲشِر</string>
+    <string name="latin">لاطینی</string>
+    <string name="malayalam">ملیالم</string>
+    <string name="marathi">مراٹِھی</string>
+    <string name="nepali">نیپالی</string>
+    <string name="dutch">ڈَچ</string>
+    <string name="norwegian">نارویجن</string>
+    <string name="chichewa">چیچیوا</string>
+    <string name="odia">اوڈیا</string>
+    <string name="iron">ششتٕر</string>
+    <string name="punjabi">پنجٲبۍ</string>
+    <string name="polish">پولِش</string>
+    <string name="portuguese">پُرتگٲلۍ</string>
+    <string name="romanian">رومانوِی</string>
+    <string name="russian">رُوسی</string>
+    <string name="slovak">سلوواک</string>
+    <string name="slovenian">سلووینِیٲیِی</string>
+    <string name="swedish">سویڈِش</string>
+    <string name="tamil">تامِل</string>
+    <string name="telugu">تیلِگو</string>
+    <string name="thai">تھائی</string>
+    <string name="turkmençe">تُرکمان</string>
+    <string name="turkish">تُرکی</string>
+    <string name="ukrainian">یوکرینی</string>
+    <string name="urdu">اردو</string>
+    <string name="uzbek">اُزبیک</string>
+    <string name="valencian">ویلنشیئن</string>
+    <string name="vietnamese">ویت نامی</string>
+    <string name="chinese">چیٖنٛی</string>
+    <string name="delete_multiple_records_confirm">کیا تُہۍ چھِو پَکہٕ زِ تُہۍ چھِو یژھان ژارنہٕ آمُت ریکارڈ ڈیلیٹ کَرُن؟</string>
+    <string name="import_pdf">درآمد کٔرِو</string>
+    <string name="loan_type_borrowed">مستعار</string>
+    <string name="loan_type_lent">لینٹ</string>
+    <string name="mark_as_loan">قرضہٕ پٲٹھۍ نشان زد کٔرِو</string>
+    <string name="marked_as_loan_success">قرضہٕ کِس طورس پیٹھ نشان زد کرنہٕ آمُت</string>
+    <string name="persons_deleted_format">٪1$d افراد حذف کٔرِتھ</string>
+    <string name="records_deleted_format">٪1$d ریکارڈ حذف کٔرِتھ</string>
+    <string name="select">ژٲرِو</string>
+    <string name="select_color">رنگ ژٲرِو</string>
+    <string name="select_multiple">اَکہِ کھۄتہٕ زیادٕ ژٲرِ</string>
+    <string name="share_logs">لاگ شییر کٔرِو</string>
+    <string name="stop">رُکاو</string>
+    <string name="unmark_as_loan">قرضہٕ پٲٹھۍ نشان زد کٔرِتھ</string>
+    <string name="unmark_loan_confirm_desc">اَمہِ سۭتۍ گژھِ لون ایسوسی ایشن امہِ لین دین نِش ہٹاونہٕ۔</string>
+    <string name="unmark_loan_confirm_title">بطور قرضہٕ ان مارک؟</string>
+    <string name="view_on_drive">ڈرایوِس پیٹھ وُچھِو</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d لائسنس</item>
+        <item quantity="other">%1$d لاسنہٕ</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">مُمکنہٕ بینکَو پیٹھٕ %1$d پٲغام</item>
+        <item quantity="other">مُمکنہٕ بینکَو پیٹھٕ %1$d پٲغام</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d فایل</item>
+        <item quantity="other">%1$d فایلہٕ</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d ذیلی زمرہٕ</item>
+        <item quantity="other">%1$d ذیلی زمرہٕ</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">%1$d لین دین کٔرِو ڈیلیٹ؟</item>
+        <item quantity="other">%1$d ٹرانزیکشن کٔرِو ڈیلیٹ؟</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%1$d دۄہ باقٕے %2$s منٛز</item>
+        <item quantity="other">%1$d دۄہ باقٕے %2$s منٛز</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d ٹرانزیکشن پارس کرنہٕ آمُت</item>
+        <item quantity="other">%1$d لین دین پارس کْرتھ</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d محفوظ</item>
+        <item quantity="other">%1$d محفوظ</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">نفر کٔرِو مِٹاونہٕ؟</item>
+        <item quantity="other">٪1$d نفر کٔرِو حذف کٔرِتھ؟</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">رِکارڈ کٔرِو مِٹاونہٕ؟</item>
+        <item quantity="other">٪1$d ریکارڈ کْریو ڈیلیٹ؟</item>
+    </plurals>
 </resources>

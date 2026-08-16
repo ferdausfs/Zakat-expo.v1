@@ -740,7 +740,6 @@ Zelená (+) = Úspory | Červená (-) = Prečerpanie</string>
     <string name="language">Jazyk</string>
     <string name="language_subtitle">Zmeniť jazyk aplikácie</string>
     <string name="select_language">Vybrať jazyk</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">Používateľ</string>
     <string name="backup_sync_subtitle">Nastavenia zálohovania, cloudu, obnovenia a synchronizácie</string>
     <string name="error">Chyba</string>
@@ -1041,55 +1040,6 @@ Môže to trvať niekoľko sekúnd v závislosti od vašej histórie správ.</st
     <string name="provider_local_only">Len lokálne</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d licencia</item>
-        <item quantity="few">%1$d licenses</item>
-        <item quantity="many">%1$d licenses</item>
-        <item quantity="other">%1$d licencie</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">%1$d správa od potenciálnych bánk</item>
-        <item quantity="few">%1$d messages from potential banks</item>
-        <item quantity="many">%1$d messages from potential banks</item>
-        <item quantity="other">%1$d správy od potenciálnych bánk</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d súbor</item>
-        <item quantity="few">%1$d files</item>
-        <item quantity="many">%1$d files</item>
-        <item quantity="other">%1$d súbory</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d podkategória</item>
-        <item quantity="few">%1$d subcategories</item>
-        <item quantity="many">%1$d subcategories</item>
-        <item quantity="other">%1$d podkategórie</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">Odstrániť %1$d transakciu?</item>
-        <item quantity="few">Delete %1$d transactions?</item>
-        <item quantity="many">Delete %1$d transactions?</item>
-        <item quantity="other">Odstrániť %1$d transakcií?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%1$d deň zostáva v %2$s</item>
-        <item quantity="few">%1$d days left in %2$s</item>
-        <item quantity="many">%1$d days left in %2$s</item>
-        <item quantity="other">%1$d dní zostáva v %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d transakcia spracovaná</item>
-        <item quantity="few">%1$d transactions parsed</item>
-        <item quantity="many">%1$d transactions parsed</item>
-        <item quantity="other">%1$d transakcií spracovaných</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d uložené</item>
-        <item quantity="few">%1$d saved</item>
-        <item quantity="many">%1$d saved</item>
-        <item quantity="other">%1$d uložené</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Hromadná úprava transakcií</string>
     <string name="batch_edit_updating_format">Aktualizácia %1$d vybraných položiek</string>
     <string name="batch_edit_toggle_hint">Prepnite možnosti nižšie, aby sa uplatnili na vybrané transakcie:</string>
@@ -1109,7 +1059,6 @@ Môže to trvať niekoľko sekúnd v závislosti od vašej histórie správ.</st
     <string name="batch_edit_set_batch_amount">Nastaviť hromadnú sumu</string>
     <string name="edit_selected_transactions">Upraviť vybrané transakcie</string>
     <string name="edit_selected_count_format">Upraviť — %1$d</string>
-
     <string name="active_tab">Ľudia</string>
     <string name="add_entry">Pridať záznam</string>
     <string name="add_person">Pridať osobu</string>
@@ -1185,4 +1134,148 @@ Môže to trvať niekoľko sekúnd v závislosti od vašej histórie správ.</st
     <string name="type_lent">Požičané</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">Spravujte záznamy o požičaných a vypožičaných prostriedkoch</string>
+    <string name="import_cashew_backup">Importovať z Cashew</string>
+    <string name="import_cashew_backup_sub">Importovať súbory SQLite alebo CSV z aplikácie Cashew</string>
+    <string name="typing">Premýšľam o vašej požiadavke...</string>
+    <string name="app_crashed">Aplikácia sa zrútila</string>
+    <string name="share_crash_report">Zdieľať hlásenie o páde</string>
+    <string name="unexpected_crash">Neočakávaný pád</string>
+    <string name="crash_report">Hlásenie o páde</string>
+    <string name="extracted_from_pdf">Extrahované z PDF</string>
+    <string name="existing_in_database">Existuje v databáze</string>
+    <string name="search_chats">Hľadať chaty...</string>
+    <string name="regenerate">Regenerovať</string>
+    <string name="tokens_usage">Použitie tokenov</string>
+    <string name="screen_content">Obsah obrazovky</string>
+    <string name="copied_text">Skopírovaný text</string>
+    <string name="english">Angličtina</string>
+    <string name="afrikaans">Afrikánčina</string>
+    <string name="arabic">العربية</string>
+    <string name="azerbaijani">Azərbaycan</string>
+    <string name="bulgarian">Bulharský</string>
+    <string name="bengali">Bengalčina</string>
+    <string name="tibetan">Tibetský</string>
+    <string name="catalan">Katalánsky</string>
+    <string name="czech">Čeština</string>
+    <string name="danish">Dánčina</string>
+    <string name="german">Nemčina</string>
+    <string name="dzongkha">Dzongkha</string>
+    <string name="greek">Gréčtina</string>
+    <string name="spanish">Španielčina</string>
+    <string name="persian">Perzština</string>
+    <string name="french">Francúzština</string>
+    <string name="gujarati">Gudžarátčina</string>
+    <string name="hawaiian">Havajský jazyk</string>
+    <string name="hebrew">Hebrejčina</string>
+    <string name="hindi">Hindi</string>
+    <string name="croatian">Chorvátčina</string>
+    <string name="hungarian">Maďarčina</string>
+    <string name="indonesian">Indonézština</string>
+    <string name="icelandic">Islandčina</string>
+    <string name="italiano">Taliančina</string>
+    <string name="japanese">Japončina</string>
+    <string name="kabyle">Taqbaylit</string>
+    <string name="kannada">Kannada</string>
+    <string name="kashmiri">Kašmírčina</string>
+    <string name="latin">Latina</string>
+    <string name="malayalam">Malayalam</string>
+    <string name="marathi">Maráthčina</string>
+    <string name="nepali">Nepálčina</string>
+    <string name="dutch">Holandčina</string>
+    <string name="norwegian">Nórčina</string>
+    <string name="chichewa">Čičewa</string>
+    <string name="odia">Oriya</string>
+    <string name="iron">Irónsky</string>
+    <string name="punjabi">Pandžábčina</string>
+    <string name="polish">Poľština</string>
+    <string name="portuguese">Portugalčina</string>
+    <string name="romanian">Rumunčina</string>
+    <string name="russian">Ruština</string>
+    <string name="slovak">Slovenčina</string>
+    <string name="slovenian">Slovinčina</string>
+    <string name="swedish">Švédčina</string>
+    <string name="tamil">Tamilčina</string>
+    <string name="telugu">Telugčina</string>
+    <string name="thai">Thajčina</string>
+    <string name="turkmençe">Turkménsky jazyk</string>
+    <string name="turkish">Turečtina</string>
+    <string name="ukrainian">Ukrajinčina</string>
+    <string name="urdu">Urdu</string>
+    <string name="uzbek">Uzbekčina</string>
+    <string name="valencian">Valencijčina</string>
+    <string name="vietnamese">Vietnamčina</string>
+    <string name="chinese">Čínština</string>
+    <string name="delete_multiple_records_confirm">Ste si istí, že chcete vymazať vybrané záznamy?</string>
+    <string name="import_pdf">Importovať</string>
+    <string name="loan_type_borrowed">Požičané</string>
+    <string name="loan_type_lent">Pôžičané</string>
+    <string name="mark_as_loan">Označiť ako pôžičku</string>
+    <string name="marked_as_loan_success">Označené ako pôžička</string>
+    <string name="persons_deleted_format">%1$d osôb vymazaných</string>
+    <string name="records_deleted_format">%1$d záznamov vymazaných</string>
+    <string name="select">Vybrať</string>
+    <string name="select_color">Vybrať farbu</string>
+    <string name="select_multiple">Vybrať viaceré</string>
+    <string name="share_logs">Zdieľať záznamy</string>
+    <string name="stop">Zastaviť</string>
+    <string name="unmark_as_loan">Zrušiť označenie ako pôžička</string>
+    <string name="unmark_loan_confirm_desc">Týmto sa odstráni asociácia pôžičky z tejto transakcie.</string>
+    <string name="unmark_loan_confirm_title">Zrušiť označenie ako pôžička?</string>
+    <string name="view_on_drive">Zobraziť na Disku</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d licencia</item>
+        <item quantity="few">%1$d licenses</item>
+        <item quantity="many">%1$d licenses</item>
+        <item quantity="other">%1$d licencie</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">%1$d správa od potenciálnych bánk</item>
+        <item quantity="few">%1$d messages from potential banks</item>
+        <item quantity="many">%1$d messages from potential banks</item>
+        <item quantity="other">%1$d správy od potenciálnych bánk</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d súbor</item>
+        <item quantity="few">%1$d files</item>
+        <item quantity="many">%1$d files</item>
+        <item quantity="other">%1$d súbory</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d podkategória</item>
+        <item quantity="few">%1$d subcategories</item>
+        <item quantity="many">%1$d subcategories</item>
+        <item quantity="other">%1$d podkategórie</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">Odstrániť %1$d transakciu?</item>
+        <item quantity="few">Delete %1$d transactions?</item>
+        <item quantity="many">Delete %1$d transactions?</item>
+        <item quantity="other">Odstrániť %1$d transakcií?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%1$d deň zostáva v %2$s</item>
+        <item quantity="few">%1$d days left in %2$s</item>
+        <item quantity="many">%1$d days left in %2$s</item>
+        <item quantity="other">%1$d dní zostáva v %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d transakcia spracovaná</item>
+        <item quantity="few">%1$d transactions parsed</item>
+        <item quantity="many">%1$d transactions parsed</item>
+        <item quantity="other">%1$d transakcií spracovaných</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d uložené</item>
+        <item quantity="few">%1$d saved</item>
+        <item quantity="many">%1$d saved</item>
+        <item quantity="other">%1$d uložené</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Vymazať osobu?</item>
+        <item quantity="other">Vymazať %1$d osoby?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Vymazať záznam?</item>
+        <item quantity="other">Vymazať %1$d záznamov?</item>
+    </plurals>
 </resources>

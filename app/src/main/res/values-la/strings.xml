@@ -16,7 +16,7 @@
     <string name="lock_timeout_1min">Claude post 1 minutum in posteriore plano</string>
     <string name="lock_timeout_minutes">Claude post %1$d minuta in posteriore plano</string>
     <string name="data_management_section">Administratio Data</string>
-    <string name="backup_tab">Backup</string>
+    <string name="backup_tab">Substitutio</string>
     <string name="local_backup_section">Backup Localis</string>
     <string name="export_data">Exportare Data</string>
     <string name="export_data_sub">Fac tuo data in file</string>
@@ -740,7 +740,6 @@ Viridis (+) = Pecunia Servata | Ruber (-) = Superfluum Expensum</string>
     <string name="language">Lingua</string>
     <string name="language_subtitle">Mutare applicationem linguam</string>
     <string name="select_language">Selige Linguam</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">Usor</string>
     <string name="backup_sync_subtitle">Optiones tergendi, nubis, restitutionis et synchronisationis</string>
     <string name="error">Error</string>
@@ -1041,39 +1040,6 @@ Hoc potest capere paucis secundis secundum tuum nuntium historiam.</string>
     <string name="provider_local_only">Localis Tantum</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d licentia</item>
-        <item quantity="other">%1$d licentiae</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">%1$d nuntius a potentialibus argentariis</item>
-        <item quantity="other">%1$d nuntii a potentialibus argentariis</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d lima</item>
-        <item quantity="other">%1$d lima</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d subcategoria</item>
-        <item quantity="other">%1$d subcategoriae</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">Dele %1$d transactionem?</item>
-        <item quantity="other">Dele %1$d transactiones?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%1$d dies restant in %2$s</item>
-        <item quantity="other">%1$d dies restant in %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d transactio absoluta est</item>
-        <item quantity="other">%1$d transactiones absolutae sunt</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d servatum est</item>
-        <item quantity="other">%1$d servata sunt</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Batch Edit Transactions</string>
     <string name="batch_edit_updating_format">Updating %1$d selected items</string>
     <string name="batch_edit_toggle_hint">Toggle options below to apply across selected transactions:</string>
@@ -1093,7 +1059,6 @@ Hoc potest capere paucis secundis secundum tuum nuntium historiam.</string>
     <string name="batch_edit_set_batch_amount">Constitue Quantitatem Fasciculi</string>
     <string name="edit_selected_transactions">Emenda Selecta Transactiones</string>
     <string name="edit_selected_count_format">Emenda — %1$d</string>
-
     <string name="active_tab">Homines</string>
     <string name="add_entry">Adde commentarium</string>
     <string name="add_person">Adde hominem</string>
@@ -1169,4 +1134,132 @@ Hoc potest capere paucis secundis secundum tuum nuntium historiam.</string>
     <string name="type_lent">Mutuo datum</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">Rege tabulas mutuorum et debitorum</string>
+    <string name="import_cashew_backup">Importare ex Cashew</string>
+    <string name="import_cashew_backup_sub">Importare SQLite vel CSV lima ex Cashew app</string>
+    <string name="typing">Cogitans de tuo rogatu...</string>
+    <string name="app_crashed">App Rupti</string>
+    <string name="share_crash_report">Commune crash relationem</string>
+    <string name="unexpected_crash">Inopinatus Ruptio</string>
+    <string name="crash_report">Crash Relatio</string>
+    <string name="extracted_from_pdf">Extractum ex PDF</string>
+    <string name="existing_in_database">Exsistens in Database</string>
+    <string name="search_chats">Quaerere colloquia...</string>
+    <string name="regenerate">Regenerare</string>
+    <string name="tokens_usage">Usus Tesserarum</string>
+    <string name="screen_content">Contentum Screen</string>
+    <string name="copied_text">Textus Copiatus</string>
+    <string name="english">Anglica</string>
+    <string name="afrikaans">Afrikaans</string>
+    <string name="arabic">العربية</string>
+    <string name="azerbaijani">Azərbaycan</string>
+    <string name="bulgarian">Български</string>
+    <string name="bengali">বাংলা</string>
+    <string name="tibetan">བོད་སྐད་</string>
+    <string name="catalan">Català</string>
+    <string name="czech">Bohemica</string>
+    <string name="danish">Danica</string>
+    <string name="german">Germanica</string>
+    <string name="dzongkha">Dzongkha</string>
+    <string name="greek">Graeca</string>
+    <string name="spanish">Hispanica</string>
+    <string name="persian">Persica</string>
+    <string name="french">Gallica</string>
+    <string name="gujarati">Gujarati</string>
+    <string name="hawaiian">Hawaiiana</string>
+    <string name="hebrew">Hebraica</string>
+    <string name="hindi">Hindi</string>
+    <string name="croatian">Croatica</string>
+    <string name="hungarian">Hungarica</string>
+    <string name="indonesian">Indonesiana</string>
+    <string name="icelandic">Islandica</string>
+    <string name="italiano">Italica</string>
+    <string name="japanese">Iaponica</string>
+    <string name="kabyle">Taqbaylit</string>
+    <string name="kannada">Kannada</string>
+    <string name="kashmiri">Kashmirica</string>
+    <string name="latin">Latina</string>
+    <string name="malayalam">Malayalam</string>
+    <string name="marathi">Marathi</string>
+    <string name="nepali">Nepalensis</string>
+    <string name="dutch">Batava</string>
+    <string name="norwegian">Norvegica</string>
+    <string name="chichewa">Chichewa</string>
+    <string name="odia">Odia</string>
+    <string name="iron">Ironica</string>
+    <string name="punjabi">Punjabi</string>
+    <string name="polish">Polonica</string>
+    <string name="portuguese">Portugallensis</string>
+    <string name="romanian">Romana</string>
+    <string name="russian">Russica</string>
+    <string name="slovak">Slovaca</string>
+    <string name="slovenian">Sloveniensis</string>
+    <string name="swedish">Svecica</string>
+    <string name="tamil">Tamilica</string>
+    <string name="telugu">Telugua</string>
+    <string name="thai">Thailändica</string>
+    <string name="turkmençe">Turcomenica</string>
+    <string name="turkish">Turcica</string>
+    <string name="ukrainian">Ucrainica</string>
+    <string name="urdu">Urdu</string>
+    <string name="uzbek">Uzbechica</string>
+    <string name="valencian">Valenciana</string>
+    <string name="vietnamese">Vietnamica</string>
+    <string name="chinese">Sinica</string>
+    <string name="delete_multiple_records_confirm">Certus es te velle delere selecta registri?</string>
+    <string name="import_pdf">Importare</string>
+    <string name="loan_type_borrowed">Mutuum sumptum</string>
+    <string name="loan_type_lent">Mutuum datum</string>
+    <string name="mark_as_loan">Signa ut mutuum</string>
+    <string name="marked_as_loan_success">Signatum ut mutuum</string>
+    <string name="persons_deleted_format">%1$d personae deleatae</string>
+    <string name="records_deleted_format">%1$d registri deleati</string>
+    <string name="select">Selige</string>
+    <string name="select_color">Selige colorem</string>
+    <string name="select_multiple">Selige plura</string>
+    <string name="share_logs">Communica logs</string>
+    <string name="stop">Sta</string>
+    <string name="unmark_as_loan">Designa ut mutuum</string>
+    <string name="unmark_loan_confirm_desc">Hoc removebit associationem mutui ex hac transactione</string>
+    <string name="unmark_loan_confirm_title">Designare ut mutuum?</string>
+    <string name="view_on_drive">Vide in Drive</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d licentia</item>
+        <item quantity="other">%1$d licentiae</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">%1$d nuntius a potentialibus argentariis</item>
+        <item quantity="other">%1$d nuntii a potentialibus argentariis</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d lima</item>
+        <item quantity="other">%1$d lima</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d subcategoria</item>
+        <item quantity="other">%1$d subcategoriae</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">Dele %1$d transactionem?</item>
+        <item quantity="other">Dele %1$d transactiones?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%1$d dies restant in %2$s</item>
+        <item quantity="other">%1$d dies restant in %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d transactio absoluta est</item>
+        <item quantity="other">%1$d transactiones absolutae sunt</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d servatum est</item>
+        <item quantity="other">%1$d servata sunt</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Delere personam?</item>
+        <item quantity="other">Delere %1$d personas?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Delere registrum?</item>
+        <item quantity="other">Delere %1$d registri?</item>
+    </plurals>
 </resources>

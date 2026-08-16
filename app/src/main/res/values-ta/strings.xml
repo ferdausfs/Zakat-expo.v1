@@ -740,7 +740,6 @@
     <string name="language">மொழி</string>
     <string name="language_subtitle">ஆப் மொழியை மாற்றவும்</string>
     <string name="select_language">மொழியைத் தேர்ந்தெடுக்கவும்</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">பயனர்</string>
     <string name="backup_sync_subtitle">காப்புப்பிரதி, கிளவுட், மீட்டெடுப்பு மற்றும் ஒத்திசைவு அமைப்புகள்</string>
     <string name="error">பிழை</string>
@@ -1041,39 +1040,6 @@
     <string name="provider_local_only">உள்ளூரில் மட்டுமே</string>
     <string name="provider_webdav">நெக்ஸ்ட்கிளவுட் / வெப்‌டேவ்</string>
     <string name="provider_google_drive">கூகிள் டிரைவ்</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d உரிமம்</item>
-        <item quantity="other">%1$d உரிமங்கள்</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">சாத்தியமான வங்கிகளிடமிருந்து %1$d செய்தி</item>
-        <item quantity="other">சாத்தியமான வங்கிகளிடமிருந்து %1$d செய்திகள்</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d கோப்பு</item>
-        <item quantity="other">%1$d கோப்புகள்</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d துணை வర్గம்</item>
-        <item quantity="other">%1$d துணை வర్గங்கள்</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">%1$d பரிவர்த்தனையை அழிக்கவா?</item>
-        <item quantity="other">%1$d பரிவர்த்தனைகளை அழிக்கவா?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%2$sல் %1$d நாள் மீதம்</item>
-        <item quantity="other">%2$sல் %1$d நாட்கள் மீதம்</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d பரிவர்த்தனை பகுப்பாய்வு செய்யப்பட்டது</item>
-        <item quantity="other">%1$d பரிவர்த்தனைகள் பகுப்பாய்வு செய்யப்பட்டன</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d சேமிக்கப்பட்டது</item>
-        <item quantity="other">%1$d சேமிக்கப்பட்டது</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">பேச்சு தொகுக்கப்பட்ட பரிவர்த்தனைகள்</string>
     <string name="batch_edit_updating_format">%1$d தேர்ந்தெடுக்கப்பட்ட பொருட்களை புதுப்பிக்கிறது</string>
     <string name="batch_edit_toggle_hint">தேர்ந்தெடுக்கப்பட்ட பரிவர்த்தனைகளில் பிரயோகிக்க கீழ்க்கண்ட விருப்பங்களை மாற்றவும்:</string>
@@ -1093,7 +1059,6 @@
     <string name="batch_edit_set_batch_amount">தொகுப்பு தொகையை அமைக்கவும்</string>
     <string name="edit_selected_transactions">தேர்ந்தெற்ற பரிவர்த்தனைகளைத் திருத்தவும்</string>
     <string name="edit_selected_count_format">திருத்தம் — %1$d</string>
-
     <string name="active_tab">மக்கள்</string>
     <string name="add_entry">பதிவு சேர்க்க</string>
     <string name="add_person">நபர் சேர்க்க</string>
@@ -1169,4 +1134,132 @@
     <string name="type_lent">கடன் கொடுத்தவை</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">கடன் கொடுத்த மற்றும் வாங்கிய பதிவுகளை நிர்வகிக்கவும்</string>
+    <string name="import_cashew_backup">Cashew இருந்து இறக்குமதி செய்</string>
+    <string name="import_cashew_backup_sub">Cashew செயலியில் இருந்து SQLite அல்லது CSV கோப்புகளை இறக்குமதி செய்</string>
+    <string name="typing">உங்கள் கோரிக்கையை நினைத்துக்கொள்கிறேன்...</string>
+    <string name="app_crashed">செயலி தரைதிரைத் தகராறு</string>
+    <string name="share_crash_report">சம்பவக் குறித்த அறிக்கையை பகிர்</string>
+    <string name="unexpected_crash">முகமறந்த தகராறு</string>
+    <string name="crash_report">தகராறு அறிக்கை</string>
+    <string name="extracted_from_pdf">PDF இருந்து சுருக்கப்பட்டது</string>
+    <string name="existing_in_database">தரவுத்தளத்தில் ஏற்கனவே உள்ளது</string>
+    <string name="search_chats">சர்வேட்ஸ்களை தேடு...</string>
+    <string name="regenerate">மீண்டும் உருவாக்கு</string>
+    <string name="tokens_usage">டோக்கன்கள் பயன்பாடு</string>
+    <string name="screen_content">திரை உள்ளடக்கம்</string>
+    <string name="copied_text">நகலெடுக்கப்பட்ட உரை</string>
+    <string name="english">ஆங்கிலம்</string>
+    <string name="afrikaans">ஆஃப்ரிகான்ஸ்</string>
+    <string name="arabic">அரபி</string>
+    <string name="azerbaijani">அசர்பைஜானி</string>
+    <string name="bulgarian">பொர்சற்றுக்கோம்</string>
+    <string name="bengali">বাংলা</string>
+    <string name="tibetan">டிபெ</string>
+    <string name="catalan">காடலான்</string>
+    <string name="czech">சேக்</string>
+    <string name="danish">டானிஷ்</string>
+    <string name="german">ஜெர்மன்</string>
+    <string name="dzongkha">சாங்</string>
+    <string name="greek">கிரேக்கம்</string>
+    <string name="spanish">ஸ்பானிஷ்</string>
+    <string name="persian">ஃபார்சி</string>
+    <string name="french">பிரஞ்சு</string>
+    <string name="gujarati">குஜராத்தி</string>
+    <string name="hawaiian">ஹவாயிக் மொழி</string>
+    <string name="hebrew">ஹீப்ரு</string>
+    <string name="hindi">ஹிந்தி</string>
+    <string name="croatian">குரோயேஷிய</string>
+    <string name="hungarian">ஹங்கேரிய</string>
+    <string name="indonesian">இந்தோனேசிய மொழி</string>
+    <string name="icelandic">ஐஸ்லாந்திக்</string>
+    <string name="italiano">இத்தாலிய</string>
+    <string name="japanese">ஜப்பான் மொழி</string>
+    <string name="kabyle">டாக்பயில்ட்</string>
+    <string name="kannada">கன்னட</string>
+    <string name="kashmiri">காஷ்மீர்</string>
+    <string name="latin">லாட்டின்</string>
+    <string name="malayalam">மலையாளம்</string>
+    <string name="marathi">மராத்தி</string>
+    <string name="nepali">நெபாளி</string>
+    <string name="dutch">டச்சு</string>
+    <string name="norwegian">நார்வே</string>
+    <string name="chichewa">சிச்செவா</string>
+    <string name="odia">ஒடியா</string>
+    <string name="iron">இரோன்</string>
+    <string name="punjabi">பஞ்சாபி</string>
+    <string name="polish">போலிஷ்</string>
+    <string name="portuguese">போர்ச்சுகீஸ்</string>
+    <string name="romanian">ரோமானிய</string>
+    <string name="russian">ரஷ்யன்</string>
+    <string name="slovak">ஸ்லோவாக்</string>
+    <string name="slovenian">ஸ்லோவேனிய</string>
+    <string name="swedish">ஸ்வீடிஷ்</string>
+    <string name="tamil">தமிழ்</string>
+    <string name="telugu">தெலுங்கு</string>
+    <string name="thai">தாய்</string>
+    <string name="turkmençe">துர்க்மென்</string>
+    <string name="turkish">துர்க்கிஷ்</string>
+    <string name="ukrainian">உக்ரைனிய</string>
+    <string name="urdu">உருது</string>
+    <string name="uzbek">உஸ்பெக்</string>
+    <string name="valencian">வாலென்சியன்</string>
+    <string name="vietnamese">வியட்நாமிஷ்</string>
+    <string name="chinese">சீனம்</string>
+    <string name="delete_multiple_records_confirm">நீங்கள் தேர்ந்தெடுத்த பதிவுகளை அழிக்க விரும்புகிறீர்களா?</string>
+    <string name="import_pdf">ஏற்றுமதி</string>
+    <string name="loan_type_borrowed">கடனாக எடுத்தது</string>
+    <string name="loan_type_lent">கடனாக கொடுத்தது</string>
+    <string name="mark_as_loan">கடன் என குறியிடு</string>
+    <string name="marked_as_loan_success">கடன் என குறியிடப்பட்டது</string>
+    <string name="persons_deleted_format">%1$d பேர் அழிக்கப்பட்டனர்</string>
+    <string name="records_deleted_format">%1$d பதிவுகள் அழிக்கப்பட்டன</string>
+    <string name="select">தேர்வு செய்</string>
+    <string name="select_color">வண்ணத்தை தேர்வு செய்</string>
+    <string name="select_multiple">பலவற்றை தேர்வு செய்</string>
+    <string name="share_logs">லாக்களை பகிர்</string>
+    <string name="stop">நிறுத்து</string>
+    <string name="unmark_as_loan">கடன் என குறி அகற்று</string>
+    <string name="unmark_loan_confirm_desc">இதனால் இந்த பரிவர்த்தனையில் இருந்து கடன் தொடர்பு அகற்றப்படும்.</string>
+    <string name="unmark_loan_confirm_title">கடன் என குறி அகற்றவா?</string>
+    <string name="view_on_drive">டைரிவில் காண்க</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d உரிமம்</item>
+        <item quantity="other">%1$d உரிமங்கள்</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">சாத்தியமான வங்கிகளிடமிருந்து %1$d செய்தி</item>
+        <item quantity="other">சாத்தியமான வங்கிகளிடமிருந்து %1$d செய்திகள்</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d கோப்பு</item>
+        <item quantity="other">%1$d கோப்புகள்</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d துணை வర్గம்</item>
+        <item quantity="other">%1$d துணை வర్గங்கள்</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">%1$d பரிவர்த்தனையை அழிக்கவா?</item>
+        <item quantity="other">%1$d பரிவர்த்தனைகளை அழிக்கவா?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%2$sல் %1$d நாள் மீதம்</item>
+        <item quantity="other">%2$sல் %1$d நாட்கள் மீதம்</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d பரிவர்த்தனை பகுப்பாய்வு செய்யப்பட்டது</item>
+        <item quantity="other">%1$d பரிவர்த்தனைகள் பகுப்பாய்வு செய்யப்பட்டன</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d சேமிக்கப்பட்டது</item>
+        <item quantity="other">%1$d சேமிக்கப்பட்டது</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">நபரை அழிக்கவா?</item>
+        <item quantity="other">%1$d நபர்களை அழிக்கவா?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">பதிவை அழிக்கவா?</item>
+        <item quantity="other">%1$d பதிவுகளை அழிக்கவா?</item>
+    </plurals>
 </resources>

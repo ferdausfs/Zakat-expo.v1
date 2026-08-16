@@ -262,7 +262,7 @@ Köp periodlar bilen uzak möhletleýin býugetler üçin peýdalydyr</string>
     <string name="total">Jemi</string>
     <string name="suffix_million">M</string>
     <string name="suffix_thousand">k</string>
-    <string name="percentage_format">(%1$d%%)</string>
+    <string name="percentage_format">(%1$d%)</string>
     <string name="total_uppercase">JEMI</string>
     <string name="transactions_format">%1$d TRANSAKSIÝA</string>
     <string name="average">ORTA</string>
@@ -740,7 +740,6 @@ Köp periodlar bilen uzak möhletleýin býugetler üçin peýdalydyr</string>
     <string name="language">Dil</string>
     <string name="language_subtitle">Programma dilini üýtget</string>
     <string name="select_language">Dili saýla</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">Ulanyjy</string>
     <string name="backup_sync_subtitle">Ätiýaçlyk köpiýa, bulut, dikeldiş we sinkronizasiýa sazlamalary</string>
     <string name="error">Ýalňyşlyk</string>
@@ -1041,39 +1040,6 @@ Bu, habar taryhyňyza baglylykda birnäçe sekunt wagty alyp biler.</string>
     <string name="provider_local_only">Diňe ýerli</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d lisenziýa</item>
-        <item quantity="other">%1$d lisenziýalar</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">Potensial banklardan %1$d habar</item>
-        <item quantity="other">Potensial banklardan %1$d habarlary</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d faýl</item>
-        <item quantity="other">%1$d faýllar</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d kategoriýa aşak</item>
-        <item quantity="other">%1$d kategoriýa aşaklar</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">%1$d tranzaksiýany öçürmeli?</item>
-        <item quantity="other">%1$d tranzaksiýany öçürmeli?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%2$s-de %1$d gün galdy</item>
-        <item quantity="other">%2$s-de %1$d gün galdy</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d amallama çözildi</item>
-        <item quantity="other">%1$d amallama çözüldi</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d halas edildi</item>
-        <item quantity="other">%1$d halas edildi</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Ýüjek Hasaplamalary Toparça Üýtgetmek</string>
     <string name="batch_edit_updating_format">Saýlanan %1$d element täzelilýär</string>
     <string name="batch_edit_toggle_hint">Aşakdaky opsiýalary çalşyryp saýlanan hasaplamalara ulanmak:</string>
@@ -1093,7 +1059,6 @@ Bu, habar taryhyňyza baglylykda birnäçe sekunt wagty alyp biler.</string>
     <string name="batch_edit_set_batch_amount">Toplum Mukdaryny Kesgitläň</string>
     <string name="edit_selected_transactions">Saýlanan Amallary Redaktirläň</string>
     <string name="edit_selected_count_format">Redaktirle — %1$d</string>
-
     <string name="active_tab">Adamlar</string>
     <string name="add_entry">Ýazgy goş</string>
     <string name="add_person">Adam goş</string>
@@ -1169,4 +1134,132 @@ Bu, habar taryhyňyza baglylykda birnäçe sekunt wagty alyp biler.</string>
     <string name="type_lent">Berlen karz</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">Karz berlen we alynan ýazgylary dolandyryň</string>
+    <string name="import_cashew_backup">Kajudan import edilýär</string>
+    <string name="import_cashew_backup_sub">Cashew programmasyndan SQLite ýa-da CSV faýllaryny import ediň</string>
+    <string name="typing">Siziň haýyşyňyz barada oýlanýaryn...</string>
+    <string name="app_crashed">App çökdi</string>
+    <string name="share_crash_report">Share crash report</string>
+    <string name="unexpected_crash">Garaşylmadyk heläkçilik</string>
+    <string name="crash_report">Heläkçilik barada hasabat</string>
+    <string name="extracted_from_pdf">PDF-den alyndy</string>
+    <string name="existing_in_database">Maglumat bazasynda bar</string>
+    <string name="search_chats">Agtarma chatlary...</string>
+    <string name="regenerate">täzeden döremek</string>
+    <string name="tokens_usage">Tokenlaryň ulanylyşy</string>
+    <string name="screen_content">Ekran mazmuny</string>
+    <string name="copied_text">Kopyalanan tekst</string>
+    <string name="english">Iňlis dili</string>
+    <string name="afrikaans">Afrikans dili</string>
+    <string name="arabic">العربية</string>
+    <string name="azerbaijani">Azərbaycan</string>
+    <string name="bulgarian">Български</string>
+    <string name="bengali">বাংলা</string>
+    <string name="tibetan">བོད་སྐད་</string>
+    <string name="catalan">Katala</string>
+    <string name="czech">Çeština</string>
+    <string name="danish">Dansk</string>
+    <string name="german">Deutsch</string>
+    <string name="dzongkha">daşary öý</string>
+    <string name="greek">Grek</string>
+    <string name="spanish">Ispan</string>
+    <string name="persian">Pars</string>
+    <string name="french">Fransuz</string>
+    <string name="gujarati">Gujarati</string>
+    <string name="hawaiian">Hawaý dili</string>
+    <string name="hebrew">Iberraý</string>
+    <string name="hindi">Hindi</string>
+    <string name="croatian">Hrowatiýa</string>
+    <string name="hungarian">Wenger</string>
+    <string name="indonesian">Indonezýa dili</string>
+    <string name="icelandic">Islandiýa dili</string>
+    <string name="italiano">Itaşlan</string>
+    <string name="japanese">Ýapon dili</string>
+    <string name="kabyle">Taqbaylit</string>
+    <string name="kannada">Kannada</string>
+    <string name="kashmiri">Kaşmiri</string>
+    <string name="latin">Latyn</string>
+    <string name="malayalam">Malayalam</string>
+    <string name="marathi">Marathi</string>
+    <string name="nepali">Nepali</string>
+    <string name="dutch">Niderland dili</string>
+    <string name="norwegian">norwegiýa</string>
+    <string name="chichewa">Çiçewa</string>
+    <string name="odia">Odia</string>
+    <string name="iron">Iron</string>
+    <string name="punjabi">Penjabi</string>
+    <string name="polish">Polşa</string>
+    <string name="portuguese">Portugaliýa</string>
+    <string name="romanian">Rumyn</string>
+    <string name="russian">rus</string>
+    <string name="slovak">Slowak dili</string>
+    <string name="slovenian">Slowen dili</string>
+    <string name="swedish">Şwedsçe</string>
+    <string name="tamil">Tamil</string>
+    <string name="telugu">Telugu</string>
+    <string name="thai">Taýland</string>
+    <string name="turkmençe">Türkmençe</string>
+    <string name="turkish">Türk dili</string>
+    <string name="ukrainian">Ukrain dili</string>
+    <string name="urdu">Urdu</string>
+    <string name="uzbek">Özbekçe</string>
+    <string name="valencian">Walenziýa</string>
+    <string name="vietnamese">Wýetnam dili</string>
+    <string name="chinese">Hytaý dili</string>
+    <string name="delete_multiple_records_confirm">Siz saýlanan ýazgylary hakykatdanam pozmak isleýärsiňizmi?</string>
+    <string name="import_pdf">Import</string>
+    <string name="loan_type_borrowed">Bortu</string>
+    <string name="loan_type_lent">Berilen</string>
+    <string name="mark_as_loan">Karz hökmünde bellä</string>
+    <string name="marked_as_loan_success">Karz hökmünde bellenildi</string>
+    <string name="persons_deleted_format">%1$d adam pozuldy</string>
+    <string name="records_deleted_format">%1$d ýazgy pozuldy</string>
+    <string name="select">Saýla</string>
+    <string name="select_color">Reňki saýla</string>
+    <string name="select_multiple">Köp saýla</string>
+    <string name="share_logs">Loglary paýlaş</string>
+    <string name="stop">Duruz</string>
+    <string name="unmark_as_loan">Karz hökmünde bellikden aýyr</string>
+    <string name="unmark_loan_confirm_desc">Bu amalyýatdan karz baglanyşygyny aýyrar.</string>
+    <string name="unmark_loan_confirm_title">Karz hökmünde bellikden aýyrmak isleýärsiňizmi?</string>
+    <string name="view_on_drive">Drive-da görmek</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d lisenziýa</item>
+        <item quantity="other">%1$d lisenziýalar</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">Potensial banklardan %1$d habar</item>
+        <item quantity="other">Potensial banklardan %1$d habarlary</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d faýl</item>
+        <item quantity="other">%1$d faýllar</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d kategoriýa aşak</item>
+        <item quantity="other">%1$d kategoriýa aşaklar</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">%1$d tranzaksiýany öçürmeli?</item>
+        <item quantity="other">%1$d tranzaksiýany öçürmeli?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%2$s-de %1$d gün galdy</item>
+        <item quantity="other">%2$s-de %1$d gün galdy</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d amallama çözildi</item>
+        <item quantity="other">%1$d amallama çözüldi</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d halas edildi</item>
+        <item quantity="other">%1$d halas edildi</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Adamy pozmak?</item>
+        <item quantity="other">%1$d adamy pozmak?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Ýazgyny pozmak?</item>
+        <item quantity="other">%1$d ýazgyny pozmak?</item>
+    </plurals>
 </resources>

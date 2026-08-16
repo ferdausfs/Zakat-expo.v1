@@ -740,7 +740,6 @@ Groen (+) = Spaar | Rooi (-) = Oorskietwyd</string>
     <string name="language">Taal</string>
     <string name="language_subtitle">Verander toepassings taal</string>
     <string name="select_language">Kies Taal</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">Gebruiker</string>
     <string name="backup_sync_subtitle">Rugsteun, Wolk, Herstel en Sinkronisasie-instellings</string>
     <string name="error">Fout</string>
@@ -1041,39 +1040,6 @@ Dit mag \'n paar sekondes neem, afhangende van jou boodskapgeskiedenis.</string>
     <string name="provider_local_only">Slegs Lokaal</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d lisensie</item>
-        <item quantity="other">%1$d lisensies</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">%1$d boodskap van potensiële banke</item>
-        <item quantity="other">%1$d boodskappe van potensiële banke</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d lêer</item>
-        <item quantity="other">%1$d lêers</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d subkategorie</item>
-        <item quantity="other">%1$d subkategorieë</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">Verwyder %1$d transaksie?</item>
-        <item quantity="other">Verwyder %1$d transaksies?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%1$d dag oor in %2$s</item>
-        <item quantity="other">%1$d dae oor in %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d transaksie verwerk</item>
-        <item quantity="other">%1$d transaksies verwerk</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d gespaar</item>
-        <item quantity="other">%1$d gespaar</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Bondelwysigingstransaksies</string>
     <string name="batch_edit_updating_format">Opdatering van %1$d geselekteerde items</string>
     <string name="batch_edit_toggle_hint">Skakel opsies hieronder om oor geselekteerde transaksies toe te pas:</string>
@@ -1093,7 +1059,6 @@ Dit mag \'n paar sekondes neem, afhangende van jou boodskapgeskiedenis.</string>
     <string name="batch_edit_set_batch_amount">Stel Bondelbedrag in</string>
     <string name="edit_selected_transactions">Wysig Geselekteerde Transaksies</string>
     <string name="edit_selected_count_format">Wysig — %1$d</string>
-
     <string name="active_tab">Mense</string>
     <string name="add_entry">Voeg Rekord by</string>
     <string name="add_person">Voeg Persoon by</string>
@@ -1169,4 +1134,132 @@ Dit mag \'n paar sekondes neem, afhangende van jou boodskapgeskiedenis.</string>
     <string name="type_lent">Uitgeleen</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">Bestuur uitgeleende en geleen rekords</string>
+    <string name="import_cashew_backup">Importeer vanaf Cashew</string>
+    <string name="import_cashew_backup_sub">Importeer SQLite of CSV-lêers vanaf Cashew-app</string>
+    <string name="typing">Dink oor jou versoek...</string>
+    <string name="app_crashed">App Gestruikel</string>
+    <string name="share_crash_report">Deel ongeluksverslag</string>
+    <string name="unexpected_crash">Onverwagte Gestruikel</string>
+    <string name="crash_report">Ongeluksverslag</string>
+    <string name="extracted_from_pdf">Uit PDF onttrek</string>
+    <string name="existing_in_database">Bestaande in Databasis</string>
+    <string name="search_chats">Soek geselsies...</string>
+    <string name="regenerate">Genereer opnuut</string>
+    <string name="tokens_usage">Tokensgebruik</string>
+    <string name="screen_content">Skerminhoud</string>
+    <string name="copied_text">Gekopieërde Tekst</string>
+    <string name="english">Engels</string>
+    <string name="afrikaans">Afrikaans</string>
+    <string name="arabic">العربية</string>
+    <string name="azerbaijani">Azərbaycan</string>
+    <string name="bulgarian">Български</string>
+    <string name="bengali">বাংলা</string>
+    <string name="tibetan">Tibettaans</string>
+    <string name="catalan">Katalaans</string>
+    <string name="czech">Tsjeggies</string>
+    <string name="danish">Deens</string>
+    <string name="german">Duits</string>
+    <string name="dzongkha">Dzongkha</string>
+    <string name="greek">Grieks</string>
+    <string name="spanish">Spaans</string>
+    <string name="persian">Persies</string>
+    <string name="french">Frans</string>
+    <string name="gujarati">Gujarati</string>
+    <string name="hawaiian">Hawaïaans</string>
+    <string name="hebrew">Hebreeus</string>
+    <string name="hindi">Hindi</string>
+    <string name="croatian">Kroaties</string>
+    <string name="hungarian">Hongaars</string>
+    <string name="indonesian">Indonesies</string>
+    <string name="icelandic">Yslands</string>
+    <string name="italiano">Italiaans</string>
+    <string name="japanese">Japanees</string>
+    <string name="kabyle">Taqbaylit</string>
+    <string name="kannada">Kannada</string>
+    <string name="kashmiri">Kasjmiri</string>
+    <string name="latin">Latyn</string>
+    <string name="malayalam">Malayalam</string>
+    <string name="marathi">Marathi</string>
+    <string name="nepali">Nepalees</string>
+    <string name="dutch">Nederlands</string>
+    <string name="norwegian">Noors</string>
+    <string name="chichewa">Chichewa</string>
+    <string name="odia">Odia</string>
+    <string name="iron">Iroon</string>
+    <string name="punjabi">Punjabi</string>
+    <string name="polish">Pools</string>
+    <string name="portuguese">Portugees</string>
+    <string name="romanian">Roemeens</string>
+    <string name="russian">Russies</string>
+    <string name="slovak">Slowaaks</string>
+    <string name="slovenian">Sloweens</string>
+    <string name="swedish">Sweeds</string>
+    <string name="tamil">Tamil</string>
+    <string name="telugu">Telugu</string>
+    <string name="thai">Thai</string>
+    <string name="turkmençe">Turkmeens</string>
+    <string name="turkish">Turks</string>
+    <string name="ukrainian">Oekraïens</string>
+    <string name="urdu">Urdu</string>
+    <string name="uzbek">Oezbeeks</string>
+    <string name="valencian">Valenciaans</string>
+    <string name="vietnamese">Viëtnamees</string>
+    <string name="chinese">Sjinees</string>
+    <string name="delete_multiple_records_confirm">Is jy seker jy wil die geselekteerde rekords uitvee?</string>
+    <string name="import_pdf">Voer in</string>
+    <string name="loan_type_borrowed">Geleen</string>
+    <string name="loan_type_lent">Uitleen</string>
+    <string name="mark_as_loan">Merk as lening</string>
+    <string name="marked_as_loan_success">Gemerk as lening</string>
+    <string name="persons_deleted_format">%1$d persone uitgevee</string>
+    <string name="records_deleted_format">%1$d rekords uitgevee</string>
+    <string name="select">Kies</string>
+    <string name="select_color">Kies kleur</string>
+    <string name="select_multiple">Kies verskeie</string>
+    <string name="share_logs">Deel rekords</string>
+    <string name="stop">Stop</string>
+    <string name="unmark_as_loan">Ontmerk as lening</string>
+    <string name="unmark_loan_confirm_desc">Dit sal die leningassosiasie van hierdie transaksie verwyder.</string>
+    <string name="unmark_loan_confirm_title">Ontmerk as lening?</string>
+    <string name="view_on_drive">Bekyk op Drive</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d lisensie</item>
+        <item quantity="other">%1$d lisensies</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">%1$d boodskap van potensiële banke</item>
+        <item quantity="other">%1$d boodskappe van potensiële banke</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d lêer</item>
+        <item quantity="other">%1$d lêers</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d subkategorie</item>
+        <item quantity="other">%1$d subkategorieë</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">Verwyder %1$d transaksie?</item>
+        <item quantity="other">Verwyder %1$d transaksies?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%1$d dag oor in %2$s</item>
+        <item quantity="other">%1$d dae oor in %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d transaksie verwerk</item>
+        <item quantity="other">%1$d transaksies verwerk</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d gespaar</item>
+        <item quantity="other">%1$d gespaar</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Verwyder persoon?</item>
+        <item quantity="other">Verwyder %1$d persone?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Verwyder rekord?</item>
+        <item quantity="other">Verwyder %1$d rekords?</item>
+    </plurals>
 </resources>

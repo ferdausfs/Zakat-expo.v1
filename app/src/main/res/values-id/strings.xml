@@ -739,7 +739,6 @@ Berguna untuk anggaran jangka panjang selama beberapa periode</string>
     <string name="language">Bahasa</string>
     <string name="language_subtitle">Ubah bahasa aplikasi</string>
     <string name="select_language">Pilih Bahasa</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">Pengguna</string>
     <string name="backup_sync_subtitle">Pengaturan Pencadangan, Cloud, Pemulihan, dan Sinkronisasi</string>
     <string name="error">Kesalahan</string>
@@ -1040,31 +1039,6 @@ Ini mungkin memerlukan beberapa detik tergantung pada riwayat pesan Anda.</strin
     <string name="provider_local_only">Hanya Lokal</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="other">%1$d lisensi</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="other">%1$d pesan dari bank potensial</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="other">%1$d file</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="other">%1$d subkategori</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="other">Hapus %1$d transaksi?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="other">%1$d hari tersisa di %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="other">%1$d transaksi diproses</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="other">%1$d tersimpan</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Edit Transaksi Massal</string>
     <string name="batch_edit_updating_format">Memperbarui %1$d item terpilih</string>
     <string name="batch_edit_toggle_hint">Toggle opsi di bawah untuk diterapkan pada transaksi yang dipilih:</string>
@@ -1084,7 +1058,6 @@ Ini mungkin memerlukan beberapa detik tergantung pada riwayat pesan Anda.</strin
     <string name="batch_edit_set_batch_amount">Tetapkan Jumlah Batch</string>
     <string name="edit_selected_transactions">Edit Transaksi yang Dipilih</string>
     <string name="edit_selected_count_format">Edit — %1$d</string>
-
     <string name="active_tab">Orang</string>
     <string name="add_entry">Tambah Catatan</string>
     <string name="add_person">Tambah Orang</string>
@@ -1160,4 +1133,124 @@ Ini mungkin memerlukan beberapa detik tergantung pada riwayat pesan Anda.</strin
     <string name="type_lent">Dipinjamkan</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">Kelola catatan uang yang dipinjamkan dan dipinjam</string>
+    <string name="import_cashew_backup">Impor dari Cashew</string>
+    <string name="import_cashew_backup_sub">Impor file SQLite atau CSV dari aplikasi Cashew</string>
+    <string name="typing">Memikirkan permintaan Anda...</string>
+    <string name="app_crashed">Aplikasi Crash</string>
+    <string name="share_crash_report">Bagikan laporan crash</string>
+    <string name="unexpected_crash">Crash Tak Terduga</string>
+    <string name="crash_report">Laporan Crash</string>
+    <string name="extracted_from_pdf">Diekstrak dari PDF</string>
+    <string name="existing_in_database">Sudah ada di Database</string>
+    <string name="search_chats">Cari obrolan...</string>
+    <string name="regenerate">Hasilkan ulang</string>
+    <string name="tokens_usage">Penggunaan Token</string>
+    <string name="screen_content">Konten Layar</string>
+    <string name="copied_text">Teks Disalin</string>
+    <string name="english">Inggris</string>
+    <string name="afrikaans">Afrikaans</string>
+    <string name="arabic">Arab</string>
+    <string name="azerbaijani">Azerbaijan</string>
+    <string name="bulgarian">Bulgaria</string>
+    <string name="bengali">Bengali</string>
+    <string name="tibetan">Tibet</string>
+    <string name="catalan">Katalan</string>
+    <string name="czech">Ceko</string>
+    <string name="danish">Denmark</string>
+    <string name="german">Jerman</string>
+    <string name="dzongkha">Dzongkha</string>
+    <string name="greek">Yunani</string>
+    <string name="spanish">Spanyol</string>
+    <string name="persian">Persia</string>
+    <string name="french">Prancis</string>
+    <string name="gujarati">Gujarati</string>
+    <string name="hawaiian">Hawaii</string>
+    <string name="hebrew">Ibrani</string>
+    <string name="hindi">Hindi</string>
+    <string name="croatian">Kroasia</string>
+    <string name="hungarian">Hungaria</string>
+    <string name="indonesian">Bahasa Indonesia</string>
+    <string name="icelandic">Islandia</string>
+    <string name="italiano">Italia</string>
+    <string name="japanese">Jepang</string>
+    <string name="kabyle">Taqbaylit</string>
+    <string name="kannada">Kannada</string>
+    <string name="kashmiri">Kashmir</string>
+    <string name="latin">Latin</string>
+    <string name="malayalam">Malayalam</string>
+    <string name="marathi">Marathi</string>
+    <string name="nepali">Nepal</string>
+    <string name="dutch">Belanda</string>
+    <string name="norwegian">Norwegia</string>
+    <string name="chichewa">Chichewa</string>
+    <string name="odia">Odia</string>
+    <string name="iron">Ossetia</string>
+    <string name="punjabi">Punjabi</string>
+    <string name="polish">Polandia</string>
+    <string name="portuguese">Portugis</string>
+    <string name="romanian">Rumania</string>
+    <string name="russian">Rusia</string>
+    <string name="slovak">Slowakia</string>
+    <string name="slovenian">Slovenia</string>
+    <string name="swedish">Swedia</string>
+    <string name="tamil">Tamil</string>
+    <string name="telugu">Telugu</string>
+    <string name="thai">Thai</string>
+    <string name="turkmençe">Turkmen</string>
+    <string name="turkish">Turki</string>
+    <string name="ukrainian">Ukraina</string>
+    <string name="urdu">Urdu</string>
+    <string name="uzbek">Uzbek</string>
+    <string name="valencian">Valencian</string>
+    <string name="vietnamese">Vietnam</string>
+    <string name="chinese">Tionghoa</string>
+    <string name="delete_multiple_records_confirm">Apakah Anda yakin ingin menghapus catatan yang dipilih?</string>
+    <string name="import_pdf">Impor</string>
+    <string name="loan_type_borrowed">Dipinjam</string>
+    <string name="loan_type_lent">Diberikan</string>
+    <string name="mark_as_loan">Tandai sebagai pinjaman</string>
+    <string name="marked_as_loan_success">Ditandai sebagai pinjaman</string>
+    <string name="persons_deleted_format">%1$d orang dihapus</string>
+    <string name="records_deleted_format">%1$d catatan dihapus</string>
+    <string name="select">Pilih</string>
+    <string name="select_color">Pilih warna</string>
+    <string name="select_multiple">Pilih banyak</string>
+    <string name="share_logs">Bagikan log</string>
+    <string name="stop">Berhenti</string>
+    <string name="unmark_as_loan">Hapus tanda sebagai pinjaman</string>
+    <string name="unmark_loan_confirm_desc">Ini akan menghapus asosiasi pinjaman dari transaksi ini.</string>
+    <string name="unmark_loan_confirm_title">Hapus tanda sebagai pinjaman?</string>
+    <string name="view_on_drive">Lihat di Drive</string>
+    <plurals name="licenses_count">
+        <item quantity="other">%1$d lisensi</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="other">%1$d pesan dari bank potensial</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="other">%1$d file</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="other">%1$d subkategori</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="other">Hapus %1$d transaksi?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="other">%1$d hari tersisa di %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="other">%1$d transaksi diproses</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="other">%1$d tersimpan</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Hapus orang?</item>
+        <item quantity="other">Hapus %1$d orang?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Hapus catatan?</item>
+        <item quantity="other">Hapus %1$d catatan?</item>
+    </plurals>
 </resources>

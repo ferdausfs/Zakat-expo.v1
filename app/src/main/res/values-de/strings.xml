@@ -16,7 +16,7 @@
     <string name="lock_timeout_1min">Sperren nach 1 Minute im Hintergrund</string>
     <string name="lock_timeout_minutes">Sperre nach %1$d Minuten im Hintergrund</string>
     <string name="data_management_section">Datenmanagement</string>
-    <string name="backup_tab">Backup</string>
+    <string name="backup_tab">Sicherung</string>
     <string name="local_backup_section">Lokales Backup</string>
     <string name="export_data">Daten exportieren</string>
     <string name="export_data_sub">Sichere deine Daten in eine Datei</string>
@@ -737,7 +737,6 @@
     <string name="language">Sprache</string>
     <string name="language_subtitle">Sprache der Anwendung ändern</string>
     <string name="select_language">Sprache auswählen</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">Benutzer</string>
     <string name="backup_sync_subtitle">Einstellungen für Backup, Cloud, Wiederherstellung und Synchronisierung</string>
     <string name="error">Fehler</string>
@@ -1038,39 +1037,6 @@ Dies kann je nach Verlauf Ihrer Nachrichten einige Sekunden dauern.</string>
     <string name="provider_local_only">Nur lokal</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d Lizenz</item>
-        <item quantity="other">%1$d Lizenzen</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">%1$d Nachricht von potenziellen Banken</item>
-        <item quantity="other">%1$d Nachrichten von potenziellen Banken</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d Datei</item>
-        <item quantity="other">%1$d Dateien</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d Unterkategorie</item>
-        <item quantity="other">%1$d Unterkategorien</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">%1$d Transaktion löschen?</item>
-        <item quantity="other">%1$d Transaktionen löschen?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%1$d Tag übrig in %2$s</item>
-        <item quantity="other">%1$d Tage übrig in %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d Transaktion analysiert</item>
-        <item quantity="other">%1$d Transaktionen analysiert</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d gespeichert</item>
-        <item quantity="other">%1$d gespeichert</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Batch-Bearbeitung von Transaktionen</string>
     <string name="batch_edit_updating_format">Aktualisiere %1$d ausgewählte Elemente</string>
     <string name="batch_edit_toggle_hint">Umschalten der unten stehenden Optionen, um auf ausgewählte Transaktionen anzuwenden:</string>
@@ -1090,7 +1056,6 @@ Dies kann je nach Verlauf Ihrer Nachrichten einige Sekunden dauern.</string>
     <string name="batch_edit_set_batch_amount">Batch-Betrag festlegen</string>
     <string name="edit_selected_transactions">Ausgewählte Transaktionen bearbeiten</string>
     <string name="edit_selected_count_format">Bearbeiten — %1$d</string>
-
     <string name="active_tab">Personen</string>
     <string name="add_entry">Eintrag hinzufügen</string>
     <string name="add_person">Person hinzufügen</string>
@@ -1166,4 +1131,132 @@ Dies kann je nach Verlauf Ihrer Nachrichten einige Sekunden dauern.</string>
     <string name="type_lent">Verliehen</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">Verwalten Sie Aufzeichnungen zu verliehenen und geliehenen Beträgen</string>
+    <string name="import_cashew_backup">Von Cashew importieren</string>
+    <string name="import_cashew_backup_sub">SQLite- oder CSV-Dateien aus der Cashew-App importieren</string>
+    <string name="typing">Ich denke über Ihre Anfrage nach...</string>
+    <string name="app_crashed">App abgestürzt</string>
+    <string name="share_crash_report">Absturzbericht teilen</string>
+    <string name="unexpected_crash">Unerwarteter Absturz</string>
+    <string name="crash_report">Absturzbericht</string>
+    <string name="extracted_from_pdf">Aus PDF extrahiert</string>
+    <string name="existing_in_database">In Datenbank vorhanden</string>
+    <string name="search_chats">Chats suchen...</string>
+    <string name="regenerate">Neu generieren</string>
+    <string name="tokens_usage">Token-Nutzung</string>
+    <string name="screen_content">Bildschirminhalt</string>
+    <string name="copied_text">Kopierter Text</string>
+    <string name="english">Englisch</string>
+    <string name="afrikaans">Afrikaans</string>
+    <string name="arabic">Arabisch</string>
+    <string name="azerbaijani">Aserbaidschanisch</string>
+    <string name="bulgarian">Bulgarisch</string>
+    <string name="bengali">Bengalisch</string>
+    <string name="tibetan">Tibetisch</string>
+    <string name="catalan">Katalanisch</string>
+    <string name="czech">Tschechisch</string>
+    <string name="danish">Dänisch</string>
+    <string name="german">Deutsch</string>
+    <string name="dzongkha">Dzongkha</string>
+    <string name="greek">Griechisch</string>
+    <string name="spanish">Spanisch</string>
+    <string name="persian">Persisch</string>
+    <string name="french">Französisch</string>
+    <string name="gujarati">Gujarati</string>
+    <string name="hawaiian">Hawaiisch</string>
+    <string name="hebrew">Hebräisch</string>
+    <string name="hindi">Hindi</string>
+    <string name="croatian">Kroatisch</string>
+    <string name="hungarian">Ungarisch</string>
+    <string name="indonesian">Indonesisch</string>
+    <string name="icelandic">Isländisch</string>
+    <string name="italiano">Italienisch</string>
+    <string name="japanese">Japanisch</string>
+    <string name="kabyle">Taqbaylit</string>
+    <string name="kannada">Kannada</string>
+    <string name="kashmiri">Kaschmiri</string>
+    <string name="latin">Latein</string>
+    <string name="malayalam">Malayalam</string>
+    <string name="marathi">Marathi</string>
+    <string name="nepali">Nepalesisch</string>
+    <string name="dutch">Niederländisch</string>
+    <string name="norwegian">Norwegisch</string>
+    <string name="chichewa">Chichewa</string>
+    <string name="odia">Odia</string>
+    <string name="iron">Iron</string>
+    <string name="punjabi">Punjabi</string>
+    <string name="polish">Polnisch</string>
+    <string name="portuguese">Portugiesisch</string>
+    <string name="romanian">Rumänisch</string>
+    <string name="russian">Russisch</string>
+    <string name="slovak">Slowakisch</string>
+    <string name="slovenian">Slowenisch</string>
+    <string name="swedish">Schwedisch</string>
+    <string name="tamil">Tamil</string>
+    <string name="telugu">Telugu</string>
+    <string name="thai">Thai</string>
+    <string name="turkmençe">Turkmenisch</string>
+    <string name="turkish">Türkisch</string>
+    <string name="ukrainian">Ukrainisch</string>
+    <string name="urdu">Urdu</string>
+    <string name="uzbek">Usbekisch</string>
+    <string name="valencian">Valencianisch</string>
+    <string name="vietnamese">Vietnamesisch</string>
+    <string name="chinese">Chinesisch</string>
+    <string name="delete_multiple_records_confirm">Sind Sie sicher, dass Sie die ausgewählten Datensätze löschen möchten?</string>
+    <string name="import_pdf">Importieren</string>
+    <string name="loan_type_borrowed">Geliehen</string>
+    <string name="loan_type_lent">Verliehen</string>
+    <string name="mark_as_loan">Als Darlehen markieren</string>
+    <string name="marked_as_loan_success">Als Darlehen markiert</string>
+    <string name="persons_deleted_format">%1$d Personen gelöscht</string>
+    <string name="records_deleted_format">%1$d Datensätze gelöscht</string>
+    <string name="select">Auswählen</string>
+    <string name="select_color">Farbe auswählen</string>
+    <string name="select_multiple">Mehrere auswählen</string>
+    <string name="share_logs">Protokolle teilen</string>
+    <string name="stop">Stoppen</string>
+    <string name="unmark_as_loan">Als Darlehen aufheben</string>
+    <string name="unmark_loan_confirm_desc">Dies entfernt die Darlehenszuordnung von dieser Transaktion.</string>
+    <string name="unmark_loan_confirm_title">Als Darlehen aufheben?</string>
+    <string name="view_on_drive">In Drive anzeigen</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d Lizenz</item>
+        <item quantity="other">%1$d Lizenzen</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">%1$d Nachricht von potenziellen Banken</item>
+        <item quantity="other">%1$d Nachrichten von potenziellen Banken</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d Datei</item>
+        <item quantity="other">%1$d Dateien</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d Unterkategorie</item>
+        <item quantity="other">%1$d Unterkategorien</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">%1$d Transaktion löschen?</item>
+        <item quantity="other">%1$d Transaktionen löschen?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%1$d Tag übrig in %2$s</item>
+        <item quantity="other">%1$d Tage übrig in %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d Transaktion analysiert</item>
+        <item quantity="other">%1$d Transaktionen analysiert</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d gespeichert</item>
+        <item quantity="other">%1$d gespeichert</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Person löschen?</item>
+        <item quantity="other">%1$d Personen löschen?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Datensatz löschen?</item>
+        <item quantity="other">%1$d Datensätze löschen?</item>
+    </plurals>
 </resources>

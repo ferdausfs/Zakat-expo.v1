@@ -740,7 +740,6 @@
     <string name="language">Γλώσσα</string>
     <string name="language_subtitle">Αλλαγή γλώσσας εφαρμογής</string>
     <string name="select_language">Επιλογή γλώσσας</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">Χρήστης</string>
     <string name="backup_sync_subtitle">Ρυθμίσεις αντιγράφων ασφαλείας, cloud, επαναφοράς και συγχρονισμού</string>
     <string name="error">Σφάλμα</string>
@@ -1041,39 +1040,6 @@
     <string name="provider_local_only">Μόνο τοπικά</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d άδεια</item>
-        <item quantity="other">%1$d άδειες</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">%1$d μήνυμα από πιθανούς τραπεζικούς φορείς</item>
-        <item quantity="other">%1$d μηνύματα από πιθανούς τραπεζικούς φορείς</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d αρχείο</item>
-        <item quantity="other">%1$d αρχεία</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d υποκατηγορία</item>
-        <item quantity="other">%1$d υποκατηγορίες</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">Διαγραφή %1$d συναλλαγής;</item>
-        <item quantity="other">Διαγραφή %1$d συναλλαγών?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%1$d ημέρα απομένει σε %2$s</item>
-        <item quantity="other">%1$d ημέρες απομένουν σε %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d συναλλαγή επεξεργάστηκε</item>
-        <item quantity="other">%1$d συναλλαγές επεξεργάστηκαν</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d αποθηκεύτηκε</item>
-        <item quantity="other">%1$d αποθηκεύτηκαν</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Μαζική Επεξεργασία Συναλλαγών</string>
     <string name="batch_edit_updating_format">Ενημέρωση %1$d επιλεγμένων στοιχείων</string>
     <string name="batch_edit_toggle_hint">Εναλλαγή επιλογών παρακάτω για εφαρμογή σε επιλεγμένες συναλλαγές:</string>
@@ -1093,7 +1059,6 @@
     <string name="batch_edit_set_batch_amount">Ορισμός Μαζικού Ποσού</string>
     <string name="edit_selected_transactions">Επεξεργασία Επιλεγμένων Συναλλαγών</string>
     <string name="edit_selected_count_format">Επεξεργασία — %1$d</string>
-
     <string name="active_tab">Άτομα</string>
     <string name="add_entry">Προσθήκη Εγγραφής</string>
     <string name="add_person">Προσθήκη Ατόμου</string>
@@ -1169,4 +1134,132 @@
     <string name="type_lent">Δάνεισα</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">Διαχείριση εγγραφών δανείων και δανεισμών</string>
+    <string name="import_cashew_backup">Εισαγωγή από Cashew</string>
+    <string name="import_cashew_backup_sub">Εισαγωγή αρχείων SQLite ή CSV από την εφαρμογή Cashew</string>
+    <string name="typing">Σκέφτεται το αίτημά σας...</string>
+    <string name="app_crashed">Η εφαρμογή κρασάρισε</string>
+    <string name="share_crash_report">Μοιραστείτε την αναφορά κατάρρευσης</string>
+    <string name="unexpected_crash">Απρόσμενη κατάρρευση</string>
+    <string name="crash_report">Αναφορά κατάρρευσης</string>
+    <string name="extracted_from_pdf">Εξήχθη από PDF</string>
+    <string name="existing_in_database">Υπάρχει στη βάση δεδομένων</string>
+    <string name="search_chats">Αναζήτηση συνομιλιών...</string>
+    <string name="regenerate">Αναδημιουργία</string>
+    <string name="tokens_usage">Χρήση Κερμάτων</string>
+    <string name="screen_content">Περιεχόμενο οθόνης</string>
+    <string name="copied_text">Αντιγραμμένο κείμενο</string>
+    <string name="english">Αγγλικά</string>
+    <string name="afrikaans">Αφρικάανς</string>
+    <string name="arabic">Αραβικά</string>
+    <string name="azerbaijani">Αζερμπαϊτζάν</string>
+    <string name="bulgarian">Βουλγαρικά</string>
+    <string name="bengali">Μπενγκάλι</string>
+    <string name="tibetan">Θιβετιανά</string>
+    <string name="catalan">Καταλανικά</string>
+    <string name="czech">Τσεχικά</string>
+    <string name="danish">Δανέζικα</string>
+    <string name="german">Γερμανικά</string>
+    <string name="dzongkha">Τζόνγκχα Κά (རྫོང་ཁ་)</string>
+    <string name="greek">Ελληνικά</string>
+    <string name="spanish">Ισπανικά</string>
+    <string name="persian">Περσικά</string>
+    <string name="french">Γαλλικά</string>
+    <string name="gujarati">Γκουτζαράτι</string>
+    <string name="hawaiian">Χαβανέζικα</string>
+    <string name="hebrew">Εβραϊκά</string>
+    <string name="hindi">Χίντι</string>
+    <string name="croatian">Κροατικά</string>
+    <string name="hungarian">Ουγγρικά</string>
+    <string name="indonesian">Ινδονησιακά</string>
+    <string name="icelandic">Ισλανδικά</string>
+    <string name="italiano">Ιταλικά</string>
+    <string name="japanese">Ιαπωνικά</string>
+    <string name="kabyle">Τακμπαγλίτ</string>
+    <string name="kannada">Κανναδά</string>
+    <string name="kashmiri">Κασμίρι</string>
+    <string name="latin">Λατινικά</string>
+    <string name="malayalam">Μαλαϊαλικά</string>
+    <string name="marathi">Μαράθι</string>
+    <string name="nepali">Νεπάλι</string>
+    <string name="dutch">Ολλανδικά</string>
+    <string name="norwegian">Νορβηγικά</string>
+    <string name="chichewa">Τσιτσέβα</string>
+    <string name="odia">Οντία</string>
+    <string name="iron">Ιρόν</string>
+    <string name="punjabi">Παντζάμπι</string>
+    <string name="polish">Πολωνικά</string>
+    <string name="portuguese">Πορτογαλικά</string>
+    <string name="romanian">Ρουμανικά</string>
+    <string name="russian">Ρωσικά</string>
+    <string name="slovak">Σλοβακικά</string>
+    <string name="slovenian">Σλοβενικά</string>
+    <string name="swedish">Σουηδικά</string>
+    <string name="tamil">Ταμίλ</string>
+    <string name="telugu">Τελούγκου</string>
+    <string name="thai">Ταϊλανδικά</string>
+    <string name="turkmençe">Τουρκμενικά</string>
+    <string name="turkish">Τουρκικά</string>
+    <string name="ukrainian">Ουκρανικά</string>
+    <string name="urdu">Ουρντού</string>
+    <string name="uzbek">Ουζμπεκικά</string>
+    <string name="valencian">Βαλενθιανά</string>
+    <string name="vietnamese">Βιετναμέζικα</string>
+    <string name="chinese">Κινέζικα</string>
+    <string name="delete_multiple_records_confirm">Είστε σίγουρος ότι θέλετε να διαγράψετε τις επιλεγμένες εγγραφές;</string>
+    <string name="import_pdf">Εισαγωγή</string>
+    <string name="loan_type_borrowed">Δανεισμένο</string>
+    <string name="loan_type_lent">Δανείστηκε</string>
+    <string name="mark_as_loan">Σήμανση ως δάνειο</string>
+    <string name="marked_as_loan_success">Σημανμένο ως δάνειο</string>
+    <string name="persons_deleted_format">Διαγράφηκαν %1$d άτομα</string>
+    <string name="records_deleted_format">Διαγράφηκαν %1$d εγγραφές</string>
+    <string name="select">Επιλογή</string>
+    <string name="select_color">Επιλέξτε χρώμα</string>
+    <string name="select_multiple">Επιλέξτε πολλαπλά</string>
+    <string name="share_logs">Κοινοποίηση καταγραφών</string>
+    <string name="stop">Διακοπή</string>
+    <string name="unmark_as_loan">Αποσήμανση ως δάνειο</string>
+    <string name="unmark_loan_confirm_desc">Αυτό θα αφαιρέσει τη συσχέτιση δανείου από αυτήν τη συναλλαγή.</string>
+    <string name="unmark_loan_confirm_title">Αποσήμανση ως δάνειο;</string>
+    <string name="view_on_drive">Προβολή στο Drive</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d άδεια</item>
+        <item quantity="other">%1$d άδειες</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">%1$d μήνυμα από πιθανούς τραπεζικούς φορείς</item>
+        <item quantity="other">%1$d μηνύματα από πιθανούς τραπεζικούς φορείς</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d αρχείο</item>
+        <item quantity="other">%1$d αρχεία</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d υποκατηγορία</item>
+        <item quantity="other">%1$d υποκατηγορίες</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">Διαγραφή %1$d συναλλαγής;</item>
+        <item quantity="other">Διαγραφή %1$d συναλλαγών?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%1$d ημέρα απομένει σε %2$s</item>
+        <item quantity="other">%1$d ημέρες απομένουν σε %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d συναλλαγή επεξεργάστηκε</item>
+        <item quantity="other">%1$d συναλλαγές επεξεργάστηκαν</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d αποθηκεύτηκε</item>
+        <item quantity="other">%1$d αποθηκεύτηκαν</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Διαγραφή ατόμου;</item>
+        <item quantity="other">Διαγραφή %1$d ατόμων;</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Διαγραφή εγγραφής;</item>
+        <item quantity="other">Διαγραφή %1$d εγγραφών;</item>
+    </plurals>
 </resources>

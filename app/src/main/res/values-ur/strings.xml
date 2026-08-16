@@ -740,7 +740,6 @@
     <string name="language">زبان</string>
     <string name="language_subtitle">ایپلیکیشن کی زبان تبدیل کریں</string>
     <string name="select_language">زبان منتخب کریں</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">صارف</string>
     <string name="backup_sync_subtitle">بیک اپ، کلاؤڈ، بحالی اور سنک ترتیبات</string>
     <string name="error">غلطی</string>
@@ -1041,39 +1040,6 @@
     <string name="provider_local_only">صرف مقامی</string>
     <string name="provider_webdav">نییکسٹ کلاؤڈ / ویب ڈی اے وی</string>
     <string name="provider_google_drive">گوگل ڈرائیو</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d لائسنس</item>
-        <item quantity="other">%1$d لائسنسز</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">%1$d ممکنہ بینک سے پیغام</item>
-        <item quantity="other">%1$d ممکنہ بینک سے پیغامات</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d فائل</item>
-        <item quantity="other">%1$d فائلز</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d ذیلی زمرہ</item>
-        <item quantity="other">%1$d ذیلی زمرے</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">کیا %1$d لین دین کو حذف کریں؟</item>
-        <item quantity="other">کیا %1$d لین دین کو حذف کریں؟</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%1$d دن باقی ہیں %2$s</item>
-        <item quantity="other">%1$d دن باقی ہیں %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d لین دین کو پارس کیا گیا</item>
-        <item quantity="other">%1$d لین دین کو پارس کیا گیا</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d محفوظ کیا گیا</item>
-        <item quantity="other">%1$d محفوظ کیا گیا</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">بیچ میں لین دین کی تدوین</string>
     <string name="batch_edit_updating_format">منتخب کردہ %1$d آئٹمز کو اپ ڈیٹ کیا جا رہا ہے</string>
     <string name="batch_edit_toggle_hint">نیچے کے اختیارات کو منتخب شدہ لین دین پر لگانے کے لیے ٹوگل کریں:</string>
@@ -1093,7 +1059,6 @@
     <string name="batch_edit_set_batch_amount">بیچ رقم مقرر کریں</string>
     <string name="edit_selected_transactions">منتخب شدہ لین دین کی تدوین کریں</string>
     <string name="edit_selected_count_format">تدوین — %1$d</string>
-
     <string name="active_tab">لوگ</string>
     <string name="add_entry">ریکارڈ شامل کریں</string>
     <string name="add_person">شخص شامل کریں</string>
@@ -1169,4 +1134,132 @@
     <string name="type_lent">دیا گیا</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">ادھار دینے اور لینے کے ریکارڈ کا انتظام کریں</string>
+    <string name="import_cashew_backup">کیشو سے درآمد کریں</string>
+    <string name="import_cashew_backup_sub">کیشو ایپ سے SQLite یا CSV فائلیں درآمد کریں</string>
+    <string name="typing">آپ کی درخواست کے بارے میں سوچ رہے ہیں...</string>
+    <string name="app_crashed">ایپ کریش ہو گئی</string>
+    <string name="share_crash_report">کراس رپورٹ شیئر کریں</string>
+    <string name="unexpected_crash">غیر متوقع کریش</string>
+    <string name="crash_report">کراس رپورٹ</string>
+    <string name="extracted_from_pdf">PDF سے نکالا گیا</string>
+    <string name="existing_in_database">ڈیٹا بیس میں موجود</string>
+    <string name="search_chats">چیٹس تلاش کریں...</string>
+    <string name="regenerate">دوبارہ تخلیق کریں</string>
+    <string name="tokens_usage">ٹوکنز کا استعمال</string>
+    <string name="screen_content">اسکرین کا مواد</string>
+    <string name="copied_text">نقل کیا گیا متن</string>
+    <string name="english">انگریزی</string>
+    <string name="afrikaans">افریکانز</string>
+    <string name="arabic">عربی</string>
+    <string name="azerbaijani">آزربائیجانی</string>
+    <string name="bulgarian">بلغاریائی</string>
+    <string name="bengali">بنگالی</string>
+    <string name="tibetan">تبت کی زبان</string>
+    <string name="catalan">کاتالان</string>
+    <string name="czech">چیک</string>
+    <string name="danish">ڈینش</string>
+    <string name="german">جرمن</string>
+    <string name="dzongkha">زونگ کھا</string>
+    <string name="greek">یونانی</string>
+    <string name="spanish">ہسپانوی</string>
+    <string name="persian">فارسی</string>
+    <string name="french">فرانسیسی</string>
+    <string name="gujarati">گجراتی</string>
+    <string name="hawaiian">ہوائی زبان</string>
+    <string name="hebrew">عبرانی</string>
+    <string name="hindi">ہندی</string>
+    <string name="croatian">کروشیا کی زبان</string>
+    <string name="hungarian">ہنگری کی زبان</string>
+    <string name="indonesian">انڈونیشیا کی زبان</string>
+    <string name="icelandic">آئس لینڈ کی زبان</string>
+    <string name="italiano">اطالوی</string>
+    <string name="japanese">جاپانی</string>
+    <string name="kabyle">تقبائلِتی</string>
+    <string name="kannada">کنڑ</string>
+    <string name="kashmiri">کشمیری</string>
+    <string name="latin">لاطینی</string>
+    <string name="malayalam">ملیالم</string>
+    <string name="marathi">مراٹھی</string>
+    <string name="nepali">نیپالی</string>
+    <string name="dutch">ڈچ</string>
+    <string name="norwegian">نارویجین</string>
+    <string name="chichewa">چچیوا</string>
+    <string name="odia">اڑیا</string>
+    <string name="iron">ایرون</string>
+    <string name="punjabi">پنجابی</string>
+    <string name="polish">پولش</string>
+    <string name="portuguese">پرتگالی</string>
+    <string name="romanian">رومانوی</string>
+    <string name="russian">روسی</string>
+    <string name="slovak">سلوواکی</string>
+    <string name="slovenian">سلووینیائی</string>
+    <string name="swedish">سویڈش</string>
+    <string name="tamil">تمل</string>
+    <string name="telugu">تیلگو</string>
+    <string name="thai">تھائی</string>
+    <string name="turkmençe">ترکمن</string>
+    <string name="turkish">ترکی</string>
+    <string name="ukrainian">یوکرینی</string>
+    <string name="urdu">اردو</string>
+    <string name="uzbek">ازبک</string>
+    <string name="valencian">ویلنسیائی</string>
+    <string name="vietnamese">ویتنامی</string>
+    <string name="chinese">چینی</string>
+    <string name="delete_multiple_records_confirm">کیا آپ واقعی منتخب شدہ ریکارڈز کو حذف کرنا چاہتے ہیں؟</string>
+    <string name="import_pdf">درآمد کریں</string>
+    <string name="loan_type_borrowed">ادھار لیا ہوا</string>
+    <string name="loan_type_lent">ادھار دیا ہوا</string>
+    <string name="mark_as_loan">قرض کے طور پر نشان زد کریں</string>
+    <string name="marked_as_loan_success">قرض کے طور پر نشان زد شدہ</string>
+    <string name="persons_deleted_format">%1$d افراد حذف کیے گئے</string>
+    <string name="records_deleted_format">%1$d ریکارڈز حذف کیے گئے</string>
+    <string name="select">منتخب کریں</string>
+    <string name="select_color">رنگ منتخب کریں</string>
+    <string name="select_multiple">متعدد منتخب کریں</string>
+    <string name="share_logs">لاگ شیئر کریں</string>
+    <string name="stop">رکیں</string>
+    <string name="unmark_as_loan">قرض کے طور پر نشان زدہ ختم کریں</string>
+    <string name="unmark_loan_confirm_desc">یہ اس لین دین سے قرض کا تعلق ختم کر دے گا۔</string>
+    <string name="unmark_loan_confirm_title">قرض کے طور پر نشان زدہ ختم کریں؟</string>
+    <string name="view_on_drive">ڈرائیو پر دیکھیں</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d لائسنس</item>
+        <item quantity="other">%1$d لائسنسز</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">%1$d ممکنہ بینک سے پیغام</item>
+        <item quantity="other">%1$d ممکنہ بینک سے پیغامات</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d فائل</item>
+        <item quantity="other">%1$d فائلز</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d ذیلی زمرہ</item>
+        <item quantity="other">%1$d ذیلی زمرے</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">کیا %1$d لین دین کو حذف کریں؟</item>
+        <item quantity="other">کیا %1$d لین دین کو حذف کریں؟</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%1$d دن باقی ہیں %2$s</item>
+        <item quantity="other">%1$d دن باقی ہیں %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d لین دین کو پارس کیا گیا</item>
+        <item quantity="other">%1$d لین دین کو پارس کیا گیا</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d محفوظ کیا گیا</item>
+        <item quantity="other">%1$d محفوظ کیا گیا</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">افراد کو حذف کریں؟</item>
+        <item quantity="other">%1$d افراد کو حذف کریں؟</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">ریکارڈ حذف کریں؟</item>
+        <item quantity="other">%1$d ریکارڈز کو حذف کریں؟</item>
+    </plurals>
 </resources>

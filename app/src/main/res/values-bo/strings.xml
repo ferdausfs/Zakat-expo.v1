@@ -740,7 +740,6 @@
     <string name="language">སྐད་ཡིག</string>
     <string name="language_subtitle">ཉེར་སྤྱོད་སྐད་ཡིག་བསྒྱུར་བ།</string>
     <string name="select_language">སྐད་རིགས་འདེམས་པ།</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">སྤྱོད་མཁན།</string>
     <string name="backup_sync_subtitle">རྒྱབ་ཐད་དང་, སྤྲིན་ཚོམ།, སླར་གསོ། མཉམ་འགྲོས་སྒྲིག་སྟངས།</string>
     <string name="error">ནོར་འཁྲུལ།</string>
@@ -1041,31 +1040,6 @@
     <string name="provider_local_only">ས་གནས་ཁོ་ནའི་སྐོར།</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="other">%1$d ཆོག་འཐུས་</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="other">%1$d མི་མངོན་པའི་དངུལ་ཁང་གི་འཕྲིན་ཡིག</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="other">%1$d ཡིག་ཆ།</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="other">%1$d རིགས་དབྱེ་ཁག་འོག་མ།</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="other">%1$d ཉོ་འཚོང་བསུབ་པ་ཡིན་ནམ།</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="other">%1$d ཉིན་གྲངས་ལྷག་མ་%2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="other">%1$d ཉོ་ཚོང་དབྱེ་འབྱེད་བྱས་པ།</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="other">%1$d ཉར་ཚགས་བྱས་ཡོད་</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">ཁག་བགོས་རྩོམ་སྒྲིག་ཉོ་འཚོང་།</string>
     <string name="batch_edit_updating_format">%1$d བདམས་ཟིན་པའི་རྣམ་གྲངས་གསར་སྒྱུར་བྱེད་བཞིན་འདུག</string>
     <string name="batch_edit_toggle_hint">གཤམ་གྱི་གདམ་གསེས་བརྗེ་སྤོར་བྱས་ནས་བདམས་པའི་ཉོ་ཚོང་ལ་སྤྱད་འཐུས།</string>
@@ -1085,7 +1059,6 @@
     <string name="batch_edit_set_batch_amount">ཁག་བགོས་ཀྱི་གྲངས་ཀ་གཏན་འབེབས།</string>
     <string name="edit_selected_transactions">བདམས་ཟིན་པའི་ཉོ་འཚོང་རྩོམ་སྒྲིག་པ།</string>
     <string name="edit_selected_count_format">རྩོམ་སྒྲིག་ — %1$d</string>
-
     <string name="active_tab">མི་རྣམས།</string>
     <string name="add_entry">ཟིན་ཐོ་ཁ་སྣོན་བྱས་པ།</string>
     <string name="add_person">མི་ཁ་སྣོན་བྱས་པ།</string>
@@ -1161,4 +1134,124 @@
     <string name="type_lent">སྤྲོད་བྱས་པ།</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">གཡར་བདག་དང་གཡར་ལེན་གྱི་ཐོ་བཀོལ།</string>
+    <string name="import_cashew_backup">ཀ་ཤ་ནས་ནང་འདྲེན་བྱས་པ།</string>
+    <string name="import_cashew_backup_sub">Cashew app ནས་SQLite or CSV ཡིག་ཆ་ནང་འདྲེན་བྱས་པ།</string>
+    <string name="typing">ཁྱོད་ཀྱི་རེ་བ་ལ་བསམ་བློ་བཏང་ན།</string>
+    <string name="app_crashed">App བརྡབ་སྐྱོན་བྱུང་བ།</string>
+    <string name="share_crash_report">མཉམ་སྤྱོད་ཀྱི་དོན་རྐྱེན་སྙན་ཞུ།</string>
+    <string name="unexpected_crash">བསམ་ཡུལ་ལས་འདས་པའི་དོན་རྐྱེན་བྱུང་བ།</string>
+    <string name="crash_report">དོན་རྐྱེན་གྱི་སྙན་ཞུ།</string>
+    <string name="extracted_from_pdf">PDFལས་བཤུས་པ།</string>
+    <string name="existing_in_database">གཞི་གྲངས་མཛོད་ནང་གནས་པ།</string>
+    <string name="search_chats">འཚོལ་ཞིབ ཁ་བརྡ...</string>
+    <string name="regenerate">བསྐྱར་སྐྲུན་</string>
+    <string name="tokens_usage">མཚོན་རྟགས་བེད་སྤྱོད་</string>
+    <string name="screen_content">བརྙན་རིས་ཀྱི་ནང་དོན་</string>
+    <string name="copied_text">འདྲ་བཤུས་ཡི་གེ</string>
+    <string name="english">དབྱིན་ཇི།</string>
+    <string name="afrikaans">ཨ་ཧྥེ་རི་ཁའི་སྐད</string>
+    <string name="arabic">ཨ་རབ་ཀྱི་སྐད</string>
+    <string name="azerbaijani">ཨ་ཛར་བྷེན་</string>
+    <string name="bulgarian">བྷལ་ག་རི་ཡཱའི་སྐད་</string>
+    <string name="bengali">བེང་ག་ལའི་སྐད་</string>
+    <string name="tibetan">བོད་སྐད</string>
+    <string name="catalan">ཁ་ཏ་ལན་གྱི་སྐད།</string>
+    <string name="czech">ཅེ་ཁེ་</string>
+    <string name="danish">ཌེན་མག་གི་སྐད་</string>
+    <string name="german">འཇར་མན་གྱི་</string>
+    <string name="dzongkha">རྫོང་ཁ།</string>
+    <string name="greek">ཀེ་རི་སེའི་</string>
+    <string name="spanish">སི་ཕེན་སྐད་</string>
+    <string name="persian">པར་སིའི་སྐད</string>
+    <string name="french">ཧྥ་རན་སིའི་སྐད་</string>
+    <string name="gujarati">གུ་ཇར་ཏི།</string>
+    <string name="hawaiian">ཞ་བེ་ཡི་སྐད་ཆ།</string>
+    <string name="hebrew">ཨིབ་རི་ཡི་སྐད་</string>
+    <string name="hindi">ཧིན་རྡུའི་སྐད་</string>
+    <string name="croatian">ཁེ་རོ་ཤི་ཡའི་སྐད་</string>
+    <string name="hungarian">ཧང་ག་རིའི་སྐད་</string>
+    <string name="indonesian">ཧིན་རྡུ་ཉི་ཞི་ཡའི་སྐད་</string>
+    <string name="icelandic">འཁྱགས་གླིང་།</string>
+    <string name="italiano">དབྱི་ཐ་ལིའི་</string>
+    <string name="japanese">ཉི་ཧོང་།</string>
+    <string name="kabyle">Kabyle</string>
+    <string name="kannada">Kannada</string>
+    <string name="kashmiri">ཁ་ཤི་མི་རི་</string>
+    <string name="latin">ལ་ཏིན་</string>
+    <string name="malayalam">མ་ལ་ཡ་ལམ་</string>
+    <string name="marathi">མ་ར་ཐི་</string>
+    <string name="nepali">བལ་ཡུལ་གྱི་སྐད་</string>
+    <string name="dutch">ཧོ་ལན་གྱི་</string>
+    <string name="norwegian">ནོར་ཝེའི་སྐད་</string>
+    <string name="chichewa">Chichewa</string>
+    <string name="odia">ཨོ་ཌི་ཡ་</string>
+    <string name="iron">ལྕགས་</string>
+    <string name="punjabi">པཱན་ཇབ་</string>
+    <string name="polish">པོ་ལན་</string>
+    <string name="portuguese">ཕོར་ཐི་གལ་གྱི་སྐད</string>
+    <string name="romanian">རོ་མ་ནི་ཡའི་སྐད་</string>
+    <string name="russian">ཨུ་རུ་སུའི་</string>
+    <string name="slovak">སི་ལོ་ཧྥུའི་སྐད་</string>
+    <string name="slovenian">སི་ལོ་ཝུན་ཡ།</string>
+    <string name="swedish">སུའེ་ཏེན་</string>
+    <string name="tamil">ཏ་མིལ་སྐད།</string>
+    <string name="telugu">ཐེ་ལུ་གུ།</string>
+    <string name="thai">ཐའེ་ལན་</string>
+    <string name="turkmençe">ཐུའུ་ཁུའུ་མན་</string>
+    <string name="turkish">ཐུར་ཁེ་</string>
+    <string name="ukrainian">ཝུའུ་ཁི་ལན་</string>
+    <string name="urdu">ཨུ་རུ་སུའི་སྐད</string>
+    <string name="uzbek">ཝུའུ་ཙི་པེ་ཁི་སྐད་</string>
+    <string name="valencian">Valencian</string>
+    <string name="vietnamese">ཡོ་ནན་གྱི་སྐད་ཡིག</string>
+    <string name="chinese">རྒྱ་སྐད།</string>
+    <string name="delete_multiple_records_confirm">ཁྱོད་ཀྱིས་བདམས་པའི་ཟིན་ཐོ་བསུབ་འདོད་དམ།</string>
+    <string name="import_pdf">ནང་འདྲེན།</string>
+    <string name="loan_type_borrowed">གཡར་བ།</string>
+    <string name="loan_type_lent">སྨྱུང་གནས་</string>
+    <string name="mark_as_loan">དངུལ་བུན་དུ་རྟགས་བརྒྱབ་པ།</string>
+    <string name="marked_as_loan_success">དངུལ་བུན་དུ་རྟགས་བརྒྱབ་པ།</string>
+    <string name="persons_deleted_format">%1$d མི་བསུབ་པ།</string>
+    <string name="records_deleted_format">%1$d ཟིན་ཐོ་བསུབ་ཡོད།</string>
+    <string name="select">གདམ་གསེས་བྱས་པ།</string>
+    <string name="select_color">ཁ་དོག་འདེམས་པ།</string>
+    <string name="select_multiple">སྣ་མང་འདེམས་སྒྲུག་བྱས་པ།</string>
+    <string name="share_logs">མཉམ་སྤྱོད་ཀྱི་ཟིན་ཐོ་</string>
+    <string name="stop">མཚམས་བཞག་</string>
+    <string name="unmark_as_loan">དངུལ་བུན་གྱི་རྟགས་མ་བསུབ་པ།</string>
+    <string name="unmark_loan_confirm_desc">འདིས་དངུལ་བུན་མཐུན་ཚོགས་དེ་ཉོ་ཚོང་འདིའི་ཁྲོད་ནས་མེད་པར་བཟོ་སྲིད།</string>
+    <string name="unmark_loan_confirm_title">དངུལ་བུན་གྱི་རྟགས་མ་བསྐྱུར་བ་ཡིན་ནམ།</string>
+    <string name="view_on_drive">Drive སྟེང་གི་ལྟ་བ།</string>
+    <plurals name="licenses_count">
+        <item quantity="other">%1$d ཆོག་འཐུས་</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="other">%1$d མི་མངོན་པའི་དངུལ་ཁང་གི་འཕྲིན་ཡིག</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="other">%1$d ཡིག་ཆ།</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="other">%1$d རིགས་དབྱེ་ཁག་འོག་མ།</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="other">%1$d ཉོ་འཚོང་བསུབ་པ་ཡིན་ནམ།</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="other">%1$d ཉིན་གྲངས་ལྷག་མ་%2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="other">%1$d ཉོ་ཚོང་དབྱེ་འབྱེད་བྱས་པ།</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="other">%1$d ཉར་ཚགས་བྱས་ཡོད་</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">མི་བསུབ་པ་ཡིན་ནམ།</item>
+        <item quantity="other">%1$d མི་བསུབ་པ་ཡིན་ནམ།</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">ཟིན་ཐོ་བསུབ་དགོས་སམ།</item>
+        <item quantity="other">%1$d ཟིན་ཐོ་བསུབ་དགོས་སམ།</item>
+    </plurals>
 </resources>

@@ -740,7 +740,6 @@
     <string name="language">语言</string>
     <string name="language_subtitle">更改应用语言</string>
     <string name="select_language">选择语言</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">用户</string>
     <string name="backup_sync_subtitle">备份、云端、恢复和同步设置</string>
     <string name="error">错误</string>
@@ -1041,31 +1040,6 @@
     <string name="provider_local_only">仅限本地</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="other">%1$d 个许可证</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="other">来自潜在银行的 %1$d 条消息</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="other">%1$d 个文件</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="other">%1$d 个子类别</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="other">删除 %1$d 笔交易？</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="other">%2$s 中剩余 %1$d 天</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="other">已解析 %1$d 笔交易</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="other">已保存 %1$d</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">批量编辑交易</string>
     <string name="batch_edit_updating_format">正在更新 %1$d 个已选择的项目</string>
     <string name="batch_edit_toggle_hint">切换下面的选项以应用到所选交易:</string>
@@ -1085,7 +1059,6 @@
     <string name="batch_edit_set_batch_amount">设置批量金额</string>
     <string name="edit_selected_transactions">编辑所选交易</string>
     <string name="edit_selected_count_format">编辑 — %1$d</string>
-
     <string name="active_tab">人物</string>
     <string name="add_entry">添加记录</string>
     <string name="add_person">添加人物</string>
@@ -1161,4 +1134,124 @@
     <string name="type_lent">借出</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">管理借出和借入记录</string>
+    <string name="import_cashew_backup">从 Cashew 导入</string>
+    <string name="import_cashew_backup_sub">从 Cashew 应用导入 SQLite 或 CSV 文件</string>
+    <string name="typing">正在思考您的请求...</string>
+    <string name="tokens_usage">Token 使用情况</string>
+    <string name="screen_content">屏幕内容</string>
+    <string name="copied_text">已复制文本</string>
+    <string name="app_crashed">应用崩溃</string>
+    <string name="share_crash_report">分享崩溃报告</string>
+    <string name="unexpected_crash">意外崩溃</string>
+    <string name="crash_report">崩溃报告</string>
+    <string name="extracted_from_pdf">从 PDF 提取</string>
+    <string name="existing_in_database">数据库中存在</string>
+    <string name="search_chats">搜索聊天...</string>
+    <string name="regenerate">重新生成</string>
+    <string name="english">英语</string>
+    <string name="afrikaans">南非荷兰语</string>
+    <string name="arabic">阿拉伯语</string>
+    <string name="azerbaijani">阿塞拜疆语</string>
+    <string name="bulgarian">保加利亚语</string>
+    <string name="bengali">孟加拉语</string>
+    <string name="tibetan">藏语</string>
+    <string name="catalan">加泰罗尼亚语</string>
+    <string name="czech">捷克语</string>
+    <string name="danish">丹麦语</string>
+    <string name="german">德语</string>
+    <string name="dzongkha">宗卡语</string>
+    <string name="greek">希腊语</string>
+    <string name="spanish">西班牙语</string>
+    <string name="persian">波斯语</string>
+    <string name="french">法语</string>
+    <string name="gujarati">古吉拉特语</string>
+    <string name="hawaiian">夏威夷语</string>
+    <string name="hebrew">希伯来语</string>
+    <string name="hindi">印地语</string>
+    <string name="croatian">克罗地亚语</string>
+    <string name="hungarian">匈牙利语</string>
+    <string name="indonesian">印度尼西亚语</string>
+    <string name="icelandic">冰岛语</string>
+    <string name="italiano">意大利语</string>
+    <string name="japanese">日语</string>
+    <string name="kabyle">塔克贝伊利特语</string>
+    <string name="kannada">坎纳达语</string>
+    <string name="kashmiri">克什米尔语</string>
+    <string name="latin">拉丁语</string>
+    <string name="malayalam">马拉雅拉姆语</string>
+    <string name="marathi">马拉地语</string>
+    <string name="nepali">尼泊尔语</string>
+    <string name="dutch">荷兰语</string>
+    <string name="norwegian">挪威语</string>
+    <string name="chichewa">奇切瓦语</string>
+    <string name="odia">奥里亚语</string>
+    <string name="iron">伊龙语</string>
+    <string name="punjabi">旁遮普语</string>
+    <string name="polish">波兰语</string>
+    <string name="portuguese">葡萄牙语</string>
+    <string name="romanian">罗马尼亚语</string>
+    <string name="russian">俄语</string>
+    <string name="slovak">斯洛伐克语</string>
+    <string name="slovenian">斯洛文尼亚语</string>
+    <string name="swedish">瑞典语</string>
+    <string name="tamil">泰米尔语</string>
+    <string name="telugu">泰卢固语</string>
+    <string name="thai">泰语</string>
+    <string name="turkmençe">土库曼语</string>
+    <string name="turkish">土耳其语</string>
+    <string name="ukrainian">乌克兰语</string>
+    <string name="urdu">乌尔都语</string>
+    <string name="uzbek">乌兹别克语</string>
+    <string name="valencian">瓦伦西亚语</string>
+    <string name="vietnamese">越南语</string>
+    <string name="chinese">中文</string>
+    <string name="delete_multiple_records_confirm">你确定要删除所选记录吗？</string>
+    <string name="import_pdf">导入</string>
+    <string name="loan_type_borrowed">已借出</string>
+    <string name="loan_type_lent">已借给</string>
+    <string name="mark_as_loan">标记为贷款</string>
+    <string name="marked_as_loan_success">已标记为贷款</string>
+    <string name="persons_deleted_format">已删除 %1$d 人</string>
+    <string name="records_deleted_format">已删除 %1$d 条记录</string>
+    <string name="select">选择</string>
+    <string name="select_color">选择颜色</string>
+    <string name="select_multiple">多选</string>
+    <string name="share_logs">分享日志</string>
+    <string name="stop">停止</string>
+    <string name="unmark_as_loan">取消贷款标记</string>
+    <string name="unmark_loan_confirm_desc">这将从此交易中移除贷款关联。</string>
+    <string name="unmark_loan_confirm_title">取消贷款标记？</string>
+    <string name="view_on_drive">在云端查看</string>
+    <plurals name="licenses_count">
+        <item quantity="other">%1$d 个许可证</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="other">来自潜在银行的 %1$d 条消息</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="other">%1$d 个文件</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="other">%1$d 个子类别</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="other">删除 %1$d 笔交易？</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="other">%2$s 中剩余 %1$d 天</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="other">已解析 %1$d 笔交易</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="other">已保存 %1$d</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">删除此人？</item>
+        <item quantity="other">删除 %1$d 人？</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">删除记录？</item>
+        <item quantity="other">删除 %1$d 条记录？</item>
+    </plurals>
 </resources>

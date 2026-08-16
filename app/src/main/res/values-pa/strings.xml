@@ -740,7 +740,6 @@
     <string name="language">ਭਾਸ਼ਾ</string>
     <string name="language_subtitle">ਐਪ ਦੀ ਭਾਸ਼ਾ ਬਦਲੋ</string>
     <string name="select_language">ਭਾਸ਼ਾ ਚੁਣੋ</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">ਵਰਤੋਂਕਾਰ</string>
     <string name="backup_sync_subtitle">ਬੈਕਅੱਪ, ਕਲਾਊਡ, ਰੀਸਟੋਰ ਅਤੇ ਸਿੰਕ ਸੈਟਿੰਗਾਂ</string>
     <string name="error">ਗਲਤੀ</string>
@@ -1041,39 +1040,6 @@
     <string name="provider_local_only">ਸਿਰਫ਼ ਸਥਾਨਕ</string>
     <string name="provider_webdav">ਨੇਕਸਟਕਲਾਉਡ / ਵੈਬਡੈਵ</string>
     <string name="provider_google_drive">ਗੂਗਲ ਡ੍ਰਾਈਵ</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d ਲਾਇਸੈਂਸ</item>
-        <item quantity="other">%1$d ਲਾਇਸੈਂਸ</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">ਸੰਭਾਵਿਤ ਬੈਂਕਾਂ ਤੋਂ %1$d ਸੁਨੇਹਾ</item>
-        <item quantity="other">ਸੰਭਾਵਿਤ ਬੈਂਕਾਂ ਤੋਂ %1$d ਸੁਨੇਹੇ</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d ਫਾਈਲ</item>
-        <item quantity="other">%1$d ਫਾਈਲਾਂ</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d ਉਪ-ਸ਼੍ਰੇਣੀ</item>
-        <item quantity="other">%1$d ਉਪ-ਸ਼੍ਰੇਣੀਆਂ</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">ਕੀ ਤੁਸੀਂ %1$d ਲੈਣ-ਦੇਣ ਨੂੰ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</item>
-        <item quantity="other">ਕੀ ਤੁਸੀਂ %1$d ਲੈਣ-ਦੇਣਾਂ ਨੂੰ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%2$s ਵਿੱਚ %1$d ਦਿਨ ਬਾਕੀ</item>
-        <item quantity="other">%2$s ਵਿੱਚ %1$d ਦਿਨ ਬਾਕੀ</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d ਲੈਣ-ਦੇਣ ਪ੍ਰਕਾਸ਼ਿਤ ਕੀਤਾ</item>
-        <item quantity="other">%1$d ਲੈਣ-ਦੇਣ ਪ੍ਰਕਾਸ਼ਿਤ ਕੀਤੇ</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d ਸੁਰੱਖਿਅਤ</item>
-        <item quantity="other">%1$d ਸੁਰੱਖਿਅਤ</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">ਬੈਚ ਲੈਣ-ਦੇਣ ਸੋਧੋ</string>
     <string name="batch_edit_updating_format">ਚੁਣੇ ਗਏ %1$d ਆਈਟਮ ਅਪਡੇਟ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
     <string name="batch_edit_toggle_hint">ਚੁਣੀਆਂ ਗਈਆਂ ਲੈਣ-ਦੇਣਾਂ \'ਤੇ ਲਾਗੂ ਕਰਨ ਲਈ ਹੇਠਾਂ ਦਿੱਖਾਏ ਵਿਕਲਪਾਂ ਨੂੰ ਟੌਗਲ ਕਰੋ:</string>
@@ -1093,7 +1059,6 @@
     <string name="batch_edit_set_batch_amount">ਬੈਚ ਰਕਮ ਸੈੱਟ ਕਰੋ</string>
     <string name="edit_selected_transactions">ਚੁਣੀਆਂ ਗਈਆਂ ਲੈਣ-ਦੇਣਾਂ ਸੋਧੋ</string>
     <string name="edit_selected_count_format">ਸੋਧੋ — %1$d</string>
-
     <string name="active_tab">ਲੋਕ</string>
     <string name="add_entry">ਰਿਕਾਰਡ ਸ਼ਾਮਲ ਕਰੋ</string>
     <string name="add_person">ਵਿਅਕਤੀ ਸ਼ਾਮਲ ਕਰੋ</string>
@@ -1169,4 +1134,132 @@
     <string name="type_lent">ਕਰਜ਼ ਦਿੱਤਾ</string>
     <string name="whatsapp_cd">ਵਟਸਐਪ</string>
     <string name="loan_description">ਉਧਾਰ ਦਿੱਤੇ ਅਤੇ ਲਏ ਗਏ ਰਿਕਾਰਡਾਂ ਦਾ ਪ੍ਰਬੰਧ ਕਰੋ</string>
+    <string name="import_cashew_backup">ਕੈਸ਼ੂ ਤੋਂ ਇੰਪੋਰਟ ਕਰੋ</string>
+    <string name="import_cashew_backup_sub">ਕੈਸ਼ੂ ਐਪ ਤੋਂ SQLite ਜਾਂ CSV ਫਾਈਲਾਂ ਇੰਪੋਰਟ ਕਰੋ</string>
+    <string name="typing">ਤੁਹਾਡੇ ਬੇਨਤੀ ਬਾਰੇ ਸੋਚ ਰਿਹਾ ਹੈ...</string>
+    <string name="app_crashed">ਐਪ ਸੁੱਟ ਗਿਆ</string>
+    <string name="share_crash_report">ਕ੍ਰੈਸ਼ ਰਿਪੋਰਟ ਸਾਂਝਾ ਕਰੋ</string>
+    <string name="unexpected_crash">ਅਚਾਨਕ ਸੁੱਟ ਗਈ</string>
+    <string name="crash_report">ਕ੍ਰੈਸ਼ ਰਿਪੋਰਟ</string>
+    <string name="extracted_from_pdf">PDF ਤੋਂ ਨਿਕਾਲਿਆ ਗਿਆ</string>
+    <string name="existing_in_database">ਡਾਟਾਬੇਸ ਵਿੱਚ ਮੌਜੂਦ</string>
+    <string name="search_chats">ਚੈਟਸ ਖੋਜੋ...</string>
+    <string name="regenerate">ਮੁੜ ਬਣਾਓ</string>
+    <string name="tokens_usage">ਟੋਕਨ ਦੀ ਵਰਤੋਂ</string>
+    <string name="screen_content">ਸਕ੍ਰੀਨ ਸਮੱਗਰੀ</string>
+    <string name="copied_text">ਨਕਲ ਕੀਤਾ ਟੈਕਸਟ</string>
+    <string name="english">ਅੰਗਰੇਜ਼ੀ</string>
+    <string name="afrikaans">ਅਫ਼ਰੀਕੀ</string>
+    <string name="arabic">ਅਰਬੀ</string>
+    <string name="azerbaijani">ਅਜ਼ਰਬਾਈਜਾਨੀ</string>
+    <string name="bulgarian">ਬੁਲਗਾਰੀਆਈ</string>
+    <string name="bengali">ਬੰਗਾਲੀ</string>
+    <string name="tibetan">ਤਿਬਤੀ</string>
+    <string name="catalan">ਕਾਤਾਲਾਨ</string>
+    <string name="czech">ਚੇਕ</string>
+    <string name="danish">ਡੈਨਿਸ਼</string>
+    <string name="german">ਜਰਮਨ</string>
+    <string name="dzongkha">ਜ਼ੋਂਗ ਖ਼ਾ</string>
+    <string name="greek">ਯੂਨਾਨੀ</string>
+    <string name="spanish">ਸਪੇਨੀ</string>
+    <string name="persian">ਫਾਰਸੀ</string>
+    <string name="french">ਫ੍ਰੈਂਚ</string>
+    <string name="gujarati">ਗੁਜਰਾਤੀ</string>
+    <string name="hawaiian">ਹਵਾਈਈ</string>
+    <string name="hebrew">ਹੀਬ੍ਰੂ</string>
+    <string name="hindi">ਹਿੰਦੀ</string>
+    <string name="croatian">ਕ੍ਰੋਏਸ਼ੀਆਈ</string>
+    <string name="hungarian">ਮੈਗਿਆਰ</string>
+    <string name="indonesian">ਬਾਹਾਸਾ ਇੰਡੋਨੇਸ਼ੀਆ</string>
+    <string name="icelandic">ਆਇਸਲੈਂਡਿਕ</string>
+    <string name="italiano">ਇਤਾਲਵੀ</string>
+    <string name="japanese">ਜਪਾਨੀ</string>
+    <string name="kabyle">ਤਾਕਬਾਇਲਿਤ</string>
+    <string name="kannada">ಕನ್ನಡ</string>
+    <string name="kashmiri">ਕਸ਼ਮੀਰੀ</string>
+    <string name="latin">ਲੈਟਿਨ</string>
+    <string name="malayalam">ਮലയാളം</string>
+    <string name="marathi">ਮਰਾਠੀ</string>
+    <string name="nepali">ਨੇਪਾਲੀ</string>
+    <string name="dutch">ਡੱਚ</string>
+    <string name="norwegian">ਨਾਰਵੇਜੀਆਈ</string>
+    <string name="chichewa">ਚੀਵੇਵਾ</string>
+    <string name="odia">ଓଡ଼ିଆ</string>
+    <string name="iron">ਇਰੋਨ</string>
+    <string name="punjabi">ਪੰਜਾਬੀ</string>
+    <string name="polish">ਪੋਲਿਸ਼</string>
+    <string name="portuguese">ਪੁਰਤਗਾਲੀ</string>
+    <string name="romanian">ਰੋਮਾਨੀਆਈ</string>
+    <string name="russian">ਰੂਸੀ</string>
+    <string name="slovak">ਸਲੋਵਾਕ</string>
+    <string name="slovenian">ਸਲੋਵੇਨੀਆਈ</string>
+    <string name="swedish">ਸਵੀਡਿਸ਼</string>
+    <string name="tamil">ਤਮਿਲ</string>
+    <string name="telugu">ਤੇਲੁਗੂ</string>
+    <string name="thai">ਥਾਈ</string>
+    <string name="turkmençe">ਤੁਰਕੀਮੇਨ</string>
+    <string name="turkish">ਤੁਰਕੀ</string>
+    <string name="ukrainian">ਯੂਕਰੇਨੀ</string>
+    <string name="urdu">ਉਰਦੂ</string>
+    <string name="uzbek">ਉਜ਼ਬੇਕ</string>
+    <string name="valencian">ਵੈਲੇਂਸੀਅਨ</string>
+    <string name="vietnamese">ਵੀਅਤਨਾਮੀ</string>
+    <string name="chinese">ਚੀਨੀ</string>
+    <string name="delete_multiple_records_confirm">ਕੀ ਤੁਸੀਂ ਯਕੀਨਨ ਚੁਣੇ ਗਏ ਰੇਕਾਰਡ ਮਿਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
+    <string name="import_pdf">ਆਯਾਤ ਕਰੋ</string>
+    <string name="loan_type_borrowed">ਉਧਾਰ ਲਿਆ</string>
+    <string name="loan_type_lent">ਉਧਾਰ ਦਿੱਤਾ</string>
+    <string name="mark_as_loan">ਉਧਾਰ ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕਰੋ</string>
+    <string name="marked_as_loan_success">ਉਧਾਰ ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ</string>
+    <string name="persons_deleted_format">%1$d ਵਿਅਕਤੀ ਮਿਟਾਏ ਗਏ</string>
+    <string name="records_deleted_format">%1$d ਰੇਕਾਰਡ ਮਿਟਾਏ ਗਏ</string>
+    <string name="select">ਚੁਣੋ</string>
+    <string name="select_color">ਰੰਗ ਚੁਣੋ</string>
+    <string name="select_multiple">ਕਈ ਚੁਣੋ</string>
+    <string name="share_logs">ਲਾਗ ਸਾਂਝੇ ਕਰੋ</string>
+    <string name="stop">ਰੋਕੋ</string>
+    <string name="unmark_as_loan">ਉਧਾਰ ਵਜੋਂ ਚਿੰਨ੍ਹ ਹਟਾਓ</string>
+    <string name="unmark_loan_confirm_desc">ਇਸ ਨਾਲ ਇਸ ਲੈਣ-ਦੇਣ ਤੋਂ ਉਧਾਰ ਸੰਬੰਧ ਹਟ ਜਾਵੇਗਾ.</string>
+    <string name="unmark_loan_confirm_title">ਉਧਾਰ ਵਜੋਂ ਚਿੰਨ੍ਹ ਹਟਾਉਣੇ?</string>
+    <string name="view_on_drive">ਡ੍ਰਾਈਵ \'ਤੇ ਵੇਖੋ</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d ਲਾਇਸੈਂਸ</item>
+        <item quantity="other">%1$d ਲਾਇਸੈਂਸ</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">ਸੰਭਾਵਿਤ ਬੈਂਕਾਂ ਤੋਂ %1$d ਸੁਨੇਹਾ</item>
+        <item quantity="other">ਸੰਭਾਵਿਤ ਬੈਂਕਾਂ ਤੋਂ %1$d ਸੁਨੇਹੇ</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d ਫਾਈਲ</item>
+        <item quantity="other">%1$d ਫਾਈਲਾਂ</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d ਉਪ-ਸ਼੍ਰੇਣੀ</item>
+        <item quantity="other">%1$d ਉਪ-ਸ਼੍ਰੇਣੀਆਂ</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">ਕੀ ਤੁਸੀਂ %1$d ਲੈਣ-ਦੇਣ ਨੂੰ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</item>
+        <item quantity="other">ਕੀ ਤੁਸੀਂ %1$d ਲੈਣ-ਦੇਣਾਂ ਨੂੰ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%2$s ਵਿੱਚ %1$d ਦਿਨ ਬਾਕੀ</item>
+        <item quantity="other">%2$s ਵਿੱਚ %1$d ਦਿਨ ਬਾਕੀ</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d ਲੈਣ-ਦੇਣ ਪ੍ਰਕਾਸ਼ਿਤ ਕੀਤਾ</item>
+        <item quantity="other">%1$d ਲੈਣ-ਦੇਣ ਪ੍ਰਕਾਸ਼ਿਤ ਕੀਤੇ</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d ਸੁਰੱਖਿਅਤ</item>
+        <item quantity="other">%1$d ਸੁਰੱਖਿਅਤ</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">ਵਿਅਕਤੀ ਮਿਟਾਉਣਾ?</item>
+        <item quantity="other">%1$d ਵਿਅਕਤੀਆਂ ਨੂੰ ਮਿਟਾਉਣਾ?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">ਰੇਕਾਰਡ ਮਿਟਾਉਣਾ?</item>
+        <item quantity="other">%1$d ਰੇਕਾਰਡ ਮਿਟਾਉਣਾ?</item>
+    </plurals>
 </resources>

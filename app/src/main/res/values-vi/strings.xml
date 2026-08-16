@@ -740,7 +740,6 @@ Xanh (+) = Tiết kiệm | Đỏ (-) = Chi tiêu vượt mức</string>
     <string name="language">Ngôn ngữ</string>
     <string name="language_subtitle">Thay đổi ngôn ngữ ứng dụng</string>
     <string name="select_language">Chọn Ngôn ngữ</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">Người dùng</string>
     <string name="backup_sync_subtitle">Cài đặt Sao lưu, Đám mây, Khôi phục và Đồng bộ hóa</string>
     <string name="error">Lỗi</string>
@@ -1041,31 +1040,6 @@ Xanh (+) = Tiết kiệm | Đỏ (-) = Chi tiêu vượt mức</string>
     <string name="provider_local_only">Chỉ cục bộ</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="other">%1$d giấy phép</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="other">%1$d tin nhắn từ các ngân hàng tiềm năng</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="other">%1$d tệp</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="other">%1$d phân mục con</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="other">Xóa %1$d giao dịch?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="other">Còn %1$d ngày trong %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="other">%1$d giao dịch đã được phân tích</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="other">%1$d đã lưu</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Chỉnh sửa hàng loạt giao dịch</string>
     <string name="batch_edit_updating_format">Đang cập nhật %1$d mục được chọn</string>
     <string name="batch_edit_toggle_hint">Bật các tùy chọn dưới đây để áp dụng cho các giao dịch đã chọn:</string>
@@ -1085,7 +1059,6 @@ Xanh (+) = Tiết kiệm | Đỏ (-) = Chi tiêu vượt mức</string>
     <string name="batch_edit_set_batch_amount">Đặt số tiền hàng loạt</string>
     <string name="edit_selected_transactions">Chỉnh sửa các giao dịch đã chọn</string>
     <string name="edit_selected_count_format">Chỉnh sửa — %1$d</string>
-
     <string name="active_tab">Mọi người</string>
     <string name="add_entry">Thêm bản ghi</string>
     <string name="add_person">Thêm người</string>
@@ -1161,4 +1134,124 @@ Xanh (+) = Tiết kiệm | Đỏ (-) = Chi tiêu vượt mức</string>
     <string name="type_lent">Đã cho vay</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">Quản lý các khoản cho vay và đi vay</string>
+    <string name="import_cashew_backup">Nhập từ Cashew</string>
+    <string name="import_cashew_backup_sub">Nhập tệp SQLite hoặc CSV từ ứng dụng Cashew</string>
+    <string name="typing">Đang suy nghĩ về yêu cầu của bạn...</string>
+    <string name="tokens_usage">Sử dụng mã thông báo</string>
+    <string name="screen_content">Nội dung màn hình</string>
+    <string name="copied_text">Đã sao chép văn bản</string>
+    <string name="app_crashed">Ứng dụng bị lỗi</string>
+    <string name="share_crash_report">Chia sẻ báo cáo lỗi</string>
+    <string name="unexpected_crash">Lỗi không mong đợi</string>
+    <string name="crash_report">Báo cáo lỗi</string>
+    <string name="extracted_from_pdf">Trích xuất từ PDF</string>
+    <string name="existing_in_database">Tồn tại trong cơ sở dữ liệu</string>
+    <string name="search_chats">Tìm kiếm tin nhắn...</string>
+    <string name="regenerate">Tạo lại</string>
+    <string name="english">Tiếng Anh</string>
+    <string name="afrikaans">Tiếng Afrikaans</string>
+    <string name="arabic">العربية</string>
+    <string name="azerbaijani">Azerbaijan</string>
+    <string name="bulgarian">Tiếng Bulgaria</string>
+    <string name="bengali">Tiếng Bengali</string>
+    <string name="tibetan">Tiếng Tây Tạng</string>
+    <string name="catalan">Tiếng Catalan</string>
+    <string name="czech">Tiếng Séc</string>
+    <string name="danish">Tiếng Đan Mạch</string>
+    <string name="german">Tiếng Đức</string>
+    <string name="dzongkha">Tiếng Dzongkha</string>
+    <string name="greek">Tiếng Hy Lạp</string>
+    <string name="spanish">Tiếng Tây Ban Nha</string>
+    <string name="persian">Tiếng Ba Tư</string>
+    <string name="french">Tiếng Pháp</string>
+    <string name="gujarati">Tiếng Gujarat</string>
+    <string name="hawaiian">Tiếng Hawaii</string>
+    <string name="hebrew">Tiếng Do Thái</string>
+    <string name="hindi">Tiếng Hindi</string>
+    <string name="croatian">Tiếng Croatia</string>
+    <string name="hungarian">Tiếng Hungary</string>
+    <string name="indonesian">Tiếng Indonesia</string>
+    <string name="icelandic">Icelandic</string>
+    <string name="italiano">Italian</string>
+    <string name="japanese">Japanese</string>
+    <string name="kabyle">Taqbaylit</string>
+    <string name="kannada">Kannada</string>
+    <string name="kashmiri">Kashmiri</string>
+    <string name="latin">Latin</string>
+    <string name="malayalam">Malayalam</string>
+    <string name="marathi">Marathi</string>
+    <string name="nepali">Nepali</string>
+    <string name="dutch">Dutch</string>
+    <string name="norwegian">Norwegian</string>
+    <string name="chichewa">Chichewa</string>
+    <string name="odia">Odia</string>
+    <string name="iron">Ossetian</string>
+    <string name="punjabi">Punjabi</string>
+    <string name="polish">Polish</string>
+    <string name="portuguese">Portuguese</string>
+    <string name="romanian">Romanian</string>
+    <string name="russian">Russian</string>
+    <string name="slovak">Slovak</string>
+    <string name="slovenian">Slovenian</string>
+    <string name="swedish">Swedish</string>
+    <string name="tamil">Tamil</string>
+    <string name="telugu">Telugu</string>
+    <string name="thai">Thai</string>
+    <string name="turkmençe">Turkmen</string>
+    <string name="turkish">Turkish</string>
+    <string name="ukrainian">Ukrainian</string>
+    <string name="urdu">Urdu</string>
+    <string name="uzbek">Uzbek</string>
+    <string name="valencian">Valencian</string>
+    <string name="vietnamese">Vietnamese</string>
+    <string name="chinese">Chinese</string>
+    <string name="delete_multiple_records_confirm">Bạn có chắc chắn muốn xóa các bản ghi đã chọn không?</string>
+    <string name="import_pdf">Nhập khẩu</string>
+    <string name="loan_type_borrowed">Đã mượn</string>
+    <string name="loan_type_lent">Đã cho vay</string>
+    <string name="mark_as_loan">Đánh dấu là khoản vay</string>
+    <string name="marked_as_loan_success">Đã đánh dấu là khoản vay</string>
+    <string name="persons_deleted_format">Đã xóa %1$d người</string>
+    <string name="records_deleted_format">Đã xóa %1$d bản ghi</string>
+    <string name="select">Chọn</string>
+    <string name="select_color">Chọn màu</string>
+    <string name="select_multiple">Chọn nhiều</string>
+    <string name="share_logs">Chia sẻ nhật ký</string>
+    <string name="stop">Dừng</string>
+    <string name="unmark_as_loan">Bỏ đánh dấu là khoản vay</string>
+    <string name="unmark_loan_confirm_desc">Điều này sẽ gỡ liên kết khoản vay khỏi giao dịch này.</string>
+    <string name="unmark_loan_confirm_title">Bạn có muốn bỏ đánh dấu là khoản vay không?</string>
+    <string name="view_on_drive">Xem trên Drive</string>
+    <plurals name="licenses_count">
+        <item quantity="other">%1$d giấy phép</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="other">%1$d tin nhắn từ các ngân hàng tiềm năng</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="other">%1$d tệp</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="other">%1$d phân mục con</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="other">Xóa %1$d giao dịch?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="other">Còn %1$d ngày trong %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="other">%1$d giao dịch đã được phân tích</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="other">%1$d đã lưu</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Xóa người?</item>
+        <item quantity="other">Xóa %1$d người?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Xóa bản ghi?</item>
+        <item quantity="other">Xóa %1$d bản ghi?</item>
+    </plurals>
 </resources>

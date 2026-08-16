@@ -740,7 +740,6 @@ Grænn (+) = Sparnaður | Rauður (-) = Ofureyðsla</string>
     <string name="language">Tungumál</string>
     <string name="language_subtitle">Breyta tungumáli forrits</string>
     <string name="select_language">Velja tungumál</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">Notandi</string>
     <string name="backup_sync_subtitle">Stillingar fyrir öryggisafrit, ský, endurheimt og samstillingu</string>
     <string name="error">Villa</string>
@@ -1041,39 +1040,6 @@ Grænn (+) = Sparnaður | Rauður (-) = Ofureyðsla</string>
     <string name="provider_local_only">Aðeins staðbundið</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d leyfi</item>
-        <item quantity="other">%1$d leyfi</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">%1$d skilaboð frá mögulegum bönkum</item>
-        <item quantity="other">%1$d skilaboð frá mögulegum bönkum</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d skrá</item>
-        <item quantity="other">%1$d skrár</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d undirflokkur</item>
-        <item quantity="other">%1$d undirflokkar</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">Eyða %1$d færslu?</item>
-        <item quantity="other">Eyða %1$d færslum?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%1$d dagur eftir í %2$s</item>
-        <item quantity="other">%1$d dagar eftir í %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d færslur greindar</item>
-        <item quantity="other">%1$d færslur greindar</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d vistað</item>
-        <item quantity="other">%1$d vistað</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Breiðsmiðsbreyting viðskipta</string>
     <string name="batch_edit_updating_format">Uppfæri %1$d valda atriði</string>
     <string name="batch_edit_toggle_hint">Breyta valkostum hér að neðan til að beita á valdar færslur:</string>
@@ -1093,7 +1059,6 @@ Grænn (+) = Sparnaður | Rauður (-) = Ofureyðsla</string>
     <string name="batch_edit_set_batch_amount">Stilla heildarupphæð</string>
     <string name="edit_selected_transactions">Breyta völdum færslum</string>
     <string name="edit_selected_count_format">Breyta — %1$d</string>
-
     <string name="active_tab">Fólk</string>
     <string name="add_entry">Bæta við færslu</string>
     <string name="add_person">Bæta við manneskju</string>
@@ -1169,4 +1134,132 @@ Grænn (+) = Sparnaður | Rauður (-) = Ofureyðsla</string>
     <string name="type_lent">Lánað út</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">Stjórnaðu skráningum yfir lán og lántökur</string>
+    <string name="import_cashew_backup">Flytja inn frá Cashew</string>
+    <string name="import_cashew_backup_sub">Flytja SQLite eða CSV skrár úr Cashew appinu</string>
+    <string name="typing">Að hugsa um beiðni þína...</string>
+    <string name="app_crashed">Forrit hrundi</string>
+    <string name="share_crash_report">Deila villuskýrslu</string>
+    <string name="unexpected_crash">Óvænt bilun</string>
+    <string name="crash_report">Bilunarskýrsla</string>
+    <string name="extracted_from_pdf">Útdregið úr PDF</string>
+    <string name="existing_in_database">Til staðar í gagnagrunni</string>
+    <string name="search_chats">Leita í spjallum...</string>
+    <string name="regenerate">Endurframleiða</string>
+    <string name="tokens_usage">Notkun á merki</string>
+    <string name="screen_content">Efni á skjá</string>
+    <string name="copied_text">Afritað texta</string>
+    <string name="english">Enska</string>
+    <string name="afrikaans">Afríkanska</string>
+    <string name="arabic">العربية</string>
+    <string name="azerbaijani">Azerbaíjanska</string>
+    <string name="bulgarian">Búlgarska</string>
+    <string name="bengali">Bengalska</string>
+    <string name="tibetan">Tíbeska</string>
+    <string name="catalan">Katalónska</string>
+    <string name="czech">Tékkneska</string>
+    <string name="danish">Danska</string>
+    <string name="german">Þýska</string>
+    <string name="dzongkha">Dzongkha</string>
+    <string name="greek">Gríska</string>
+    <string name="spanish">Spænska</string>
+    <string name="persian">Farsí</string>
+    <string name="french">Franska</string>
+    <string name="gujarati">Gujarati</string>
+    <string name="hawaiian">ʻŌlelo Hawaiʻi</string>
+    <string name="hebrew">Hebreska</string>
+    <string name="hindi">Hindí</string>
+    <string name="croatian">Króatíska</string>
+    <string name="hungarian">Magíríska</string>
+    <string name="indonesian">Indónesíska</string>
+    <string name="icelandic">Íslenska</string>
+    <string name="italiano">Ítalska</string>
+    <string name="japanese">Japanska</string>
+    <string name="kabyle">Taqbaylit</string>
+    <string name="kannada">Kannada</string>
+    <string name="kashmiri">Kashmírska</string>
+    <string name="latin">Latína</string>
+    <string name="malayalam">Malajalam</string>
+    <string name="marathi">Marathi</string>
+    <string name="nepali">Nepalska</string>
+    <string name="dutch">Hollenska</string>
+    <string name="norwegian">Norska</string>
+    <string name="chichewa">Chichewa</string>
+    <string name="odia">Oriya</string>
+    <string name="iron">Íron</string>
+    <string name="punjabi">Punjabi</string>
+    <string name="polish">Pólska</string>
+    <string name="portuguese">Portúgalska</string>
+    <string name="romanian">Rúmenska</string>
+    <string name="russian">Rússneska</string>
+    <string name="slovak">Slóvakíska</string>
+    <string name="slovenian">Slóvenska</string>
+    <string name="swedish">Sænska</string>
+    <string name="tamil">Tamíl</string>
+    <string name="telugu">Telugu</string>
+    <string name="thai">Taílenska</string>
+    <string name="turkmençe">Turkmenska</string>
+    <string name="turkish">Tyrkneska</string>
+    <string name="ukrainian">Úkraínska</string>
+    <string name="urdu">Urdu</string>
+    <string name="uzbek">Usbekíska</string>
+    <string name="valencian">Valenciana</string>
+    <string name="vietnamese">Víetnamska</string>
+    <string name="chinese">Kínverska</string>
+    <string name="delete_multiple_records_confirm">Ertu viss um að þú viljir eyða valin skráningum?</string>
+    <string name="import_pdf">Flytja inn</string>
+    <string name="loan_type_borrowed">Lánað</string>
+    <string name="loan_type_lent">Lánað</string>
+    <string name="mark_as_loan">Merkja sem lán</string>
+    <string name="marked_as_loan_success">Merkkt sem lán</string>
+    <string name="persons_deleted_format">%1$d manns eytt</string>
+    <string name="records_deleted_format">%1$d skráningum eytt</string>
+    <string name="select">Velja</string>
+    <string name="select_color">Velja lit</string>
+    <string name="select_multiple">Velja marga</string>
+    <string name="share_logs">Deila færslum</string>
+    <string name="stop">Hætta</string>
+    <string name="unmark_as_loan">Afturkalla merkingu sem lán</string>
+    <string name="unmark_loan_confirm_desc">Þetta fjarlægir lánstengsl af þessari færslu.</string>
+    <string name="unmark_loan_confirm_title">Afturkalla merkingu sem lán?</string>
+    <string name="view_on_drive">Skoða á Drive</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d leyfi</item>
+        <item quantity="other">%1$d leyfi</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">%1$d skilaboð frá mögulegum bönkum</item>
+        <item quantity="other">%1$d skilaboð frá mögulegum bönkum</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d skrá</item>
+        <item quantity="other">%1$d skrár</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d undirflokkur</item>
+        <item quantity="other">%1$d undirflokkar</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">Eyða %1$d færslu?</item>
+        <item quantity="other">Eyða %1$d færslum?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%1$d dagur eftir í %2$s</item>
+        <item quantity="other">%1$d dagar eftir í %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d færslur greindar</item>
+        <item quantity="other">%1$d færslur greindar</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d vistað</item>
+        <item quantity="other">%1$d vistað</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Eyða einstaklingi?</item>
+        <item quantity="other">Eyða %1$d einstaklingum?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Eyða skráningu?</item>
+        <item quantity="other">Eyða %1$d skráningum?</item>
+    </plurals>
 </resources>

@@ -1,16 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Cashiro</string>
-
     <!-- App shortcuts -->
     <string name="add_transaction">Add Transaction</string>
     <string name="add_subscription">Add Subscription</string>
     <string name="add_transfer">Add Transfer</string>
-
     <!-- Add Screen -->
     <string name="add_new">Add New</string>
     <string name="transaction">Transaction</string>
     <string name="subscription">Subscription</string>
-
     <!-- Data Privacy Screen -->
     <string name="data_privacy_title">Data Privacy</string>
     <string name="security_section">Security</string>
@@ -43,12 +41,10 @@
     <string name="profile_data">Profile Data</string>
     <string name="budgets">Budgets</string>
     <string name="app_preferences">App Preferences</string>
-
     <!-- NumberPad -->
     <string name="enter_amount">Enter Amount</string>
     <string name="done">Done</string>
     <string name="backspace">Backspace</string>
-
     <!-- Merge Accounts Dialogs -->
     <string name="merge_accounts_title">Merge Accounts</string>
     <string name="merge_accounts_desc">Select accounts to merge into %1$s (...%2$s). Selected accounts will be deleted after merging.</string>
@@ -63,7 +59,6 @@
     <string name="merge_confirm_title">Final Confirmation</string>
     <string name="merge_confirm_message">Merging Accounts: All current and past transactions from the merging bank accounts will now show on the merged bank account. The original accounts will be deleted.</string>
     <string name="merge">Merge</string>
-
     <!-- HistorySheet -->
     <string name="balance_history_title">Balance History</string>
     <string name="records_count_latest_balance_note">%1$d records • Latest balance is shown in accounts</string>
@@ -81,7 +76,6 @@
     <string name="source_system">System</string>
     <string name="sms_source">SMS Source</string>
     <string name="copy">Copy</string>
-
     <!-- AccountDetailScreen -->
     <string name="account_details">Account Details</string>
     <string name="transactions_count">Transactions (%1$d)</string>
@@ -96,14 +90,6 @@
     <string name="range_last_6_months">Last 6 Months</string>
     <string name="range_last_year">Last Year</string>
     <string name="range_all_time">All Time</string>
-    <string name="time_period_this_month">This Month</string>
-    <string name="time_period_last_month">Last Month</string>
-    <string name="time_period_current_fy">Current FY</string>
-    <string name="time_period_all_time">All Time</string>
-    <string name="time_period_custom_range">Custom Range</string>
-    <string name="type_all">All</string>
-    <string name="type_credit">Credit</string>
-
     <!-- Add/Edit Account Screens -->
     <string name="add_account_info">Add accounts not tracked via SMS like cash, wallets, or investment accounts.</string>
     <string name="account_type_label">Account Type</string>
@@ -123,7 +109,6 @@
     <string name="credit_limit_hint">Optional: Set credit limit for utilization tracking</string>
     <string name="save_account">Save Account</string>
     <string name="enter_credit_limit">Enter Credit Limit</string>
-
     <string name="update_amount">Update Amount</string>
     <string name="add_account_title">Add Account</string>
     <string name="edit_account_title">Edit Account</string>
@@ -142,7 +127,6 @@
     <string name="delete_account_desc">Delete account</string>
     <string name="save_changes">Save Changes</string>
     <string name="type_wallet_lowercase">wallet</string>
-
     <!-- ManageAccountsScreen -->
     <string name="title_accounts">Accounts</string>
     <string name="no_accounts_yet">No accounts yet</string>
@@ -156,7 +140,6 @@
     <string name="hidden_accounts_count">Hidden Accounts (%1$d)</string>
     <string name="update_outstanding_title">Update Outstanding</string>
     <string name="update_balance">Update Balance</string>
-
     <string name="enter_merged_balance">Enter Merged Balance</string>
     <string name="confirm_balance">Confirm Balance</string>
     <string name="label_available">Available</string>
@@ -177,7 +160,6 @@
     <string name="select_account_link_prompt">Select an account to link this card to:</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_link">Link</string>
-
     <!-- SubscriptionTabContent & TransactionTabContent -->
     <string name="subscription_info">Track recurring expenses. You\'ll need to add transactions manually each month.</string>
     <string name="billing_cycle_label">Billing Cycle</string>
@@ -209,14 +191,12 @@
     <string name="merchant_description">Merchant / Description</string>
     <string name="where_did_you_spend">Where did you spend this?</string>
     <string name="merchant_placeholder">e.g., Target, Walmart</string>
-    
     <!-- Budgets Screen -->
     <string name="new_budget">New Budget</string>
     <string name="no_budgets_yet">No Budgets Yet</string>
     <string name="create_first_budget_desc">Create your first budget to start tracking your spending goals</string>
     <string name="create_budget">Create Budget</string>
     <string name="edit_budget">Edit Budget</string>
-    
     <!-- Edit Budget Sheet -->
     <string name="budget_period">Budget Period</string>
     <string name="starts">Starts</string>
@@ -258,7 +238,6 @@
     <string name="budget_overspent_format">%1$s overspent of %2$s</string>
     <string name="budget_left_format">%1$s left of %2$s</string>
     <string name="less_than_one_percent">&lt; 1%</string>
-    
     <string name="select_budget_type">Select Budget Type</string>
     <string name="savings_budget">Savings budget</string>
     <string name="savings_budget_desc">Track your income and budget your savings</string>
@@ -271,14 +250,12 @@
     <string name="all_transactions">All transactions</string>
     <string name="all_transactions_desc">All transactions within selected categories and filters\nUseful for long term budgets over multiple periods</string>
     <string name="all_transactions_example">Example: \'Monthly Spending\' budget</string>
-
     <!-- Categories Screen -->
     <string name="categories">Categories</string>
     <string name="add_category">Add Category</string>
     <string name="clear_search">Clear search</string>
     <string name="expense_categories">Expense Categories</string>
     <string name="income_categories">Income Categories</string>
-    
     <!-- Edit Category Sheet -->
     <string name="category_name">Category Name</string>
     <string name="category_description_placeholder">description about the category</string>
@@ -292,13 +269,11 @@
     <string name="update_category">Update Category</string>
     <string name="create_category">Create Category</string>
     <string name="reset_to_default">Reset to default</string>
-    
     <!-- Edit Subcategory Sheet -->
     <string name="subcategory">Subcategory</string>
     <string name="delete_subcategory">Delete subcategory</string>
     <string name="create_subcategory">Create Subcategory</string>
     <string name="update_subcategory">Update Subcategory</string>
-    
     <!-- Analytics -->
     <string name="total">Total</string>
     <string name="suffix_million">M</string>
@@ -359,8 +334,6 @@
     <string name="search_transactions">Search transactions</string>
     <string name="search">Search</string>
     <string name="view_all">View All</string>
-    <string name="contacts">Contacts</string>
-    <string name="no_contacts_desc">No contacts added yet. Tap the View All button to add people.</string>
     <string name="settings">Settings</string>
     <string name="ask_ai">Ask AI</string>
     <string name="sync_sms">Sync SMS</string>
@@ -384,7 +357,6 @@
     <string name="upcoming">Upcoming</string>
     <string name="active_subscriptions_singular">1 Sub</string>
     <string name="active_subscriptions_plural">%1$d Subs</string>
-    
     <!-- Onboarding -->
     <string name="app_logo">App Logo</string>
     <string name="onboarding_subtitle">Experience a seamless way to track your money, categorize your spending, and hit your savings goals faster.</string>
@@ -415,7 +387,6 @@
     <string name="scanning_ellipsis">Scanning...</string>
     <string name="continue_action">Continue</string>
     <string name="finish_setup">Finish Setup</string>
-    
     <!-- Mock Messages -->
     <string name="mock_msg_electric_bill">Electric bill due: ₹2,450</string>
     <string name="mock_msg_starbucks">Transaction of ₹500 at Starbucks</string>
@@ -427,7 +398,6 @@
     <string name="mock_msg_axis">Axis: ₹200 spent at Zomato</string>
     <string name="notification">Notification</string>
     <string name="mock_msg_salary_credited">Your salary has been credited!</string>
-
     <!-- SubscriptionsScreen -->
     <string name="subscriptions">Subscriptions</string>
     <string name="total_subscriptions">Total Subscriptions</string>
@@ -455,7 +425,6 @@
     <string name="show_original_message">Show Original Message</string>
     <string name="no_subscriptions_detected_yet">No subscriptions detected yet</string>
     <string name="sync_sms_to_detect_subscriptions">Sync your SMS to detect subscriptions</string>
-
     <!-- ExportTransactionsDialog -->
     <string name="export_transactions">Export Transactions</string>
     <string name="exporting">Exporting...</string>
@@ -470,15 +439,11 @@
     <string name="retry">Retry</string>
     <string name="share_csv">Share CSV</string>
     <string name="csv_export_subject">Cashiro Transactions Export</string>
-
     <!-- TransactionDetailScreen -->
     <string name="edit_transaction">Edit Transaction</string>
     <string name="transaction_details">Transaction Details</string>
     <string name="report_issue">Report Issue</string>
     <string name="delete_transaction">Delete Transaction</string>
-    <string name="duplicate_transaction">Duplicate Transaction</string>
-    <string name="transaction_duplicated">Transaction duplicated</string>
-    <string name="share_receipt">Share Receipt</string>
     <string name="transaction_updated_successfully">Transaction updated successfully</string>
     <string name="merchant_label">Merchant</string>
     <string name="description_optional_label">Description (Optional)</string>
@@ -518,7 +483,6 @@
     <string name="semi_annual_recurring">Semi-Annual</string>
     <string name="annual_recurring">Annual</string>
     <string name="custom_recurring">Custom</string>
-
     <!-- TransactionsFilterBottomSheet -->
     <string name="filters">Filters</string>
     <string name="reset">Reset</string>
@@ -530,7 +494,6 @@
     <string name="set_minimum_amount">Set Minimum Amount</string>
     <string name="set_maximum_amount">Set Maximum Amount</string>
     <string name="confirm">Confirm</string>
-
     <!-- TransactionsScreen -->
     <string name="transactions_deleted_format">%1$d transactions deleted</string>
     <string name="items_selected_format">%1$d selected</string>
@@ -542,7 +505,6 @@
     <string name="no_transactions_matching_format">No transactions matching \"%1$s\"</string>
     <string name="no_transactions_for_format">No transactions for %1$s</string>
     <string name="sync_sms_to_see_transactions">Sync your SMS to see transactions</string>
-
     <!-- About Screen -->
     <string name="about">About</string>
     <string name="cashiro_logo_cd">Cashiro Logo</string>
@@ -566,10 +528,6 @@
     <string name="licenses">Licenses</string>
     <string name="licenses_desc">Open source libraries</string>
     <string name="developer_options">Developer Options</string>
-    <string name="webhook_mode">Webhooks</string>
-    <string name="webhook_mode_desc">Enable BYOAPI webhook sync</string>
-    <string name="token_info">Chat Token Info</string>
-    <string name="token_info_desc">Show technical information in chat</string>
     <string name="developer_options_desc">Tests and Experimental features</string>
     <string name="delete_all_data">Delete All Data</string>
     <string name="delete_all_data_desc">Permanently clear all records</string>
@@ -577,7 +535,6 @@
     <string name="delete_all_data_confirm_title">Delete All Data?</string>
     <string name="delete_all_data_confirm_desc">This action will permanently delete all your transactions, budgets, subscriptions, and settings. This cannot be undone.</string>
     <string name="delete_all">Delete All</string>
-
     <!-- Licenses Screen -->
     <string name="license_version_format">v%1$s, db-v%2$d</string>
     <string name="license_disclaimer_software">THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</string>
@@ -587,7 +544,6 @@
         <item quantity="one">%1$d license</item>
         <item quantity="other">%1$d licenses</item>
     </plurals>
-
     <!-- Rules Screen -->
     <string name="smart_rules">Smart Rules</string>
     <string name="reset_to_defaults">Reset to defaults</string>
@@ -613,7 +569,6 @@
     <string name="rule_summary_transfer">Self transfers, contra</string>
     <string name="priority_format">Priority: %1$d</string>
     <string name="edit_rule">Edit Rule</string>
-
     <!-- SMS Screen -->
     <string name="sms_title">SMS</string>
     <string name="sms_scan_period">SMS Scan Period</string>
@@ -629,7 +584,6 @@
     <string name="sms_scan_period_desc">Choose how many months of SMS history to scan for transactions</string>
     <string name="one_month">1 month</string>
     <string name="two_years">2 years</string>
-
     <!-- Unrecognized SMS Screen -->
     <string name="unrecognized_messages_title">Unrecognized Messages</string>
     <string name="unrecognized_bank_messages_desc">These messages from potential banks couldn\'t be automatically parsed. Help improve Cashiro by reporting them so we can add support for more banks.</string>
@@ -640,7 +594,6 @@
     <string name="delete_message_confirm_desc">Are you sure you want to delete this unrecognized message? This action cannot be undone.</string>
     <string name="reported">Reported</string>
     <string name="report">Report</string>
-
     <!-- Webhooks Settings & Screen -->
     <string name="new_webhook">New Webhook</string>
     <string name="edit_webhook">Edit Webhook</string>
@@ -705,7 +658,6 @@
     <string name="pick_a_time">Pick a time</string>
     <string name="ok">OK</string>
     <string name="create_rule">Create Rule</string>
-
     <!-- Account UI & Details -->
     <string name="edit_details">Edit Details</string>
     <string name="merge_account">Merge Account</string>
@@ -718,7 +670,6 @@
     <string name="view_details">View details</string>
     <string name="none_manual_entry">None (Manual Entry)</string>
     <string name="no_accounts_found">No accounts found</string>
-
     <!-- Attachments Section -->
     <string name="attachments">Attachments</string>
     <string name="add_attachment">Add attachment</string>
@@ -729,7 +680,6 @@
         <item quantity="one">%1$d file</item>
         <item quantity="other">%1$d files</item>
     </plurals>
-
     <!-- Categories Sheet -->
     <plurals name="subcategory_count_plural">
         <item quantity="one">%1$d subcategory</item>
@@ -739,17 +689,12 @@
     <string name="search_placeholder_shopping">Search Shopping</string>
     <string name="search_placeholder_fitness">Search Fitness</string>
     <string name="search_placeholder_sports">Search Sports</string>
-
     <!-- Collapsible & Filter Rows -->
     <string name="more_filters">More Filters</string>
     <string name="more_filters_active_format">More Filters (%1$d active)</string>
-    <string name="collapse_cd">Collapse</string>
-    <string name="expand_cd">Expand</string>
-
     <!-- Color Picker -->
     <string name="colors">Colors</string>
     <string name="color_picker_button_desc">Custom Color Picker</string>
-
     <!-- Currencies & Bottom Sheets -->
     <string name="search_currencies_placeholder">Search currencies...</string>
     <string name="currency_not_available">Currency not available</string>
@@ -762,14 +707,12 @@
     <string name="last_updated_format">Last updated: %1$s</string>
     <string name="currency_code_symbol_format">%1$s (%2$s)</string>
     <string name="exchange_rate_formula_format">1 %1$s = %2$s %3$s</string>
-
     <!-- Selected Currency Localized Names -->
     <string name="currency_inr_name">Indian Rupee (₹)</string>
     <string name="currency_usd_name">US Dollar ($)</string>
     <string name="currency_aed_name">UAE Dirham (AED)</string>
     <string name="currency_npr_name">Nepalese Rupee (₨)</string>
     <string name="currency_etb_name">Ethiopian Birr (ብር)</string>
-
     <!-- Custom Billing Cycles -->
     <string name="repeat_desc">Repeat</string>
     <string name="set_to_forever">Set to Forever</string>
@@ -779,10 +722,8 @@
     <string name="billing_unit_year">Year</string>
     <string name="forever">Forever</string>
     <string name="until_date_format">Until %1$s</string>
-
     <!-- Date Selection -->
     <string name="select_date_range">Select Date Range</string>
-
     <!-- Delete Dialogs & Warnings -->
     <string name="delete_transaction_title">Delete Transaction</string>
     <string name="delete_transaction_confirm">Are you sure you want to delete this transaction? This action cannot be undone.</string>
@@ -808,9 +749,6 @@
     <string name="delete_subscription_confirm">Are you sure you want to delete \u2018%1$s\u2019? This will permanently remove it from your subscriptions list.</string>
     <string name="delete_subcategory_title">Delete Subcategory?</string>
     <string name="delete_subcategory_confirm">Are you sure you want to delete \u2018%1$s\u2019? This action cannot be undone.</string>
-    <string name="delete_cloud_snapshot_title">Delete Cloud Snapshot?</string>
-    <string name="delete_cloud_snapshot_confirm">Are you sure you want to delete \u2018%1$s\u2019? This will permanently remove the backup snapshot from your cloud storage.</string>
-
     <!-- User & Profile Greeting Card -->
     <string name="profile_desc">Profile Image</string>
     <string name="greeting_morning">Good morning</string>
@@ -822,7 +760,6 @@
         <item quantity="one">%1$d day left in %2$s</item>
         <item quantity="other">%1$d days left in %2$s</item>
     </plurals>
-
     <!-- Rules Dialogs -->
     <string name="reset_rules_title">Reset Rules</string>
     <string name="reset_rules_confirm">Reset all rules to default settings? Your custom settings will be lost.</string>
@@ -840,7 +777,6 @@
     <string name="transactions_updated_format">Transactions updated: %1$d</string>
     <string name="transactions_blocked_format">Transactions blocked (soft deleted): %1$d</string>
     <string name="errors_count_format">Errors: %1$d</string>
-
     <!-- SMS Scanning & Workers -->
     <string name="scanning_sms_messages_title">Scanning SMS Messages</string>
     <string name="cancel_scan">Cancel Scan</string>
@@ -864,10 +800,8 @@
     <string name="scan_cancelled">Scan cancelled</string>
     <string name="starting_scan">Starting scan...</string>
     <string name="scanning_sms_format">Scanning SMS: %1$d/%2$d</string>
-
     <!-- Time Selection -->
     <string name="select_time">Select Time</string>
-
     <!-- Transactions, Indicators & Categories -->
     <string name="recurring">Recurring</string>
     <string name="balance_after_format">Bal: %1$s</string>
@@ -877,22 +811,18 @@
     <string name="type_investment">Investment</string>
     <string name="type_income">Income</string>
     <string name="type_expense">Expense</string>
-    <string name="type_balance_update">Balance Update</string>
-
     <!-- Estimated amounts -->
     <string name="estimated_amount_format">est. %1$s</string>
     <string name="uncategorized">Uncategorized</string>
     <string name="net">Net</string>
     <string name="processing">Processing…</string>
-
     <!-- Language Selection -->
     <string name="language">Language</string>
     <string name="language_subtitle">Change application language</string>
     <string name="select_language">Select Language</string>
-
     <!-- Settings Screen -->
     <string name="default_user_name">User</string>
-    <string name="backup_sync_subtitle">Backup, Cloud, Restore and  Sync settings</string>
+    <string name="backup_sync_subtitle">Backup, Cloud, Restore and Sync settings</string>
     <string name="error">Error</string>
     <string name="transactions_count_short">%1$d Transactions</string>
     <string name="appearances">Appearances</string>
@@ -915,416 +845,476 @@
     <string name="webhooks_subtitle">BYOAPI finance sync</string>
     <string name="about_subtitle">App version, source code and more</string>
 
-    <!-- Currency Settings -->
-    <string name="currency">Currency</string>
-    <string name="currency_subtitle">Exchange rates and currency preferences</string>
-    <string name="currency_settings_title">Currency</string>
-    <string name="unified_currency">Unified Currency</string>
-    <string name="unified_currency_subtitle">Display all amounts in a single currency</string>
-    <string name="default_currency">Default Currency</string>
-    <string name="default_currency_subtitle">Pre-select currency for new entries</string>
-    <string name="display_currency">Display Currency</string>
-    <string name="default_label">Default</string>
-    <string name="none">None</string>
-    <string name="rates_info_subtitle">View exchange rates for your base currency</string>
+    <string name="typing">Thinking about your request...</string>
+    <string name="app_crashed">App Crashed</string>
+    <string name="share_crash_report">Share crash report</string>
+    <string name="unexpected_crash">Unexpected Crash</string>
+    <string name="crash_report">Crash Report</string>
+    <string name="share_logs">Share logs</string>
+    <string name="stop">Stop</string>
+    <string name="extracted_from_pdf">Extracted from PDF</string>
+    <string name="existing_in_database">Existing in Database</string>
+    <string name="search_chats">Search chats...</string>
+    <string name="regenerate">Regenerate</string>
+    <string name="tokens_usage">Tokens Usage</string>
+    <string name="screen_content">Screen Content</string>
+    <string name="copied_text">Copied Text</string>
 
-    <!-- Custom Currency Settings -->
-    <string name="search_currencies">Search currencies...</string>
-    <string name="rates_relative_to">Rates relative to %1$s</string>
-    <string name="last_updated">Last updated: %1$s</string>
-    <string name="custom_rate">Custom rate</string>
-    <string name="custom_rate_set">Custom rate set. Tap Reset to revert to API rate.</string>
-    <string name="add_custom_currency">Add Custom Currency</string>
-    <string name="custom_currency">Custom Currency</string>
-    <string name="currency_country_name">Currency name</string>
-    <string name="eg_test_country">e.g. Test Country</string>
-    <string name="currency_code">Currency Code</string>
-    <string name="eg_tst">e.g. TST</string>
-    <string name="currency_symbol">Currency Symbol</string>
-    <string name="eg_tsymbol">e.g. T$</string>
-    <string name="exchange_rate">Exchange Rate</string>
-    <string name="exchange_rate_format">1 %1$s = %2$s %3$s</string>
-    <string name="please_fill_all_fields">Please fill all fields with valid data.</string>
-    <string name="base_currency_hint">Base = default currency or main account\'s currency</string>
-    <string name="save_currency">Save Currency</string>
-    <string name="currency_name_hint">US Dollar, India Rupee ..</string>
-    <string name="currency_code_hint">USD, INR, EUR ...</string>
-    <string name="currency_symbols_hint">$,₹,€,£,₽</string>
-    <string name="exchange_rate_hint">1 Base = X Custom currency</string>
-    <string name="exchange_rates_notice_title">Exchange Rates Notice</string>
-    <string name="exchange_rates_notice_text">The exchange rates displayed within this app are for informational purposes only and should not be used for investment decisions. These rates are estimates and may not reflect actual rates. By using this app you acknowledge that you understand and accept these limitations.</string>
-    <string name="custom_label">CUSTOM</string>
-    <string name="new_chat">New Chat</string>
-    <string name="chat_history">Chat History</string>
+    <!-- Language names -->
+    <string name="english">English</string>
+    <string name="afrikaans">Afrikaans</string>
+    <string name="arabic">العربية</string>
+    <string name="azerbaijani">Azərbaycan</string>
+    <string name="bulgarian">Български</string>
+    <string name="bengali">বাংলা</string>
+    <string name="tibetan">བོད་སྐད་</string>
+    <string name="catalan">Català</string>
+    <string name="czech">Čeština</string>
+    <string name="danish">Dansk</string>
+    <string name="german">Deutsch</string>
+    <string name="dzongkha">རྫོང་ཁ་</string>
+    <string name="greek">Ελληνικά</string>
+    <string name="spanish">Español</string>
+    <string name="persian">فارسي</string>
+    <string name="french">Français</string>
+    <string name="gujarati">ગુજરાતી</string>
+    <string name="hawaiian">ʻŌlelo Hawaiʻi</string>
+    <string name="hebrew">עברית</string>
+    <string name="hindi">हिन्दी</string>
+    <string name="croatian">Hrvatski</string>
+    <string name="hungarian">Magyar</string>
+    <string name="indonesian">Bahasa Indonesia</string>
+    <string name="icelandic">Íslenska</string>
+    <string name="italiano">Italiano</string>
+    <string name="japanese">日本語</string>
+    <string name="kabyle">Taqbaylit</string>
+    <string name="kannada">ಕನ್ನಡ</string>
+    <string name="kashmiri">कश्मीरी</string>
+    <string name="latin">Latina</string>
+    <string name="malayalam">മലയാളം</string>
+    <string name="marathi">मराठी</string>
+    <string name="nepali">नेपाली</string>
+    <string name="dutch">Nederlands</string>
+    <string name="norwegian">Norsk</string>
+    <string name="chichewa">Chichewa</string>
+    <string name="odia">ଓଡ଼ིଆ</string>
+    <string name="iron">Ирон</string>
+    <string name="punjabi">ਪੰਜਾਬੀ</string>
+    <string name="polish">Polski</string>
+    <string name="portuguese">Português</string>
+    <string name="romanian">Română</string>
+    <string name="russian">Русский</string>
+    <string name="slovak">Slovenčina</string>
+    <string name="slovenian">Slovenščina</string>
+    <string name="swedish">Svenska</string>
+    <string name="tamil">தமிழ்</string>
+    <string name="telugu">తెలుగు</string>
+    <string name="thai">ไทย</string>
+    <string name="turkmençe">Türkmençe</string>
+    <string name="turkish">Türkçe</string>
+    <string name="ukrainian">Українська</string>
+    <string name="urdu">اردو</string>
+    <string name="uzbek">Oʻzbekcha</string>
+    <string name="valencian">Valencian</string>
+    <string name="vietnamese">Tiếng Việt</string>
+    <string name="chinese">中文</string>
 
-    <!-- AppearanceScreen -->
-    <string name="appearance_title">Appearance</string>
-    <string name="theme_system">System</string>
-    <string name="theme_light">Light</string>
-    <string name="theme_dark">Dark</string>
-    <string name="style_dynamic">Dynamic</string>
-    <string name="style_dynamic_sub">Wallpaper Colors</string>
-    <string name="style_default">Default</string>
-    <string name="style_default_sub">Default Colors</string>
-    <string name="amoled_black">Amoled Black</string>
-    <string name="amoled_black_desc">Use pure black background for deeper contrast</string>
-    <string name="blur_effects">Blur Effects</string>
-    <string name="blur_effects_desc">Enable glassmorphism blur effects in UI components</string>
-    <string name="logo_original">Original</string>
-    <string name="logo_anarchy">Anarchy</string>
-    <string name="logo_comic">Comic</string>
-    <string name="logo_zenith">Zenith</string>
-    <string name="logo_monochrome">Monochrome</string>
-    <string name="navigation_style">Navigation</string>
-    <string name="nav_floating">Floating</string>
-    <string name="nav_floating_sub">Modern &amp; Sleek</string>
-    <string name="nav_normal">Normal</string>
-    <string name="nav_normal_sub">Standard M3</string>
-    <string name="hide_nav_labels">Hide Navigation Labels</string>
-    <string name="hide_nav_labels_desc">Hide labels in the navigation bar</string>
-    <string name="hide_pill_indicator">Hide Pill Indicator</string>
-    <string name="hide_pill_indicator_desc">Hide the selection indicator in the navigation bar</string>
-    <string name="fonts_title">Fonts</string>
-    <string name="font_default_sub">System</string>
-    <string name="font_snpro">SN Pro</string>
-    <string name="font_snpro_sub">Modern Mono</string>
+    <string name="loan_description">Manage lent and borrowed records</string>
 
-    <!-- CreateRuleScreen -->
-    <string name="quick_templates">Quick Templates</string>
-    <string name="rule_name_label">Rule Name</string>
-    <string name="rule_name_placeholder">e.g., Food expenses under ₹200</string>
-    <string name="description_placeholder">What does this rule do?</string>
-    <string name="conditions_title">Conditions</string>
-    <string name="add_condition">Add</string>
-    <string name="condition_n_format">Condition %1$d</string>
-    <string name="remove_condition_cd">Remove Condition</string>
-    <string name="field_label">Field</string>
-    <string name="value_label">Value</string>
-    <string name="field_amount">Amount</string>
-    <string name="field_merchant">Merchant</string>
-    <string name="field_category">Category</string>
-    <string name="field_sms_text">SMS Text</string>
-    <string name="field_transaction_type">Transaction Type</string>
-    <string name="field_subcategory">Subcategory</string>
-    <string name="field_bank_name">Bank Name</string>
-    <string name="field_default">Field</string>
-    <string name="then_title">Then</string>
-    <string name="action_type_label">Action Type</string>
-    <string name="action_block_transaction">Block Transaction</string>
-    <string name="action_set_field">Set Field</string>
-    <string name="action_clear_field">Clear Field</string>
-    <string name="action_set_category">Set Category</string>
-    <string name="action_set_subcategory">Set Subcategory</string>
-    <string name="action_set_merchant">Set Merchant Name</string>
-    <string name="action_set_type">Set Transaction Type</string>
-    <string name="action_label">Action</string>
-    <string name="block_message">Transactions matching this rule will be blocked and not saved</string>
-    <string name="choose_category">Choose Category</string>
-    <string name="preset_block_otps">Block OTPs</string>
-    <string name="preset_block_small">Block Small Amounts</string>
-    <string name="preset_small_food">Small amounts → Food</string>
-    <string name="preset_standardize">Standardize Merchant</string>
-    <string name="preset_mark_income">Mark as Income</string>
+    <!-- Added fallback strings (present in locales) -->
+<string name="action_block_transaction">Block Transaction</string>
+<string name="action_clear_field">Clear Field</string>
+<string name="action_label">Action</string>
+<string name="action_set_category">Set Category</string>
+<string name="action_set_field">Set Field</string>
+<string name="action_set_merchant">Set Merchant Name</string>
+<string name="action_set_subcategory">Set Subcategory</string>
+<string name="action_set_type">Set Transaction Type</string>
+<string name="action_type_label">Action Type</string>
+<string name="active_tab">People</string>
+<string name="add_attachment_cd">Add attachment</string>
+<string name="add_condition">Add</string>
+<string name="add_custom_currency">Add Custom Currency</string>
+<string name="add_entry">Add Record</string>
+<string name="add_person">Add Person</string>
+<string name="add_record">Add Record</string>
+<string name="add_transaction_subscription_cd">Add Transaction or Subscription</string>
+<string name="alert_time">Alert Time</string>
+<string name="all_txns_tab">Transactions</string>
+<string name="am_lbl">AM</string>
+<string name="amoled_black">Amoled Black</string>
+<string name="amoled_black_desc">Use pure black background for deeper contrast</string>
+<string name="amount_i_owe_them">The Amount I owe them</string>
+<string name="amount_they_owe_me">The Amount they owe me</string>
+<string name="app_locked_title">Cashiro is Locked</string>
+<string name="appearance_title">Appearance</string>
+<string name="auth_failed_format">Authentication failed: %1$s</string>
+<string name="authenticate_desc">Authenticate to access your expense data</string>
+<string name="automatic_backup_schedule">Automatic Backup Schedule</string>
+<string name="backup_retention_limit">Backup Retention Limit</string>
+<string name="backup_schedule">Backup Schedule</string>
+<string name="backup_sync_title">Backup &amp; Sync</string>
+<string name="backup_uploaded_success">Backup successfully uploaded!</string>
+<string name="bank_push_notifications">Bank Push Notifications</string>
+<string name="base_currency_hint">Base = default currency or main account\'s currency</string>
+<string name="batch_edit_amount">Amount</string>
+<string name="batch_edit_apply_format">Apply to %1$d Transactions</string>
+<string name="batch_edit_category_subcategory">Category &amp; Subcategory</string>
+<string name="batch_edit_check_options">Check Options Above to Edit</string>
+<string name="batch_edit_choose">Choose</string>
+<string name="batch_edit_date">Date</string>
+<string name="batch_edit_note_description">Note / Description</string>
+<string name="batch_edit_note_placeholder">Enter note across selected items</string>
+<string name="batch_edit_pick_date">Pick Date</string>
+<string name="batch_edit_pick_time">Pick Time</string>
+<string name="batch_edit_select_category">Select Category</string>
+<string name="batch_edit_set_amount">Set Amount</string>
+<string name="batch_edit_set_batch_amount">Set Batch Amount</string>
+<string name="batch_edit_time">Time</string>
+<string name="batch_edit_title">Batch Edit Transactions</string>
+<string name="batch_edit_toggle_hint">Toggle options below to apply across selected transactions:</string>
+<string name="batch_edit_updating_format">Updating %1$d selected items</string>
+<string name="biometric_setup_desc">Please disable app lock in device settings or set up biometric authentication.</string>
+<string name="biometric_unavailable_title">Biometric authentication unavailable</string>
+<string name="block_message">Transactions matching this rule will be blocked and not saved</string>
+<string name="blur_effects">Blur Effects</string>
+<string name="blur_effects_desc">Enable glassmorphism blur effects in UI components</string>
+<string name="call_person">Call</string>
+<string name="category_all">All</string>
+<string name="category_colleagues">Colleagues</string>
+<string name="category_family">Family</string>
+<string name="category_filter">Filter by category</string>
+<string name="category_friends">Friends</string>
+<string name="category_other">Other</string>
+<string name="chat_history">Chat History</string>
+<string name="choose_category">Choose Category</string>
+<string name="clear_due_date">Clear Due Date</string>
+<string name="cloud_backup_failed">Cloud backup failed</string>
+<string name="cloud_snapshots">Cloud Snapshots</string>
+<string name="collapse_cd">Collapse</string>
+<string name="condition_n_format">Condition %1$d</string>
+<string name="conditions_title">Conditions</string>
+<string name="connected_to_google_drive">Connected to Google Drive</string>
+<string name="connection_failed_format">Connection failed: %1$s</string>
+<string name="connection_verified">Connection successfully verified!</string>
+<string name="contacts">Contacts</string>
+<string name="create_backup">Create Backup</string>
+<string name="currency">Currency</string>
+<string name="currency_code">Currency Code</string>
+<string name="currency_code_hint">USD, INR, EUR ...</string>
+<string name="currency_country_name">Currency name</string>
+<string name="currency_name_hint">US Dollar, India Rupee ..</string>
+<string name="currency_settings_title">Currency</string>
+<string name="currency_subtitle">Exchange rates and currency preferences</string>
+<string name="currency_symbol">Currency Symbol</string>
+<string name="currency_symbols_hint">$,₹,€,£,₽</string>
+<string name="custom_currency">Custom Currency</string>
+<string name="custom_label">CUSTOM</string>
+<string name="custom_rate">Custom rate</string>
+<string name="custom_rate_set">Custom rate set. Tap Reset to revert to API rate.</string>
+<string name="data_protected_format">Your data is protected with %1$s</string>
+<string name="default_currency">Default Currency</string>
+<string name="default_currency_subtitle">Pre-select currency for new entries</string>
+<string name="default_label">Default</string>
+<string name="delete_cloud_snapshot_confirm">Are you sure you want to delete \u2018%1$s\u2019? This will permanently remove the backup snapshot from your cloud storage.</string>
+<string name="delete_cloud_snapshot_title">Delete Cloud Snapshot?</string>
+<string name="delete_multiple_persons_confirm">This action is irreversible. The selected persons and all associated ledger records will be permanently deleted and cannot be recovered.</string>
+<string name="delete_person">Delete Person</string>
+<string name="delete_person_confirm_desc">Are you sure you want to delete %1$s and all associated ledger records? This cannot be undone.</string>
+<string name="delete_person_confirm_title">Delete Person?</string>
+<string name="delete_record">Delete Record</string>
+<string name="delete_snapshot">Delete Snapshot</string>
+<string name="description_placeholder">What does this rule do?</string>
+<string name="device_sync_failed">Device synchronization failed</string>
+<string name="display_currency">Display Currency</string>
+<string name="downloading_snapshot">Downloading snapshot...</string>
+<string name="due_date">Due Date</string>
+<string name="due_date_optional">Due Date (Optional)</string>
+<string name="duplicate_transaction">Duplicate Transaction</string>
+<string name="e2e_disabled_desc">Encrypt backups before uploading to cloud</string>
+<string name="e2e_enabled_desc">Backups encrypted with AES-256-GCM</string>
+<string name="e2e_encryption">End-to-End Encryption</string>
+<string name="earlier_lbl">Earlier</string>
+<string name="edit_person">Edit Person</string>
+<string name="edit_record">Edit Record</string>
+<string name="edit_selected_count_format">Edit — %1$d</string>
+<string name="edit_selected_transactions">Edit Selected Transactions</string>
+<string name="eg_test_country">e.g. Test Country</string>
+<string name="eg_tst">e.g. TST</string>
+<string name="eg_tsymbol">e.g. T$</string>
+<string name="enable_and_save">Save</string>
+<string name="encrypted_backup_title">Encrypted Backup</string>
+<string name="encryption_and_automation">Encryption &amp; Automation</string>
+<string name="enter_passphrase_desc">Enter a secure passphrase to encrypt all future cloud backups using AES-256-GCM:</string>
+<string name="err_accounts_different">Source and target accounts must be different</string>
+<string name="err_amount_positive">Amount must be greater than 0</string>
+<string name="err_amount_required">Amount is required</string>
+<string name="err_auth_failed_retry">Authentication failed. Please sign out and try again.</string>
+<string name="err_category_required">Category is required</string>
+<string name="err_invalid_amount">Invalid amount</string>
+<string name="err_merchant_required">Merchant/Description is required</string>
+<string name="err_network">Network error. Please check your connection.</string>
+<string name="err_save_subscription">Failed to save subscription</string>
+<string name="err_save_transaction">Failed to save transaction</string>
+<string name="err_service_required">Service name is required</string>
+<string name="err_source_target_required">Both source and target accounts are required for transfers</string>
+<string name="err_subscription_not_found">Subscription not found</string>
+<string name="err_token_null">Retrieved token is null</string>
+<string name="err_too_short">Too short</string>
+<string name="error_format">Error: %1$s</string>
+<string name="error_testing_connection_format">Error testing connection: %1$s</string>
+<string name="exchange_rate">Exchange Rate</string>
+<string name="exchange_rate_format">1 %1$s = %2$s %3$s</string>
+<string name="exchange_rate_hint">1 Base = X Custom currency</string>
+<string name="exchange_rates_notice_text">The exchange rates displayed within this app are for informational purposes only and should not be used for investment decisions. These rates are estimates and may not reflect actual rates. By using this app you acknowledge that you understand and accept these limitations.</string>
+<string name="exchange_rates_notice_title">Exchange Rates Notice</string>
+<string name="expand_cd">Expand</string>
+<string name="failed_list_backups_format">Failed to list remote backups: %1$s</string>
+<string name="failed_restore_snapshot">Failed to restore cloud snapshot</string>
+<string name="field_amount">Amount</string>
+<string name="field_bank_name">Bank Name</string>
+<string name="field_category">Category</string>
+<string name="field_default">Field</string>
+<string name="field_label">Field</string>
+<string name="field_merchant">Merchant</string>
+<string name="field_sms_text">SMS Text</string>
+<string name="field_subcategory">Subcategory</string>
+<string name="field_transaction_type">Transaction Type</string>
+<string name="font_default_sub">System</string>
+<string name="font_snpro">SN Pro</string>
+<string name="font_snpro_sub">Modern Mono</string>
+<string name="fonts_title">Fonts</string>
+<string name="full_resync">Full Resync</string>
+<string name="full_resync_desc">This will reprocess all SMS messages from scratch. Use this to fix issues caused by updated bank parsers.\n\nThis may take a few seconds depending on your message history.</string>
+<string name="full_settlement">Full</string>
+<string name="gets_amount">Gets %1$s</string>
+<string name="google_drive_configuration">Google Drive Configuration</string>
+<string name="google_drive_provider_desc">Secure AppData folder in your personal Google Drive</string>
+<string name="google_drive_signin_desc">Sign in with your Google account to enable Google Drive backup &amp; sync.</string>
+<string name="google_signin_failed_no_email">Google sign-in failed: Could not retrieve email</string>
+<string name="google_signin_failed_null">Google sign-in failed: Account is null</string>
+<string name="hide_nav_labels">Hide Navigation Labels</string>
+<string name="hide_nav_labels_desc">Hide labels in the navigation bar</string>
+<string name="hide_pill_indicator">Hide Pill Indicator</string>
+<string name="hide_pill_indicator_desc">Hide the selection indicator in the navigation bar</string>
+<string name="home_title">Home</string>
+<string name="how_to_enable">How to enable:</string>
+<string name="i_borrowed">I owe them</string>
+<string name="i_lent">They owe me</string>
+<string name="immediate_locking">immediate locking</string>
+<string name="keep_backups_format">Keep up to %1$d backups</string>
+<string name="keep_snapshots_format">Keep up to %1$d cloud snapshots</string>
+<string name="khata_title">Loans</string>
+<string name="last_updated">Last updated: %1$s</string>
+<string name="lend_borrow_filter_lent">Lent</string>
+<string name="lend_borrow_filter_owed">Owed</string>
+<string name="lend_borrow_settled">Settled</string>
+<string name="lend_borrow_title">Loans</string>
+<string name="lend_borrow_you_get">You\'ll get</string>
+<string name="lend_borrow_you_owe">You owe</string>
+<string name="loan_total_title">Total</string>
+<string name="logo_anarchy">Anarchy</string>
+<string name="logo_comic">Comic</string>
+<string name="logo_monochrome">Monochrome</string>
+<string name="logo_original">Original</string>
+<string name="logo_zenith">Zenith</string>
+<string name="manage_transaction">Manage Transaction</string>
+<string name="manual_actions">Manual Actions</string>
+<string name="mark_as">Mark as</string>
+<string name="merchant_lbl">Merchant</string>
+<string name="minute_timeout_format">%1$d minute timeout</string>
+<string name="nav_floating">Floating</string>
+<string name="nav_floating_sub">Modern &amp; Sleek</string>
+<string name="nav_normal">Normal</string>
+<string name="nav_normal_sub">Standard M3</string>
+<string name="navigation_style">Navigation</string>
+<string name="net_balance_khata">Net Balance</string>
+<string name="net_worth_label">Net worth</string>
+<string name="new_chat">New Chat</string>
+<string name="no_attachments">No attachments</string>
+<string name="no_cloud_snapshots">No remote backup snapshots found in cloud folder.</string>
+<string name="no_contacts_desc">No contacts added yet. Tap the View All button to add people.</string>
+<string name="no_description">No description</string>
+<string name="no_due_date">No Due Date</string>
+<string name="no_persons_desc">Add a person to start tracking money lended or borrowed</string>
+<string name="no_persons_yet">No ledger records yet</string>
+<string name="no_transactions_khata">No records found</string>
+<string name="none">None</string>
+<string name="notes_optional_ledger">Notes (Optional)</string>
+<string name="notification_access">Notification Access</string>
+<string name="notification_access_active">Notification access is active</string>
+<string name="notification_access_desc">Enable to detect bank transactions from push notifications</string>
+<string name="notification_access_required">Notification Access Required</string>
+<string name="notification_access_required_desc">To automatically detect bank transactions in real-time, Cashiro requires notification access. This is a system-level permission.</string>
+<string name="open_settings">Open Settings</string>
+<string name="options_desc">Options</string>
+<string name="overdue_count_format">%1$d Overdue</string>
+<string name="overdue_tag">Overdue</string>
+<string name="owes_amount">Owes %1$s</string>
+<string name="partial_settlement">Partial</string>
+<string name="passphrase">Passphrase</string>
+<string name="password_or_token">Password or App Token</string>
+<string name="people_count_format">%1$d People</string>
+<string name="percent_this_month_format">%1$s%2$s%% this month</string>
+<string name="person_avatar">Avatar</string>
+<string name="person_category">Category</string>
+<string name="person_color">Avatar Color</string>
+<string name="person_name">Person Name *</string>
+<string name="phone_number_optional">Phone Number (Optional)</string>
+<string name="please_fill_all_fields">Please fill all fields with valid data.</string>
+<string name="pm_lbl">PM</string>
+<string name="preset_block_otps">Block OTPs</string>
+<string name="preset_block_small">Block Small Amounts</string>
+<string name="preset_mark_income">Mark as Income</string>
+<string name="preset_small_food">Small amounts → Food</string>
+<string name="preset_standardize">Standardize Merchant</string>
+<string name="provider_google_drive">Google Drive</string>
+<string name="provider_local_only">Local Only</string>
+<string name="provider_webdav">Nextcloud / WebDAV</string>
+<string name="quick_templates">Quick Templates</string>
+<string name="rates_info_subtitle">View exchange rates for your base currency</string>
+<string name="rates_relative_to">Rates relative to %1$s</string>
+<string name="receipt">Receipt</string>
+<string name="record_options">Record Options</string>
+<string name="remind_transactions">Remind Transactions</string>
+<string name="remind_transactions_desc">Get reminders to scan new messages</string>
+<string name="reminder_message_format">Hi %1$s, friendly reminder regarding our ledger balance of %2$s.</string>
+<string name="remove_cd">Remove</string>
+<string name="remove_condition_cd">Remove Condition</string>
+<string name="restore">Restore</string>
+<string name="restore_passphrase_desc">This backup is encrypted. Enter the passphrase used when creating the backup:</string>
+<string name="restore_snapshot">Restore Snapshot</string>
+<string name="restoring_data_format">Restoring data... %1$d%%</string>
+<string name="resync_all">Resync All</string>
+<string name="retention_limit">Retention Limit</string>
+<string name="review">Review</string>
+<string name="rule_name_label">Rule Name</string>
+<string name="rule_name_placeholder">e.g., Food expenses under ₹200</string>
+<string name="sample_data">Sample Data</string>
+<string name="sample_data_desc">Create dummy accounts and transactions</string>
+<string name="save_configuration">Save</string>
+<string name="save_currency">Save Currency</string>
+<string name="scan_settings">Scan Settings</string>
+<string name="schedule_daily">Daily</string>
+<string name="schedule_manual">Manual only</string>
+<string name="schedule_monthly">Monthly</string>
+<string name="schedule_weekly">Weekly</string>
+<string name="search_currencies">Search currencies...</string>
+<string name="select_due_date">Select Due Date</string>
+<string name="select_person">Select Person</string>
+<string name="selected_cd">Selected</string>
+<string name="server_url_hint">Server URL (e.g. https://cloud.example.com/remote.php/dav/files/user/)</string>
+<string name="settle_amount">Settlement Amount</string>
+<string name="settle_description">Settlement Note</string>
+<string name="settle_full_desc">Pay the entire outstanding balance in one go.</string>
+<string name="settle_partial_desc">Pay only a portion of the outstanding balance. You can settle the remaining amount later.</string>
+<string name="settle_up">Settle Up</string>
+<string name="settled_tag">Settled</string>
+<string name="settlement_paid">Paid Back (Settlement)</string>
+<string name="settlement_received">Received Payment (Settlement)</string>
+<string name="share_receipt">Share Receipt</string>
+<string name="sign_in_with_google">Sign in with Google</string>
+<string name="sign_out">Sign Out</string>
+<string name="signed_in_as_format">Signed in as %1$s</string>
+<string name="signin_failed_code_format">Sign-In failed: %1$d</string>
+<string name="size_mb_format">%.2f MB</string>
+<string name="sms_person">Remind via SMS</string>
+<string name="snapshot_restored_success">Snapshot successfully restored!</string>
+<string name="snapshot_subtitle_format">%1$s • %2$s</string>
+<string name="sort_amount_highest">Highest Amount</string>
+<string name="sort_amount_lowest">Lowest Amount</string>
+<string name="sort_date_newest">Newest First</string>
+<string name="sort_date_oldest">Oldest First</string>
+<string name="sort_merchant_az">Merchant (A-Z)</string>
+<string name="sort_merchant_za">Merchant (Z-A)</string>
+<string name="split_transaction">Split</string>
+<string name="starting_cloud_backup">Starting cloud backup...</string>
+<string name="step_1">Tap the \'Open Settings\' button below.</string>
+<string name="step_2">Find \'Cashiro\' in the list of applications.</string>
+<string name="step_3">Toggle \'Allow notification access\' to enabled.</string>
+<string name="storage_provider">Storage Provider</string>
+<string name="store_backups_local_desc">Store backups only on this device</string>
+<string name="style_default">Default</string>
+<string name="style_default_sub">Default Colors</string>
+<string name="style_dynamic">Dynamic</string>
+<string name="style_dynamic_sub">Wallpaper Colors</string>
+<string name="sync_complete_format">Sync complete! Synced %1$d peer device(s), imported %2$d transactions.</string>
+<string name="sync_devices">Sync Devices</string>
+<string name="sync_sms_cd">Sync SMS transactions</string>
+<string name="sync_with_wallet">Also add transaction to Bank/Wallet</string>
+<string name="synchronizing_devices">Synchronizing across devices...</string>
+<string name="syncing_devices_format">Syncing across devices... %1$d%%</string>
+<string name="telegram_cd">Telegram</string>
+<string name="test_connection">Test Connection</string>
+<string name="test_notification_alerts">Test Notification Alerts</string>
+<string name="test_notification_alerts_desc">Send test notifications periodically</string>
+<string name="theme_dark">Dark</string>
+<string name="theme_light">Light</string>
+<string name="theme_system">System</string>
+<string name="then_title">Then</string>
+<string name="this_month_lbl">THIS MONTH</string>
+<string name="this_transaction">This transaction</string>
+<string name="this_week_lbl">This Week</string>
+<string name="this_year_lbl">THIS YEAR</string>
+<string name="time_period_all_time">All Time</string>
+<string name="time_period_current_fy">Current FY</string>
+<string name="time_period_custom_range">Custom Range</string>
+<string name="time_period_last_month">Last Month</string>
+<string name="time_period_this_month">This Month</string>
+<string name="today_lbl">Today</string>
+<string name="token_info">Chat Token Info</string>
+<string name="token_info_desc">Show technical information in chat</string>
+<string name="total_borrowed">Borrowed</string>
+<string name="total_lent">Lent</string>
+<string name="transaction_duplicated">Transaction duplicated</string>
+<string name="transaction_info">Transaction Info</string>
+<string name="type_all">All</string>
+<string name="type_balance_update">Balance Update</string>
+<string name="type_borrowed">Borrowed</string>
+<string name="type_credit">Credit</string>
+<string name="type_lent">Lent</string>
+<string name="unified_currency">Unified Currency</string>
+<string name="unified_currency_subtitle">Display all amounts in a single currency</string>
+<string name="unknown_error">Unknown error</string>
+<string name="unlock">Unlock</string>
+<string name="upcoming_transactions_desc">Get reminders for upcoming payments</string>
+<string name="upcoming_transactions_section">Upcoming Transactions</string>
+<string name="uploading_to_cloud_format">Uploading to cloud... %1$d%%</string>
+<string name="username">Username</string>
+<string name="value_label">Value</string>
+<string name="verification_failed">Verification failed.</string>
+<string name="view_transaction">View Transaction</string>
+<string name="webdav_credentials_title">Nextcloud / WebDAV Credentials</string>
+<string name="webdav_provider_desc">Nextcloud, OwnCloud, Synology, or custom WebDAV</string>
+<string name="webhook_mode">Webhooks</string>
+<string name="webhook_mode_desc">Enable BYOAPI webhook sync</string>
+<string name="whatsapp_cd">WhatsApp</string>
+<string name="yesterday_lbl">Yesterday</string>
 
-    <!-- NotificationScreen -->
-    <string name="notification_access">Notification Access</string>
-    <string name="bank_push_notifications">Bank Push Notifications</string>
-    <string name="notification_access_active">Notification access is active</string>
-    <string name="notification_access_desc">Enable to detect bank transactions from push notifications</string>
-    <string name="notification_access_required">Notification Access Required</string>
-    <string name="notification_access_required_desc">To automatically detect bank transactions in real-time, Cashiro requires notification access. This is a system-level permission.</string>
-    <string name="how_to_enable">How to enable:</string>
-    <string name="step_1">Tap the \'Open Settings\' button below.</string>
-    <string name="step_2">Find \'Cashiro\' in the list of applications.</string>
-    <string name="step_3">Toggle \'Allow notification access\' to enabled.</string>
-    <string name="open_settings">Open Settings</string>
-    <string name="scan_settings">Scan Settings</string>
-    <string name="remind_transactions">Remind Transactions</string>
-    <string name="remind_transactions_desc">Get reminders to scan new messages</string>
-    <string name="alert_time">Alert Time</string>
-    <string name="upcoming_transactions_section">Upcoming Transactions</string>
-    <string name="upcoming_transactions_desc">Get reminders for upcoming payments</string>
-
-    <!-- DeveloperScreen -->
-    <string name="test_notification_alerts">Test Notification Alerts</string>
-    <string name="test_notification_alerts_desc">Send test notifications periodically</string>
-    <string name="sample_data">Sample Data</string>
-    <string name="sample_data_desc">Create dummy accounts and transactions</string>
-
-    <!-- BottomNavItem -->
-    <string name="home_title">Home</string>
-
-    <!-- CashiroNavHost -->
-    <string name="full_resync">Full Resync</string>
-    <string name="full_resync_desc">This will reprocess all SMS messages from scratch. Use this to fix issues caused by updated bank parsers.\n\nThis may take a few seconds depending on your message history.</string>
-    <string name="resync_all">Resync All</string>
-    <string name="sync_sms_cd">Sync SMS transactions</string>
-    <string name="options_desc">Options</string>
-    <string name="add_transaction_subscription_cd">Add Transaction or Subscription</string>
-
-    <!-- ColorPickerContent -->
-    <string name="selected_cd">Selected</string>
-
-    <!-- BalanceCard -->
-    <string name="net_worth_label">Net worth</string>
-    <string name="this_month_lbl">THIS MONTH</string>
-    <string name="this_year_lbl">THIS YEAR</string>
-    <string name="percent_this_month_format">%1$s%2$s%% this month</string>
-
-    <!-- AppLockScreen -->
-    <string name="app_locked_title">Cashiro is Locked</string>
-    <string name="authenticate_desc">Authenticate to access your expense data</string>
-    <string name="unlock">Unlock</string>
-    <string name="biometric_unavailable_title">Biometric authentication unavailable</string>
-    <string name="biometric_setup_desc">Please disable app lock in device settings or set up biometric authentication.</string>
-    <string name="immediate_locking">immediate locking</string>
-    <string name="minute_timeout_format">%1$d minute timeout</string>
-    <string name="data_protected_format">Your data is protected with %1$s</string>
-
-    <!-- TransactionsState -->
-    <string name="today_lbl">Today</string>
-    <string name="yesterday_lbl">Yesterday</string>
-    <string name="this_week_lbl">This Week</string>
-    <string name="earlier_lbl">Earlier</string>
-    <string name="sort_date_newest">Newest First</string>
-    <string name="sort_date_oldest">Oldest First</string>
-    <string name="sort_amount_highest">Highest Amount</string>
-    <string name="sort_amount_lowest">Lowest Amount</string>
-    <string name="sort_merchant_az">Merchant (A-Z)</string>
-    <string name="sort_merchant_za">Merchant (Z-A)</string>
-
-    <!-- AttachmentSection -->
-    <string name="add_attachment_cd">Add attachment</string>
-    <string name="remove_cd">Remove</string>
-
-    <!-- TransactionDetailScreen -->
-    <string name="receipt">Receipt</string>
-    <string name="transaction_info">Transaction Info</string>
-    <string name="split_transaction">Split</string>
-    <string name="manage_transaction">Manage Transaction</string>
-    <string name="view_transaction">View Transaction</string>
-    <string name="mark_as">Mark as</string>
-    <string name="no_description">No description</string>
-    <string name="no_attachments">No attachments</string>
-    <string name="this_transaction">This transaction</string>
-
-    <!-- AddViewModel validation -->
-    <string name="err_amount_required">Amount is required</string>
-    <string name="err_invalid_amount">Invalid amount</string>
-    <string name="err_amount_positive">Amount must be greater than 0</string>
-    <string name="err_merchant_required">Merchant/Description is required</string>
-    <string name="err_too_short">Too short</string>
-    <string name="err_category_required">Category is required</string>
-    <string name="err_service_required">Service name is required</string>
-    <string name="err_source_target_required">Both source and target accounts are required for transfers</string>
-    <string name="err_accounts_different">Source and target accounts must be different</string>
-    <string name="err_save_transaction">Failed to save transaction</string>
-    <string name="err_save_subscription">Failed to save subscription</string>
-    <string name="err_subscription_not_found">Subscription not found</string>
-    <string name="am_lbl">AM</string>
-    <string name="pm_lbl">PM</string>
-    <string name="merchant_lbl">Merchant</string>
-
-    <!-- Backup & Sync -->
-    <string name="review">Review</string>
-    <string name="backup_sync_title">Backup &amp; Sync</string>
-    <string name="storage_provider">Storage Provider</string>
-    <string name="store_backups_local_desc">Store backups only on this device</string>
-    <string name="webdav_provider_desc">Nextcloud, OwnCloud, Synology, or custom WebDAV</string>
-    <string name="google_drive_provider_desc">Secure AppData folder in your personal Google Drive</string>
-    <string name="webdav_credentials_title">Nextcloud / WebDAV Credentials</string>
-    <string name="server_url_hint">Server URL (e.g. https://cloud.example.com/remote.php/dav/files/user/)</string>
-    <string name="username">Username</string>
-    <string name="password_or_token">Password or App Token</string>
-    <string name="test_connection">Test Connection</string>
-    <string name="save_configuration">Save</string>
-    <string name="google_drive_configuration">Google Drive Configuration</string>
-    <string name="connected_to_google_drive">Connected to Google Drive</string>
-    <string name="sign_out">Sign Out</string>
-    <string name="google_drive_signin_desc">Sign in with your Google account to enable Google Drive backup &amp; sync.</string>
-    <string name="sign_in_with_google">Sign in with Google</string>
-    <string name="encryption_and_automation">Encryption &amp; Automation</string>
-    <string name="e2e_encryption">End-to-End Encryption</string>
-    <string name="e2e_enabled_desc">Backups encrypted with AES-256-GCM</string>
-    <string name="e2e_disabled_desc">Encrypt backups before uploading to cloud</string>
-    <string name="automatic_backup_schedule">Automatic Backup Schedule</string>
-    <string name="backup_retention_limit">Backup Retention Limit</string>
-    <string name="keep_snapshots_format">Keep up to %1$d cloud snapshots</string>
-    <string name="manual_actions">Manual Actions</string>
-    <string name="create_backup">Create Backup</string>
-    <string name="sync_devices">Sync Devices</string>
-    <string name="cloud_snapshots">Cloud Snapshots</string>
-    <string name="no_cloud_snapshots">No remote backup snapshots found in cloud folder.</string>
-    <string name="backup_schedule">Backup Schedule</string>
-    <string name="retention_limit">Retention Limit</string>
-    <string name="keep_backups_format">Keep up to %1$d backups</string>
-    <string name="enter_passphrase_desc">Enter a secure passphrase to encrypt all future cloud backups using AES-256-GCM:</string>
-    <string name="passphrase">Passphrase</string>
-    <string name="enable_and_save">Save</string>
-    <string name="encrypted_backup_title">Encrypted Backup</string>
-    <string name="restore_passphrase_desc">This backup is encrypted. Enter the passphrase used when creating the backup:</string>
-    <string name="restore">Restore</string>
-    <string name="restore_snapshot">Restore Snapshot</string>
-    <string name="delete_snapshot">Delete Snapshot</string>
-    <string name="size_mb_format">%.2f MB</string>
-    <string name="snapshot_subtitle_format">%1$s • %2$s</string>
-    <string name="schedule_manual">Manual only</string>
-    <string name="schedule_daily">Daily</string>
-    <string name="schedule_weekly">Weekly</string>
-    <string name="schedule_monthly">Monthly</string>
-    <string name="google_signin_failed_null">Google sign-in failed: Account is null</string>
-    <string name="google_signin_failed_no_email">Google sign-in failed: Could not retrieve email</string>
-    <string name="err_token_null">Retrieved token is null</string>
-    <string name="signed_in_as_format">Signed in as %1$s</string>
-    <string name="err_network">Network error. Please check your connection.</string>
-    <string name="err_auth_failed_retry">Authentication failed. Please sign out and try again.</string>
-    <string name="auth_failed_format">Authentication failed: %1$s</string>
-    <string name="connection_verified">Connection successfully verified!</string>
-    <string name="verification_failed">Verification failed.</string>
-    <string name="connection_failed_format">Connection failed: %1$s</string>
-    <string name="error_testing_connection_format">Error testing connection: %1$s</string>
-    <string name="starting_cloud_backup">Starting cloud backup...</string>
-    <string name="uploading_to_cloud_format">Uploading to cloud... %1$d%%</string>
-    <string name="backup_uploaded_success">Backup successfully uploaded!</string>
-    <string name="cloud_backup_failed">Cloud backup failed</string>
-    <string name="synchronizing_devices">Synchronizing across devices...</string>
-    <string name="syncing_devices_format">Syncing across devices... %1$d%%</string>
-    <string name="sync_complete_format">Sync complete! Synced %1$d peer device(s), imported %2$d transactions.</string>
-    <string name="device_sync_failed">Device synchronization failed</string>
-    <string name="downloading_snapshot">Downloading snapshot...</string>
-    <string name="restoring_data_format">Restoring data... %1$d%%</string>
-    <string name="snapshot_restored_success">Snapshot successfully restored!</string>
-    <string name="failed_restore_snapshot">Failed to restore cloud snapshot</string>
-    <string name="unknown_error">Unknown error</string>
-    <string name="failed_list_backups_format">Failed to list remote backups: %1$s</string>
-    <string name="signin_failed_code_format">Sign-In failed: %1$d</string>
-    <string name="error_format">Error: %1$s</string>
-    <string name="provider_local_only">Local Only</string>
-    <string name="provider_webdav">Nextcloud / WebDAV</string>
-    <string name="provider_google_drive">Google Drive</string>
-    <!-- Batch Edit Transactions -->
-    <string name="batch_edit_title">Batch Edit Transactions</string>
-    <string name="batch_edit_updating_format">Updating %1$d selected items</string>
-    <string name="batch_edit_toggle_hint">Toggle options below to apply across selected transactions:</string>
-    <string name="batch_edit_date">Date</string>
-    <string name="batch_edit_pick_date">Pick Date</string>
-    <string name="batch_edit_time">Time</string>
-    <string name="batch_edit_pick_time">Pick Time</string>
-    <string name="batch_edit_category_subcategory">Category &amp; Subcategory</string>
-    <string name="batch_edit_select_category">Select Category</string>
-    <string name="batch_edit_choose">Choose</string>
-    <string name="batch_edit_amount">Amount</string>
-    <string name="batch_edit_set_amount">Set Amount</string>
-    <string name="batch_edit_note_description">Note / Description</string>
-    <string name="batch_edit_note_placeholder">Enter note across selected items</string>
-    <string name="batch_edit_apply_format">Apply to %1$d Transactions</string>
-    <string name="batch_edit_check_options">Check Options Above to Edit</string>
-    <string name="batch_edit_set_batch_amount">Set Batch Amount</string>
-    <string name="edit_selected_transactions">Edit Selected Transactions</string>
-    <string name="edit_selected_count_format">Edit — %1$d</string>
-
-    <!-- Ledger (Khata) -->
-    <string name="lend_borrow_title">Loans</string>
-    <string name="khata_title">Loans</string>
-    <string name="loan_total_title">Total</string>
-    <string name="total_lent">Lent</string>
-    <string name="total_borrowed">Borrowed</string>
-    <string name="net_balance_khata">Net Balance</string>
-    <string name="add_person">Add Person</string>
-    <string name="add_record">Add Record</string>
-    <string name="edit_person">Edit Person</string>
-    <string name="delete_person">Delete Person</string>
-    <string name="person_name">Person Name *</string>
-    <string name="phone_number_optional">Phone Number (Optional)</string>
-    <string name="notes_optional_ledger">Notes (Optional)</string>
-    <string name="person_color">Avatar Color</string>
-    <string name="person_avatar">Avatar</string>
-    <string name="person_category">Category</string>
-    <string name="category_all">All</string>
-    <string name="category_friends">Friends</string>
-    <string name="category_family">Family</string>
-    <string name="category_colleagues">Colleagues</string>
-    <string name="category_other">Other</string>
-    <string name="category_filter">Filter by category</string>
-    <string name="settle_up">Settle Up</string>
-    <string name="add_entry">Add Record</string>
-    <string name="i_lent">They owe me</string>
-    <string name="i_borrowed">I owe them</string>
-    <string name="settlement_received">Received Payment (Settlement)</string>
-    <string name="settlement_paid">Paid Back (Settlement)</string>
-    <string name="due_date_optional">Due Date (Optional)</string>
-    <string name="select_due_date">Select Due Date</string>
-    <string name="no_due_date">No Due Date</string>
-    <string name="overdue_tag">Overdue</string>
-    <string name="settled_tag">Settled</string>
-    <string name="active_tab">People</string>
-    <string name="all_txns_tab">Transactions</string>
-    <string name="no_persons_yet">No ledger records yet</string>
-    <string name="no_persons_desc">Add a person to start tracking money lended or borrowed</string>
-    <string name="no_transactions_khata">No records found</string>
-    <string name="settle_amount">Settlement Amount</string>
-    <string name="settle_description">Settlement Note</string>
-    <string name="full_settlement">Full</string>
-    <string name="partial_settlement">Partial</string>
-    <string name="sync_with_wallet">Also add transaction to Bank/Wallet</string>
-    <string name="call_person">Call</string>
-    <string name="sms_person">Remind via SMS</string>
-    <string name="gets_amount">Gets %1$s</string>
-    <string name="owes_amount">Owes %1$s</string>
-    <string name="lend_borrow_you_get">You\'ll get</string>
-    <string name="lend_borrow_you_owe">You owe</string>
-    <string name="lend_borrow_settled">Settled</string>
-    <string name="lend_borrow_filter_lent">Lent</string>
-    <string name="lend_borrow_filter_owed">Owed</string>
-    <string name="people_count_format">%1$d People</string>
-    <string name="overdue_count_format">%1$d Overdue</string>
-    <string name="delete_person_confirm_title">Delete Person?</string>
-    <string name="delete_person_confirm_desc">Are you sure you want to delete %1$s and all associated ledger records? This cannot be undone.</string>
-    <plurals name="delete_persons_title">
-        <item quantity="one">Delete %1$d person?</item>
-        <item quantity="other">Delete %1$d persons?</item>
-    </plurals>
-    <string name="delete_multiple_persons_confirm">This action is irreversible. The selected persons and all associated ledger records will be permanently deleted and cannot be recovered.</string>
-    <plurals name="delete_records_title">
-        <item quantity="one">Delete %1$d record?</item>
-        <item quantity="other">Delete %1$d records?</item>
-    </plurals>
-    <string name="delete_multiple_records_confirm">This action is irreversible. The selected records will be permanently deleted and cannot be recovered.</string>
+    <!-- Added missing strings referenced by code -->
+    <string name="view_on_drive">View on Drive</string>
+    <string name="select_color">Select color</string>
+    <string name="select">Select</string>
+    <string name="delete_multiple_records_confirm">Are you sure you want to delete the selected records?</string>
     <string name="persons_deleted_format">%1$d persons deleted</string>
+    <string name="select_multiple">Select multiple</string>
     <string name="records_deleted_format">%1$d records deleted</string>
-    <string name="select_multiple">Select Multiple</string>
-    <string name="type_lent">Lent</string>
-    <string name="type_borrowed">Borrowed</string>
-    <string name="amount_they_owe_me">The Amount they owe me</string>
-    <string name="amount_i_owe_them">The Amount I owe them</string>
-    <string name="due_date">Due Date</string>
-    <string name="clear_due_date">Clear Due Date</string>
-    <string name="select_person">Select Person</string>
-    <string name="whatsapp_cd">WhatsApp</string>
-    <string name="telegram_cd">Telegram</string>
-    <string name="reminder_message_format">Hi %1$s, friendly reminder regarding our ledger balance of %2$s.</string>
-    <string name="edit_record">Edit Record</string>
-    <string name="delete_record">Delete Record</string>
-    <string name="record_options">Record Options</string>
-     <string name="settle_full_desc">Pay the entire outstanding balance in one go.</string>
-    <string name="settle_partial_desc">Pay only a portion of the outstanding balance. You can settle the remaining amount later.</string>
-    <!-- Mark as Loan -->
-    <string name="mark_as_loan">Mark as Loan</string>
-    <string name="unmark_as_loan">Unmark as Loan</string>
-    <string name="mark_as_loan_desc">Link this transaction to a lend/borrow record.</string>
-    <string name="unlink_loan">Unlink Loan</string>
-    <string name="unmark_loan_confirm_title">Unmark as Loan?</string>
-    <string name="unmark_loan_confirm_desc">This removes the loan link from this transaction. The transaction itself will be kept. The lend/borrow record will be deleted.</string>
-    <string name="marked_as_loan_success">Transaction linked to a loan record</string>
-    <string name="unlinked_loan_success">Loan link removed from transaction</string>
+    <string name="marked_as_loan_success">Marked as loan</string>
+    <string name="unmark_as_loan">Unmark as loan</string>
+    <string name="mark_as_loan">Mark as loan</string>
+    <string name="unmark_loan_confirm_title">Unmark as loan?</string>
+    <string name="unmark_loan_confirm_desc">This will remove the loan association from this transaction.</string>
     <string name="loan_type_lent">Lent</string>
     <string name="loan_type_borrowed">Borrowed</string>
-    <string name="loan_marked_success">Marked as loan</string>
-    <string name="loan_unmarked_success">Unmarked as loan</string>
-    <string name="loan_person_hint">Who did you lend to / borrow from?</string>
-    <string name="loan_lent">Lent (they owe you)</string>
-    <string name="loan_borrowed">Borrowed (you owe them)</string>
-    <string name="loan_amount_hint">Loan amount</string>
-    <string name="loan_description">Manage lent and borrowed records</string>
-    <string name="loan_only_part">Only this portion counts toward the loan.</string>
+    <string name="import_pdf">Import</string>
+
+    <plurals name="delete_persons_title">
+        <item quantity="one">Delete person?</item>
+        <item quantity="other">Delete %1$d persons?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Delete record?</item>
+        <item quantity="other">Delete %1$d records?</item>
+    </plurals>
+
 </resources>

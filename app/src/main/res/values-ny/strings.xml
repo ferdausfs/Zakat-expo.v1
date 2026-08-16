@@ -16,8 +16,8 @@
     <string name="lock_timeout_1min">Tsekani kumbuyo kwa mphindi imodzi</string>
     <string name="lock_timeout_minutes">Tsekani pambuyo pa mphindi %1$d chakumbuyo</string>
     <string name="data_management_section">Data Management</string>
-    <string name="backup_tab">Backup</string>
-    <string name="local_backup_section">Local Backup</string>
+    <string name="backup_tab">Zosunga zobwezeretsera</string>
+    <string name="local_backup_section">Backup Local</string>
     <string name="export_data">Tumizani Deta</string>
     <string name="export_data_sub">Sungani deta yanu ku fayilo</string>
     <string name="import_data">Lowetsani Deta</string>
@@ -517,7 +517,7 @@
     <string name="rules_group_daily">Ndalama Zatsiku ndi Tsiku</string>
     <string name="rules_group_income">Ndalama &amp; Kubweza</string>
     <string name="rules_group_recurring">Malipiro Obwerezabwereza</string>
-    <string name="rules_group_banking">Banking &amp; Investments</string>
+    <string name="rules_group_banking">Banking &amp;amp; Investments</string>
     <string name="rules_group_healthcare">Zaumoyo</string>
     <string name="rules_group_other">Zina</string>
     <string name="rules_explanation">Malamulo amangogwiritsidwa ntchito pazochitika zatsopano. Malamulo ofunika kwambiri amatsogolera poyamba.</string>
@@ -737,7 +737,6 @@
     <string name="language">Chiyankhulo</string>
     <string name="language_subtitle">Sinthani chilankhulo cha pulogalamu</string>
     <string name="select_language">Sankhani Chiyankhulo</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">Wogwiritsa</string>
     <string name="backup_sync_subtitle">Makonzedwe a zobwezeretsa, mtambo, ndi kulunzanitsa</string>
     <string name="error">Cholakwika</string>
@@ -1036,39 +1035,6 @@
     <string name="provider_local_only">Local Only</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d chilolezo</item>
-        <item quantity="other">%1$d ziphaso</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">%1$d uthenga wochokera kumabanki omwe angathe</item>
-        <item quantity="other">%1$d mauthenga ochokera kumabanki omwe angakhalepo</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d fayilo</item>
-        <item quantity="other">%1$d mafayilo</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d kagawo kakang\'ono</item>
-        <item quantity="other">%1$d magulu ang\'onoang\'ono</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">Chotsani %1$d mayendedwe?</item>
-        <item quantity="other">Chotsani %1$d mayendedwe?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%1$d tsiku latsala mu %2$s</item>
-        <item quantity="other">%1$d masiku atsala mu %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d zasinthidwa</item>
-        <item quantity="other">%1$d zasinthidwa</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d zasungidwa</item>
-        <item quantity="other">%1$d zasungidwa</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Kusintha kwa Batch Transactions</string>
     <string name="batch_edit_updating_format">Kusintha %1$d zinthu zosankhidwa</string>
     <string name="batch_edit_toggle_hint">Sinthani zosankha pansipa kuti mugwiritse ntchito pazosankha zosankhidwa:</string>
@@ -1088,7 +1054,6 @@
     <string name="batch_edit_set_batch_amount">Khazikitsani Mtengo wa Batch</string>
     <string name="edit_selected_transactions">Sinthani Zochita Zosankhidwa</string>
     <string name="edit_selected_count_format">Sinthani — %1$d</string>
-
     <string name="active_tab">Anthu</string>
     <string name="add_entry">Onjezani mbiri</string>
     <string name="add_person">Onjezani munthu</string>
@@ -1164,4 +1129,132 @@
     <string name="type_lent">Zobwereketsa</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">Yendetsani zolembedwa za ngongole zobwerekedwa ndi zobwereka</string>
+    <string name="import_cashew_backup">Tengani kuchokera ku Cashew</string>
+    <string name="import_cashew_backup_sub">Lowetsani mafayilo a SQLite kapena CSV kuchokera ku pulogalamu ya Cashew</string>
+    <string name="typing">Ndikuganiza za pempho lanu...</string>
+    <string name="app_crashed">Pulogalamu Yawonongeka</string>
+    <string name="share_crash_report">Gawani lipoti la ngozi</string>
+    <string name="unexpected_crash">Kuwonongeka Kosayembekezeka</string>
+    <string name="crash_report">Lipoti la Crash</string>
+    <string name="extracted_from_pdf">Kuchotsedwa ku PDF</string>
+    <string name="existing_in_database">Zomwe zilipo mu Database</string>
+    <string name="search_chats">Sakani macheza...</string>
+    <string name="regenerate">Bweretsaninso</string>
+    <string name="tokens_usage">Kugwiritsa Ntchito Zizindikiro</string>
+    <string name="screen_content">Screen Content</string>
+    <string name="copied_text">Mawu Okopera</string>
+    <string name="english">Chingerezi</string>
+    <string name="afrikaans">Afrikaans</string>
+    <string name="arabic">العربية</string>
+    <string name="azerbaijani">Azərbaycan</string>
+    <string name="bulgarian">Български</string>
+    <string name="bengali">বাংলা</string>
+    <string name="tibetan">བོད་སྐད་</string>
+    <string name="catalan">Català</string>
+    <string name="czech">Čeština</string>
+    <string name="danish">Dansk</string>
+    <string name="german">Deutsch</string>
+    <string name="dzongkha">རྫོང་ཁ་</string>
+    <string name="greek">Ελληνικά</string>
+    <string name="spanish">Español</string>
+    <string name="persian">فارسي</string>
+    <string name="french">Chifransa</string>
+    <string name="gujarati">ગુજરાતી</string>
+    <string name="hawaiian">Werenganinso Hawaiʻi</string>
+    <string name="hebrew">עברית</string>
+    <string name="hindi">हिन्दी</string>
+    <string name="croatian">Hrvatski</string>
+    <string name="hungarian">Magyar</string>
+    <string name="indonesian">Bahasa Indonesia</string>
+    <string name="icelandic">Íslenska</string>
+    <string name="italiano">Chitaliyana</string>
+    <string name="japanese">日本語</string>
+    <string name="kabyle">Taqbaylit</string>
+    <string name="kannada">ಕನ್ನಡ</string>
+    <string name="kashmiri">कश्मीरी</string>
+    <string name="latin">Latina</string>
+    <string name="malayalam">മലയാളം</string>
+    <string name="marathi">मराठी</string>
+    <string name="nepali">नेपाली</string>
+    <string name="dutch">Nederlands</string>
+    <string name="norwegian">Norsk</string>
+    <string name="chichewa">Chichewa</string>
+    <string name="odia">ଓଡ଼ིଆ</string>
+    <string name="iron">Ирон</string>
+    <string name="punjabi">ਪੰਜਾਬੀ</string>
+    <string name="polish">Polski</string>
+    <string name="portuguese">Português</string>
+    <string name="romanian">Română</string>
+    <string name="russian">Русский</string>
+    <string name="slovak">Slovenčina</string>
+    <string name="slovenian">Slovenščina</string>
+    <string name="swedish">Svenska</string>
+    <string name="tamil">தமிழ்</string>
+    <string name="telugu">తెలుగు</string>
+    <string name="thai">ไทย</string>
+    <string name="turkmençe">Türkmençe</string>
+    <string name="turkish">Türkçe</string>
+    <string name="ukrainian">Українська</string>
+    <string name="urdu">اردو</string>
+    <string name="uzbek">O\'zbekcha</string>
+    <string name="valencian">Chi Valencian</string>
+    <string name="vietnamese">Tiếng Việt</string>
+    <string name="chinese">中文</string>
+    <string name="delete_multiple_records_confirm">Kodi mukutsimikiza kuti mukufuna kufufuta zolembedwa zomwe mwasankha?</string>
+    <string name="import_pdf">Tengani</string>
+    <string name="loan_type_borrowed">Zobwereka</string>
+    <string name="loan_type_lent">Lenti</string>
+    <string name="mark_as_loan">Lembani ngati ngongole</string>
+    <string name="marked_as_loan_success">Zolembedwa ngati ngongole</string>
+    <string name="persons_deleted_format">%1$d anthu achotsedwa</string>
+    <string name="records_deleted_format">%1$d zolemba zafufutidwa</string>
+    <string name="select">Sankhani</string>
+    <string name="select_color">Sankhani mtundu</string>
+    <string name="select_multiple">Sankhani angapo</string>
+    <string name="share_logs">Gawani zipika</string>
+    <string name="stop">Imani</string>
+    <string name="unmark_as_loan">Chotsani chizindikiro ngati ngongole</string>
+    <string name="unmark_loan_confirm_desc">Izi zichotsa mgwirizano wangongole pakuchita izi.</string>
+    <string name="unmark_loan_confirm_title">Chotsani chizindikiro ngati ngongole?</string>
+    <string name="view_on_drive">Onani pa Drive</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d chilolezo</item>
+        <item quantity="other">%1$d ziphaso</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">%1$d uthenga wochokera kumabanki omwe angathe</item>
+        <item quantity="other">%1$d mauthenga ochokera kumabanki omwe angakhalepo</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d fayilo</item>
+        <item quantity="other">%1$d mafayilo</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d kagawo kakang\'ono</item>
+        <item quantity="other">%1$d magulu ang\'onoang\'ono</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">Chotsani %1$d mayendedwe?</item>
+        <item quantity="other">Chotsani %1$d mayendedwe?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%1$d tsiku latsala mu %2$s</item>
+        <item quantity="other">%1$d masiku atsala mu %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d zasinthidwa</item>
+        <item quantity="other">%1$d zasinthidwa</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d zasungidwa</item>
+        <item quantity="other">%1$d zasungidwa</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Chotsani munthu?</item>
+        <item quantity="other">Chotsani anthu %1$d?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Chotsani mbiri?</item>
+        <item quantity="other">Chotsani %1$d zolemba?</item>
+    </plurals>
 </resources>

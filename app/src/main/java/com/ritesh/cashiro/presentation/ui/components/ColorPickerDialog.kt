@@ -1,5 +1,7 @@
 package com.ritesh.cashiro.presentation.ui.components
 
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 
 import android.graphics.Color as AndroidColor
 import androidx.compose.foundation.Canvas
@@ -147,7 +149,7 @@ fun ColorPickerDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(
-                text = "Select Color",
+                text = stringResource(R.string.select_color),
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
@@ -168,7 +170,7 @@ fun ColorPickerDialog(
                         containerColor = MaterialTheme.colorScheme.primaryContainer,
                         contentColor = MaterialTheme.colorScheme.onPrimaryContainer
                     )
-            ) { Text("Select", fontWeight = FontWeight.SemiBold) }
+            ) { Text(stringResource(R.string.select), fontWeight = FontWeight.SemiBold) }
         },
         dismissButton = {
             FilledTonalButton(
@@ -181,7 +183,7 @@ fun ColorPickerDialog(
                         contentColor = MaterialTheme.colorScheme.onSurface
                     )
             ) {
-                Text("Cancel", fontWeight = FontWeight.SemiBold)
+                Text(stringResource(R.string.cancel), fontWeight = FontWeight.SemiBold)
             }
         },
         containerColor = MaterialTheme.colorScheme.surfaceContainerLow,

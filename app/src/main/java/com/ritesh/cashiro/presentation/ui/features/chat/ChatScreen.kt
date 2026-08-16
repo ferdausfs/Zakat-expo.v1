@@ -366,9 +366,9 @@ fun ChatScreen(
                                 items(messages) { message ->
                                     ChatMessageItem(
                                         message = message,
-                                        onCopy = { 
+                                        onCopy = {
                                             val clipboardManager = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as ClipboardManager
-                                            clipboardManager.setPrimaryClip(ClipData.newPlainText("Copied Text", it.message))
+                                            clipboardManager.setPrimaryClip(ClipData.newPlainText(context.getString(R.string.copied_text), it.message))
                                         },
                                         onDelete = { chatViewModel.deleteMessage(it.id) },
                                         onEdit = {
@@ -507,9 +507,9 @@ fun ChatScreen(
                                     items(messages) { message ->
                                         ChatMessageItem(
                                             message = message,
-                                            onCopy = { 
+                                            onCopy = {
                                                 val clipboardManager = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as ClipboardManager
-                                                clipboardManager.setPrimaryClip(ClipData.newPlainText("Copied Text", it.message))
+                                                clipboardManager.setPrimaryClip(ClipData.newPlainText(context.getString(R.string.copied_text), it.message))
                                             },
                                             onDelete = { chatViewModel.deleteMessage(it.id) },
                                             onEdit = {
@@ -668,7 +668,7 @@ fun ChatScreen(
                                                     if (uiState.isLoading) {
                                                         Icon(
                                                             Icons.Rounded.Stop,
-                                                            contentDescription = "Stop",
+                                                            contentDescription = stringResource(R.string.stop),
                                                             modifier = Modifier.size(24.dp)
                                                         )
                                                     } else {
@@ -700,7 +700,7 @@ fun ChatScreen(
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Chat History",
+                    text = stringResource(R.string.chat_history),
                     style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
@@ -709,7 +709,7 @@ fun ChatScreen(
                     searchQuery = searchQuery,
                     onSearchQueryChange = { searchQuery = it },
                     modifier = Modifier.padding(bottom = 16.dp),
-                    label = { Text("Search chats...") },
+                    label = { Text(stringResource(R.string.search_chats)) },
                     leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = null) }
                 )
                 LazyColumn {
@@ -729,7 +729,7 @@ fun ChatScreen(
                                 IconButton(onClick = { chatViewModel.deleteSession(session.id) }) {
                                     Icon(
                                         Iconax.Bag,
-                                        contentDescription = "Delete",
+contentDescription = stringResource(R.string.delete),
                                         tint = MaterialTheme.colorScheme.error
                                     )
                                 }
@@ -1079,7 +1079,7 @@ fun ChatMessageItem(
                     shape = RoundedCornerShape(24.dp)
                 ) {
                     DropdownMenuItem(
-                        text = { Text("Copy") },
+                        text = { Text(stringResource(R.string.copy)) },
                         onClick = {
                             showMenu = false
                             onCopy(message)
@@ -1091,7 +1091,7 @@ fun ChatMessageItem(
                         color = MaterialTheme.colorScheme.surface.copy(0.6f)
                     )
                     DropdownMenuItem(
-                        text = { Text("Edit") },
+                        text = { Text(stringResource(R.string.edit)) },
                         onClick = {
                             showMenu = false
                             onEdit(message)
@@ -1103,7 +1103,7 @@ fun ChatMessageItem(
                         color = MaterialTheme.colorScheme.surface.copy(0.6f)
                     )
                     DropdownMenuItem(
-                        text = { Text("Delete") },
+                        text = { Text(stringResource(R.string.delete)) },
                         onClick = {
                             showMenu = false
                             onDelete(message)
@@ -1161,7 +1161,7 @@ fun ChatMessageItem(
                             ) {
                                 Icon(
                                     imageVector = Icons.Outlined.ContentCopy,
-                                    contentDescription = "Copy",
+                                    contentDescription = stringResource(R.string.copy),
                                     modifier = Modifier.size(16.dp),
                                     tint = MaterialTheme.colorScheme.onSurface.copy(0.6f)
                                 )
@@ -1172,7 +1172,7 @@ fun ChatMessageItem(
                             ) {
                                 Icon(
                                     imageVector = Icons.Rounded.Refresh,
-                                    contentDescription = "Regenerate",
+                                    contentDescription = stringResource(R.string.regenerate),
                                     modifier = Modifier.size(16.dp),
                                     tint = MaterialTheme.colorScheme.onSurface.copy(0.6f)
                                 )
@@ -1183,7 +1183,7 @@ fun ChatMessageItem(
                             ) {
                                 Icon(
                                     imageVector = Iconax.Bag,
-                                    contentDescription = "Delete",
+                                    contentDescription = stringResource(R.string.delete),
                                     modifier = Modifier.size(16.dp),
                                     tint = MaterialTheme.colorScheme.error.copy(0.6f)
                                 )

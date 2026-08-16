@@ -1,5 +1,7 @@
 package com.ritesh.cashiro.presentation.ui.components
 
+import androidx.compose.ui.res.stringResource
+import com.ritesh.cashiro.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -82,7 +84,7 @@ fun IphoneFramePreview() {
                     modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text("Screen Content", color = MaterialTheme.colorScheme.inverseSurface)
+                    Text(stringResource(R.string.screen_content), color = MaterialTheme.colorScheme.inverseSurface)
                 }
             }
         }

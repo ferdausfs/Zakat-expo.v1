@@ -84,7 +84,7 @@ fun CurrencyBottomSheet(
                     .padding(horizontal = 16.dp)
             ) {
                 Text(
-                    text = "Currencies",
+                    text = stringResource(R.string.currencies),
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
@@ -103,11 +103,11 @@ fun CurrencyBottomSheet(
                     SearchBarBox(
                         searchQuery = searchQuery,
                         onSearchQueryChange = { searchQuery = it },
-                        label = { Text("Search currencies...") },
+                        label = { Text(stringResource(R.string.search_currencies)) },
                         leadingIcon = {
                             Icon(
                                 imageVector = Iconax.Search,
-                                contentDescription = "Search",
+contentDescription = stringResource(R.string.search),
                                 tint = MaterialTheme.colorScheme.onSurface.copy(0.5f)
                             )
                         },
@@ -116,7 +116,7 @@ fun CurrencyBottomSheet(
                                 IconButton(onClick = { searchQuery = TextFieldValue("") }) {
                                     Icon(
                                         imageVector = Iconax.CloseCircle,
-                                        contentDescription = "Clear",
+                                        contentDescription = stringResource(R.string.clear),
                                         tint = MaterialTheme.colorScheme.onSurface.copy(0.5f)
                                     )
                                 }
@@ -156,7 +156,7 @@ fun CurrencyBottomSheet(
 
                     if (filteredCurrencies.isEmpty()) {
                         Text(
-                            text = "Currency not available",
+                            text = stringResource(R.string.currency_not_available),
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(vertical = 16.dp)

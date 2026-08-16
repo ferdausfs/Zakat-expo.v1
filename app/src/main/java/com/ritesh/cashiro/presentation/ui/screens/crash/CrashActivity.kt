@@ -47,12 +47,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.FileProvider
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.presentation.ui.theme.CashiroTheme
 import com.ritesh.cashiro.utils.CrashHandler
 import java.io.File
@@ -72,7 +74,7 @@ class CrashActivity : ComponentActivity() {
             val filePath = intent.getStringExtra(CrashHandler.EXTRA_CRASH_LOG_FILE)
             if (!filePath.isNullOrBlank()) {
                 try {
-                    java.io.File(filePath).readText()
+                    File(filePath).readText()
                 } catch (e: Exception) {
                     null
                 }
@@ -111,11 +113,11 @@ class CrashActivity : ComponentActivity() {
             val shareIntent = Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
                 putExtra(Intent.EXTRA_STREAM, uri)
-                putExtra(Intent.EXTRA_SUBJECT, "Cashiro Crash Report")
+                putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + " " + getString(R.string.share_crash_report))
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
 
-            startActivity(Intent.createChooser(shareIntent, "Share crash report"))
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_crash_report)))
         } catch (e: Exception) {
             // Fallback to plain text share
             val shareIntent = Intent(Intent.ACTION_SEND).apply {
@@ -140,7 +142,7 @@ fun CrashScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "App Crashed",
+                        text = stringResource(R.string.app_crashed),
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.SemiBold
                     )
@@ -167,7 +169,7 @@ fun CrashScreen(
                         contentDescription = null
                     )
                 },
-                text = { Text("Share Logs") },
+                text = { Text(stringResource(R.string.share_logs)) },
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             )
@@ -216,7 +218,7 @@ fun CrashScreen(
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
                         Text(
-                            text = "Unexpected Crash",
+                            text = stringResource(R.string.unexpected_crash),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onErrorContainer
@@ -235,7 +237,7 @@ fun CrashScreen(
 
             // Section header
             Text(
-                text = "Crash Report",
+                text = stringResource(R.string.crash_report),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontWeight = FontWeight.Medium,

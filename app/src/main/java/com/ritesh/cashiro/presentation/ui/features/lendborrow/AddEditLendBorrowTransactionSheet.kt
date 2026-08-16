@@ -1,6 +1,8 @@
 package com.ritesh.cashiro.presentation.ui.features.lendborrow
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -733,7 +735,29 @@ fun AddEditLendBorrowTransactionSheet(
                     onRemoveAttachment = { path ->
                         attachments = attachments - path
                     },
-                    onAttachmentClick = { /* Preview handled internally */ },
+                    onAttachmentClick = { path ->
+                        if (attachmentService.isUrl(path)) {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(path))
+                            try {
+                                context.startActivity(intent)
+                            } catch (e: Exception) {
+                                // Handle error
+                            }
+                        } else {
+                            val uri = attachmentService.getAttachmentUri(path)
+                            if (uri != null) {
+                                val intent = Intent(Intent.ACTION_VIEW).apply {
+                                    setDataAndType(uri, attachmentService.getAttachmentMimeType(path))
+                                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                }
+                                try {
+                                    context.startActivity(intent)
+                                } catch (e: Exception) {
+                                    // Handle error
+                                }
+                            }
+                        }
+                    },
                     isEditable = true
                 )
                 Spacer(modifier = Modifier.height(48.dp))

@@ -740,7 +740,6 @@ Yashil (+) = Tejash | Qizil (-) = Haddan tashqari sarflash</string>
     <string name="language">Til</string>
     <string name="language_subtitle">Ilova tilini oʻzgartirish</string>
     <string name="select_language">Tilni tanlash</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">Foydalanuvchi</string>
     <string name="backup_sync_subtitle">Zaxiralash, bulut, tiklash va sinxronlash sozlamalari</string>
     <string name="error">Xatolik</string>
@@ -1041,39 +1040,6 @@ Bu xabar tarixingizga qarab bir necha soniya davom etishi mumkin.</string>
     <string name="provider_local_only">Faqat Mahalliy</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d litsenziya</item>
-        <item quantity="other">%1$d litsenziyalar</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">Potensial banklardan %1$d xabar</item>
-        <item quantity="other">Potensial banklardan %1$d xabarlar</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d fayl</item>
-        <item quantity="other">%1$d fayllar</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d kichik toifa</item>
-        <item quantity="other">%1$d kichik toifalar</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">%1$d tranzaksiyani o‘chirish?</item>
-        <item quantity="other">%1$d tranzaksiyalarni o‘chirish?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%1$d kun qoldi %2$s</item>
-        <item quantity="other">%1$d kun qoldi %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d tranzaksiya tahlil qilindi</item>
-        <item quantity="other">%1$d tranzaksiya tahlil qilindi</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d saqlandi</item>
-        <item quantity="other">%1$d saqlandi</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Batch Edit Transactions</string>
     <string name="batch_edit_updating_format">Tanlangan %1$d elementlar yangilanmoqda</string>
     <string name="batch_edit_toggle_hint">Pastdagi variantlarni yoqish tanlangan tranzaksiyalarda qo\'llanadi:</string>
@@ -1093,7 +1059,6 @@ Bu xabar tarixingizga qarab bir necha soniya davom etishi mumkin.</string>
     <string name="batch_edit_set_batch_amount">Partiya miqdorini belgilang</string>
     <string name="edit_selected_transactions">Tanlangan tranzaksiyalarni tahrirlash</string>
     <string name="edit_selected_count_format">Tahrirlash — %1$d</string>
-
     <string name="active_tab">Odallar</string>
     <string name="add_entry">Yozuv qo\'shish</string>
     <string name="add_person">Shaxs qo\'shish</string>
@@ -1169,4 +1134,132 @@ Bu xabar tarixingizga qarab bir necha soniya davom etishi mumkin.</string>
     <string name="type_lent">Qarz berdi</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">Berilgan va olingan qarz yozuvlarini boshqaring</string>
+    <string name="import_cashew_backup">Cashew\'dan import qilish</string>
+    <string name="import_cashew_backup_sub">Cashew ilovasidan SQLite yoki CSV fayllarini import qilish</string>
+    <string name="typing">\nSoʻrovingiz ustida o‘ylayapman...</string>
+    <string name="app_crashed">Ilova ish faoliyatini to‘xtatdi</string>
+    <string name="share_crash_report">Avariya hisobotini ulashish</string>
+    <string name="unexpected_crash">Kutilmagan avariya</string>
+    <string name="crash_report">Avariya hisobot</string>
+    <string name="extracted_from_pdf">PDF dan chiqarilgan</string>
+    <string name="existing_in_database">Ma’lumotlar bazasida mavjud</string>
+    <string name="search_chats">Chatlarni qidirish...</string>
+    <string name="regenerate">Qayta yaratish</string>
+    <string name="tokens_usage">Tokenlar ishlatilishi</string>
+    <string name="screen_content">Ekran mazmuni</string>
+    <string name="copied_text">Nusxalangan matn</string>
+    <string name="english">Inglizcha</string>
+    <string name="afrikaans">Afrikanca</string>
+    <string name="arabic">Arabcha</string>
+    <string name="azerbaijani">Ozarbayjanch</string>
+    <string name="bulgarian">Bolgarcha</string>
+    <string name="bengali">Bengalcha</string>
+    <string name="tibetan">Tibcha</string>
+    <string name="catalan">Katalancha</string>
+    <string name="czech">Chexcha</string>
+    <string name="danish">Danishcha</string>
+    <string name="german">Nemis</string>
+    <string name="dzongkha">Dzongkha</string>
+    <string name="greek">Yunoncha</string>
+    <string name="spanish">Ispancha</string>
+    <string name="persian">Forscha</string>
+    <string name="french">Fransuzcha</string>
+    <string name="gujarati">Gujarati</string>
+    <string name="hawaiian">Havaycha</string>
+    <string name="hebrew">Ibroniycha</string>
+    <string name="hindi">Hindcha</string>
+    <string name="croatian">Xorvatcha</string>
+    <string name="hungarian">Vengricha</string>
+    <string name="indonesian">Indonezcha</string>
+    <string name="icelandic">Islandcha</string>
+    <string name="italiano">Italyancha</string>
+    <string name="japanese">Yaponcha</string>
+    <string name="kabyle">Taqbaylit</string>
+    <string name="kannada">Kannada</string>
+    <string name="kashmiri">Kashmircha</string>
+    <string name="latin">Lotincha</string>
+    <string name="malayalam">Malayalam</string>
+    <string name="marathi">Marathcha</string>
+    <string name="nepali">Nepalcha</string>
+    <string name="dutch">Gollandcha</string>
+    <string name="norwegian">Norvegcha</string>
+    <string name="chichewa">Checheva</string>
+    <string name="odia">Odiya</string>
+    <string name="iron">Iron</string>
+    <string name="punjabi">Panjobcha</string>
+    <string name="polish">Polyakcha</string>
+    <string name="portuguese">Portugallcha</string>
+    <string name="romanian">Ruminyacha</string>
+    <string name="russian">Ruscha</string>
+    <string name="slovak">Slovakcha</string>
+    <string name="slovenian">Sloveniya</string>
+    <string name="swedish">Shvetsiyacha</string>
+    <string name="tamil">Tamilcha</string>
+    <string name="telugu">Telugucha</string>
+    <string name="thai">Taycha</string>
+    <string name="turkmençe">Turkmancha</string>
+    <string name="turkish">Turkcha</string>
+    <string name="ukrainian">Ukraincha</string>
+    <string name="urdu">Urducha</string>
+    <string name="uzbek">Oʻzbekcha</string>
+    <string name="valencian">Valensiyacha</string>
+    <string name="vietnamese">Vyetnamcha</string>
+    <string name="chinese">Xitoycha</string>
+    <string name="delete_multiple_records_confirm">Tanlangan yozuvlarni o\'chirmoqchimisiz?</string>
+    <string name="import_pdf">Import qilish</string>
+    <string name="loan_type_borrowed">Olingan</string>
+    <string name="loan_type_lent">Bergan</string>
+    <string name="mark_as_loan">Qarz sifatida belgilash</string>
+    <string name="marked_as_loan_success">Qarz sifatida belgilandi</string>
+    <string name="persons_deleted_format">%1$d kishi o\'chirildi</string>
+    <string name="records_deleted_format">%1$d yozuv o\'chirildi</string>
+    <string name="select">Tanlash</string>
+    <string name="select_color">Rangni tanlash</string>
+    <string name="select_multiple">Bir nechta tanlash</string>
+    <string name="share_logs">Jurnallarni ulashish</string>
+    <string name="stop">To\'xtatish</string>
+    <string name="unmark_as_loan">Qarz sifatida belgilashni bekor qilish</string>
+    <string name="unmark_loan_confirm_desc">Bu operatsiyadan qarz bog\'lanishini olib tashlaydi.</string>
+    <string name="unmark_loan_confirm_title">Qarz sifatida belgilashni bekor qilinsinmi?</string>
+    <string name="view_on_drive">Drive’da ko‘rish</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d litsenziya</item>
+        <item quantity="other">%1$d litsenziyalar</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">Potensial banklardan %1$d xabar</item>
+        <item quantity="other">Potensial banklardan %1$d xabarlar</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d fayl</item>
+        <item quantity="other">%1$d fayllar</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d kichik toifa</item>
+        <item quantity="other">%1$d kichik toifalar</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">%1$d tranzaksiyani o‘chirish?</item>
+        <item quantity="other">%1$d tranzaksiyalarni o‘chirish?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%1$d kun qoldi %2$s</item>
+        <item quantity="other">%1$d kun qoldi %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d tranzaksiya tahlil qilindi</item>
+        <item quantity="other">%1$d tranzaksiya tahlil qilindi</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d saqlandi</item>
+        <item quantity="other">%1$d saqlandi</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Shaxsni o‘chirish?</item>
+        <item quantity="other">%1$d kishini o‘chirish?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Yozuvni o‘chirish?</item>
+        <item quantity="other">%1$d yozuvni o‘chirish?</item>
+    </plurals>
 </resources>

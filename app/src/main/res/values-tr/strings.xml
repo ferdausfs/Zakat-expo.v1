@@ -740,7 +740,6 @@ Yeşil (+) = Tasarruf | Kırmızı (-) = Harcama Fazlası</string>
     <string name="language">Dil</string>
     <string name="language_subtitle">Uygulama dilini değiştir</string>
     <string name="select_language">Dil Seç</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">Kullanıcı</string>
     <string name="backup_sync_subtitle">Yedekleme, Bulut, Geri Yükleme ve Senkronizasyon ayarları</string>
     <string name="error">Hata</string>
@@ -1041,39 +1040,6 @@ Mesaj geçmişinize bağlı olarak birkaç saniye sürebilir.</string>
     <string name="provider_local_only">Sadece Yerel</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d lisans</item>
-        <item quantity="other">%1$d lisanslar</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">Potansiyel bankalardan %1$d mesaj</item>
-        <item quantity="other">Potansiyel bankalardan %1$d mesajlar</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d dosya</item>
-        <item quantity="other">%1$d dosyalar</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d alt kategori</item>
-        <item quantity="other">%1$d alt kategoriler</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">%1$d işlemi sil?</item>
-        <item quantity="other">%1$d işlemleri sil?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%1$d gün kaldı %2$s</item>
-        <item quantity="other">%1$d gün kaldı %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d işlem işlendi</item>
-        <item quantity="other">%1$d işlem işlendi</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d kaydedildi</item>
-        <item quantity="other">%1$d kaydedildi</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Toplu İşlem Düzenleme</string>
     <string name="batch_edit_updating_format">Seçilen %1$d öğe güncelleniyor</string>
     <string name="batch_edit_toggle_hint">Seçilen işlemler üzerinde uygulamak için aşağıdaki seçenekleri değiştirin:</string>
@@ -1093,7 +1059,6 @@ Mesaj geçmişinize bağlı olarak birkaç saniye sürebilir.</string>
     <string name="batch_edit_set_batch_amount">Toplu Tutar Belirle</string>
     <string name="edit_selected_transactions">Seçili İşlemleri Düzenle</string>
     <string name="edit_selected_count_format">Düzenle — %1$d</string>
-
     <string name="active_tab">Kişiler</string>
     <string name="add_entry">Kayıt Ekle</string>
     <string name="add_person">Kişi Ekle</string>
@@ -1169,4 +1134,132 @@ Mesaj geçmişinize bağlı olarak birkaç saniye sürebilir.</string>
     <string name="type_lent">Ödünç Verilen</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">Verilen ve alınan borç kayıtlarını yönetin</string>
+    <string name="import_cashew_backup">Cashew\'den İçe Aktar</string>
+    <string name="import_cashew_backup_sub">Cashew uygulamasından SQLite veya CSV dosyalarını içe aktar</string>
+    <string name="typing">İsteğiniz düşünülüyor...</string>
+    <string name="app_crashed">Uygulama Çöktü</string>
+    <string name="share_crash_report">Çökme raporunu paylaş</string>
+    <string name="unexpected_crash">Beklenmeyen Çökme</string>
+    <string name="crash_report">Çökme Raporu</string>
+    <string name="extracted_from_pdf">PDF\'den çıkarıldı</string>
+    <string name="existing_in_database">Veritabanında mevcut</string>
+    <string name="search_chats">Sohbetlerde ara...</string>
+    <string name="regenerate">Yeniden oluştur</string>
+    <string name="tokens_usage">Token Kullanımı</string>
+    <string name="screen_content">Ekran İçeriği</string>
+    <string name="copied_text">Kopyalanan Metin</string>
+    <string name="english">İngilizce</string>
+    <string name="afrikaans">Afrikaans</string>
+    <string name="arabic">العربية</string>
+    <string name="azerbaijani">Azərbaycan</string>
+    <string name="bulgarian">Български</string>
+    <string name="bengali">বাংলা</string>
+    <string name="tibetan">བོད་སྐད་</string>
+    <string name="catalan">Katalanca</string>
+    <string name="czech">Çekçe</string>
+    <string name="danish">Danca</string>
+    <string name="german">Almanca</string>
+    <string name="dzongkha">རྫོང་ཁ་</string>
+    <string name="greek">Yunanca</string>
+    <string name="spanish">İspanyolca</string>
+    <string name="persian">فارسي</string>
+    <string name="french">Fransızca</string>
+    <string name="gujarati">Güceratça</string>
+    <string name="hawaiian">Havai Dili</string>
+    <string name="hebrew">İbranice</string>
+    <string name="hindi">Hintçe</string>
+    <string name="croatian">Hırvatça</string>
+    <string name="hungarian">Macarca</string>
+    <string name="indonesian">Endonezce</string>
+    <string name="icelandic">İzlandaca</string>
+    <string name="italiano">İtalyanca</string>
+    <string name="japanese">Japonca</string>
+    <string name="kabyle">Takbaylit</string>
+    <string name="kannada">Kannada</string>
+    <string name="kashmiri">Keşmiri</string>
+    <string name="latin">Latince</string>
+    <string name="malayalam">Malayalam</string>
+    <string name="marathi">Marathi</string>
+    <string name="nepali">Nepalce</string>
+    <string name="dutch">Flemenkçe</string>
+    <string name="norwegian">Norveççe</string>
+    <string name="chichewa">Çicheva</string>
+    <string name="odia">Oriya</string>
+    <string name="iron">İron</string>
+    <string name="punjabi">Pencapça</string>
+    <string name="polish">Lehçe</string>
+    <string name="portuguese">Portekizce</string>
+    <string name="romanian">Rumence</string>
+    <string name="russian">Rusça</string>
+    <string name="slovak">Slovakça</string>
+    <string name="slovenian">Slovence</string>
+    <string name="swedish">İsveççe</string>
+    <string name="tamil">Tamilce</string>
+    <string name="telugu">Telugu</string>
+    <string name="thai">Tayca</string>
+    <string name="turkmençe">Türkmençe</string>
+    <string name="turkish">Türkçe</string>
+    <string name="ukrainian">Ukraynaca</string>
+    <string name="urdu">Urduca</string>
+    <string name="uzbek">Özbekçe</string>
+    <string name="valencian">Valensiyaca</string>
+    <string name="vietnamese">Vietnamca</string>
+    <string name="chinese">Çince</string>
+    <string name="delete_multiple_records_confirm">Seçili kayıtları silmek istediğinizden emin misiniz?</string>
+    <string name="import_pdf">İçe Aktar</string>
+    <string name="loan_type_borrowed">Ödünç Alındı</string>
+    <string name="loan_type_lent">Verildi</string>
+    <string name="mark_as_loan">Ödünç olarak işaretle</string>
+    <string name="marked_as_loan_success">Ödünç olarak işaretlendi</string>
+    <string name="persons_deleted_format">%1$d kişi silindi</string>
+    <string name="records_deleted_format">%1$d kayıt silindi</string>
+    <string name="select">Seç</string>
+    <string name="select_color">Renk seç</string>
+    <string name="select_multiple">Birden fazla seç</string>
+    <string name="share_logs">Kayıtları paylaş</string>
+    <string name="stop">Durdur</string>
+    <string name="unmark_as_loan">Ödünç olarak işareti kaldır</string>
+    <string name="unmark_loan_confirm_desc">Bu işlem, bu işlemin ödünç ilişkilendirmesini kaldıracaktır.</string>
+    <string name="unmark_loan_confirm_title">Ödünç olarak işareti kaldırılsın mı?</string>
+    <string name="view_on_drive">Drive\'da görüntüle</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d lisans</item>
+        <item quantity="other">%1$d lisanslar</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">Potansiyel bankalardan %1$d mesaj</item>
+        <item quantity="other">Potansiyel bankalardan %1$d mesajlar</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d dosya</item>
+        <item quantity="other">%1$d dosyalar</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d alt kategori</item>
+        <item quantity="other">%1$d alt kategoriler</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">%1$d işlemi sil?</item>
+        <item quantity="other">%1$d işlemleri sil?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%1$d gün kaldı %2$s</item>
+        <item quantity="other">%1$d gün kaldı %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d işlem işlendi</item>
+        <item quantity="other">%1$d işlem işlendi</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d kaydedildi</item>
+        <item quantity="other">%1$d kaydedildi</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Kişi silinsin mi?</item>
+        <item quantity="other">%1$d kişi silinsin mi?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Kayıt silinsin mi?</item>
+        <item quantity="other">%1$d kayıt silinsin mi?</item>
+    </plurals>
 </resources>

@@ -738,7 +738,6 @@
     <string name="language">言語</string>
     <string name="language_subtitle">アプリの言語を変更</string>
     <string name="select_language">言語を選択</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">ユーザー</string>
     <string name="backup_sync_subtitle">バックアップ、クラウド、復元および同期設定</string>
     <string name="error">エラー</string>
@@ -1039,31 +1038,6 @@
     <string name="provider_local_only">ローカルのみ</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google ドライブ</string>
-    <plurals name="licenses_count">
-        <item quantity="other">%1$d ライセンス</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="other">潜在的な銀行からの%1$d メッセージ</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="other">%1$d ファイル</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="other">%1$d サブカテゴリ</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="other">%1$d トランザクションを削除しますか？</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="other">%1$d 日後 %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="other">%1$d トランザクションが解析されました</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="other">%1$d を保存しました</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">取引を一括編集</string>
     <string name="batch_edit_updating_format">選択された %1$d 項目を更新中</string>
     <string name="batch_edit_toggle_hint">以下のオプションを切り替えて、選択した取引に適用:</string>
@@ -1083,7 +1057,6 @@
     <string name="batch_edit_set_batch_amount">一括金額を設定</string>
     <string name="edit_selected_transactions">選択した取引を編集</string>
     <string name="edit_selected_count_format">編集 — %1$d</string>
-
     <string name="active_tab">人々</string>
     <string name="add_entry">記録を追加</string>
     <string name="add_person">人を追加</string>
@@ -1159,4 +1132,124 @@
     <string name="type_lent">貸付</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">貸した・借りた記録を管理</string>
+    <string name="import_cashew_backup">Cashewからインポート</string>
+    <string name="import_cashew_backup_sub">CashewアプリからSQLiteまたはCSVファイルをインポート</string>
+    <string name="typing">リクエストについて考えています...</string>
+    <string name="app_crashed">アプリがクラッシュしました</string>
+    <string name="share_crash_report">クラッシュレポートを共有</string>
+    <string name="unexpected_crash">予期しないクラッシュ</string>
+    <string name="crash_report">クラッシュレポート</string>
+    <string name="extracted_from_pdf">PDFから抽出</string>
+    <string name="existing_in_database">データベースに存在</string>
+    <string name="search_chats">チャットを検索...</string>
+    <string name="regenerate">再生成</string>
+    <string name="tokens_usage">トークンの使用状況</string>
+    <string name="screen_content">画面の内容</string>
+    <string name="copied_text">コピーされたテキスト</string>
+    <string name="english">英語</string>
+    <string name="afrikaans">アフリカーンス語</string>
+    <string name="arabic">アラビア語</string>
+    <string name="azerbaijani">アゼルバイジャン語</string>
+    <string name="bulgarian">ブルガリア語</string>
+    <string name="bengali">ベンガル語</string>
+    <string name="tibetan">チベット語</string>
+    <string name="catalan">カタルーニャ語</string>
+    <string name="czech">チェコ語</string>
+    <string name="danish">デンマーク語</string>
+    <string name="german">ドイツ語</string>
+    <string name="dzongkha">ゾンカ語</string>
+    <string name="greek">ギリシャ語</string>
+    <string name="spanish">スペイン語</string>
+    <string name="persian">ペルシア語</string>
+    <string name="french">フランス語</string>
+    <string name="gujarati">グジャラート語</string>
+    <string name="hawaiian">ハワイ語</string>
+    <string name="hebrew">ヘブライ語</string>
+    <string name="hindi">ヒンディー語</string>
+    <string name="croatian">クロアチア語</string>
+    <string name="hungarian">ハンガリー語</string>
+    <string name="indonesian">インドネシア語</string>
+    <string name="icelandic">アイスランド語</string>
+    <string name="italiano">イタリア語</string>
+    <string name="japanese">日本語</string>
+    <string name="kabyle">タクバイリット語</string>
+    <string name="kannada">カンナダ語</string>
+    <string name="kashmiri">カシミール語</string>
+    <string name="latin">ラテン語</string>
+    <string name="malayalam">マラヤーラム語</string>
+    <string name="marathi">マラーティー語</string>
+    <string name="nepali">ネパール語</string>
+    <string name="dutch">オランダ語</string>
+    <string name="norwegian">ノルウェー語</string>
+    <string name="chichewa">チェワ語</string>
+    <string name="odia">オディア語</string>
+    <string name="iron">イロン語</string>
+    <string name="punjabi">パンジャブ語</string>
+    <string name="polish">ポーランド語</string>
+    <string name="portuguese">ポルトガル語</string>
+    <string name="romanian">ルーマニア語</string>
+    <string name="russian">ロシア語</string>
+    <string name="slovak">スロバキア語</string>
+    <string name="slovenian">スロベニア語</string>
+    <string name="swedish">スウェーデン語</string>
+    <string name="tamil">タミル語</string>
+    <string name="telugu">テルグ語</string>
+    <string name="thai">タイ語</string>
+    <string name="turkmençe">トルクメン語</string>
+    <string name="turkish">トルコ語</string>
+    <string name="ukrainian">ウクライナ語</string>
+    <string name="urdu">ウルドゥー語</string>
+    <string name="uzbek">ウズベク語</string>
+    <string name="valencian">バレンシア語</string>
+    <string name="vietnamese">ベトナム語</string>
+    <string name="chinese">中国語</string>
+    <string name="delete_multiple_records_confirm">選択した記録を削除してもよろしいですか？</string>
+    <string name="import_pdf">インポート</string>
+    <string name="loan_type_borrowed">借りた</string>
+    <string name="loan_type_lent">貸した</string>
+    <string name="mark_as_loan">貸出としてマーク</string>
+    <string name="marked_as_loan_success">貸出としてマーク済み</string>
+    <string name="persons_deleted_format">%1$d 人が削除されました</string>
+    <string name="records_deleted_format">%1$d 件の記録が削除されました</string>
+    <string name="select">選択</string>
+    <string name="select_color">色を選択</string>
+    <string name="select_multiple">複数選択</string>
+    <string name="share_logs">ログを共有</string>
+    <string name="stop">停止</string>
+    <string name="unmark_as_loan">貸出マークを解除</string>
+    <string name="unmark_loan_confirm_desc">これにより、この取引から貸出の関連付けが削除されます。</string>
+    <string name="unmark_loan_confirm_title">貸出マークを解除しますか？</string>
+    <string name="view_on_drive">Driveで表示</string>
+    <plurals name="licenses_count">
+        <item quantity="other">%1$d ライセンス</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="other">潜在的な銀行からの%1$d メッセージ</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="other">%1$d ファイル</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="other">%1$d サブカテゴリ</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="other">%1$d トランザクションを削除しますか？</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="other">%1$d 日後 %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="other">%1$d トランザクションが解析されました</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="other">%1$d を保存しました</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">人物を削除しますか？</item>
+        <item quantity="other">%1$d 人を削除しますか？</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">記録を削除しますか？</item>
+        <item quantity="other">%1$d 件の記録を削除しますか？</item>
+    </plurals>
 </resources>

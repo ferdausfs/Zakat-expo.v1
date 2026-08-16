@@ -740,7 +740,6 @@
     <string name="language">ഭാഷ</string>
     <string name="language_subtitle">പ്രയോഗത്തിന്റെ ഭാഷ മാറ്റുക</string>
     <string name="select_language">ഭാഷ തിരഞ്ഞെടുക്കുക</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">ഉപയോക്താവ്</string>
     <string name="backup_sync_subtitle">ബാക്കപ്പ്, ക്ലൗഡ്, പുനഃസ്ഥാപിക്കൽ, സിങ്ക് ക്രമീകരണങ്ങൾ</string>
     <string name="error">പിശക്</string>
@@ -1041,39 +1040,6 @@
     <string name="provider_local_only">പ്രാദേശിക മാത്രം</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google ഡ്രൈവ്</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d ലൈസൻസ്</item>
-        <item quantity="other">%1$d ലൈസൻസുകൾ</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">ശക്തമായ ബാങ്കുകളിൽ നിന്ന് %1$d സന്ദേശം</item>
-        <item quantity="other">ശക്തമായ ബാങ്കുകളിൽ നിന്ന് %1$d സന്ദേശങ്ങൾ</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d ഫയൽ</item>
-        <item quantity="other">%1$d ഫയലുകൾ</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d ഉപവിഭാഗം</item>
-        <item quantity="other">%1$d ഉപവിഭാഗങ്ങൾ</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">%1$d ട്രാൻസാക്ഷൻ ഒഴിവാക്കണോ?</item>
-        <item quantity="other">%1$d ട്രാൻസാക്ഷനുകൾ ഒഴിവാക്കണോ?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%2$s-ലിൽ %1$d ദിവസം മാത്രം ബാക്കി</item>
-        <item quantity="other">%2$s-ലിൽ %1$d ദിവസം ബാക്കി</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d കടത്ത് പാഴ്സ് ചെയ്തു</item>
-        <item quantity="other">%1$d കടത്തുകൾ പാഴ്സ് ചെയ്തു</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d സേവ് ചെയ്‌തു</item>
-        <item quantity="other">%1$d സേവ് ചെയ്‌തു</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">ബാച്ച് എഡിറ്റ് ട്രാൻസാക്ഷനുകൾ</string>
     <string name="batch_edit_updating_format">%1$d തിരഞ്ഞെടുക്കപ്പെട്ട ഇനങ്ങൾ അപ്‌ഡേറ്റ് ചെയ്യുന്നു</string>
     <string name="batch_edit_toggle_hint">തിരഞ്ഞെടുത്ത ട്രാൻസാക്ഷനുകളിൽ പ്രയോഗിക്കാൻ താഴെ ഓപ്ഷനുകൾ അൺ/ടോഗിൾ ചെയ്യുക:</string>
@@ -1093,7 +1059,6 @@
     <string name="batch_edit_set_batch_amount">ബാച്ച് റാശി എഡിറ്റ് ചെയ്യുക</string>
     <string name="edit_selected_transactions">തിരഞ്ഞെടുക്കപ്പെട്ട ട്രാൻസാക്ഷനുകൾ എഡിറ്റ് ചെയ്യുക</string>
     <string name="edit_selected_count_format">എഡിറ്റ് — %1$d</string>
-
     <string name="active_tab">ആളുകൾ</string>
     <string name="add_entry">രേഖ ചേർക്കുക</string>
     <string name="add_person">വ്യക്തിയെ ചേർക്കുക</string>
@@ -1169,4 +1134,132 @@
     <string name="type_lent">കടം കൊടുത്തത്</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">കടം കൊടുത്തതിന്റെയും വാങ്ങിയതിന്റെയും രേഖകൾ കൈകാര്യം ചെയ്യുക</string>
+    <string name="import_cashew_backup">കാഷുവിൽ നിന്ന് ഇറക്കുമതി ചെയ്യുക</string>
+    <string name="import_cashew_backup_sub">കാഷു ആപ്പിൽ നിന്ന് SQLite അല്ലെങ്കിൽ CSV ഫയലുകൾ ഇറക്കുമതി ചെയ്യുക</string>
+    <string name="typing">നിങ്ങളുടെ അഭ്യർത്ഥന പരിഗണിക്കുന്നു...</string>
+    <string name="app_crashed">ആപ്പ് ക്രാഷ് ആയി</string>
+    <string name="share_crash_report">ക്രാഷ് റിപ്പോർട്ട് പങ്കിടുക</string>
+    <string name="unexpected_crash">അപ്രതീക്ഷിത ക്രാഷ്</string>
+    <string name="crash_report">ക്രാഷ് റിപ്പോർട്ട്</string>
+    <string name="extracted_from_pdf">PDF-നിൽ നിന്ന് പിഴുതെടുക്കപ്പെട്ടത്</string>
+    <string name="existing_in_database">ഡാറ്റാബേസിൽ നിലവിലുള്ളത്</string>
+    <string name="search_chats">ചാറ്റുകൾ തിരയുക...</string>
+    <string name="regenerate">പുനഃസൃഷ്ടിക്കുക</string>
+    <string name="tokens_usage">ടോക്കൺ ഉപയോഗം</string>
+    <string name="screen_content">സ്ക്രീൻ ഉള്ളടക്കം</string>
+    <string name="copied_text">പകര്‍ത്തിയ ടെക്‌സ്റ്റ്</string>
+    <string name="english">ഇംഗ്ലീഷ്</string>
+    <string name="afrikaans">ആഫ്രിക്കാൻസ്</string>
+    <string name="arabic">അറബിക്</string>
+    <string name="azerbaijani">അസർബൈജാനി</string>
+    <string name="bulgarian">ബൾഗേറിയൻ</string>
+    <string name="bengali">ബംഗാളി</string>
+    <string name="tibetan">ടിബറ്റിയൻ</string>
+    <string name="catalan">കാറ്റലാൻ</string>
+    <string name="czech">ചെക്ക്</string>
+    <string name="danish">ഡാനിഷ്</string>
+    <string name="german">ജർമ്മൻ</string>
+    <string name="dzongkha">സോംഗ്‌ക്‌ക്ക</string>
+    <string name="greek">ഗ്രീഷ്</string>
+    <string name="spanish">സ്പാനിഷ്</string>
+    <string name="persian">വ്യാപാരി</string>
+    <string name="french">ഫ്രഞ്ച്</string>
+    <string name="gujarati">ഗുജറാത്തി</string>
+    <string name="hawaiian">ഹവായിയൻ</string>
+    <string name="hebrew">ഹിബ്രു</string>
+    <string name="hindi">ഹിന്ദി</string>
+    <string name="croatian">ക്രൊയേഷ്യൻ</string>
+    <string name="hungarian">ഹംഗേറിയൻ</string>
+    <string name="indonesian">ഇൻഡൊനേഷ്യൻ</string>
+    <string name="icelandic">ഐസ്‌ലൻഡിക്</string>
+    <string name="italiano">ഇറ്റാലിയന്</string>
+    <string name="japanese">ജാപ്പനീസ്</string>
+    <string name="kabyle">ടാക്‌ബയ്ലിറ്റ്</string>
+    <string name="kannada">ಕನ್ನಡ</string>
+    <string name="kashmiri">കശ്മീരി</string>
+    <string name="latin">ലാറ്റിൻ</string>
+    <string name="malayalam">മലയാളം</string>
+    <string name="marathi">മറാത്തി</string>
+    <string name="nepali">नेपाली</string>
+    <string name="dutch">ഡച്ച്സ്</string>
+    <string name="norwegian">നോർവീജിയൻ</string>
+    <string name="chichewa">ചിച്ചേവ്വ</string>
+    <string name="odia">ଓଡ଼ିଆ</string>
+    <string name="iron">ഇറോൺ</string>
+    <string name="punjabi">ਪੰਜਾਬੀ</string>
+    <string name="polish">പോളിഷ്</string>
+    <string name="portuguese">പോർച്ചുഗീസ്</string>
+    <string name="romanian">റൊമാനിയൻ</string>
+    <string name="russian">റഷ്യൻ</string>
+    <string name="slovak">സ്ലൊവാകിയൻ</string>
+    <string name="slovenian">സ്ലൊവേനിയൻ</string>
+    <string name="swedish">സ്വീഡിഷ്</string>
+    <string name="tamil">തമിഴ്</string>
+    <string name="telugu">తెలుగు</string>
+    <string name="thai">ഥായ്</string>
+    <string name="turkmençe">തുർക്ക്മെൻ</string>
+    <string name="turkish">തുർക്കിഷ്</string>
+    <string name="ukrainian">ഉക്രൈനിയൻ</string>
+    <string name="urdu">ഉർദു</string>
+    <string name="uzbek">ഉസ്ബെക്ക്</string>
+    <string name="valencian">വാലൻസിയൻ</string>
+    <string name="vietnamese">വിയറ്റ്‌നാമീസ്</string>
+    <string name="chinese">ചൈനീസ്</string>
+    <string name="delete_multiple_records_confirm">നിങ്ങൾ തെരഞ്ഞെടുത്ത രേഖകൾ ഇല്ലാതാക്കാൻ ഉറപ്പാണോ?</string>
+    <string name="import_pdf">അയിൽക്കോൾ</string>
+    <string name="loan_type_borrowed">പോണ്ട് എടുത്തത്</string>
+    <string name="loan_type_lent">പോണ്ട് കൊടുത്തത്</string>
+    <string name="mark_as_loan">വിങ്ങിരിയ്ക്കുക</string>
+    <string name="marked_as_loan_success">വിങ്ങിരി.mark ചെയ്യപ്പെട്ടു</string>
+    <string name="persons_deleted_format">%1$d പേർ ഇല്ലാതാക്കി</string>
+    <string name="records_deleted_format">%1$d രേഖകൾ ഇല്ലാതാക്കി</string>
+    <string name="select">തിരഞ്ഞെടുക്കുക</string>
+    <string name="select_color">വപ്പു തിരഞ്ഞെടുക്കുക</string>
+    <string name="select_multiple">ബഹുവലി തിരഞ്ഞെടുക്കുക</string>
+    <string name="share_logs">ലോഗുകൾ പങ്കിടുക</string>
+    <string name="stop">നിൽക്കുക</string>
+    <string name="unmark_as_loan">വിങ്ങിരി.mark ഒഴിവാക്കുക</string>
+    <string name="unmark_loan_confirm_desc">ഈ ഇടപാടിൽ നിന്നുള്ള വായ്പ ബന്ധം നീക്കംചെയ്യും.</string>
+    <string name="unmark_loan_confirm_title">വിങ്ങിരി.mark ഒഴിവാക്കവേണോ?</string>
+    <string name="view_on_drive">ഡ്രൈവിൽ കാണുക</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d ലൈസൻസ്</item>
+        <item quantity="other">%1$d ലൈസൻസുകൾ</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">ശക്തമായ ബാങ്കുകളിൽ നിന്ന് %1$d സന്ദേശം</item>
+        <item quantity="other">ശക്തമായ ബാങ്കുകളിൽ നിന്ന് %1$d സന്ദേശങ്ങൾ</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d ഫയൽ</item>
+        <item quantity="other">%1$d ഫയലുകൾ</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d ഉപവിഭാഗം</item>
+        <item quantity="other">%1$d ഉപവിഭാഗങ്ങൾ</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">%1$d ട്രാൻസാക്ഷൻ ഒഴിവാക്കണോ?</item>
+        <item quantity="other">%1$d ട്രാൻസാക്ഷനുകൾ ഒഴിവാക്കണോ?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%2$s-ലിൽ %1$d ദിവസം മാത്രം ബാക്കി</item>
+        <item quantity="other">%2$s-ലിൽ %1$d ദിവസം ബാക്കി</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d കടത്ത് പാഴ്സ് ചെയ്തു</item>
+        <item quantity="other">%1$d കടത്തുകൾ പാഴ്സ് ചെയ്തു</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d സേവ് ചെയ്‌തു</item>
+        <item quantity="other">%1$d സേവ് ചെയ്‌തു</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">പേർ ഇല്ലാതാക്കണോ?</item>
+        <item quantity="other">%1$d പേർ ഇല്ലാതാക്കണോ?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">രേഖ ഇല്ലാതാക്കണോ?</item>
+        <item quantity="other">%1$d രേഖകൾ ഇല്ലാതാക്കണോ?</item>
+    </plurals>
 </resources>

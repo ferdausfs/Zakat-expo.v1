@@ -740,7 +740,6 @@
     <string name="language">اللغة</string>
     <string name="language_subtitle">تغيير لغة التطبيق</string>
     <string name="select_language">اختر اللغة</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">مستخدم</string>
     <string name="backup_sync_subtitle">إعدادات النسخ الاحتياطي، السحاب، الاستعادة والمزامنة</string>
     <string name="error">خطأ</string>
@@ -1041,71 +1040,6 @@
     <string name="provider_local_only">محلي فقط</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="zero">%1$d licenses</item>
-        <item quantity="one">رخصة %1$d</item>
-        <item quantity="two">%1$d licenses</item>
-        <item quantity="few">%1$d licenses</item>
-        <item quantity="many">%1$d licenses</item>
-        <item quantity="other">رخص %1$d</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="zero">%1$d messages from potential banks</item>
-        <item quantity="one">رسالة %1$d من البنوك المحتملة</item>
-        <item quantity="two">%1$d messages from potential banks</item>
-        <item quantity="few">%1$d messages from potential banks</item>
-        <item quantity="many">%1$d messages from potential banks</item>
-        <item quantity="other">رسائل %1$d من البنوك المحتملة</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="zero">%1$d files</item>
-        <item quantity="one">ملف %1$d</item>
-        <item quantity="two">%1$d files</item>
-        <item quantity="few">%1$d files</item>
-        <item quantity="many">%1$d files</item>
-        <item quantity="other">ملفات %1$d</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="zero">%1$d subcategories</item>
-        <item quantity="one">فئة فرعية %1$d</item>
-        <item quantity="two">%1$d subcategories</item>
-        <item quantity="few">%1$d subcategories</item>
-        <item quantity="many">%1$d subcategories</item>
-        <item quantity="other">فئات فرعية %1$d</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="zero">Delete %1$d transactions?</item>
-        <item quantity="one">هل تريد حذف المعاملة %1$d؟</item>
-        <item quantity="two">Delete %1$d transactions?</item>
-        <item quantity="few">Delete %1$d transactions?</item>
-        <item quantity="many">Delete %1$d transactions?</item>
-        <item quantity="other">هل تريد حذف المعاملات %1$d؟</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="zero">%1$d days left in %2$s</item>
-        <item quantity="one">تبقى %1$d يوم في %2$s</item>
-        <item quantity="two">%1$d days left in %2$s</item>
-        <item quantity="few">%1$d days left in %2$s</item>
-        <item quantity="many">%1$d days left in %2$s</item>
-        <item quantity="other">تبقى %1$d أيام في %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="zero">%1$d transactions parsed</item>
-        <item quantity="one">تم تحليل %1$d معاملة</item>
-        <item quantity="two">%1$d transactions parsed</item>
-        <item quantity="few">%1$d transactions parsed</item>
-        <item quantity="many">%1$d transactions parsed</item>
-        <item quantity="other">تم تحليل %1$d معاملات</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="zero">%1$d saved</item>
-        <item quantity="one">تم حفظ %1$d</item>
-        <item quantity="two">%1$d saved</item>
-        <item quantity="few">%1$d saved</item>
-        <item quantity="many">%1$d saved</item>
-        <item quantity="other">تم حفظ %1$d</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">تعديل الدفعة للمعاملات</string>
     <string name="batch_edit_updating_format">جارٍ تحديث %1$d عناصر محددة</string>
     <string name="batch_edit_toggle_hint">قم بتبديل الخيارات أدناه لتطبيقها على المعاملات المحددة:</string>
@@ -1125,7 +1059,6 @@
     <string name="batch_edit_set_batch_amount">تعيين مبلغ الدفعة</string>
     <string name="edit_selected_transactions">تعديل المعاملات المحددة</string>
     <string name="edit_selected_count_format">تعديل — %1$d</string>
-
     <string name="active_tab">الأشخاص</string>
     <string name="add_entry">إضافة سجل</string>
     <string name="add_person">إضافة شخص</string>
@@ -1201,4 +1134,164 @@
     <string name="type_lent">أقرض</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">إدارة سجلات الإقراض والاقتراض</string>
+    <string name="import_cashew_backup">استيراد من Cashew</string>
+    <string name="import_cashew_backup_sub">استيراد ملفات SQLite أو CSV من تطبيق Cashew</string>
+    <string name="typing">جاري التفكير في طلبك...</string>
+    <string name="app_crashed">تعطل التطبيق</string>
+    <string name="share_crash_report">مشاركة تقرير العطل</string>
+    <string name="unexpected_crash">عطل غير متوقع</string>
+    <string name="crash_report">تقرير العطل</string>
+    <string name="extracted_from_pdf">مستخرج من PDF</string>
+    <string name="existing_in_database">موجود في قاعدة البيانات</string>
+    <string name="search_chats">البحث في المحادثات...</string>
+    <string name="regenerate">إعادة التوليد</string>
+    <string name="tokens_usage">استخدام الرموز</string>
+    <string name="screen_content">محتوى الشاشة</string>
+    <string name="copied_text">النص المنسوخ</string>
+    <string name="english">الإنجليزية</string>
+    <string name="afrikaans">الأفريكانية</string>
+    <string name="arabic">العربية</string>
+    <string name="azerbaijani">أذربيجانية</string>
+    <string name="bulgarian">بلغارية</string>
+    <string name="bengali">بنغالية</string>
+    <string name="tibetan">تيبتي</string>
+    <string name="catalan">كتالانية</string>
+    <string name="czech">تشيكية</string>
+    <string name="danish">دانمركية</string>
+    <string name="german">ألمانية</string>
+    <string name="dzongkha">زونغخية</string>
+    <string name="greek">اليونانية</string>
+    <string name="spanish">إسبانية</string>
+    <string name="persian">فارسی</string>
+    <string name="french">فرنسية</string>
+    <string name="gujarati">غوجاراتية</string>
+    <string name="hawaiian">لغة هاواي</string>
+    <string name="hebrew">عبرية</string>
+    <string name="hindi">هندية</string>
+    <string name="croatian">كرواتية</string>
+    <string name="hungarian">هنغارية</string>
+    <string name="indonesian">إندونيسية</string>
+    <string name="icelandic">أيسلندية</string>
+    <string name="italiano">إيطالية</string>
+    <string name="japanese">اليابانية</string>
+    <string name="kabyle">طقبايلية</string>
+    <string name="kannada">كانادية</string>
+    <string name="kashmiri">كشميرية</string>
+    <string name="latin">لاتينية</string>
+    <string name="malayalam">مالايالامية</string>
+    <string name="marathi">ماراثية</string>
+    <string name="nepali">نيبالية</string>
+    <string name="dutch">هولندية</string>
+    <string name="norwegian">نرويجية</string>
+    <string name="chichewa">شيشوا</string>
+    <string name="odia">أوديا</string>
+    <string name="iron">إيرونية</string>
+    <string name="punjabi">بنجابية</string>
+    <string name="polish">بولندية</string>
+    <string name="portuguese">برتغالية</string>
+    <string name="romanian">رومانية</string>
+    <string name="russian">روسية</string>
+    <string name="slovak">سلوفاكية</string>
+    <string name="slovenian">سلوفينية</string>
+    <string name="swedish">سويدية</string>
+    <string name="tamil">التاميلية</string>
+    <string name="telugu">التيلجو</string>
+    <string name="thai">التايلاندية</string>
+    <string name="turkmençe">التركمانية</string>
+    <string name="turkish">التركية</string>
+    <string name="ukrainian">الأوكرانية</string>
+    <string name="urdu">الأردية</string>
+    <string name="uzbek">الأوزبكية</string>
+    <string name="valencian">الفالنسية</string>
+    <string name="vietnamese">الفيتنامية</string>
+    <string name="chinese">الصينية</string>
+    <string name="delete_multiple_records_confirm">هل أنت متأكد من أنك تريد حذف السجلات المحددة؟</string>
+    <string name="import_pdf">استيراد</string>
+    <string name="loan_type_borrowed">مستعار</string>
+    <string name="loan_type_lent">معار</string>
+    <string name="mark_as_loan">وضع علامة كقرض</string>
+    <string name="marked_as_loan_success">تم وضع علامة كقرض</string>
+    <string name="persons_deleted_format">تم حذف %1$d شخصًا</string>
+    <string name="records_deleted_format">تم حذف %1$d سجلًا</string>
+    <string name="select">اختيار</string>
+    <string name="select_color">اختر اللون</string>
+    <string name="select_multiple">اختر متعدد</string>
+    <string name="share_logs">مشاركة السجلات</string>
+    <string name="stop">إيقاف</string>
+    <string name="unmark_as_loan">إلغاء وضع علامة كقرض</string>
+    <string name="unmark_loan_confirm_desc">سيؤدي هذا إلى إزالة الربط بالقرض من هذه المعاملة.</string>
+    <string name="unmark_loan_confirm_title">إلغاء وضع علامة كقرض؟</string>
+    <string name="view_on_drive">عرض على Drive</string>
+    <plurals name="licenses_count">
+        <item quantity="zero">%1$d licenses</item>
+        <item quantity="one">رخصة %1$d</item>
+        <item quantity="two">%1$d licenses</item>
+        <item quantity="few">%1$d licenses</item>
+        <item quantity="many">%1$d licenses</item>
+        <item quantity="other">رخص %1$d</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="zero">%1$d messages from potential banks</item>
+        <item quantity="one">رسالة %1$d من البنوك المحتملة</item>
+        <item quantity="two">%1$d messages from potential banks</item>
+        <item quantity="few">%1$d messages from potential banks</item>
+        <item quantity="many">%1$d messages from potential banks</item>
+        <item quantity="other">رسائل %1$d من البنوك المحتملة</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="zero">%1$d files</item>
+        <item quantity="one">ملف %1$d</item>
+        <item quantity="two">%1$d files</item>
+        <item quantity="few">%1$d files</item>
+        <item quantity="many">%1$d files</item>
+        <item quantity="other">ملفات %1$d</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="zero">%1$d subcategories</item>
+        <item quantity="one">فئة فرعية %1$d</item>
+        <item quantity="two">%1$d subcategories</item>
+        <item quantity="few">%1$d subcategories</item>
+        <item quantity="many">%1$d subcategories</item>
+        <item quantity="other">فئات فرعية %1$d</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="zero">Delete %1$d transactions?</item>
+        <item quantity="one">هل تريد حذف المعاملة %1$d؟</item>
+        <item quantity="two">Delete %1$d transactions?</item>
+        <item quantity="few">Delete %1$d transactions?</item>
+        <item quantity="many">Delete %1$d transactions?</item>
+        <item quantity="other">هل تريد حذف المعاملات %1$d؟</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="zero">%1$d days left in %2$s</item>
+        <item quantity="one">تبقى %1$d يوم في %2$s</item>
+        <item quantity="two">%1$d days left in %2$s</item>
+        <item quantity="few">%1$d days left in %2$s</item>
+        <item quantity="many">%1$d days left in %2$s</item>
+        <item quantity="other">تبقى %1$d أيام في %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="zero">%1$d transactions parsed</item>
+        <item quantity="one">تم تحليل %1$d معاملة</item>
+        <item quantity="two">%1$d transactions parsed</item>
+        <item quantity="few">%1$d transactions parsed</item>
+        <item quantity="many">%1$d transactions parsed</item>
+        <item quantity="other">تم تحليل %1$d معاملات</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="zero">%1$d saved</item>
+        <item quantity="one">تم حفظ %1$d</item>
+        <item quantity="two">%1$d saved</item>
+        <item quantity="few">%1$d saved</item>
+        <item quantity="many">%1$d saved</item>
+        <item quantity="other">تم حفظ %1$d</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">حذف الشخص؟</item>
+        <item quantity="other">حذف %1$d أشخاص؟</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">حذف السجل؟</item>
+        <item quantity="other">حذف %1$d سجلات؟</item>
+    </plurals>
 </resources>

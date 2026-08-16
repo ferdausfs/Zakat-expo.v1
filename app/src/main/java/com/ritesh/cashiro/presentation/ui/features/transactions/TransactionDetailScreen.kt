@@ -1037,7 +1037,7 @@ private fun TransactionDetailContent(
      linkedLoanPersonAvatar: String? = null,
      onNavigateToPersonDetail: (Long) -> Unit = {}
  ) {
-
+    val context = LocalContext.current
     val receiptContainerColor = if (isAmoledMode) {
         MaterialTheme.colorScheme.surfaceContainerLow
     } else {
@@ -1121,7 +1121,29 @@ private fun TransactionDetailContent(
                     attachmentService = viewModel.attachmentService,
                     onAddAttachment = onAddAttachment,
                     onRemoveAttachment = onRemoveAttachment,
-                    onAttachmentClick = { /* Preview handled internally */ },
+                    onAttachmentClick = { path ->
+                        if (viewModel.attachmentService.isUrl(path)) {
+                            val intent = Intent(Intent.ACTION_VIEW, path.toUri())
+                            try {
+                                context.startActivity(intent)
+                            } catch (e: Exception) {
+                                // Handle error
+                            }
+                        } else {
+                            val uri = viewModel.attachmentService.getAttachmentUri(path)
+                            if (uri != null) {
+                                val intent = Intent(Intent.ACTION_VIEW).apply {
+                                    setDataAndType(uri, viewModel.attachmentService.getAttachmentMimeType(path))
+                                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                }
+                                try {
+                                    context.startActivity(intent)
+                                } catch (e: Exception) {
+                                    // Handle error
+                                }
+                            }
+                        }
+                    },
                     isEditable = true
                 )
                 Spacer(modifier = Modifier.height(300.dp)) // For better scroll space
@@ -2942,16 +2964,25 @@ private fun TransactionReceipt(
                                 onAddAttachment = {},
                                 onRemoveAttachment = {},
                                 onAttachmentClick = { path ->
-                                    val uri = attachmentService.getAttachmentUri(path)
-                                    if (uri != null) {
-                                        val intent = Intent(Intent.ACTION_VIEW).apply {
-                                            setDataAndType(uri, attachmentService.getAttachmentMimeType(path))
-                                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                                        }
+                                    if (attachmentService.isUrl(path)) {
+                                        val intent = Intent(Intent.ACTION_VIEW, path.toUri())
                                         try {
                                             context.startActivity(intent)
                                         } catch (e: Exception) {
                                             // Handle error
+                                        }
+                                    } else {
+                                        val uri = attachmentService.getAttachmentUri(path)
+                                        if (uri != null) {
+                                            val intent = Intent(Intent.ACTION_VIEW).apply {
+                                                setDataAndType(uri, attachmentService.getAttachmentMimeType(path))
+                                                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                            }
+                                            try {
+                                                context.startActivity(intent)
+                                            } catch (e: Exception) {
+                                                // Handle error
+                                            }
                                         }
                                     }
                                 },

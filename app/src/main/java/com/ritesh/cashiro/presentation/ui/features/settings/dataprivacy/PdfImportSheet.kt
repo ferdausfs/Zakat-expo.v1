@@ -57,8 +57,10 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.ritesh.cashiro.R
 import com.ritesh.cashiro.data.database.entity.TransactionEntity
 import com.ritesh.cashiro.presentation.effects.BlurredAnimatedVisibility
 import com.ritesh.cashiro.presentation.effects.overScrollVertical
@@ -421,7 +423,7 @@ fun PdfImportSheet(
                         )
                     ) {
                         Text(
-                            text = "Cancel",
+                            text = stringResource(R.string.cancel),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold
                         )
@@ -437,7 +439,7 @@ fun PdfImportSheet(
                         shape = RoundedCornerShape(16.dp)
                     ) {
                         Text(
-                            text = "Import",
+                            text = stringResource(R.string.import_pdf),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold
                         )
@@ -751,7 +753,7 @@ fun DuplicateComparisonSheet(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp)
             ) {
-                Text("Close")
+                Text(stringResource(R.string.close))
             }
         }
     }
@@ -767,7 +769,7 @@ fun ComparisonListGroup(
     Column {
         ListItem(
             headline = { Text(pdfValue) },
-            supporting = { Text("Extracted from PDF") },
+            supporting = { Text(stringResource(R.string.extracted_from_pdf)) },
             leading = {
                 Icon(
                     Icons.Default.PictureAsPdf,
@@ -781,7 +783,7 @@ fun ComparisonListGroup(
         )
         ListItem(
             headline = { Text(existingValue) },
-            supporting = { Text("Existing in Database") },
+            supporting = { Text(stringResource(R.string.existing_in_database)) },
             leading = {
                 Icon(
                     Icons.Default.History,

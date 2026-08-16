@@ -737,7 +737,6 @@
     <string name="language">Language</string>
     <string name="language_subtitle">Change application language</string>
     <string name="select_language">Select Language</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">ལག་ལེན་པ།</string>
     <string name="backup_sync_subtitle">རྒྱབ་བསྡུ་དང་, སྤྲིན་ཚོམ།, སླར་གསོ། མཉམ་འབྱོར་སྒྲིག་སྟངས།</string>
     <string name="error">འཛོལ་བ།</string>
@@ -907,30 +906,6 @@
     <string name="sync_sms_cd">Sync SMS transactions</string>
     <string name="add_transaction_subscription_cd">Add Transaction or Subscription</string>
     <string name="selected_cd">Selected</string>
-    <plurals name="licenses_count">
-        <item quantity="other">%1$d licenses</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="other">%1$d messages from potential banks</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="other">%1$d files</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="other">%1$d subcategories</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="other">Delete %1$d transactions?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="other">%1$d days left in %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="other">%1$d transactions parsed</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="other">%1$d saved</item>
-    </plurals>
     <string name="net_worth_label">Net worth</string>
     <string name="this_month_lbl">THIS MONTH</string>
     <string name="this_year_lbl">THIS YEAR</string>
@@ -983,7 +958,6 @@
     <string name="merchant_lbl">Merchant</string>
     <string name="options_desc">Options</string>
     <string name="save_configuration">སྲུངས།</string>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Batch Edit Transactions</string>
     <string name="batch_edit_updating_format">Updating %1$d selected items</string>
     <string name="batch_edit_toggle_hint">Toggle options below to apply across selected transactions:</string>
@@ -1003,7 +977,6 @@
     <string name="batch_edit_set_batch_amount">Set Batch Amount</string>
     <string name="edit_selected_transactions">Edit Selected Transactions</string>
     <string name="edit_selected_count_format">Edit — %1$d</string>
-
     <string name="active_tab">མི།</string>
     <string name="add_entry">ཐོ་གཏན་འབེབས།</string>
     <string name="add_person">མི་ཁ་སྣོན།</string>
@@ -1156,4 +1129,53 @@
     <string name="webdav_provider_desc">Nextcloud, OwnCloud, Synology, ཡང་ན་སྒེར་སྒྲིག་WebDAV</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">བུལ་ལེན་དང་བུན་ལེན་གྱི་ཐོ་འགོད།</string>
+    <string name="delete_multiple_records_confirm">Are you sure you want to delete the selected records?</string>
+    <string name="import_pdf">Import</string>
+    <string name="loan_type_borrowed">Borrowed</string>
+    <string name="loan_type_lent">Lent</string>
+    <string name="mark_as_loan">Mark as loan</string>
+    <string name="marked_as_loan_success">Marked as loan</string>
+    <string name="persons_deleted_format">%1$d persons deleted</string>
+    <string name="records_deleted_format">%1$d records deleted</string>
+    <string name="select">Select</string>
+    <string name="select_color">Select color</string>
+    <string name="select_multiple">Select multiple</string>
+    <string name="share_logs">Share logs</string>
+    <string name="stop">Stop</string>
+    <string name="unmark_as_loan">Unmark as loan</string>
+    <string name="unmark_loan_confirm_desc">This will remove the loan association from this transaction.</string>
+    <string name="unmark_loan_confirm_title">Unmark as loan?</string>
+    <string name="view_on_drive">View on Drive</string>
+    <plurals name="licenses_count">
+        <item quantity="other">%1$d licenses</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="other">%1$d messages from potential banks</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="other">%1$d files</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="other">%1$d subcategories</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="other">Delete %1$d transactions?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="other">%1$d days left in %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="other">%1$d transactions parsed</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="other">%1$d saved</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Delete person?</item>
+        <item quantity="other">Delete %1$d persons?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Delete record?</item>
+        <item quantity="other">Delete %1$d records?</item>
+    </plurals>
 </resources>

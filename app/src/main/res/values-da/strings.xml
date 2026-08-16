@@ -561,7 +561,7 @@
     <string name="add">Tilføj</string>
     <string name="webhook_endpoint_section">Endpoint</string>
     <string name="webhook_name_label">Webhook navn</string>
-    <string name="webhook_url_label">Webhook URL</string>
+    <string name="webhook_url_label">Webhook-URL</string>
     <string name="webhook_data_types_section">Datatyper</string>
     <string name="webhook_data_types_desc">Vælg hvilke data der leveres til dit slutpunkt.</string>
     <string name="webhook_time_range_section">Tidsinterval</string>
@@ -737,7 +737,6 @@
     <string name="language">Sprog</string>
     <string name="language_subtitle">Skift appens sprog</string>
     <string name="select_language">Vælg sprog</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">Bruger</string>
     <string name="backup_sync_subtitle">Indstillinger for sikkerhedskopiering, sky, gendannelse og synkronisering</string>
     <string name="error">Fejl</string>
@@ -1038,39 +1037,6 @@ Dette kan tage nogle sekunder afhængigt af din beskedhistorik.</string>
     <string name="provider_local_only">Kun Lokal</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drev</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d licens</item>
-        <item quantity="other">%1$d licenser</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">%1$d besked fra potentielle banker</item>
-        <item quantity="other">%1$d meddelelser fra potentielle banker</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d fil</item>
-        <item quantity="other">%1$d filer</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d underkategori</item>
-        <item quantity="other">%1$d underkategorier</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">Slet %1$d transaktion?</item>
-        <item quantity="other">Slet %1$d transaktioner?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%1$d dag tilbage i %2$s</item>
-        <item quantity="other">%1$d dage tilbage i %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d transaktion analyseret</item>
-        <item quantity="other">%1$d transaktioner fortolket</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d gemt</item>
-        <item quantity="other">%1$d gemt</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Rediger transaktioner i batch</string>
     <string name="batch_edit_updating_format">Opdaterer %1$d valgte elementer</string>
     <string name="batch_edit_toggle_hint">Skift indstillinger nedenfor for at anvende på de valgte transaktioner:</string>
@@ -1090,7 +1056,6 @@ Dette kan tage nogle sekunder afhængigt af din beskedhistorik.</string>
     <string name="batch_edit_set_batch_amount">Indstil batchbeløb</string>
     <string name="edit_selected_transactions">Rediger valgte transaktioner</string>
     <string name="edit_selected_count_format">Rediger — %1$d</string>
-
     <string name="active_tab">Personer</string>
     <string name="add_entry">Tilføj postering</string>
     <string name="add_person">Tilføj person</string>
@@ -1166,4 +1131,132 @@ Dette kan tage nogle sekunder afhængigt af din beskedhistorik.</string>
     <string name="type_lent">Udlånt</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">Administrer registreringer af udlån og lån</string>
+    <string name="import_cashew_backup">Importér fra Cashew</string>
+    <string name="import_cashew_backup_sub">Importer SQLite- eller CSV-filer fra Cashew-appen</string>
+    <string name="typing">Overvejer din anmodning...</string>
+    <string name="app_crashed">Appen er gået ned</string>
+    <string name="share_crash_report">Del fejllog</string>
+    <string name="unexpected_crash">Uventet nedbrud</string>
+    <string name="crash_report">Fejllog</string>
+    <string name="extracted_from_pdf">Uddraget fra PDF</string>
+    <string name="existing_in_database">Findes i databasen</string>
+    <string name="search_chats">Søg i chats...</string>
+    <string name="regenerate">Generér igen</string>
+    <string name="tokens_usage">Tokenforbrug</string>
+    <string name="screen_content">Skærmindhold</string>
+    <string name="copied_text">Kopieret tekst</string>
+    <string name="english">Engelsk</string>
+    <string name="afrikaans">Afrikaans</string>
+    <string name="arabic">العربية</string>
+    <string name="azerbaijani">Aserbajdsjansk</string>
+    <string name="bulgarian">Bulgarsk</string>
+    <string name="bengali">Bengali</string>
+    <string name="tibetan">Tibetansk</string>
+    <string name="catalan">Catalansk</string>
+    <string name="czech">Tjekkisk</string>
+    <string name="danish">Dansk</string>
+    <string name="german">Tysk</string>
+    <string name="dzongkha">Dzongkha</string>
+    <string name="greek">Grekisk</string>
+    <string name="spanish">Spansk</string>
+    <string name="persian">Persisk</string>
+    <string name="french">Fransk</string>
+    <string name="gujarati">Gujarati</string>
+    <string name="hawaiian">Hawaiiansk</string>
+    <string name="hebrew">Hebraisk</string>
+    <string name="hindi">Hindi</string>
+    <string name="croatian">Kroatisk</string>
+    <string name="hungarian">Ungarsk</string>
+    <string name="indonesian">Indonesisk</string>
+    <string name="icelandic">Islandsk</string>
+    <string name="italiano">Italiensk</string>
+    <string name="japanese">Japansk</string>
+    <string name="kabyle">Taqbaylit</string>
+    <string name="kannada">Kannada</string>
+    <string name="kashmiri">Kashmiri</string>
+    <string name="latin">Latin</string>
+    <string name="malayalam">Malayalam</string>
+    <string name="marathi">Marathi</string>
+    <string name="nepali">Nepali</string>
+    <string name="dutch">Hollandsk</string>
+    <string name="norwegian">Norsk</string>
+    <string name="chichewa">Chichewa</string>
+    <string name="odia">Odia</string>
+    <string name="iron">Iron</string>
+    <string name="punjabi">Punjabi</string>
+    <string name="polish">Polsk</string>
+    <string name="portuguese">Portugisisk</string>
+    <string name="romanian">Rumænsk</string>
+    <string name="russian">Russisk</string>
+    <string name="slovak">Slovakisk</string>
+    <string name="slovenian">Slovenščina</string>
+    <string name="swedish">Svenska</string>
+    <string name="tamil">தமிழ்</string>
+    <string name="telugu">Telugu</string>
+    <string name="thai">ไทย</string>
+    <string name="turkmençe">Türkmençe</string>
+    <string name="turkish">Türkçe</string>
+    <string name="ukrainian">Українська</string>
+    <string name="urdu">اردو</string>
+    <string name="uzbek">Oʻzbekcha</string>
+    <string name="valencian">Valencian</string>
+    <string name="vietnamese">Tiếng Việt</string>
+    <string name="chinese">中文</string>
+    <string name="delete_multiple_records_confirm">Er du sikker på, at du vil slette de valgte optegnelser?</string>
+    <string name="import_pdf">Import</string>
+    <string name="loan_type_borrowed">Lånt</string>
+    <string name="loan_type_lent">Udlånt</string>
+    <string name="mark_as_loan">Marker som lån</string>
+    <string name="marked_as_loan_success">Markeret som lån</string>
+    <string name="persons_deleted_format">%1$d personer slettet</string>
+    <string name="records_deleted_format">%1$d optegnelser slettet</string>
+    <string name="select">Vælg</string>
+    <string name="select_color">Vælg farve</string>
+    <string name="select_multiple">Vælg flere</string>
+    <string name="share_logs">Del logfiler</string>
+    <string name="stop">Stop</string>
+    <string name="unmark_as_loan">Fjern markering som lån</string>
+    <string name="unmark_loan_confirm_desc">Dette vil fjerne låneforeningen fra denne transaktion.</string>
+    <string name="unmark_loan_confirm_title">Fjern markering som lån?</string>
+    <string name="view_on_drive">Se på Drive</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d licens</item>
+        <item quantity="other">%1$d licenser</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">%1$d besked fra potentielle banker</item>
+        <item quantity="other">%1$d meddelelser fra potentielle banker</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d fil</item>
+        <item quantity="other">%1$d filer</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d underkategori</item>
+        <item quantity="other">%1$d underkategorier</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">Slet %1$d transaktion?</item>
+        <item quantity="other">Slet %1$d transaktioner?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%1$d dag tilbage i %2$s</item>
+        <item quantity="other">%1$d dage tilbage i %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d transaktion analyseret</item>
+        <item quantity="other">%1$d transaktioner fortolket</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d gemt</item>
+        <item quantity="other">%1$d gemt</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Slet person?</item>
+        <item quantity="other">Slet %1$d personer?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Slet optegnelse?</item>
+        <item quantity="other">Slet %1$d optegnelser?</item>
+    </plurals>
 </resources>

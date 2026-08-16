@@ -737,7 +737,6 @@
     <string name="language">Limbă</string>
     <string name="language_subtitle">Schimbă limba aplicației</string>
     <string name="select_language">Selectați limba</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">Utilizator</string>
     <string name="backup_sync_subtitle">Setări de copie de rezervă, cloud, restaurare și sincronizare</string>
     <string name="error">Eroare</string>
@@ -1038,47 +1037,6 @@ Acest proces poate dura câteva secunde, în funcție de istoricul mesajelor dvs
     <string name="provider_local_only">Doar local</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="one">Licență %1$d</item>
-        <item quantity="few">Licențe %1$d</item>
-        <item quantity="other">Licențe %1$d</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">Mesaj %1$d de la bănci potențiale</item>
-        <item quantity="few">%1$d mesaje de la bănci potențiale</item>
-        <item quantity="other">%1$d mesaje de la bănci potențiale</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">Fişier %1$d</item>
-        <item quantity="few">Fişiere %1$d</item>
-        <item quantity="other">Fişiere %1$d</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d subcategorie</item>
-        <item quantity="few">%1$d subcategorii</item>
-        <item quantity="other">%1$d subcategorii</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">Ștergeți tranzacția %1$d?</item>
-        <item quantity="few">Ștergeți tranzacțiile %1$d?</item>
-        <item quantity="other">Ștergeți tranzacțiile %1$d?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">%1$d zi rămasă în %2$s</item>
-        <item quantity="few">%1$d zile rămase în %2$s</item>
-        <item quantity="other">%1$d zile rămase în %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">Tranzacție %1$d analizată</item>
-        <item quantity="few">Tranzacții %1$d analizate</item>
-        <item quantity="other">Tranzacții %1$d analizate</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d salvat</item>
-        <item quantity="few">%1$d salvat</item>
-        <item quantity="other">%1$d salvat</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Editare în Lot a Tranzacțiilor</string>
     <string name="batch_edit_updating_format">Actualizare %1$d articole selectate</string>
     <string name="batch_edit_toggle_hint">Comutați opțiunile de mai jos pentru a le aplica pe tranzacțiile selectate:</string>
@@ -1098,7 +1056,6 @@ Acest proces poate dura câteva secunde, în funcție de istoricul mesajelor dvs
     <string name="batch_edit_set_batch_amount">Setează Suma pentru Lot</string>
     <string name="edit_selected_transactions">Editează Tranzacțiile Selectate</string>
     <string name="edit_selected_count_format">Editează — %1$d</string>
-
     <string name="active_tab">Oameni</string>
     <string name="add_entry">Adaugă Înregistrare</string>
     <string name="add_person">Adaugă Persoană</string>
@@ -1174,4 +1131,140 @@ Acest proces poate dura câteva secunde, în funcție de istoricul mesajelor dvs
     <string name="type_lent">Împrumutat</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">Gestionați înregistrările pentru bani împrumutați și primiți</string>
+    <string name="import_cashew_backup">Importă din Cashew</string>
+    <string name="import_cashew_backup_sub">Importă fișiere SQLite sau CSV din aplicația Cashew</string>
+    <string name="typing">Se procesează cererea ta...</string>
+    <string name="app_crashed">Aplicația a picat</string>
+    <string name="share_crash_report">Împarte raportul de eroare</string>
+    <string name="unexpected_crash">Eroare neașteptată</string>
+    <string name="crash_report">Raport de eroare</string>
+    <string name="extracted_from_pdf">Extras din PDF</string>
+    <string name="existing_in_database">Există în baza de date</string>
+    <string name="search_chats">Caută în chaturi...</string>
+    <string name="regenerate">Regenerare</string>
+    <string name="tokens_usage">Utilizare token-uri</string>
+    <string name="screen_content">Conținutul ecranului</string>
+    <string name="copied_text">Text Copiat</string>
+    <string name="english">Engleză</string>
+    <string name="afrikaans">Afrikaans</string>
+    <string name="arabic">Arabă</string>
+    <string name="azerbaijani">Azeră</string>
+    <string name="bulgarian">Bulgară</string>
+    <string name="bengali">Bengaleză</string>
+    <string name="tibetan">Tibetană</string>
+    <string name="catalan">Catalană</string>
+    <string name="czech">Cehă</string>
+    <string name="danish">Daneză</string>
+    <string name="german">Germană</string>
+    <string name="dzongkha">Dzongkha</string>
+    <string name="greek">Greacă</string>
+    <string name="spanish">Spaniolă</string>
+    <string name="persian">Persană</string>
+    <string name="french">Franceză</string>
+    <string name="gujarati">Gujarati</string>
+    <string name="hawaiian">Hawaiiană</string>
+    <string name="hebrew">Ebraică</string>
+    <string name="hindi">Hindi</string>
+    <string name="croatian">Croată</string>
+    <string name="hungarian">Maghiară</string>
+    <string name="indonesian">Indoneziană</string>
+    <string name="icelandic">Islandeză</string>
+    <string name="italiano">Italiană</string>
+    <string name="japanese">Japoneză</string>
+    <string name="kabyle">Taqbaylit</string>
+    <string name="kannada">Kannada</string>
+    <string name="kashmiri">Kashmiri</string>
+    <string name="latin">Latină</string>
+    <string name="malayalam">Malayalam</string>
+    <string name="marathi">Marathi</string>
+    <string name="nepali">Nepaleză</string>
+    <string name="dutch">Olandeză</string>
+    <string name="norwegian">Norvegiană</string>
+    <string name="chichewa">Chichewa</string>
+    <string name="odia">Odia</string>
+    <string name="iron">Iron</string>
+    <string name="punjabi">Punjabi</string>
+    <string name="polish">Poloneză</string>
+    <string name="portuguese">Portugheză</string>
+    <string name="romanian">Română</string>
+    <string name="russian">Rusă</string>
+    <string name="slovak">Slovacă</string>
+    <string name="slovenian">Slovenă</string>
+    <string name="swedish">Suedeză</string>
+    <string name="tamil">Tamil</string>
+    <string name="telugu">Telugu</string>
+    <string name="thai">Thailandeză</string>
+    <string name="turkmençe">Turkmenă</string>
+    <string name="turkish">Turcă</string>
+    <string name="ukrainian">Ucrainiană</string>
+    <string name="urdu">Urdu</string>
+    <string name="uzbek">Uzbecă</string>
+    <string name="valencian">Valenciană</string>
+    <string name="vietnamese">Vietnameză</string>
+    <string name="chinese">Chineză</string>
+    <string name="delete_multiple_records_confirm">Ești sigur că vrei să ștergi înregistrările selectate?</string>
+    <string name="import_pdf">Import</string>
+    <string name="loan_type_borrowed">Împrumutat</string>
+    <string name="loan_type_lent">Împrumutat altuia</string>
+    <string name="mark_as_loan">Marchează ca împrumut</string>
+    <string name="marked_as_loan_success">Marcat ca împrumut</string>
+    <string name="persons_deleted_format">%1$d persoane șterse</string>
+    <string name="records_deleted_format">%1$d înregistrări șterse</string>
+    <string name="select">Selectează</string>
+    <string name="select_color">Selectează culoare</string>
+    <string name="select_multiple">Selectează mai multe</string>
+    <string name="share_logs">Partajează jurnalele</string>
+    <string name="stop">Oprește</string>
+    <string name="unmark_as_loan">Debifează ca împrumut</string>
+    <string name="unmark_loan_confirm_desc">Acest lucru va elimina asociația de împrumut din această tranzacție.</string>
+    <string name="unmark_loan_confirm_title">Debifează ca împrumut?</string>
+    <string name="view_on_drive">Vezi pe Drive</string>
+    <plurals name="licenses_count">
+        <item quantity="one">Licență %1$d</item>
+        <item quantity="few">Licențe %1$d</item>
+        <item quantity="other">Licențe %1$d</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">Mesaj %1$d de la bănci potențiale</item>
+        <item quantity="few">%1$d mesaje de la bănci potențiale</item>
+        <item quantity="other">%1$d mesaje de la bănci potențiale</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">Fişier %1$d</item>
+        <item quantity="few">Fişiere %1$d</item>
+        <item quantity="other">Fişiere %1$d</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d subcategorie</item>
+        <item quantity="few">%1$d subcategorii</item>
+        <item quantity="other">%1$d subcategorii</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">Ștergeți tranzacția %1$d?</item>
+        <item quantity="few">Ștergeți tranzacțiile %1$d?</item>
+        <item quantity="other">Ștergeți tranzacțiile %1$d?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">%1$d zi rămasă în %2$s</item>
+        <item quantity="few">%1$d zile rămase în %2$s</item>
+        <item quantity="other">%1$d zile rămase în %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">Tranzacție %1$d analizată</item>
+        <item quantity="few">Tranzacții %1$d analizate</item>
+        <item quantity="other">Tranzacții %1$d analizate</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d salvat</item>
+        <item quantity="few">%1$d salvat</item>
+        <item quantity="other">%1$d salvat</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Șterge persoana?</item>
+        <item quantity="other">Șterge %1$d persoane?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Șterge înregistrarea?</item>
+        <item quantity="other">Șterge %1$d înregistrări?</item>
+    </plurals>
 </resources>

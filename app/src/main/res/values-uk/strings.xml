@@ -739,7 +739,6 @@
     <string name="language">Мова</string>
     <string name="language_subtitle">Змінити мову додатку</string>
     <string name="select_language">Вибрати мову</string>
-    <!-- Settings Screen -->
     <string name="default_user_name">Користувач</string>
     <string name="backup_sync_subtitle">Налаштування резервного копіювання, хмари, відновлення та синхронізації</string>
     <string name="error">Помилка</string>
@@ -1040,55 +1039,6 @@
     <string name="provider_local_only">Тільки локально</string>
     <string name="provider_webdav">Nextcloud / WebDAV</string>
     <string name="provider_google_drive">Google Drive</string>
-    <plurals name="licenses_count">
-        <item quantity="one">%1$d ліцензія</item>
-        <item quantity="few">%1$d ліцензії</item>
-        <item quantity="many">%1$d ліцензії</item>
-        <item quantity="other">%1$d ліцензії</item>
-    </plurals>
-    <plurals name="unrecognized_messages_count">
-        <item quantity="one">%1$d повідомлення від потенційних банків</item>
-        <item quantity="few">%1$d повідомлення від потенційних банків</item>
-        <item quantity="many">%1$d повідомлення від потенційних банків</item>
-        <item quantity="other">%1$d повідомлення від потенційних банків</item>
-    </plurals>
-    <plurals name="attachments_count">
-        <item quantity="one">%1$d файл</item>
-        <item quantity="few">%1$d файлів</item>
-        <item quantity="many">%1$d файлів</item>
-        <item quantity="other">%1$d файлів</item>
-    </plurals>
-    <plurals name="subcategory_count_plural">
-        <item quantity="one">%1$d підкатегорія</item>
-        <item quantity="few">%1$d підкатегорії</item>
-        <item quantity="many">%1$d підкатегорії</item>
-        <item quantity="other">%1$d підкатегорії</item>
-    </plurals>
-    <plurals name="delete_transactions_title">
-        <item quantity="one">Видалити операцію %1$d?</item>
-        <item quantity="few">Видалити операції %1$d?</item>
-        <item quantity="many">Видалити операції %1$d?</item>
-        <item quantity="other">Видалити операції %1$d?</item>
-    </plurals>
-    <plurals name="month_status_days_left_format">
-        <item quantity="one">Залишився %1$d день у %2$s</item>
-        <item quantity="few">%1$d days left in %2$s</item>
-        <item quantity="many">%1$d days left in %2$s</item>
-        <item quantity="other">Залишилося %1$d днів у %2$s</item>
-    </plurals>
-    <plurals name="transactions_parsed_format">
-        <item quantity="one">%1$d транзакція оброблена</item>
-        <item quantity="few">%1$d операцій проаналізовано</item>
-        <item quantity="many">%1$d операцій проаналізовано</item>
-        <item quantity="other">%1$d операцій проаналізовано</item>
-    </plurals>
-    <plurals name="saved_transactions_format">
-        <item quantity="one">%1$d збережено</item>
-        <item quantity="few">%1$d saved</item>
-        <item quantity="many">%1$d saved</item>
-        <item quantity="other">%1$d збережено</item>
-    </plurals>
-    <!-- Batch Edit Transactions -->
     <string name="batch_edit_title">Пакетне редагування транзакцій</string>
     <string name="batch_edit_updating_format">Оновлення %1$d обраних елементів</string>
     <string name="batch_edit_toggle_hint">Увімкніть параметри нижче для застосування до обраних транзакцій:</string>
@@ -1108,7 +1058,6 @@
     <string name="batch_edit_set_batch_amount">Встановити пакетну суму</string>
     <string name="edit_selected_transactions">Редагувати обрані транзакції</string>
     <string name="edit_selected_count_format">Редагувати — %1$d</string>
-
     <string name="active_tab">Люди</string>
     <string name="add_entry">Додати запис</string>
     <string name="add_person">Додати людину</string>
@@ -1184,4 +1133,148 @@
     <string name="type_lent">Позичено</string>
     <string name="whatsapp_cd">WhatsApp</string>
     <string name="loan_description">Керуйте записами про видані та отримані позики</string>
+    <string name="import_cashew_backup">Імпортувати з Cashew</string>
+    <string name="import_cashew_backup_sub">Імпортувати файли SQLite або CSV з додатку Cashew</string>
+    <string name="typing">Обробка вашого запиту...</string>
+    <string name="app_crashed">Додаток аварійно завершив роботу</string>
+    <string name="share_crash_report">Поділитися звітом про збій</string>
+    <string name="unexpected_crash">Неочікуваний збій</string>
+    <string name="crash_report">Звіт про збій</string>
+    <string name="extracted_from_pdf">Видобуто з PDF</string>
+    <string name="existing_in_database">Існує в базі даних</string>
+    <string name="search_chats">Пошук чатів...</string>
+    <string name="regenerate">Згенерувати повторно</string>
+    <string name="tokens_usage">Використання токенів</string>
+    <string name="screen_content">Вміст екрану</string>
+    <string name="copied_text">Скопійований текст</string>
+    <string name="english">Англійська</string>
+    <string name="afrikaans">Африкаанс</string>
+    <string name="arabic">Арабська</string>
+    <string name="azerbaijani">Азербайджанська</string>
+    <string name="bulgarian">Болгарська</string>
+    <string name="bengali">Бенгальська</string>
+    <string name="tibetan">Тибетська</string>
+    <string name="catalan">Каталонська</string>
+    <string name="czech">Чеська</string>
+    <string name="danish">Данська</string>
+    <string name="german">Німецька</string>
+    <string name="dzongkha">Dzongkha</string>
+    <string name="greek">Грецька</string>
+    <string name="spanish">Іспанська</string>
+    <string name="persian">Перська</string>
+    <string name="french">Французька</string>
+    <string name="gujarati">Гуджараті</string>
+    <string name="hawaiian">Гавайська мова</string>
+    <string name="hebrew">Іврит</string>
+    <string name="hindi">Хінді</string>
+    <string name="croatian">Хорватська</string>
+    <string name="hungarian">Угорська</string>
+    <string name="indonesian">Індонезійська</string>
+    <string name="icelandic">Ісландська</string>
+    <string name="italiano">Італійська</string>
+    <string name="japanese">Японська</string>
+    <string name="kabyle">Такбаїліт</string>
+    <string name="kannada">Каннада</string>
+    <string name="kashmiri">Кашмірі</string>
+    <string name="latin">Латинь</string>
+    <string name="malayalam">Малаялам</string>
+    <string name="marathi">Мархі</string>
+    <string name="nepali">Непальська</string>
+    <string name="dutch">Нідерландська</string>
+    <string name="norwegian">Норвезька</string>
+    <string name="chichewa">Чічева</string>
+    <string name="odia">Орія</string>
+    <string name="iron">Ірон</string>
+    <string name="punjabi">Пенджабі</string>
+    <string name="polish">Польська</string>
+    <string name="portuguese">Португальська</string>
+    <string name="romanian">Румунська</string>
+    <string name="russian">Російська</string>
+    <string name="slovak">Словацька</string>
+    <string name="slovenian">Словенська</string>
+    <string name="swedish">Шведська</string>
+    <string name="tamil">Тамільська</string>
+    <string name="telugu">Телугу</string>
+    <string name="thai">Тайська</string>
+    <string name="turkmençe">Туркменська</string>
+    <string name="turkish">Турецька</string>
+    <string name="ukrainian">Українська</string>
+    <string name="urdu">Урду</string>
+    <string name="uzbek">Узбекська</string>
+    <string name="valencian">Валенсійська</string>
+    <string name="vietnamese">В’єтнамська</string>
+    <string name="chinese">Китайська</string>
+    <string name="delete_multiple_records_confirm">Ви впевнені, що хочете видалити обрані записи?</string>
+    <string name="import_pdf">Імпорт</string>
+    <string name="loan_type_borrowed">Позичено</string>
+    <string name="loan_type_lent">Позичено іншій особі</string>
+    <string name="mark_as_loan">Позначити як позичку</string>
+    <string name="marked_as_loan_success">Позначено як позичку</string>
+    <string name="persons_deleted_format">%1$d осіб видалено</string>
+    <string name="records_deleted_format">%1$d записів видалено</string>
+    <string name="select">Вибрати</string>
+    <string name="select_color">Вибрати колір</string>
+    <string name="select_multiple">Вибрати декілька</string>
+    <string name="share_logs">Поділитися журналами</string>
+    <string name="stop">Зупинити</string>
+    <string name="unmark_as_loan">Зняти позначку позички</string>
+    <string name="unmark_loan_confirm_desc">Це видалить асоціацію позички з цією транзакцією.</string>
+    <string name="unmark_loan_confirm_title">Зняти позначку позички?</string>
+    <string name="view_on_drive">Переглянути на Диску</string>
+    <plurals name="licenses_count">
+        <item quantity="one">%1$d ліцензія</item>
+        <item quantity="few">%1$d ліцензії</item>
+        <item quantity="many">%1$d ліцензії</item>
+        <item quantity="other">%1$d ліцензії</item>
+    </plurals>
+    <plurals name="unrecognized_messages_count">
+        <item quantity="one">%1$d повідомлення від потенційних банків</item>
+        <item quantity="few">%1$d повідомлення від потенційних банків</item>
+        <item quantity="many">%1$d повідомлення від потенційних банків</item>
+        <item quantity="other">%1$d повідомлення від потенційних банків</item>
+    </plurals>
+    <plurals name="attachments_count">
+        <item quantity="one">%1$d файл</item>
+        <item quantity="few">%1$d файлів</item>
+        <item quantity="many">%1$d файлів</item>
+        <item quantity="other">%1$d файлів</item>
+    </plurals>
+    <plurals name="subcategory_count_plural">
+        <item quantity="one">%1$d підкатегорія</item>
+        <item quantity="few">%1$d підкатегорії</item>
+        <item quantity="many">%1$d підкатегорії</item>
+        <item quantity="other">%1$d підкатегорії</item>
+    </plurals>
+    <plurals name="delete_transactions_title">
+        <item quantity="one">Видалити операцію %1$d?</item>
+        <item quantity="few">Видалити операції %1$d?</item>
+        <item quantity="many">Видалити операції %1$d?</item>
+        <item quantity="other">Видалити операції %1$d?</item>
+    </plurals>
+    <plurals name="month_status_days_left_format">
+        <item quantity="one">Залишився %1$d день у %2$s</item>
+        <item quantity="few">%1$d days left in %2$s</item>
+        <item quantity="many">%1$d days left in %2$s</item>
+        <item quantity="other">Залишилося %1$d днів у %2$s</item>
+    </plurals>
+    <plurals name="transactions_parsed_format">
+        <item quantity="one">%1$d транзакція оброблена</item>
+        <item quantity="few">%1$d операцій проаналізовано</item>
+        <item quantity="many">%1$d операцій проаналізовано</item>
+        <item quantity="other">%1$d операцій проаналізовано</item>
+    </plurals>
+    <plurals name="saved_transactions_format">
+        <item quantity="one">%1$d збережено</item>
+        <item quantity="few">%1$d saved</item>
+        <item quantity="many">%1$d saved</item>
+        <item quantity="other">%1$d збережено</item>
+    </plurals>
+    <plurals name="delete_persons_title">
+        <item quantity="one">Видалити особу?</item>
+        <item quantity="other">Видалити %1$d осіб?</item>
+    </plurals>
+    <plurals name="delete_records_title">
+        <item quantity="one">Видалити запис?</item>
+        <item quantity="other">Видалити %1$d записів?</item>
+    </plurals>
 </resources>

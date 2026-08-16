@@ -1,5 +1,7 @@
 package com.ritesh.cashiro.presentation.ui.features.add
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -110,6 +112,7 @@ fun SubscriptionTabContent(
     blurEffects: Boolean,
     hazeState: HazeState
 ) {
+    val context = LocalContext.current
     val uiState by viewModel.subscriptionUiState.collectAsState()
     val categories by viewModel.categories.collectAsState()
     val accounts by viewModel.accounts.collectAsState()
@@ -713,7 +716,29 @@ fun SubscriptionTabContent(
                 attachmentService = viewModel.attachmentService,
                 onAddAttachment = viewModel::addSubscriptionAttachment,
                 onRemoveAttachment = viewModel::removeSubscriptionAttachment,
-                onAttachmentClick = { /* Preview handled internally */ },
+                onAttachmentClick = { path ->
+                    if (viewModel.attachmentService.isUrl(path)) {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(path))
+                        try {
+                            context.startActivity(intent)
+                        } catch (e: Exception) {
+                            // Handle error
+                        }
+                    } else {
+                        val uri = viewModel.attachmentService.getAttachmentUri(path)
+                        if (uri != null) {
+                            val intent = Intent(Intent.ACTION_VIEW).apply {
+                                setDataAndType(uri, viewModel.attachmentService.getAttachmentMimeType(path))
+                                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            }
+                            try {
+                                context.startActivity(intent)
+                            } catch (e: Exception) {
+                                // Handle error
+                            }
+                        }
+                    }
+                },
                 isEditable = true
             )
 

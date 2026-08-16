@@ -148,67 +148,72 @@ fun SettingsScreen(
             java.util.Locale.getDefault().language
         }
     }
-    val currentLanguageName = remember(currentLanguageCode) {
-        when (currentLanguageCode) {
-            "en" -> "English"
-            "af" -> "Afrikaans"
-            "ar" -> "العربية"
-            "az" -> "Azərbaycan"
-            "bg" -> "Български"
-            "bn" -> "বাংলা"
-            "bo" -> "བོད་སྐད་"
-            "ca" -> "Català"
-            "cs" -> "Čeština"
-            "da" -> "Dansk"
-            "de" -> "Deutsch"
-            "dz" -> "རྫོང་ཁ་"
-            "el" -> "Ελληνικά"
-            "es" -> "Español"
-            "fa" -> "فارسی"
-            "fr" -> "Français"
-            "gu" -> "ગુજરાતી"
-            "haw" -> "ʻŌlelo Hawaiʻi"
-            "he" -> "עברית"
-            "hi" -> "हिन्दी"
-            "hr" -> "Hrvatski"
-            "hu" -> "Magyar"
-            "id" -> "Bahasa Indonesia"
-            "is" -> "Íslenska"
-            "it" -> "Italiano"
-            "ja" -> "日本語"
-            "kab" -> "Taqbaylit"
-            "kn" -> "ಕನ್ನಡ"
-            "ks" -> "कश्मीरी"
-            "la" -> "Latina"
-            "ml" -> "മലയാളം"
-            "mr" -> "मराठी"
-            "ne" -> "नेपाली"
-            "nl" -> "Nederlands"
-            "no" -> "Norsk"
-            "ny" -> "Chichewa"
-            "or" -> "ଓଡ଼ିଆ"
-            "os" -> "Ирон"
-            "pa" -> "ਪੰਜਾਬੀ"
-            "pl" -> "Polski"
-            "pt" -> "Português"
-            "ro" -> "Română"
-            "ru" -> "Русский"
-            "sk" -> "Slovenčina"
-            "sl" -> "Slovenščina"
-            "sv" -> "Svenska"
-            "ta" -> "தமிழ்"
-            "te" -> "తెలుగు"
-            "th" -> "ไทย"
-            "tk" -> "Türkmençe"
-            "tr" -> "Türkçe"
-            "uk" -> "Українська"
-            "ur" -> "اردو"
-            "uz" -> "Oʻzbekcha"
-            "val" -> "Valencian"
-            "vi" -> "Tiếng Việt"
-            "zh" -> "中文"
-            else -> java.util.Locale.forLanguageTag(currentLanguageCode).displayName
+    val currentLanguageRes = remember(currentLanguageCode) {
+ when (currentLanguageCode) {
+            "en" -> R.string.english
+            "af" -> R.string.afrikaans
+            "ar" -> R.string.arabic
+            "az" -> R.string.azerbaijani
+            "bg" -> R.string.bulgarian
+            "bn" -> R.string.bengali
+            "bo" -> R.string.tibetan
+            "ca" -> R.string.catalan
+            "cs" -> R.string.czech
+            "da" -> R.string.danish
+            "de" -> R.string.german
+            "dz" -> R.string.dzongkha
+            "el" -> R.string.greek
+            "es" -> R.string.spanish
+            "fa" -> R.string.persian
+            "fr" -> R.string.french
+            "gu" -> R.string.gujarati
+            "haw" -> R.string.hawaiian
+            "he" -> R.string.hebrew
+            "hi" -> R.string.hindi
+            "hr" -> R.string.croatian
+            "hu" -> R.string.hungarian
+            "id" -> R.string.indonesian
+            "is" -> R.string.icelandic
+            "it" -> R.string.italiano
+            "ja" -> R.string.japanese
+            "kab" -> R.string.kabyle
+            "kn" -> R.string.kannada
+            "ks" -> R.string.kashmiri
+            "la" -> R.string.latin
+            "ml" -> R.string.malayalam
+            "mr" -> R.string.marathi
+            "ne" -> R.string.nepali
+            "nl" -> R.string.dutch
+            "no" -> R.string.norwegian
+            "ny" -> R.string.chichewa
+            "or" -> R.string.odia
+            "os" -> R.string.iron
+            "pa" -> R.string.punjabi
+            "pl" -> R.string.polish
+            "pt" -> R.string.portuguese
+            "ro" -> R.string.romanian
+            "ru" -> R.string.russian
+            "sk" -> R.string.slovak
+            "sl" -> R.string.slovenian
+            "sv" -> R.string.swedish
+            "ta" -> R.string.tamil
+            "te" -> R.string.telugu
+            "th" -> R.string.thai
+            "tk" -> R.string.turkmençe
+            "tr" -> R.string.turkish
+            "uk" -> R.string.ukrainian
+            "ur" -> R.string.urdu
+            "uz" -> R.string.uzbek
+            "val" -> R.string.valencian
+            "vi" -> R.string.vietnamese
+            "zh" -> R.string.chinese
+            else -> null
         }
+    }
+    val currentLanguageName = if (currentLanguageRes != null) {
+        stringResource(currentLanguageRes)
+    } else {
+        java.util.Locale.forLanguageTag(currentLanguageCode).displayName
     }
 
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
