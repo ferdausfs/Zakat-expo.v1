@@ -47,6 +47,9 @@ scripts/node_modules/
 reddit.md
 .claude
 
+# Personal notes (do not commit)
+docs/interview prep/
+
 # Release artifacts
 *.apk
 *.aab

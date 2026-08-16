@@ -117,6 +117,7 @@ import com.ritesh.cashiro.presentation.ui.icons.DirectboxReceive
 import com.ritesh.cashiro.presentation.ui.icons.DirectboxSend
 import com.ritesh.cashiro.presentation.ui.icons.Folder2
 import com.ritesh.cashiro.presentation.ui.icons.Iconax
+import com.ritesh.cashiro.presentation.ui.icons.ImportArrow01
 import com.ritesh.cashiro.presentation.ui.icons.Information
 import com.ritesh.cashiro.presentation.ui.theme.Dimensions
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
@@ -187,6 +188,11 @@ fun BackupSyncScreen(
     val pdfImportLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri -> uri?.let { dataPrivacyViewModel.analyzePdfStatement(it) } }
+    )
+
+    val cashewImportLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = { uri -> uri?.let { dataPrivacyViewModel.importCashew(it) } }
     )
 
     // Handle export completion
@@ -926,6 +932,36 @@ fun BackupSyncScreen(
                                 )
                             },
                             onClick = { pdfImportLauncher.launch("application/pdf") },
+                            shape = ListItemPosition.Middle.toShape(),
+                            padding = PaddingValues(0.dp)
+                        )
+
+                        // Import from Cashew
+                        ListItem(
+                            headline = { Text(stringResource(R.string.import_cashew_backup)) },
+                            supporting = { Text(stringResource(R.string.import_cashew_backup_sub)) },
+                            leading = {
+                                Box(
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .background(blue_light, CircleShape),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        imageVector = Iconax.ImportArrow01,
+                                        contentDescription = null,
+                                        tint = blue_dark
+                                    )
+                                }
+                            },
+                            trailing = {
+                                Icon(
+                                    Icons.Rounded.ChevronRight,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            },
+                            onClick = { cashewImportLauncher.launch("*/*") },
                             shape = ListItemPosition.Bottom.toShape(),
                             padding = PaddingValues(0.dp)
                         )

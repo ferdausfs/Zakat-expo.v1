@@ -20,8 +20,8 @@
     <string name="lock_timeout_immediate">Lock immediately when app goes to background</string>
     <string name="lock_timeout_1min">Lock after 1 minute in background</string>
     <string name="lock_timeout_minutes">Lock after %1$d minutes in background</string>
-    
     <string name="data_management_section">Data Management</string>
+    <string name="backup_tab">Backup</string>
     <string name="local_backup_section">Local Backup</string>
     <string name="export_data">Export Data</string>
     <string name="export_data_sub">Backup your data to a file</string>
@@ -29,14 +29,13 @@
     <string name="import_data_sub">Restore data from backup</string>
     <string name="import_pdf_statement">Import PDF Statement</string>
     <string name="import_pdf_statement_sub">Scan GPay or PhonePe PDF statements</string>
-    
+    <string name="import_cashew_backup">Import from Cashew</string>
+    <string name="import_cashew_backup_sub">Import SQLite or CSV files from Cashew app</string>
     <string name="pdf_support_warning_title">Only PDFs from GPay and PhonePe are currently supported.</string>
     <string name="pdf_support_warning_sub">Balance chart won\'t add any bank balance information from PDFs as it isn\'t available in the statement data.</string>
-    
     <string name="immediately">Immediately</string>
     <string name="one_minute">1 minute</string>
     <string name="minutes_format">%1$d minutes</string>
-    
     <string name="cancel">Cancel</string>
     <string name="export">Export</string>
     <string name="select_data_to_backup">Select data to backup:</string>
@@ -1164,7 +1163,6 @@
     <string name="enable_and_save">Save</string>
     <string name="encrypted_backup_title">Encrypted Backup</string>
     <string name="restore_passphrase_desc">This backup is encrypted. Enter the passphrase used when creating the backup:</string>
-    <string name="backup_tab">Backup</string>
     <string name="restore">Restore</string>
     <string name="restore_snapshot">Restore Snapshot</string>
     <string name="delete_snapshot">Delete Snapshot</string>

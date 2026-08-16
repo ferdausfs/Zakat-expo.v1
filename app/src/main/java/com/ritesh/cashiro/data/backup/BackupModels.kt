@@ -340,7 +340,9 @@ sealed class ImportResult {
     data class Success(
         val importedTransactions: Int,
         val importedCategories: Int,
-        val skippedDuplicates: Int
+        val skippedDuplicates: Int,
+        val importedAttachments: Int = 0,
+        val failedAttachments: Int = 0
     ) : ImportResult()
     
     data class Error(val message: String) : ImportResult()

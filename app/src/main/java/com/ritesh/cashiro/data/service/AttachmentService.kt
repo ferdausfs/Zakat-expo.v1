@@ -64,6 +64,29 @@ class AttachmentService @Inject constructor(
     }
 
     /**
+     * Save a raw byte array as an attachment file in internal storage.
+     * Used when an attachment is downloaded (e.g. from a backup import) rather
+     * than picked from a content URI.
+     * @param data The raw file bytes
+     * @param mimeType The MIME type of the file
+     * @return The relative path of the saved file, or null if save failed
+     */
+    fun saveAttachmentBytes(data: ByteArray, mimeType: String): String? {
+        return try {
+            val extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType) ?: "bin"
+            val fileName = "${System.currentTimeMillis()}_${UUID.randomUUID()}.$extension"
+            val outputFile = File(attachmentsDir, fileName)
+            FileOutputStream(outputFile).use { outputStream ->
+                outputStream.write(data)
+            }
+            "$ATTACHMENTS_DIR/$fileName"
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    /**
      * Delete an attachment file from internal storage.
      * @param relativePath The relative path of the file to delete
      * @return true if deletion was successful
@@ -124,6 +147,15 @@ class AttachmentService @Inject constructor(
      */
     fun getAbsolutePath(relativePath: String): String {
         return File(context.filesDir, relativePath).absolutePath
+    }
+
+    /**
+     * Check if the attachment path is a remote URL.
+     * @param path The path or URL
+     * @return true if it starts with http:// or https://
+     */
+    fun isUrl(path: String): Boolean {
+        return path.startsWith("http://") || path.startsWith("https://")
     }
 
     /**

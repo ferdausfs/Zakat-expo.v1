@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.ritesh.cashiro.data.backup.BackupConfiguration
 import com.ritesh.cashiro.data.backup.BackupExporter
 import com.ritesh.cashiro.data.backup.BackupImporter
+import com.ritesh.cashiro.data.backup.CashewImporter
 import com.ritesh.cashiro.data.backup.ExportResult
 import com.ritesh.cashiro.data.backup.ImportResult
 import com.ritesh.cashiro.data.backup.ImportStrategy
@@ -44,6 +45,7 @@ class DataPrivacyViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val backupExporter: BackupExporter,
     private val backupImporter: BackupImporter,
+    private val cashewImporter: CashewImporter,
     private val transactionRepository: TransactionRepository,
     private val accountBalanceRepository: AccountBalanceRepository,
     private val ruleRepository: RuleRepository,
@@ -109,6 +111,28 @@ class DataPrivacyViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 _uiState.update { it.copy(importExportMessage = "Import error: ${e.message}") }
+            }
+        }
+    }
+
+    fun importCashew(uri: Uri) {
+        viewModelScope.launch {
+            try {
+                _uiState.update { it.copy(importExportMessage = "Importing from Cashew...") }
+                when (val result = cashewImporter.importCashew(uri)) {
+                    is ImportResult.Success -> {
+                        val attachmentSuffix = if (result.importedAttachments > 0 || result.failedAttachments > 0) {
+                            ", ${result.importedAttachments} attachments" +
+                                (if (result.failedAttachments > 0) " (${result.failedAttachments} failed)" else "")
+                        } else ""
+                        _uiState.update { it.copy(importExportMessage = "Cashew import successful! Imported ${result.importedTransactions} transactions, ${result.importedCategories} categories$attachmentSuffix.") }
+                    }
+                    is ImportResult.Error -> {
+                        _uiState.update { it.copy(importExportMessage = "Cashew import failed: ${result.message}") }
+                    }
+                }
+            } catch (e: Exception) {
+                _uiState.update { it.copy(importExportMessage = "Cashew import error: ${e.message}") }
             }
         }
     }
