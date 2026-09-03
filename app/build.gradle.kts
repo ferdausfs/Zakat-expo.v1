@@ -141,7 +141,14 @@ android {
     }
 
     testOptions {
-        unitTests.isReturnDefaultValues = true
+        unitTests {
+            isReturnDefaultValues = true
+            // Required for Robolectric (JVM) Compose UI tests
+            isIncludeAndroidResources = true
+            all { test ->
+                test.maxHeapSize = "1792m"
+            }
+        }
     }
 }
 
@@ -239,6 +246,12 @@ dependencies {
     testImplementation(libs.androidx.room.testing)
     testImplementation(libs.ktor.client.mock)
     testImplementation(libs.kotlinx.coroutines.test)
+    // Robolectric (JVM) UI test stack — regression harness for navigation stability
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.junit)
+    testImplementation(libs.androidx.espresso.core)
+    testImplementation(libs.androidx.ui.test.junit4)
+    testImplementation(libs.androidx.ui.test.manifest)
     androidTestImplementation(libs.androidx.work.testing)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
