@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Zakat</string>
+    <string name="zakat_title">Zakat</string>
+    <string name="zakat_tagline">Berkah yang Kembali</string>
+    <string name="zakat_coming_soon">Perhitungan zakat segera hadir</string>
     <string name="add_transaction">Tambah Transaksi</string>
     <string name="add_subscription">Tambah Langganan</string>
     <string name="add_transfer">Tambah Transfer</string>

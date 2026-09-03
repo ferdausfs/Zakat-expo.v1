@@ -11,12 +11,14 @@ import com.ritesh.cashiro.R
 import com.ritesh.cashiro.presentation.ui.icons.AiCommentary
 import com.ritesh.cashiro.presentation.ui.icons.FavoriteChart
 import com.ritesh.cashiro.presentation.ui.icons.Home
+import com.ritesh.cashiro.presentation.ui.icons.MedalStar
 import com.ritesh.cashiro.presentation.ui.icons.ReceiptItem
 import com.ritesh.cashiro.presentation.ui.icons.Iconax
 import kotlin.reflect.KClass
 import com.ritesh.cashiro.presentation.navigation.Home as HomeDestination
 import com.ritesh.cashiro.presentation.navigation.Analytics as AnalyticsDestination
 import com.ritesh.cashiro.presentation.navigation.Transactions as TransactionsDestination
+import com.ritesh.cashiro.presentation.navigation.Zakat as ZakatDestination
 
 sealed class BottomNavItem(
     val route: String,
@@ -47,5 +49,13 @@ sealed class BottomNavItem(
         icon = Iconax.ReceiptItem,
         destination = TransactionsDestination(),
         destinationType = TransactionsDestination::class
+    )
+
+    data object Zakat : BottomNavItem(
+        route = "zakat",
+        titleRes = R.string.zakat_title,
+        icon = Iconax.MedalStar,
+        destination = ZakatDestination,
+        destinationType = ZakatDestination::class
     )
 }

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Zakat</string>
+    <string name="zakat_title">زکاہ</string>
+    <string name="zakat_tagline">ایک برکت جو لوٹتی ہے</string>
+    <string name="zakat_coming_soon">زکات کا حساب جلد آ رہا ہے</string>
     <string name="add_transaction">ٹرانزیکشن شامل کریں</string>
     <string name="add_subscription">سبسکرپشن شامل کریں</string>
     <string name="add_transfer">ٹرانسفر شامل کریں</string>

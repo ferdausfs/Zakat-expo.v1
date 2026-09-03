@@ -191,6 +191,8 @@ data class Transactions(
 
 @Serializable object Analytics
 
+@Serializable object Zakat
+
 @Serializable object Chat
 
 @Serializable data class TransactionDetail(val transactionId: Long, val sharedElementKey: String? = null)
@@ -260,5 +262,6 @@ data class Transactions(
 val BOTTOM_NAV_ROUTES = setOf(
     Home::class.qualifiedName,
     Analytics::class.qualifiedName,
-    Transactions::class.qualifiedName
+    Transactions::class.qualifiedName,
+    Zakat::class.qualifiedName
 )

@@ -106,7 +106,7 @@ fun CashiroBottomNavigation(
     hazeState: HazeState = remember { HazeState() },
     fabConfig: FabConfig? = null
 ) {
-    val navigationItems = listOf(BottomNavItem.Home, BottomNavItem.Analytics, BottomNavItem.Transactions)
+    val navigationItems = listOf(BottomNavItem.Home, BottomNavItem.Analytics, BottomNavItem.Transactions, BottomNavItem.Zakat)
     val containerColor = MaterialTheme.colorScheme.surface
     val view = LocalView.current
 

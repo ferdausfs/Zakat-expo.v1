@@ -167,6 +167,13 @@ fun AboutScreen(
                     )
 
                     Text(
+                        text = stringResource(R.string.zakat_tagline),
+                        style = MaterialTheme.typography.bodySmall,
+                        fontWeight = FontWeight.Medium,
+                        color = MaterialTheme.colorScheme.tertiary
+                    )
+
+                    Text(
                         text = stringResource(R.string.version_format, BuildConfig.VERSION_NAME, settingsViewModel.databaseVersion),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface.copy(0.7f)

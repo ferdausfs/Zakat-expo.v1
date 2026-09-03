@@ -91,6 +91,7 @@ import com.ritesh.cashiro.presentation.ui.features.onboarding.OnBoardingScreen
 import com.ritesh.cashiro.presentation.ui.features.profile.ProfileScreen
 import com.ritesh.cashiro.presentation.ui.features.settings.SettingsScreen
 import com.ritesh.cashiro.presentation.ui.features.settings.about.AboutScreen
+import com.ritesh.cashiro.presentation.ui.features.zakat.ZakatScreen
 import com.ritesh.cashiro.presentation.ui.features.settings.about.LicensesScreen
 import com.ritesh.cashiro.presentation.ui.features.settings.currency.CurrencySettingsScreen
 import com.ritesh.cashiro.presentation.ui.features.settings.appearance.AppearanceScreen
@@ -274,6 +275,16 @@ fun CashiroNavHost(
                         animatedContentScope = this@composable,
                         blurEffects = themeUiState.blurEffects,
                     )
+                }
+
+                // Zakat Screen (placeholder for upcoming zakat features)
+                composable<Zakat>(
+                    enterTransition = CashiroTransitions.verticalSlideEnter,
+                    exitTransition = CashiroTransitions.verticalSlideExit,
+                    popEnterTransition = CashiroTransitions.verticalSlidePopEnter,
+                    popExitTransition = CashiroTransitions.verticalSlidePopExit
+                ) {
+                    ZakatScreen()
                 }
 
                 // Chat Screen

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Zakat</string>
+    <string name="zakat_title">ஸகாத்</string>
+    <string name="zakat_tagline">திரும்பி வரும் ஒரு பேறு</string>
+    <string name="zakat_coming_soon">ஸகாத் கணக்கீடுகள் விரைவில் வருகின்றன</string>
     <string name="add_transaction">கடந்த கொள்கையைச் சேர்</string>
     <string name="add_subscription">சேவைக்கு இணைக்கவும்</string>
     <string name="add_transfer">பரிமாற்றத்தைச் சேர்</string>

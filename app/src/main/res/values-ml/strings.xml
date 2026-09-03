@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Zakat</string>
+    <string name="zakat_title">സകാത്ത്</string>
+    <string name="zakat_tagline">തിരികെ വരുന്ന ഒരു അനുഗ്രഹം</string>
+    <string name="zakat_coming_soon">സകാത്ത് കണക്കുകൾ ഉടൻ വരുന്നു</string>
     <string name="add_transaction">പേര് ചേർക്കുക</string>
     <string name="add_subscription">സബ്സ്ക്രിപ്ഷൻ ചേർക്കുക</string>
     <string name="add_transfer">ട്രാൻസ്ഫർ ചേർക്കുക</string>
