@@ -5,6 +5,32 @@
     <!-- Zakat tab (placeholder for upcoming zakat features) -->
     <string name="zakat_title">Zakat</string>
     <string name="zakat_coming_soon">Zakat calculations coming soon</string>
+    <string name="zakat_currency_note">All amounts in %1$s</string>
+    <string name="zakat_hawl_section">Hawl (lunar year)</string>
+    <string name="zakat_hawl_start">Hawl start date</string>
+    <string name="zakat_hawl_progress">%1$d of %2$d days</string>
+    <string name="zakat_hawl_complete">Hawl complete — zakat is due</string>
+    <string name="zakat_hawl_in_progress">Hawl in progress</string>
+    <string name="zakat_wealth_section">Zakatable wealth</string>
+    <string name="zakat_cash">Cash on hand</string>
+    <string name="zakat_gold_grams">Gold held (grams)</string>
+    <string name="zakat_silver_grams">Silver held (grams)</string>
+    <string name="zakat_investments">Investments value</string>
+    <string name="zakat_debts">Debts you owe</string>
+    <string name="zakat_prices_section">Market prices per gram</string>
+    <string name="zakat_gold_price">Gold price / gram</string>
+    <string name="zakat_silver_price">Silver price / gram</string>
+    <string name="zakat_nisab_section">Nisab standard</string>
+    <string name="zakat_nisab_gold">Gold 85 g</string>
+    <string name="zakat_nisab_silver">Silver 595 g</string>
+    <string name="zakat_gold_nisab_value">Gold nisab (85 g): %1$s</string>
+    <string name="zakat_silver_nisab_value">Silver nisab (595 g): %1$s</string>
+    <string name="zakat_result_section">Assessment</string>
+    <string name="zakat_nisab_value">Nisab threshold</string>
+    <string name="zakat_net_wealth">Net zakatable wealth</string>
+    <string name="zakat_due">Zakat due (2.5%)</string>
+    <string name="zakat_below_nisab">Below nisab — no zakat due yet</string>
+    <string name="zakat_select_date">Change date</string>
     <!-- App shortcuts -->
     <string name="add_transaction">Add Transaction</string>
     <string name="add_subscription">Add Subscription</string>
