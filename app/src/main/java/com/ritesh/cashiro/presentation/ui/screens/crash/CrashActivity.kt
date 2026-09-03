@@ -55,7 +55,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.FileProvider
 import com.ritesh.cashiro.R
-import com.ritesh.cashiro.presentation.ui.theme.ZakatTheme
+import com.ritesh.cashiro.presentation.ui.theme.CashiroTheme
 import com.ritesh.cashiro.utils.CrashHandler
 import java.io.File
 import java.text.SimpleDateFormat
@@ -84,7 +84,7 @@ class CrashActivity : ComponentActivity() {
 
         setContent {
             val darkTheme = isSystemInDarkTheme()
-            ZakatTheme(darkTheme = darkTheme) {
+            CashiroTheme(darkTheme = darkTheme) {
                 CrashScreen(
                     crashLog = crashLog,
                     onClose = { finishAffinity() },

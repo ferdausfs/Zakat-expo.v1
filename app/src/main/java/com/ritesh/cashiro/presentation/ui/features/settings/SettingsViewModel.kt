@@ -47,7 +47,7 @@ import java.net.URLEncoder
 import java.io.File
 import javax.inject.Inject
 import androidx.core.net.toUri
-import com.ritesh.cashiro.data.database.ZakatDatabase
+import com.ritesh.cashiro.data.database.CashiroDatabase
 import com.ritesh.cashiro.data.repository.TransactionRepository
 import com.ritesh.cashiro.data.repository.AccountBalanceRepository
 import com.ritesh.cashiro.data.repository.CardRepository
@@ -85,7 +85,7 @@ class SettingsViewModel @Inject constructor(
     private val merchantMappingRepository: MerchantMappingRepository,
     private val backupExporter: BackupExporter,
     private val backupImporter: BackupImporter,
-    private val database: ZakatDatabase,
+    private val database: CashiroDatabase,
     private val webhookSyncScheduler: WebhookSyncScheduler,
     private val cloudCredentialStore: CloudCredentialStore
 ) : ViewModel() {

@@ -104,7 +104,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.zIndex
-import com.ritesh.cashiro.presentation.ui.theme.ZakatTheme
+import com.ritesh.cashiro.presentation.ui.theme.CashiroTheme
 import androidx.work.WorkInfo
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.RoundRect
@@ -129,8 +129,8 @@ import com.ritesh.cashiro.presentation.ui.components.TiledScrollingIconBackgroun
 import com.ritesh.cashiro.presentation.ui.features.profile.EditProfileState
 import com.ritesh.cashiro.presentation.ui.features.profile.PresetAvatarSelection
 import com.ritesh.cashiro.presentation.ui.features.profile.ProfileCardPreview
-import com.ritesh.cashiro.presentation.ui.icons.Zakat
-import com.ritesh.cashiro.presentation.ui.icons.ZakatOutline
+import com.ritesh.cashiro.presentation.ui.icons.Cashiro
+import com.ritesh.cashiro.presentation.ui.icons.CashiroOutline
 import com.ritesh.cashiro.presentation.ui.icons.Edit2
 import com.ritesh.cashiro.presentation.ui.icons.HierarchySquare3
 import com.ritesh.cashiro.presentation.ui.icons.Iconax
@@ -453,8 +453,8 @@ fun WelcomeStep() {
                     val tertiary = MaterialTheme.colorScheme.tertiary
                     val alternatingIcons = remember {
                         listOf(
-                            IconResource.VectorIcon(Iconax.Zakat, primary),
-                            IconResource.VectorIcon(Iconax.ZakatOutline, tertiary)
+                            IconResource.VectorIcon(Iconax.Cashiro, primary),
+                            IconResource.VectorIcon(Iconax.CashiroOutline, tertiary)
                         )
                     }
 
@@ -1210,7 +1210,7 @@ fun OnBoardingBottomBar(
 @Preview(showBackground = true, name = "1. Welcome")
 @Composable
 fun OnBoardingWelcomePreview() {
-    ZakatTheme {
+    CashiroTheme {
         OnBoardingScreenContent(
             uiState = OnBoardingUiState(currentStep = 1),
             onNext = {}, onPrevious = {}, onRequestPermissions = {}, onStartScan = {},
@@ -1227,7 +1227,7 @@ fun OnBoardingWelcomePreview() {
 @Preview(showBackground = true, name = "2. SMS Permission")
 @Composable
 fun OnBoardingSmsPermissionPreview() {
-    ZakatTheme {
+    CashiroTheme {
         OnBoardingScreenContent(
             uiState = OnBoardingUiState(currentStep = 2),
             onNext = {}, onPrevious = {}, onRequestPermissions = {}, onStartScan = {},
@@ -1244,7 +1244,7 @@ fun OnBoardingSmsPermissionPreview() {
 @Preview(showBackground = true, name = "3. Notification Permission")
 @Composable
 fun OnBoardingNotificationPermissionPreview() {
-    ZakatTheme {
+    CashiroTheme {
         OnBoardingScreenContent(
             uiState = OnBoardingUiState(currentStep = 3),
             onNext = {}, onPrevious = {}, onRequestPermissions = {}, onStartScan = {},
@@ -1261,7 +1261,7 @@ fun OnBoardingNotificationPermissionPreview() {
 @Preview(showBackground = true, name = "4. Syncing (Scanning)")
 @Composable
 fun OnBoardingSyncingPreview() {
-    ZakatTheme {
+    CashiroTheme {
         OnBoardingScreenContent(
             uiState = OnBoardingUiState(currentStep = 4, isScanning = true),
             onNext = {}, onPrevious = {}, onRequestPermissions = {}, onStartScan = {},
@@ -1285,7 +1285,7 @@ fun OnBoardingAccountVerificationPreview() {
         currency = "INR",
         timestamp = LocalDateTime.now(),
     )
-    ZakatTheme {
+    CashiroTheme {
         OnBoardingScreenContent(
             uiState = OnBoardingUiState(
                 currentStep = 4, 
@@ -1306,7 +1306,7 @@ fun OnBoardingAccountVerificationPreview() {
 @Preview(showBackground = true, name = "4. Manual Account Entry")
 @Composable
 fun OnBoardingManualAccountPreview() {
-    ZakatTheme {
+    CashiroTheme {
         OnBoardingScreenContent(
             uiState = OnBoardingUiState(currentStep = 4, hasSkippedPermission = true),
             onNext = {}, onPrevious = {}, onRequestPermissions = {}, onStartScan = {},
@@ -1323,7 +1323,7 @@ fun OnBoardingManualAccountPreview() {
 @Preview(showBackground = true, name = "5. Profile Setup")
 @Composable
 fun OnBoardingProfilePreview() {
-    ZakatTheme {
+    CashiroTheme {
         OnBoardingScreenContent(
             uiState = OnBoardingUiState(currentStep = 5),
             onNext = {}, onPrevious = {}, onRequestPermissions = {}, onStartScan = {},

@@ -102,8 +102,8 @@ fun AboutScreen(
                 val tertiary = MaterialTheme.colorScheme.tertiary
                 val alternatingIcons = remember {
                     listOf(
-                        IconResource.VectorIcon(Iconax.Zakat, primary),
-                        IconResource.VectorIcon(Iconax.ZakatOutline, tertiary)
+                        IconResource.VectorIcon(Iconax.Cashiro, primary),
+                        IconResource.VectorIcon(Iconax.CashiroOutline, tertiary)
                     )
                 }
 
@@ -397,7 +397,7 @@ fun AboutScreen(
                 Need to check Google play policy for donation. for now, I'll comment out these sections
                  */
 
-//                ZakatCard(
+//                CashiroCard(
 //                    modifier = Modifier.fillMaxWidth(),
 //                ){
 //                    Row(
