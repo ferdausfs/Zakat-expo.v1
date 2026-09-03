@@ -1,30 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="192.0dp"
     android:height="192.0dp"
     android:viewportWidth="192.0"
     android:viewportHeight="192.0">
-    <path
-        android:fillColor="#FF000000"
-        android:strokeColor="#FF000000"
-        android:strokeWidth="5.7599998"
-        android:strokeLineJoin="round"
-        android:fillType="nonZero"
-        android:strokeLineCap="round"
-        android:pathData="M131.02,100.00L160.74,124.77A59.45 59.45 -0.00 1 1 160.74,75.23L131.02,100.00z"/>
-    <path
-        android:fillColor="#FFFFFFFF"
-        android:strokeColor="#FF000000"
-        android:strokeWidth="5.7599998"
-        android:strokeLineJoin="round"
-        android:fillType="nonZero"
-        android:strokeLineCap="round"
-        android:pathData="M123.02,96.00L152.74,120.77A59.45 59.45 -0.00 1 1 152.74,71.23L123.02,96.00z"/>
-    <path
-        android:fillColor="#FF000000"
-        android:strokeColor="#FF000000"
-        android:strokeWidth="7.5594616"
-        android:strokeLineJoin="round"
-        android:fillType="nonZero"
-        android:strokeLineCap="round"
-        android:pathData="M96.00,116.81L116.81,96.00L96.00,75.19L75.19,96.00L96.00,116.81z"/>
+  <!-- Zakat in-app logo, "Comic" palette: black Kufic-stroke diamond
+       with the white center accent. -->
+  <path
+      android:pathData="M91.05,40.95 L40.95,91.05"
+      android:strokeColor="#000000"
+      android:strokeWidth="10"
+      android:strokeLineCap="butt" />
+  <path
+      android:pathData="M100.95,40.95 L151.05,91.05"
+      android:strokeColor="#000000"
+      android:strokeWidth="10"
+      android:strokeLineCap="butt" />
+  <path
+      android:pathData="M151.05,100.95 L100.95,151.05"
+      android:strokeColor="#000000"
+      android:strokeWidth="10"
+      android:strokeLineCap="butt" />
+  <path
+      android:pathData="M91.05,151.05 L40.95,100.95"
+      android:strokeColor="#000000"
+      android:strokeWidth="10"
+      android:strokeLineCap="butt" />
+  <path
+      android:pathData="M96,66 L126,96 L96,126 L66,96 Z"
+      android:strokeColor="#000000"
+      android:strokeWidth="5.5"
+      android:strokeLineJoin="round" />
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M96,84 L108,96 L96,108 L84,96 Z" />
 </vector>

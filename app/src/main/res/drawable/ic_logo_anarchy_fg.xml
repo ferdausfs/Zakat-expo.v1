@@ -4,12 +4,36 @@
     android:height="108dp"
     android:viewportWidth="192"
     android:viewportHeight="192">
+  <!-- Zakat "Anarchy" splash/launcher art: Kufic-stroke diamond,
+       green strokes with the orange center accent on the cream backdrop. -->
   <group android:scaleX="0.7" android:scaleY="0.7" android:translateX="30" android:translateY="30">
     <path
-        android:fillColor="#FF71AC51"
-        android:pathData="M46.03,14.06 A34.00,34.00 0 1 0 73.32,65.22 A29.00,29.00 0 0 1 46.03,14.06 Z"/>
+        android:pathData="M91.76,56.24 L56.24,91.76"
+        android:strokeColor="#71AC51"
+        android:strokeWidth="8"
+        android:strokeLineCap="butt" />
     <path
-        android:fillColor="#FFDD8131"
-        android:pathData="M63.00,22.00 L65.40,32.60 L76.00,35.00 L65.40,37.40 L63.00,48.00 L60.60,37.40 L50.00,35.00 L60.60,32.60 Z"/>
+        android:pathData="M100.24,56.24 L135.76,91.76"
+        android:strokeColor="#71AC51"
+        android:strokeWidth="8"
+        android:strokeLineCap="butt" />
+    <path
+        android:pathData="M135.76,100.24 L100.24,135.76"
+        android:strokeColor="#71AC51"
+        android:strokeWidth="8"
+        android:strokeLineCap="butt" />
+    <path
+        android:pathData="M91.76,135.76 L56.24,100.24"
+        android:strokeColor="#71AC51"
+        android:strokeWidth="8"
+        android:strokeLineCap="butt" />
+    <path
+        android:pathData="M96,74 L118,96 L96,118 L74,96 Z"
+        android:strokeColor="#71AC51"
+        android:strokeWidth="4.5"
+        android:strokeLineJoin="round" />
+    <path
+        android:fillColor="#DD8131"
+        android:pathData="M96,87.5 L104.5,96 L96,104.5 L87.5,96 Z" />
   </group>
 </vector>

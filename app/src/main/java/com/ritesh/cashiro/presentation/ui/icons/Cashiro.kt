@@ -1,6 +1,7 @@
 package com.ritesh.cashiro.presentation.ui.icons
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathFillType
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
@@ -20,30 +21,36 @@ val Iconax.Cashiro: ImageVector
             viewportWidth = 192f,
             viewportHeight = 192f
         ).apply {
+            // Kufic-stroke diamond ring (outer diamond with an inner diamond
+            // cut out, even-odd) rendered as a filled ring shape.
             path(
                 fill = SolidColor(Color.White),
-                stroke = SolidColor(Color.Black),
+                fillAlpha = 1.0f,
+                pathFillType = PathFillType.EvenOdd,
                 strokeLineCap = StrokeCap.Square,
                 strokeLineJoin = StrokeJoin.Round
             ) {
-                moveTo(92.06f, 28.12f)
-                arcTo(68.00f, 68.00f, -0f, isMoreThanHalf = true, isPositiveArc = false, 146.63f, 130.44f)
-                arcTo(58.00f, 58.00f, -0f, isMoreThanHalf = false, isPositiveArc = true, 92.06f, 28.12f)
+                moveTo(96f, 36f)
+                lineTo(156f, 96f)
+                lineTo(96f, 156f)
+                lineTo(36f, 96f)
+                close()
+                moveTo(96f, 62f)
+                lineTo(130f, 96f)
+                lineTo(96f, 130f)
+                lineTo(62f, 96f)
                 close()
             }
+            // Small diamond accent at the center.
             path(
                 fill = SolidColor(Color.White),
                 strokeLineCap = StrokeCap.Square,
                 strokeLineJoin = StrokeJoin.Round
             ) {
-                moveTo(126.00f, 44.00f)
-                lineTo(130.80f, 65.20f)
-                lineTo(152.00f, 70.00f)
-                lineTo(130.80f, 74.80f)
-                lineTo(126.00f, 96.00f)
-                lineTo(121.20f, 74.80f)
-                lineTo(100.00f, 70.00f)
-                lineTo(121.20f, 65.20f)
+                moveTo(96f, 84f)
+                lineTo(108f, 96f)
+                lineTo(96f, 108f)
+                lineTo(84f, 96f)
                 close()
             }
         }.build()
