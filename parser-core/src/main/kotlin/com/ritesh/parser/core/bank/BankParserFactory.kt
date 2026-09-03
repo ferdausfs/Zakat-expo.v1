@@ -140,7 +140,14 @@ object BankParserFactory {
         SampathBankParser(),  // Sampath Bank (Sri Lanka)
         EnparaBankParser(),  // Enpara Bank (Turkey)
         SparkasseRheinMaasParser(),  // Sparkasse Rhein-Maas (Germany)
-        AltanaFCUParser()  // Altana FCU (USA)
+        AltanaFCUParser(),  // Altana FCU (USA)
+        // P3-F: Saudi Arabia expansion (SAR) — banks/rails without a dedicated parser
+        SaudiBankParser(),  // Riyad Bank / ANB / BSF / Albilad / AlJazira / SAIB / SARIE
+        // Bangladesh (BDT) — MFS first, then generic banks
+        BkashParser(),  // bKash (Bangladesh MFS)
+        NagadParser(),  // Nagad (Bangladesh MFS)
+        RocketParser(),  // Rocket / DBBL mobile banking (Bangladesh MFS)
+        BangladeshBankParser()  // BRAC / City / EBL / IBBL / UCB / MTB and other BD banks
         // Add more bank parsers here as we implement them
     )
 
