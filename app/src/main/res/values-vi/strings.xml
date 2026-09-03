@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">Thêm Giao Dịch</string>
     <string name="add_subscription">Thêm Đăng Ký</string>
     <string name="add_transfer">Thêm Chuyển Khoản</string>
@@ -277,7 +277,7 @@ Hữu ích cho ngân sách dài hạn qua nhiều kỳ</string>
     <string name="chart_type_heatmap">Bản đồ nhiệt</string>
     <string name="chart_format">Biểu đồ %1$s</string>
     <string name="toggle_view">Chuyển đổi chế độ xem</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">Thêm tùy chọn</string>
     <string name="clear_chat">Xóa trò chuyện</string>
     <string name="qwen_model_required">Yêu cầu Mô hình Qwen</string>
@@ -309,7 +309,7 @@ Hữu ích cho ngân sách dài hạn qua nhiều kỳ</string>
     <string name="press_back_again_to_close">Nhấn lại để đóng ứng dụng</string>
     <string name="transaction_deleted">Giao dịch đã bị xóa</string>
     <string name="undo">Hoàn tác</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">Hồ sơ</string>
     <string name="banner">Biểu ngữ</string>
     <string name="recent">Gần đây</string>
@@ -346,7 +346,7 @@ Xanh (+) = Tiết kiệm | Đỏ (-) = Chi tiêu vượt mức</string>
     <string name="stay_updated">Cập nhật Thông tin</string>
     <string name="automatic_tracking">Theo dõi Tự động</string>
     <string name="allow_notifications_desc">Cho phép thông báo để nhận nhắc nhở hóa đơn và tổng hợp hàng ngày.</string>
-    <string name="automatic_tracking_desc">Cashiro có thể tự động quét SMS giao dịch của bạn để cập nhật tài khoản.</string>
+    <string name="automatic_tracking_desc">Zakat có thể tự động quét SMS giao dịch của bạn để cập nhật tài khoản.</string>
     <string name="skip_for_now">Bỏ qua hiện tại</string>
     <string name="verify_accounts">Xác minh Tài khoản</string>
     <string name="scanning_messages">Đang quét Tin nhắn</string>
@@ -416,7 +416,7 @@ Xanh (+) = Tiết kiệm | Đỏ (-) = Chi tiêu vượt mức</string>
     <string name="share">Chia sẻ</string>
     <string name="retry">Thử lại</string>
     <string name="share_csv">Chia sẻ CSV</string>
-    <string name="csv_export_subject">Xuất giao dịch Cashiro</string>
+    <string name="csv_export_subject">Xuất giao dịch Zakat</string>
     <string name="edit_transaction">Chỉnh sửa giao dịch</string>
     <string name="transaction_details">Chi tiết giao dịch</string>
     <string name="report_issue">Báo cáo sự cố</string>
@@ -481,7 +481,7 @@ Xanh (+) = Tiết kiệm | Đỏ (-) = Chi tiêu vượt mức</string>
     <string name="no_transactions_for_format">Không có giao dịch nào cho %1$s</string>
     <string name="sync_sms_to_see_transactions">Đồng bộ SMS của bạn để xem các giao dịch</string>
     <string name="about">Giới thiệu</string>
-    <string name="cashiro_logo_cd">Logo Cashiro</string>
+    <string name="cashiro_logo_cd">Logo Zakat</string>
     <string name="version_format">Phiên bản %1$s, db-v%2$d</string>
     <string name="developed_by">Phát triển bởi Ritesh</string>
     <string name="lead_developer_cd">Trưởng lập trình viên</string>
@@ -492,9 +492,9 @@ Xanh (+) = Tiết kiệm | Đỏ (-) = Chi tiêu vượt mức</string>
     <string name="faq">Câu hỏi thường gặp</string>
     <string name="faq_desc">Các câu hỏi thường gặp</string>
     <string name="guides">Hướng dẫn</string>
-    <string name="guides_desc">Cách sử dụng Cashiro</string>
+    <string name="guides_desc">Cách sử dụng Zakat</string>
     <string name="report_bug">Báo lỗi</string>
-    <string name="report_bug_desc">Giúp chúng tôi cải thiện Cashiro</string>
+    <string name="report_bug_desc">Giúp chúng tôi cải thiện Zakat</string>
     <string name="privacy_policy">Chính sách quyền riêng tư</string>
     <string name="privacy_policy_desc">Việc sử dụng dữ liệu và quyền riêng tư của bạn</string>
     <string name="terms_of_service">Điều khoản dịch vụ</string>
@@ -548,7 +548,7 @@ Xanh (+) = Tiết kiệm | Đỏ (-) = Chi tiêu vượt mức</string>
     <string name="one_month">1 tháng</string>
     <string name="two_years">2 năm</string>
     <string name="unrecognized_messages_title">Tin nhắn không nhận dạng</string>
-    <string name="unrecognized_bank_messages_desc">Những tin nhắn từ các ngân hàng tiềm năng này không thể phân tích tự động. Giúp cải thiện Cashiro bằng cách báo cáo chúng để chúng tôi có thể hỗ trợ thêm cho nhiều ngân hàng hơn.</string>
+    <string name="unrecognized_bank_messages_desc">Những tin nhắn từ các ngân hàng tiềm năng này không thể phân tích tự động. Giúp cải thiện Zakat bằng cách báo cáo chúng để chúng tôi có thể hỗ trợ thêm cho nhiều ngân hàng hơn.</string>
     <string name="show_reported">Hiển thị các Báo cáo</string>
     <string name="count_new_format">%1$d mới</string>
     <string name="count_reported_format">%1$d đã báo cáo</string>
@@ -591,7 +591,7 @@ Xanh (+) = Tiết kiệm | Đỏ (-) = Chi tiêu vượt mức</string>
     <string name="delete_webhook_confirm_desc">Hồ sơ này, các lần đồng bộ đã lên lịch và tất cả nhật ký giao hàng sẽ bị xóa. Việc này không thể hoàn tác.</string>
     <string name="byoapi_sync_title">Đồng bộ Tài chính BYOAPI</string>
     <string name="byoapi_sync_desc">Gửi dữ liệu tài chính đã chọn đến điểm cuối của bạn. Bất kỳ phản hồi HTTP 2xx nào đều được coi là gửi thành công.</string>
-    <string name="byoapi_sync_warning">Điều này sẽ gửi dữ liệu tài chính của bạn đến URL mà bạn cấu hình. Cashiro không thể xác minh tính bảo mật của điểm cuối đó.</string>
+    <string name="byoapi_sync_warning">Điều này sẽ gửi dữ liệu tài chính của bạn đến URL mà bạn cấu hình. Zakat không thể xác minh tính bảo mật của điểm cuối đó.</string>
     <string name="sync_now">Đồng bộ ngay</string>
     <string name="sync_now_desc">Kích hoạt giao hàng cho tất cả các hồ sơ đã kích hoạt</string>
     <string name="sync_schedule_title">Lịch đồng bộ</string>
@@ -886,10 +886,10 @@ Xanh (+) = Tiết kiệm | Đỏ (-) = Chi tiêu vượt mức</string>
     <string name="notification_access_active">Truy cập thông báo đang hoạt động</string>
     <string name="notification_access_desc">Bật để phát hiện các giao dịch ngân hàng từ thông báo đẩy</string>
     <string name="notification_access_required">Cần Truy Cập Thông Báo</string>
-    <string name="notification_access_required_desc">Để tự động phát hiện các giao dịch ngân hàng theo thời gian thực, Cashiro yêu cầu truy cập thông báo. Đây là quyền ở cấp hệ thống.</string>
+    <string name="notification_access_required_desc">Để tự động phát hiện các giao dịch ngân hàng theo thời gian thực, Zakat yêu cầu truy cập thông báo. Đây là quyền ở cấp hệ thống.</string>
     <string name="how_to_enable">Cách bật:</string>
     <string name="step_1">Nhấn nút \'Mở Cài đặt\' bên dưới.</string>
-    <string name="step_2">Tìm \'Cashiro\' trong danh sách ứng dụng.</string>
+    <string name="step_2">Tìm \'Zakat\' trong danh sách ứng dụng.</string>
     <string name="step_3">Bật \'Cho phép truy cập thông báo\'.</string>
     <string name="open_settings">Mở Cài đặt</string>
     <string name="scan_settings">Quét Cài đặt</string>
@@ -915,7 +915,7 @@ Xanh (+) = Tiết kiệm | Đỏ (-) = Chi tiêu vượt mức</string>
     <string name="this_month_lbl">THÁNG NÀY</string>
     <string name="this_year_lbl">NĂM NÀY</string>
     <string name="percent_this_month_format">%1$s%2$s%% trong tháng này</string>
-    <string name="app_locked_title">Cashiro bị khóa</string>
+    <string name="app_locked_title">Zakat bị khóa</string>
     <string name="authenticate_desc">Xác thực để truy cập dữ liệu chi tiêu của bạn</string>
     <string name="unlock">Mở khóa</string>
     <string name="biometric_unavailable_title">Xác thực sinh trắc học không khả dụng</string>

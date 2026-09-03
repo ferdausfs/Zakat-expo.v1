@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">Tambah Transaksi</string>
     <string name="add_subscription">Tambah Langganan</string>
     <string name="add_transfer">Tambah Transfer</string>
@@ -277,7 +277,7 @@ Berguna untuk anggaran jangka panjang selama beberapa periode</string>
     <string name="chart_type_heatmap">Peta Panas</string>
     <string name="chart_format">Grafik %1$s</string>
     <string name="toggle_view">Alihkan Tampilan</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">Opsi lainnya</string>
     <string name="clear_chat">Bersihkan Obrolan</string>
     <string name="qwen_model_required">Model Qwen Diperlukan</string>
@@ -309,7 +309,7 @@ Berguna untuk anggaran jangka panjang selama beberapa periode</string>
     <string name="press_back_again_to_close">Tekan kembali lagi untuk menutup aplikasi</string>
     <string name="transaction_deleted">Transaksi dihapus</string>
     <string name="undo">Urungkan</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">Profil</string>
     <string name="banner">Spanduk</string>
     <string name="recent">Terbaru</string>
@@ -345,7 +345,7 @@ Berguna untuk anggaran jangka panjang selama beberapa periode</string>
     <string name="stay_updated">Tetap Terbaru</string>
     <string name="automatic_tracking">Pelacakan Otomatis</string>
     <string name="allow_notifications_desc">Izinkan notifikasi untuk menerima pengingat tagihan dan ringkasan harian.</string>
-    <string name="automatic_tracking_desc">Cashiro dapat secara otomatis memindai SMS transaksi Anda untuk menjaga akun tetap terbaru.</string>
+    <string name="automatic_tracking_desc">Zakat dapat secara otomatis memindai SMS transaksi Anda untuk menjaga akun tetap terbaru.</string>
     <string name="skip_for_now">Lewati untuk sekarang</string>
     <string name="verify_accounts">Verifikasi Akun</string>
     <string name="scanning_messages">Memindai Pesan</string>
@@ -415,7 +415,7 @@ Berguna untuk anggaran jangka panjang selama beberapa periode</string>
     <string name="share">Bagikan</string>
     <string name="retry">Coba Lagi</string>
     <string name="share_csv">Bagikan CSV</string>
-    <string name="csv_export_subject">Ekspor Transaksi Cashiro</string>
+    <string name="csv_export_subject">Ekspor Transaksi Zakat</string>
     <string name="edit_transaction">Sunting Transaksi</string>
     <string name="transaction_details">Detail Transaksi</string>
     <string name="report_issue">Laporkan Masalah</string>
@@ -480,7 +480,7 @@ Berguna untuk anggaran jangka panjang selama beberapa periode</string>
     <string name="no_transactions_for_format">Tidak ada transaksi untuk %1$s</string>
     <string name="sync_sms_to_see_transactions">Sinkronkan SMS Anda untuk melihat transaksi</string>
     <string name="about">Tentang</string>
-    <string name="cashiro_logo_cd">Logo Cashiro</string>
+    <string name="cashiro_logo_cd">Logo Zakat</string>
     <string name="version_format">Versi %1$s, db-v%2$d</string>
     <string name="developed_by">Dikembangkan oleh Ritesh</string>
     <string name="lead_developer_cd">pengembang utama</string>
@@ -491,9 +491,9 @@ Berguna untuk anggaran jangka panjang selama beberapa periode</string>
     <string name="faq">FAQ</string>
     <string name="faq_desc">Pertanyaan yang sering diajukan</string>
     <string name="guides">Panduan</string>
-    <string name="guides_desc">Cara menggunakan Cashiro</string>
+    <string name="guides_desc">Cara menggunakan Zakat</string>
     <string name="report_bug">Laporkan Bug</string>
-    <string name="report_bug_desc">Bantu kami meningkatkan Cashiro</string>
+    <string name="report_bug_desc">Bantu kami meningkatkan Zakat</string>
     <string name="privacy_policy">Kebijakan Privasi</string>
     <string name="privacy_policy_desc">Penggunaan data dan privasi Anda</string>
     <string name="terms_of_service">Ketentuan Layanan</string>
@@ -547,7 +547,7 @@ Berguna untuk anggaran jangka panjang selama beberapa periode</string>
     <string name="one_month">1 bulan</string>
     <string name="two_years">2 tahun</string>
     <string name="unrecognized_messages_title">Pesan Tak Dikenal</string>
-    <string name="unrecognized_bank_messages_desc">Pesan-pesan ini dari bank potensial tidak bisa diparsing secara otomatis. Bantu meningkatkan Cashiro dengan melaporkannya agar kami bisa menambahkan dukungan untuk lebih banyak bank.</string>
+    <string name="unrecognized_bank_messages_desc">Pesan-pesan ini dari bank potensial tidak bisa diparsing secara otomatis. Bantu meningkatkan Zakat dengan melaporkannya agar kami bisa menambahkan dukungan untuk lebih banyak bank.</string>
     <string name="show_reported">Tampilkan yang Dilaporkan</string>
     <string name="count_new_format">%1$d baru</string>
     <string name="count_reported_format">%1$d dilaporkan</string>
@@ -590,7 +590,7 @@ Berguna untuk anggaran jangka panjang selama beberapa periode</string>
     <string name="delete_webhook_confirm_desc">Profil ini, sinkronisasi yang dijadwalkan, dan semua log pengiriman akan dihapus. Ini tidak dapat dibatalkan.</string>
     <string name="byoapi_sync_title">Sinkronisasi Keuangan BYOAPI</string>
     <string name="byoapi_sync_desc">Kirim data keuangan yang dipilih ke endpoint Anda sendiri. Setiap respons HTTP 2xx dianggap sebagai pengiriman yang berhasil.</string>
-    <string name="byoapi_sync_warning">Ini akan mengirim data keuangan Anda ke URL yang Anda konfigurasikan. Cashiro tidak dapat memverifikasi keamanan endpoint tersebut.</string>
+    <string name="byoapi_sync_warning">Ini akan mengirim data keuangan Anda ke URL yang Anda konfigurasikan. Zakat tidak dapat memverifikasi keamanan endpoint tersebut.</string>
     <string name="sync_now">Sinkronkan sekarang</string>
     <string name="sync_now_desc">Aktifkan pengiriman untuk semua profil yang diaktifkan</string>
     <string name="sync_schedule_title">Jadwal Sinkronisasi</string>
@@ -885,10 +885,10 @@ Berguna untuk anggaran jangka panjang selama beberapa periode</string>
     <string name="notification_access_active">Akses notifikasi aktif</string>
     <string name="notification_access_desc">Aktifkan untuk mendeteksi transaksi bank dari notifikasi push</string>
     <string name="notification_access_required">Akses Notifikasi Diperlukan</string>
-    <string name="notification_access_required_desc">Untuk mendeteksi transaksi bank secara otomatis secara real-time, Cashiro memerlukan akses notifikasi. Ini adalah izin tingkat sistem.</string>
+    <string name="notification_access_required_desc">Untuk mendeteksi transaksi bank secara otomatis secara real-time, Zakat memerlukan akses notifikasi. Ini adalah izin tingkat sistem.</string>
     <string name="how_to_enable">Cara mengaktifkan:</string>
     <string name="step_1">Ketuk tombol \'Buka Pengaturan\' di bawah.</string>
-    <string name="step_2">Temukan \'Cashiro\' dalam daftar aplikasi.</string>
+    <string name="step_2">Temukan \'Zakat\' dalam daftar aplikasi.</string>
     <string name="step_3">Alihkan \'Izinkan akses notifikasi\' ke aktif.</string>
     <string name="open_settings">Buka Pengaturan</string>
     <string name="scan_settings">Pindai Pengaturan</string>
@@ -914,7 +914,7 @@ Ini mungkin memerlukan beberapa detik tergantung pada riwayat pesan Anda.</strin
     <string name="this_month_lbl">BULAN INI</string>
     <string name="this_year_lbl">TAHUN INI</string>
     <string name="percent_this_month_format">%1$s%2$s%% bulan ini</string>
-    <string name="app_locked_title">Cashiro Terkunci</string>
+    <string name="app_locked_title">Zakat Terkunci</string>
     <string name="authenticate_desc">Autentikasi untuk mengakses data pengeluaran Anda</string>
     <string name="unlock">Buka kunci</string>
     <string name="biometric_unavailable_title">Autentikasi biometrik tidak tersedia</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">Tilføj Transaktion</string>
     <string name="add_subscription">Tilføj Abonnement</string>
     <string name="add_transfer">Tilføj Overførsel</string>
@@ -275,7 +275,7 @@
     <string name="chart_type_heatmap">Varme kort</string>
     <string name="chart_format">%1$s Diagram</string>
     <string name="toggle_view">Skift Visning</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">Flere valgmuligheder</string>
     <string name="clear_chat">Ryd Chat</string>
     <string name="qwen_model_required">Qwen Model Kræves</string>
@@ -307,7 +307,7 @@
     <string name="press_back_again_to_close">Tryk tilbage igen for at lukke appen</string>
     <string name="transaction_deleted">Transaktionen slettet</string>
     <string name="undo">Fortryd</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">Profil</string>
     <string name="banner">Banner</string>
     <string name="recent">Seneste</string>
@@ -343,7 +343,7 @@
     <string name="stay_updated">Bliv Opdateret</string>
     <string name="automatic_tracking">Automatisk Sporing</string>
     <string name="allow_notifications_desc">Tillad notifikationer at modtage regningspåmindelser og daglige resuméer.</string>
-    <string name="automatic_tracking_desc">Cashiro kan automatisk scanne din transaktions-SMS for at holde dine konti ajour.</string>
+    <string name="automatic_tracking_desc">Zakat kan automatisk scanne din transaktions-SMS for at holde dine konti ajour.</string>
     <string name="skip_for_now">Spring over for nu</string>
     <string name="verify_accounts">Verificér Konti</string>
     <string name="scanning_messages">Scanner Beskeder</string>
@@ -413,7 +413,7 @@
     <string name="share">Del</string>
     <string name="retry">Forsøg igen</string>
     <string name="share_csv">Del CSV</string>
-    <string name="csv_export_subject">Eksport Af Cashiro Transaktioner</string>
+    <string name="csv_export_subject">Eksport Af Zakat Transaktioner</string>
     <string name="edit_transaction">Rediger Transaktion</string>
     <string name="transaction_details">Transaktion Detaljer</string>
     <string name="report_issue">Rapportér Problem</string>
@@ -478,7 +478,7 @@
     <string name="no_transactions_for_format">Ingen transaktioner for %1$s</string>
     <string name="sync_sms_to_see_transactions">Synkroniser din SMS for at se transaktioner</string>
     <string name="about">Om</string>
-    <string name="cashiro_logo_cd">Cashiro-logo</string>
+    <string name="cashiro_logo_cd">Zakat-logo</string>
     <string name="version_format">Version %1$s, db-v%2$d</string>
     <string name="developed_by">Udviklet Af Ritesh</string>
     <string name="lead_developer_cd">bly udvikler</string>
@@ -489,9 +489,9 @@
     <string name="faq">OSS</string>
     <string name="faq_desc">Ofte stillede spørgsmål</string>
     <string name="guides">Guider</string>
-    <string name="guides_desc">Sådan skal du bruge Cashiro</string>
+    <string name="guides_desc">Sådan skal du bruge Zakat</string>
     <string name="report_bug">Rapportér Fejl</string>
-    <string name="report_bug_desc">Hjælp os med at forbedre Cashiro</string>
+    <string name="report_bug_desc">Hjælp os med at forbedre Zakat</string>
     <string name="privacy_policy">Privat Politik</string>
     <string name="privacy_policy_desc">Dit dataforbrug og privatliv</string>
     <string name="terms_of_service">Betingelser for brug</string>
@@ -545,7 +545,7 @@
     <string name="one_month">1 måned</string>
     <string name="two_years">2 år</string>
     <string name="unrecognized_messages_title">Ukendt Beskeder</string>
-    <string name="unrecognized_bank_messages_desc">Disse meddelelser fra potentielle banker kunne ikke automatisk fortolkes. Hjælp med at forbedre Cashiro ved at rapportere dem, så vi kan tilføje støtte til flere banker.</string>
+    <string name="unrecognized_bank_messages_desc">Disse meddelelser fra potentielle banker kunne ikke automatisk fortolkes. Hjælp med at forbedre Zakat ved at rapportere dem, så vi kan tilføje støtte til flere banker.</string>
     <string name="show_reported">Vis Rapporteret</string>
     <string name="count_new_format">%1$d ny</string>
     <string name="count_reported_format">%1$d anmeldt</string>
@@ -588,7 +588,7 @@
     <string name="delete_webhook_confirm_desc">Denne profil, dens planlagte synkroniseringer, og alle leveringslogs vil blive fjernet. Dette kan ikke fortrydes.</string>
     <string name="byoapi_sync_title">BYOAPI Finansieringssynkronisering</string>
     <string name="byoapi_sync_desc">Send valgte finansieringsdata til dit eget slutpunkt. Enhver HTTP 2xx respons behandles som en vellykket levering.</string>
-    <string name="byoapi_sync_warning">Dette vil sende dine finansielle data til den URL, du konfigurerer. Cashiro kan ikke bekræfte sikkerheden af dette slutpunkt.</string>
+    <string name="byoapi_sync_warning">Dette vil sende dine finansielle data til den URL, du konfigurerer. Zakat kan ikke bekræfte sikkerheden af dette slutpunkt.</string>
     <string name="sync_now">Synkroniser nu</string>
     <string name="sync_now_desc">Udløs levering for alle aktiverede profiler</string>
     <string name="sync_schedule_title">Synkroniser Tidsplan</string>
@@ -883,10 +883,10 @@
     <string name="notification_access_active">Notifikationstilgang er aktiv</string>
     <string name="notification_access_desc">Aktivér for at opdage banktransaktioner fra push-notifikationer</string>
     <string name="notification_access_required">Notifikationstilgang krævet</string>
-    <string name="notification_access_required_desc">For automatisk at opdage banktransaktioner i realtid kræver Cashiro notifikationstilgang. Dette er en systemniveau-tilladelse.</string>
+    <string name="notification_access_required_desc">For automatisk at opdage banktransaktioner i realtid kræver Zakat notifikationstilgang. Dette er en systemniveau-tilladelse.</string>
     <string name="how_to_enable">Sådan aktiveres:</string>
     <string name="step_1">Tryk på \'Åbn Indstillinger\'-knappen nedenfor.</string>
-    <string name="step_2">Find \'Cashiro\' i listen over applikationer.</string>
+    <string name="step_2">Find \'Zakat\' i listen over applikationer.</string>
     <string name="step_3">Slå \'Tillad notifikationstilgang\' til.</string>
     <string name="open_settings">Åbn indstillinger</string>
     <string name="scan_settings">Scan-indstillinger</string>
@@ -912,7 +912,7 @@ Dette kan tage nogle sekunder afhængigt af din beskedhistorik.</string>
     <string name="this_month_lbl">DENNE MÅNED</string>
     <string name="this_year_lbl">DETTE ÅR</string>
     <string name="percent_this_month_format">%1$s%2$s%%denne måned</string>
-    <string name="app_locked_title">Cashiro er låst</string>
+    <string name="app_locked_title">Zakat er låst</string>
     <string name="authenticate_desc">Godkend for at få adgang til dine udgiftsdata</string>
     <string name="unlock">Lås op</string>
     <string name="biometric_unavailable_title">Biometrisk godkendelse ikke tilgængelig</string>

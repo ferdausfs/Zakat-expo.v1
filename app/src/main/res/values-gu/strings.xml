@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">લેનદેન ઉમેરો</string>
     <string name="add_subscription">સબ્સ્ક્રિપ્શન ઉમેરો</string>
     <string name="add_transfer">સ્થાનાંતરણ ઉમેરો</string>
@@ -307,7 +307,7 @@
     <string name="press_back_again_to_close">એપ બંધ કરવા માટે ફરીથી બેક દબાવો</string>
     <string name="transaction_deleted">ટ્રાન્ઝેક્શન મિટાવી</string>
     <string name="undo">આનકાંલ (Undo)</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">પ્રોફાઇલ</string>
     <string name="banner">બૈનર</string>
     <string name="recent">તાજેતરના</string>
@@ -479,7 +479,7 @@
     <string name="no_transactions_for_format">%1$s માટે કોઈ લેણદેણ નથી</string>
     <string name="sync_sms_to_see_transactions">લેણદેણ જોવા માટે તમારું SMS સુમેળ કરાવો</string>
     <string name="about">વિશે</string>
-    <string name="cashiro_logo_cd">Cashiro લોગો</string>
+    <string name="cashiro_logo_cd">Zakat લોગો</string>
     <string name="version_format">આવૃત્તિ %1$s, db-v%2$d</string>
     <string name="developed_by">વિકસિત દ્વારા રિતેશ</string>
     <string name="lead_developer_cd">પ્રধান ડેવલપર</string>
@@ -490,9 +490,9 @@
     <string name="faq">વારંવાર પૂછાતા પ્રશ્નો</string>
     <string name="faq_desc">વારંવાર પૂછાતા પ્રશ્નો</string>
     <string name="guides">માર્ગદર્શિકા</string>
-    <string name="guides_desc">Cashiro કેવી રીતે ઉપયોગ કરવું</string>
+    <string name="guides_desc">Zakat કેવી રીતે ઉપયોગ કરવું</string>
     <string name="report_bug">બગ રિપોર્ટ કરો</string>
-    <string name="report_bug_desc">Cashiroને સુધારવામાં અમારી મદદ કરો</string>
+    <string name="report_bug_desc">Zakatને સુધારવામાં અમારી મદદ કરો</string>
     <string name="privacy_policy">પ્રાયવસી નીતિ</string>
     <string name="privacy_policy_desc">તમારા ડેટા ઉપયોગ અને ખાનગીપણું</string>
     <string name="terms_of_service">સર્વિસની શરતો</string>
@@ -546,7 +546,7 @@
     <string name="one_month">1 મહિનો</string>
     <string name="two_years">2 વર્ષ</string>
     <string name="unrecognized_messages_title">અપરીચિત સંદેશા</string>
-    <string name="unrecognized_bank_messages_desc">સંભવિત બેંકોમાંથી આ સંદેશાઓને આપોઆਪ રીતે પાર્ઝ કરવું શક્ય નથી. કૃપા કરીને તેમને રિપોર્ટ કરીને Cashiroને સુધારવામાં મદદ કરો જેથી વધુ બેંકોને સપોર્ટ ઉમેરવાં શકીએ.</string>
+    <string name="unrecognized_bank_messages_desc">સંભવિત બેંકોમાંથી આ સંદેશાઓને આપોઆਪ રીતે પાર્ઝ કરવું શક્ય નથી. કૃપા કરીને તેમને રિપોર્ટ કરીને Zakatને સુધારવામાં મદદ કરો જેથી વધુ બેંકોને સપોર્ટ ઉમેરવાં શકીએ.</string>
     <string name="show_reported">રિપોર્ટેડ બતાવો</string>
     <string name="count_new_format">%1$d નવો</string>
     <string name="count_reported_format">%1$d રિપોર્ટ કર્યું</string>
@@ -887,7 +887,7 @@
     <string name="notification_access_required_desc">રિયલ-ટાઈમમાં બેંક લેનદેનને આપમેળે શોધવા માટે, કેશિરોને સૂચના ઍક્સેસની જરૂર છે. આ સિસ્ટમ-સ્તરના પરવાનગીઓ છે.</string>
     <string name="how_to_enable">સક્રિય કરવા માટે:</string>
     <string name="step_1">નીચે \'Open Settings\' બટન પર ટૅપ કરો.</string>
-    <string name="step_2">એપ્લિકેશન્સની યાદીમાં \'Cashiro\' શોધો.</string>
+    <string name="step_2">એપ્લિકેશન્સની યાદીમાં \'Zakat\' શોધો.</string>
     <string name="step_3">\'Allow notification access\'ને સક્રિય પર ટૉગલ કરો.</string>
     <string name="open_settings">સેટિંગ્સ ખોલો</string>
     <string name="scan_settings">સેટિંગ્સ સ્કેન કરો</string>
@@ -913,7 +913,7 @@
     <string name="this_month_lbl">આ મહિનો</string>
     <string name="this_year_lbl">આ વર્ષ</string>
     <string name="percent_this_month_format">આ મહિને %1$s%2$s%%</string>
-    <string name="app_locked_title">Cashiro લૉક છે</string>
+    <string name="app_locked_title">Zakat લૉક છે</string>
     <string name="authenticate_desc">તમારા ખર્ચાના ડેટા મેળવવા માટે પ્રમાણીત કરો</string>
     <string name="unlock">અનલૉક કરો</string>
     <string name="biometric_unavailable_title">બાયോമેટ્રિક પ્રમાણિકરણ ઉપલબ્ધ નથી</string>

@@ -1,57 +1,38 @@
 <a name="top"></a>
-[![Cashiro Banner](banner.png)](https://github.com/sarim2000/pennywiseai-tracker)
+[![Zakat Banner](banner.png)](#top)
 
-[//]: # ([![GitHub stars]&#40;https://img.shields.io/github/stars/sarim2000/pennywiseai-tracker?style=social&#41;]&#40;https://github.com/sarim2000/pennywiseai-tracker&#41;)
 [![License](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-8.0+-3DDC84)](https://developer.android.com/about/versions/oreo)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0.21-7F52FF)](https://kotlinlang.org/)
 [![Privacy](https://img.shields.io/badge/AI-100%25_On--Device-FF6B6B)](https://developers.google.com/mediapipe)
 
-[//]: # ([![Downloads]&#40;https://img.shields.io/badge/Downloads-100+-green&#41;]&#40;https://play.google.com/store/apps/details?id=com.pennywiseai.tracker&#41;)
+[![GitHub release](https://img.shields.io/github/v/release/ferdausfs/Zakat-expo.v1)](https://github.com/ferdausfs/Zakat-expo.v1/releases)
+[![GitHub last commit](https://img.shields.io/github/last-commit/ferdausfs/Zakat-expo.v1)](https://github.com/ferdausfs/Zakat-expo.v1/commits)
 
-[![F-Droid](https://img.shields.io/f-droid/v/com.ritesh.cashiro?color=green)](https://f-droid.org/packages/com.ritesh.cashiro/)
-[![GitHub release](https://img.shields.io/github/v/release/ritesh-kanwar/Cashiro)](https://github.com/ritesh-kanwar/Cashiro/releases)
-[![GitHub last commit](https://img.shields.io/github/last-commit/ritesh-kanwar/Cashiro)](https://github.com/ritesh-kanwar/Cashiro/commits)
+## Zakat — Free & Open‑Source, private SMS‑powered expense tracker
 
-[//]: # ([![Discord]&#40;https://img.shields.io/badge/Discord-Join_Community-5865F2&#41;]&#40;https://discord.gg/H3xWeMWjKQ&#41;)
+Zakat is a comprehensive financial tracking manager that turns bank SMS and PDF statements into a clean, searchable money timeline with on-device AI assistance. 100% private, no cloud processing.
 
-## Cashiro — Free & Open‑Source, private SMS‑powered expense tracker
+> **Roadmap note:** Dedicated Zakat calculation features (wealth assessment, nisab thresholds, zakat dues and yearly zakat tracking) will be added in a later phase, one function at a time. This release keeps the proven expense-tracking core untouched.
 
-Cashiro is a comprehensive financial tracking manager that Turn bank SMS and PDF Statements into a clean, searchable money timeline with on-device AI assistance. 100% private, no cloud processing.
-
-
-[//]: # ()
 ⭐ **Star us on GitHub**
 
-[//]: # ()
-[![Share](https://img.shields.io/badge/share-000000?logo=x&logoColor=white)](https://x.com/intent/tweet?text=Check%20out%20Cashiro%20AI%20-%20Privacy-first%20expense-budget%20tracker%20with%20on-device%20AI:%20https://github.com/ritesh-kanwar/Cashiro%20%23Android%20%23PrivacyFirst%20%23OnDeviceAI)
-[![Share](https://img.shields.io/badge/share-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/sharing/share-offsite/?url=https://github.com/ritesh-kanwar/Cashiro)
-[![Share](https://img.shields.io/badge/share-FF4500?logo=reddit&logoColor=white)](https://www.reddit.com/submit?title=Cashiro%20AI%20-%20Privacy-first%20expense-budget%20tracker&url=https://github.com/ritesh-kanwar/Cashiro)
-[![Share](https://img.shields.io/badge/share-0088CC?logo=telegram&logoColor=white)](https://t.me/share/url?url=https://github.com/ritesh-kanwar/Cashiro&text=Check%20out%20Cashiro%20AI)
+[![Share](https://img.shields.io/badge/share-000000?logo=x&logoColor=white)](https://x.com/intent/tweet?text=Check%20out%20Zakat%20-%20Privacy-first%20expense-budget%20tracker%20with%20on-device%20AI:%20https://github.com/ferdausfs/Zakat-expo.v1%20%23Android%20%23PrivacyFirst%20%23OnDeviceAI)
+[![Share](https://img.shields.io/badge/share-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/sharing/share-offsite/?url=https://github.com/ferdausfs/Zakat-expo.v1)
+[![Share](https://img.shields.io/badge/share-FF4500?logo=reddit&logoColor=white)](https://www.reddit.com/submit?title=Zakat%20-%20Privacy-first%20expense-budget%20tracker&url=https://github.com/ferdausfs/Zakat-expo.v1)
+[![Share](https://img.shields.io/badge/share-0088CC?logo=telegram&logoColor=white)](https://t.me/share/url?url=https://github.com/ferdausfs/Zakat-expo.v1&text=Check%20out%20Zakat)
 
 ## Overview
 
 For Android users worldwide who want a comprehensive financial tracking — automatic expense tracking from bank SMS, manual cash entry, budgeting, clean categories, subscription detection, and clear insights. Supporting 80+ banks across 14 countries with multi-currency capabilities.
 
-[//]: # (<a href="https://play.google.com/store/apps/details?id=com.pennywiseai.tracker">)
-
-[//]: # (  <img src="https://img.shields.io/badge/GET_IT_ON-Google_Play-00875F?style=for-the-badge&logo=google-play&logoColor=white" alt="Get it on Google Play" />)
-
-[//]: # (</a>)
-
-<a href="https://f-droid.org/packages/com.ritesh.cashiro">
-
-  <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">
-
-</a>
-
 ### How it works
 
 1. Grant SMS permission (read‑only). No inbox changes, no messages sent OR import PDF Statements.
-2. Cashiro parses transaction SMS or PDF, extracts amount, merchant, category, and date.
+2. Zakat parses transaction SMS or PDF, extracts amount, merchant, category, and date.
 3. View analytics, subscriptions, and the full transaction timeline — with on-device AI assistant for insights.
 
-## Why Cashiro
+## Why Zakat
 
 - **🤖 Smart SMS Parsing** - Automatically extracts transaction details from 40+ banks SMS across 5 countries
 - **🗂️ Smart PDF Parsing** - Automatically extracts transaction details from GPay and PhonePe PDF UPI Statements.
@@ -67,6 +48,7 @@ For Android users worldwide who want a comprehensive financial tracking — auto
 - **🔄 Subscription Tracking** - Detects and monitors recurring payments
 - **💬 On-device AI Assistant** - Ask questions like "What did I spend on food last month?" locally
 - **📤 Data Export** - Export as CSV for taxes or records
+- **🌙 Zakat (upcoming)** - Nisab-aware zakat calculation and tracking, built on top of the existing accounts and transactions core
 
 ## Supported Banks & Countries
 
@@ -130,7 +112,7 @@ Supporting **80+ banks** across **14 countries** with **multi-currency** capabil
 ### 🇧🇾 Belarus (1 bank) - BYN Br
 - **Priorbank** - Russian/Belarusian SMS support
 
-More banks being added regularly! [Request your bank →](https://github.com/ritesh-kanwar/Cashiro/issues/new?template=bank_support_request.md)
+More banks being added regularly! [Request your bank →](https://github.com/ferdausfs/Zakat-expo.v1/issues/new)
 
 ## Privacy First
 
@@ -181,8 +163,8 @@ All processing happens on your device using MediaPipe's LLM. Your financial data
 
 ```bash
 # Clone repository
-git clone https://github.com/ritesh-kanwar/Cashiro.git
-cd Cashiro
+git clone https://github.com/ferdausfs/Zakat-expo.v1.git
+cd Zakat-expo.v1
 
 # Build APK
 ./gradlew assembleDebug
@@ -229,8 +211,7 @@ com.ritesh.cashiro
 
 ## Community & Support
 
-[//]: # (- **Discord**: Join the community, share feedback, and get help — [Join Discord]&#40;https://discord.gg/H3xWeMWjKQ&#41;)
-- **Issues**: Report bugs or request features — [Open an issue](https://github.com/ritesh-kanwar/Cashiro/issues)
+- **Issues**: Report bugs or request features — [Open an issue](https://github.com/ferdausfs/Zakat-expo.v1/issues)
 
 ## Contributing
 
@@ -247,52 +228,11 @@ Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before participating.
 
 Please review our [Security Policy](SECURITY.md) for how to report vulnerabilities.
 
-## Contributors ✨
-
-[//]: # (Thanks goes to these wonderful people &#40;[emoji key]&#40;https://allcontributors.org/docs/en/emoji-key&#41;&#41;:)
-
-[//]: # ()
-[//]: # (<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->)
-
-[//]: # (<!-- prettier-ignore-start -->)
-
-[//]: # (<!-- markdownlint-disable -->)
-
-[//]: # (<table>)
-
-[//]: # (  <tbody>)
-
-[//]: # (    <tr>)
-
-[//]: # (      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Lucifer1590"><img src="https://avatars.githubusercontent.com/Lucifer1590?v=4&s=100" width="100px;" alt="Lucifer1590"/><br /><sub><b>Lucifer1590</b></sub></a><br /><a href="#community-Lucifer1590" title="Community Management">👥</a> <a href="https://github.com/sarim2000/pennywiseai-tracker/issues?q=author%3ALucifer1590" title="Bug reports">🐛</a> <a href="#userTesting-Lucifer1590" title="User Testing">📓</a></td>)
-
-[//]: # (      <td align="center" valign="top" width="14.28%"><a href="https://github.com/akshaynexus"><img src="https://avatars.githubusercontent.com/akshaynexus?v=4&s=100" width="100px;" alt="akshaynexus"/><br /><sub><b>akshaynexus</b></sub></a><br /><a href="https://github.com/sarim2000/pennywiseai-tracker/commits?author=akshaynexus" title="Code">💻</a></td>)
-
-[//]: # (    </tr>)
-
-[//]: # (  </tbody>)
-
-[//]: # (</table>)
-
-[//]: # ()
-[//]: # (<!-- markdownlint-restore -->)
-
-[//]: # (<!-- prettier-ignore-end -->)
-
-[//]: # ()
-[//]: # (<!-- ALL-CONTRIBUTORS-LIST:END -->)
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
-
-[//]: # (## Star History)
-
-[//]: # ([![Star History Chart]&#40;https://api.star-history.com/svg?repos=sarim2000/pennywiseai-tracker&type=Date&#41;]&#40;https://star-history.com/#sarim2000/pennywiseai-tracker&Date&#41;)
-
 ## Acknowledgements
 
 Special thanks to the following projects and resources:
 
-- **[PennyWise AI](https://github.com/sarim2000/pennywiseai-tracker)** - The base and inspiration of this project.
+- **[Cashiro](https://github.com/ritesh-kanwar/Cashiro)** by Ritesh Kanwar - The base of this project. Zakat is a rebranded fork; all credit for the original expense-tracking engine goes to the upstream author.
 - **[Microsoft Fluent Emojis](https://github.com/microsoft/fluentui-emoji)** - Beautiful emojis used for category icons.
 - **[Haze](https://chrisbanes.github.io/haze/latest/)** - Applied for stunning blur effects.
 - **[Compose Charts](https://github.com/ehsannarmani/ComposeCharts)** - Used for creating animated charts and graphs.
@@ -307,7 +247,7 @@ GNU Affero General Public License v3.0 - see [LICENSE](LICENSE)
 ---
 
 <p align="center">
-<a href="https://github.com/ritesh-kanwar/Cashiro/releases">Download</a> •
-<a href="https://github.com/ritesh-kanwar/Cashiro/issues">Report Bug</a> •
-<a href="https://github.com/ritesh-kanwar/Cashiro/issues">Request Feature</a>
+<a href="https://github.com/ferdausfs/Zakat-expo.v1/releases">Download</a> •
+<a href="https://github.com/ferdausfs/Zakat-expo.v1/issues">Report Bug</a> •
+<a href="https://github.com/ferdausfs/Zakat-expo.v1/issues">Request Feature</a>
 </p>

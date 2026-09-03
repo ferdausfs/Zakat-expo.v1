@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">ٹرانزیکشن شامل کریں</string>
     <string name="add_subscription">سبسکرپشن شامل کریں</string>
     <string name="add_transfer">ٹرانسفر شامل کریں</string>
@@ -309,7 +309,7 @@
     <string name="press_back_again_to_close">ایپ بند کرنے کے لیے دوبارہ بیک دبائیں</string>
     <string name="transaction_deleted">لین دین حذف کر دیا گیا</string>
     <string name="undo">واپس لائیں</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">پروفائل</string>
     <string name="banner">بینر</string>
     <string name="recent">حالیہ</string>
@@ -548,7 +548,7 @@
     <string name="one_month">1 مہینہ</string>
     <string name="two_years">2 سال</string>
     <string name="unrecognized_messages_title">غیر شناخت شدہ پیغامات</string>
-    <string name="unrecognized_bank_messages_desc">ان ممکنہ بینکوں کے پیغامات کو خودکار طریقے سے نہیں پڑھا جا سکا۔ انہی کی رپورٹ کر کے Cashiro کو بہتر بنانے میں مدد کریں تاکہ ہم مزید بینکوں کی سپورٹ شامل کر سکیں۔</string>
+    <string name="unrecognized_bank_messages_desc">ان ممکنہ بینکوں کے پیغامات کو خودکار طریقے سے نہیں پڑھا جا سکا۔ انہی کی رپورٹ کر کے Zakat کو بہتر بنانے میں مدد کریں تاکہ ہم مزید بینکوں کی سپورٹ شامل کر سکیں۔</string>
     <string name="show_reported">رپورٹ شدہ دکھائیں</string>
     <string name="count_new_format">%1$d نئے</string>
     <string name="count_reported_format">%1$d نے رپورٹ کیا</string>
@@ -591,7 +591,7 @@
     <string name="delete_webhook_confirm_desc">یہ پروفائل، اس کے شیڈول شدہ سنکس، اور تمام ڈیلیوری لاگز ہٹا دیے جائیں گے۔ یہ واپس نہیں کیا جا سکتا۔</string>
     <string name="byoapi_sync_title">BYOAPI فنانس سنک</string>
     <string name="byoapi_sync_desc">منتخب شدہ فنانس ڈیٹا اپنے اینڈ پوائنٹ پر بھیجیں۔ کوئی بھی HTTP 2xx جواب کامیاب ڈیلیوری کے طور پر شمار کیا جائے گا۔</string>
-    <string name="byoapi_sync_warning">یہ آپ کے مالیاتی ڈیٹا کو وہ URL بھیجے گا جو آپ ترتیب دیں گے۔ Cashiro اس اینڈ پوائنٹ کی سیکیورٹی کی تصدیق نہیں کر سکتا۔</string>
+    <string name="byoapi_sync_warning">یہ آپ کے مالیاتی ڈیٹا کو وہ URL بھیجے گا جو آپ ترتیب دیں گے۔ Zakat اس اینڈ پوائنٹ کی سیکیورٹی کی تصدیق نہیں کر سکتا۔</string>
     <string name="sync_now">اب سنک کریں</string>
     <string name="sync_now_desc">تمام فعال پروفائلز کے لیے ڈیلیوری کو ٹرگر کریں</string>
     <string name="sync_schedule_title">سنک شیڈول</string>

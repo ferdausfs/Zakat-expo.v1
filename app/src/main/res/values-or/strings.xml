@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">ଟ୍ରାଞ୍ଜାକସନ୍ ଯୋଡନ୍ତୁ</string>
     <string name="add_subscription">ସଦସ୍ୟତା ଯୋଡନ୍ତୁ</string>
     <string name="add_transfer">ସ୍ଥାନାନ୍ତରଣ ଯୋଡନ୍ତୁ</string>
@@ -309,7 +309,7 @@
     <string name="press_back_again_to_close">ଆପ୍ପ୍ ବନ୍ଦ କରିବାକୁ ଆଉ ଏକଥର ପଛକୁ ଦବାନ୍ତୁ</string>
     <string name="transaction_deleted">ଲେନଦେନ ହଟାଯାଇଛି</string>
     <string name="undo">ପୂର୍ବ ପଦକ୍ଷେପକୁ ରଦ୍ଦ କରନ୍ତୁ</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">ପ୍ରୋଫାଇଲ୍</string>
     <string name="banner">ବ୍ୟାନର୍</string>
     <string name="recent">ସাম্প୍ରତିକ</string>
@@ -591,7 +591,7 @@
     <string name="delete_webhook_confirm_desc">ଏହି ପ୍ରୋଫାଇଲ, ଏହାର ନିର୍ଦ୍ଧାରିତ ସିଙ୍କ୍ ଏବଂ ସମସ୍ତ ଡେଲିଭରୀ ଲଗ୍ସ ହଟାଯିବ । ଏହା ପୁନଃସ୍ଥାପନ କରିପାରିବା ନାହିଁ ।</string>
     <string name="byoapi_sync_title">BYOAPI ଫାଇନାନ୍ସ ସିଙ୍କ୍</string>
     <string name="byoapi_sync_desc">ଚୟନିତ ଫାଇନାନ୍ସ ତଥ୍ୟକୁ ଆପଣଙ୍କର ନିଜ ଏଣ୍ଡପଏଣ୍ଟକୁ ପଠାନ୍ତୁ । ଯେକୌଣସି HTTP 2xx ପ୍ରତିକ୍ରିୟାକୁ ସଫଳ ଡେଲିଭରୀ ବୋଲି ଗଣାଯିବ ।</string>
-    <string name="byoapi_sync_warning">ଏହିଟି ଆପଣଙ୍କର ବିନ୍ୟାସ କରାଯାଇଥିବା URL କୁ ଆପଣଙ୍କର ଆର୍ଥିକ ତଥ୍ୟ ପଠାଇବ । Cashiro ସେହି ଏଣ୍ଡପଏଣ୍ଟର ସୁରକ୍ଷା ପ୍ରମାଣିକରଣ କରିପାରିବ ନାହିଁ ।</string>
+    <string name="byoapi_sync_warning">ଏହିଟି ଆପଣଙ୍କର ବିନ୍ୟାସ କରାଯାଇଥିବା URL କୁ ଆପଣଙ୍କର ଆର୍ଥିକ ତଥ୍ୟ ପଠାଇବ । Zakat ସେହି ଏଣ୍ଡପଏଣ୍ଟର ସୁରକ୍ଷା ପ୍ରମାଣିକରଣ କରିପାରିବ ନାହିଁ ।</string>
     <string name="sync_now">ସିଙ୍କ୍ କରନ୍ତୁ</string>
     <string name="sync_now_desc">ସକଳ ସକ୍ରିୟ ପ୍ରୋଫାଇଲ ପାଇଁ ଡେଲିଭରୀ ଟ୍ରିଗର୍ କରନ୍ତୁ</string>
     <string name="sync_schedule_title">ସିଙ୍କ୍ ସୁଚୀ</string>
@@ -886,10 +886,10 @@
     <string name="notification_access_active">ସୂଚନା ପ୍ରବେଶ ସକ୍ରିୟ ଅଛି</string>
     <string name="notification_access_desc">ପୁସ୍ ସୂଚନାରୁ ବ୍ୟାଙ୍କ ଲେନଦେନ ଚିହ୍ନଟ କରିବାକୁ ସକ୍ରିୟ କରନ୍ତୁ</string>
     <string name="notification_access_required">ସୂଚନା ପ୍ରବେଶ ଆବଶ୍ୟକ</string>
-    <string name="notification_access_required_desc">ରିଆଲ୍-ଟାଇମ୍ ରେ ବ୍ୟାଙ୍କ ଲେନଦେନ ଚିହ୍ନଟ କରିବାକୁ, Cashiro କୁ ସୂଚନା ପ୍ରବେଶ ଆବଶ୍ୟକ। ଏହା ଏକ ପ୍ରଣାଳୀ ମାଟିର ଅନୁମତି।</string>
+    <string name="notification_access_required_desc">ରିଆଲ୍-ଟାଇମ୍ ରେ ବ୍ୟାଙ୍କ ଲେନଦେନ ଚିହ୍ନଟ କରିବାକୁ, Zakat କୁ ସୂଚନା ପ୍ରବେଶ ଆବଶ୍ୟକ। ଏହା ଏକ ପ୍ରଣାଳୀ ମାଟିର ଅନୁମତି।</string>
     <string name="how_to_enable">କିପରି ସକ୍ଷମ କରିବେ:</string>
     <string name="step_1">ନିମ୍ନରେ \'ସେଟିଂସ୍ ଖୋଲନ୍ତୁ\' ବଟନ୍ ଟ୍ୟାପ୍ କରନ୍ତୁ।</string>
-    <string name="step_2">ଆପ୍ଲିକେସନଗୁଡିକର ତାଲିକାରେ \'Cashiro\' ସନ୍ଧାନ କରନ୍ତୁ।</string>
+    <string name="step_2">ଆପ୍ଲିକେସନଗୁଡିକର ତାଲିକାରେ \'Zakat\' ସନ୍ଧାନ କରନ୍ତୁ।</string>
     <string name="step_3">ସକ୍ଷମ କରିବାକୁ \'ବିଜ୍ଞପ୍ତି ଆକସେସ୍ ଅନୁମତି ଦିଅନ୍ତୁ\' ଟୋଗଲ୍ କରନ୍ତୁ।</string>
     <string name="open_settings">ସେଟିଂ ଖୋଲନ୍ତୁ</string>
     <string name="scan_settings">ସେଟିଂସ୍ ସ୍କାନ୍ କରନ୍ତୁ</string>

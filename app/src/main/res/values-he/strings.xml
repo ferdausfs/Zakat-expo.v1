@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">הוסף עסקה</string>
     <string name="add_subscription">הוסף מנוי</string>
     <string name="add_transfer">הוסף העברה</string>
@@ -309,7 +309,7 @@
     <string name="press_back_again_to_close">הקש חזרה שוב כדי לסגור את האפליקציה</string>
     <string name="transaction_deleted">העסקה נמחקה</string>
     <string name="undo">בטל</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">פרופיל</string>
     <string name="banner">באנר</string>
     <string name="recent">אחרונים</string>
@@ -346,7 +346,7 @@
     <string name="stay_updated">הישאר מעודכן</string>
     <string name="automatic_tracking">מעקב אוטומטי</string>
     <string name="allow_notifications_desc">אפשר התראות לקבלת תזכורות חשבונות וסיכומים יומיים.</string>
-    <string name="automatic_tracking_desc">Cashiro יכול לסרוק אוטומטית את הודעות העסקה שלך כדי לשמור על חשבונותיך מעודכנים.</string>
+    <string name="automatic_tracking_desc">Zakat יכול לסרוק אוטומטית את הודעות העסקה שלך כדי לשמור על חשבונותיך מעודכנים.</string>
     <string name="skip_for_now">דלג בינתיים</string>
     <string name="verify_accounts">אמת חשבונות</string>
     <string name="scanning_messages">סריקת הודעות</string>
@@ -416,7 +416,7 @@
     <string name="share">שתף</string>
     <string name="retry">נסה שוב</string>
     <string name="share_csv">שתף CSV</string>
-    <string name="csv_export_subject">ייצוא עסקאות Cashiro</string>
+    <string name="csv_export_subject">ייצוא עסקאות Zakat</string>
     <string name="edit_transaction">ערוך עסקה</string>
     <string name="transaction_details">פרטי העסקה</string>
     <string name="report_issue">דווח על בעיה</string>
@@ -481,7 +481,7 @@
     <string name="no_transactions_for_format">אין עסקאות עבור %1$s</string>
     <string name="sync_sms_to_see_transactions">סנכרן את ה-SMS שלך כדי לראות עסקאות</string>
     <string name="about">אודות</string>
-    <string name="cashiro_logo_cd">לוגו Cashiro</string>
+    <string name="cashiro_logo_cd">לוגו Zakat</string>
     <string name="version_format">גרסה %1$s, db-v%2$d</string>
     <string name="developed_by">פותח על ידי ריטש</string>
     <string name="lead_developer_cd">מפתח ראשי</string>
@@ -492,9 +492,9 @@
     <string name="faq">שאלות נפוצות</string>
     <string name="faq_desc">שאלות שנשאלות לעיתים קרובות</string>
     <string name="guides">מדריכים</string>
-    <string name="guides_desc">איך להשתמש ב-Cashiro</string>
+    <string name="guides_desc">איך להשתמש ב-Zakat</string>
     <string name="report_bug">דווח על תקלה</string>
-    <string name="report_bug_desc">עזור לנו לשפר את Cashiro</string>
+    <string name="report_bug_desc">עזור לנו לשפר את Zakat</string>
     <string name="privacy_policy">מדיניות פרטיות</string>
     <string name="privacy_policy_desc">שימוש בנתונים ופרטיות</string>
     <string name="terms_of_service">תנאי שירות</string>
@@ -548,7 +548,7 @@
     <string name="one_month">חודש אחד</string>
     <string name="two_years">שנתיים</string>
     <string name="unrecognized_messages_title">הודעות לא מזוהות</string>
-    <string name="unrecognized_bank_messages_desc">הודעות אלו מבנקים פוטנציאליים לא יכלו להיפרס אוטומטית. עזור לשפר את Cashiro על ידי דיווח עליהן כדי שנוכל להוסיף תמיכה בבנקים נוספים.</string>
+    <string name="unrecognized_bank_messages_desc">הודעות אלו מבנקים פוטנציאליים לא יכלו להיפרס אוטומטית. עזור לשפר את Zakat על ידי דיווח עליהן כדי שנוכל להוסיף תמיכה בבנקים נוספים.</string>
     <string name="show_reported">הצג דווח</string>
     <string name="count_new_format">%1$d חדש</string>
     <string name="count_reported_format">%1$d דווח</string>
@@ -591,7 +591,7 @@
     <string name="delete_webhook_confirm_desc">הפרופיל הזה, הסינכרונים המתוזמנים שלו, וכל יומני המסירה יוסרו. אין ניתן לבטל פעולה זו.</string>
     <string name="byoapi_sync_title">סנכרון BYOAPI Finance</string>
     <string name="byoapi_sync_desc">שלח נתוני כספים נבחרים לנקודת הקצה שלך. כל תגובת HTTP 2xx נחשבת למסירה מוצלחת.</string>
-    <string name="byoapi_sync_warning">זה ישלח את הנתונים הפיננסיים שלך לכתובת URL שתגדיר. Cashiro אינו יכול לאמת את אבטחת נקודת הקצה הזו.</string>
+    <string name="byoapi_sync_warning">זה ישלח את הנתונים הפיננסיים שלך לכתובת URL שתגדיר. Zakat אינו יכול לאמת את אבטחת נקודת הקצה הזו.</string>
     <string name="sync_now">סנכרן עכשיו</string>
     <string name="sync_now_desc">גרום למסירה עבור כל הפרופילים המופעלים</string>
     <string name="sync_schedule_title">לוח סינכרון</string>
@@ -886,10 +886,10 @@
     <string name="notification_access_active">גישה להודעות פעילה</string>
     <string name="notification_access_desc">הפעל כדי לזהות עסקאות בנק מהודעות דחיפה</string>
     <string name="notification_access_required">גישה להודעות נדרשת</string>
-    <string name="notification_access_required_desc">כדי לזהות באופן אוטומטי עסקאות בנק בזמן אמת, Cashiro דורש גישה להודעות. זהו הרשאה ברמת המערכת.</string>
+    <string name="notification_access_required_desc">כדי לזהות באופן אוטומטי עסקאות בנק בזמן אמת, Zakat דורש גישה להודעות. זהו הרשאה ברמת המערכת.</string>
     <string name="how_to_enable">איך להפעיל:</string>
     <string name="step_1">הקש על כפתור \'פתח הגדרות\' למטה.</string>
-    <string name="step_2">מצא את \'Cashiro\' ברשימת היישומים.</string>
+    <string name="step_2">מצא את \'Zakat\' ברשימת היישומים.</string>
     <string name="step_3">החלף את \'אפשר גישה להודעות\' למופעל.</string>
     <string name="open_settings">פתח הגדרות</string>
     <string name="scan_settings">סרוק הגדרות</string>

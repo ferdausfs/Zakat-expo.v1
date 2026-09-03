@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">লেনদেন যোগ করুন</string>
     <string name="add_subscription">সাবস্ক্রিপশন যোগ করুন</string>
     <string name="add_transfer">স্থানান্তর যোগ করুন</string>
@@ -309,7 +309,7 @@
     <string name="press_back_again_to_close">অ্যাপ বন্ধ করতে আবার ব্যাক চাপুন</string>
     <string name="transaction_deleted">লেনদেন মুছে ফেলা হয়েছে</string>
     <string name="undo">বাতিল করুন</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">প্রোফাইল</string>
     <string name="banner">ব্যানার</string>
     <string name="recent">সাম্প্রতিক</string>
@@ -416,7 +416,7 @@
     <string name="share">শেয়ার</string>
     <string name="retry">পুনরায় চেষ্টা করুন</string>
     <string name="share_csv">CSV শেয়ার করুন</string>
-    <string name="csv_export_subject">Cashiro লেনদেন এক্সপোর্ট</string>
+    <string name="csv_export_subject">Zakat লেনদেন এক্সপোর্ট</string>
     <string name="edit_transaction">লেনদেন সম্পাদনা করুন</string>
     <string name="transaction_details">লেনদেনের বিস্তারিত</string>
     <string name="report_issue">সমস্যা রিপোর্ট করুন</string>
@@ -591,7 +591,7 @@
     <string name="delete_webhook_confirm_desc">এই প্রোফাইল, এর নির্ধারিত সিঙ্ক এবং সমস্ত ডেলিভারি লগ মুছে ফেলা হবে। এটি পুনরায় করা যাবে না।</string>
     <string name="byoapi_sync_title">BYOAPI ফাইন্যান্স সিঙ্ক</string>
     <string name="byoapi_sync_desc">নির্বাচিত ফাইন্যান্স ডেটা আপনার নিজস্ব এন্ডপয়েন্টে পাঠান। যেকোনো HTTP 2xx প্রতিক্রিয়াকে সফল ডেলিভারি হিসেবে গণনা করা হবে।</string>
-    <string name="byoapi_sync_warning">এটি আপনার আর্থিক ডেটা সেট করা URL-এ পাঠাবে। Cashiro সেই এন্ডপয়েন্টের নিরাপত্তা যাচাই করতে পারে না।</string>
+    <string name="byoapi_sync_warning">এটি আপনার আর্থিক ডেটা সেট করা URL-এ পাঠাবে। Zakat সেই এন্ডপয়েন্টের নিরাপত্তা যাচাই করতে পারে না।</string>
     <string name="sync_now">এখন সিঙ্ক করুন</string>
     <string name="sync_now_desc">সক্রিয় করা সমস্ত প্রোফাইলের জন্য ডেলিভারি ট্রিগার করুন</string>
     <string name="sync_schedule_title">সিঙ্ক সময়সূচী</string>
@@ -886,10 +886,10 @@
     <string name="notification_access_active">নোটিফিকেশন অ্যাক্সেস সক্রিয় আছে</string>
     <string name="notification_access_desc">পুশ নোটিফিকেশন থেকে ব্যাংক লেনদেন সনাক্ত করতে সক্ষম করতে সক্রিয় করুন</string>
     <string name="notification_access_required">নোটিফিকেশন অ্যাক্সেস প্রয়োজন</string>
-    <string name="notification_access_required_desc">রিয়েল-টাইমে স্বয়ংক্রিয়ভাবে ব্যাংক লেনদেন সনাক্ত করতে Cashiro নোটিফিকেশন অ্যাক্সেস প্রয়োজন। এটি একটি সিস্টেম-স্তরের অনুমতি।</string>
+    <string name="notification_access_required_desc">রিয়েল-টাইমে স্বয়ংক্রিয়ভাবে ব্যাংক লেনদেন সনাক্ত করতে Zakat নোটিফিকেশন অ্যাক্সেস প্রয়োজন। এটি একটি সিস্টেম-স্তরের অনুমতি।</string>
     <string name="how_to_enable">কিভাবে সক্রিয় করবেন:</string>
     <string name="step_1">নিচের \'Open Settings\' বোতামে ট্যাপ করুন।</string>
-    <string name="step_2">অ্যাপ্লিকেশন তালিকায় \'Cashiro\' খুঁজুন।</string>
+    <string name="step_2">অ্যাপ্লিকেশন তালিকায় \'Zakat\' খুঁজুন।</string>
     <string name="step_3">বিকল্প করুন \'নোটিফিকেশন অ্যাক্সেস অনুমোদন\' সক্রিয় করতে।</string>
     <string name="open_settings">সেটিংস খুলুন</string>
     <string name="scan_settings">স্ক্যান সেটিংস</string>

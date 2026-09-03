@@ -275,7 +275,7 @@
     <string name="chart_type_heatmap">Varmekart</string>
     <string name="chart_format">%1$s diagram</string>
     <string name="toggle_view">Veksle visning</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">Flere alternativer</string>
     <string name="clear_chat">Fjern Chat</string>
     <string name="qwen_model_required">Qwen modell kreves</string>
@@ -343,7 +343,7 @@
     <string name="stay_updated">Hold deg oppdatert</string>
     <string name="automatic_tracking">Automatisk sporing</string>
     <string name="allow_notifications_desc">Tillat varslinger å motta påminnelser om regninger og daglige oppsummeringer.</string>
-    <string name="automatic_tracking_desc">Cashiro kan automatisk skanne transaksjonen SMS for å holde kontoene dine oppdatert.</string>
+    <string name="automatic_tracking_desc">Zakat kan automatisk skanne transaksjonen SMS for å holde kontoene dine oppdatert.</string>
     <string name="skip_for_now">Hopp over for nå</string>
     <string name="verify_accounts">Kontrollere kontoer</string>
     <string name="scanning_messages">Skanner meldinger</string>
@@ -489,9 +489,9 @@
     <string name="faq">OSS</string>
     <string name="faq_desc">Ofte stilte spørsmål</string>
     <string name="guides">Veiledninger</string>
-    <string name="guides_desc">Hvordan du bruker Cashiro</string>
+    <string name="guides_desc">Hvordan du bruker Zakat</string>
     <string name="report_bug">Rapporter feil</string>
-    <string name="report_bug_desc">Hjelp oss med å forbedre Cashiro</string>
+    <string name="report_bug_desc">Hjelp oss med å forbedre Zakat</string>
     <string name="privacy_policy">Retningslinjer for personvern</string>
     <string name="privacy_policy_desc">Bruk av data og personvern</string>
     <string name="terms_of_service">Vilkår for bruk</string>
@@ -588,7 +588,7 @@
     <string name="delete_webhook_confirm_desc">Denne profilen, dens planlagte synkronisering, og alle leveringslogger fjernes. Dette kan ikke angres.</string>
     <string name="byoapi_sync_title">BYOAPI Finans Synk</string>
     <string name="byoapi_sync_desc">Send valgte finansdata til ditt eget endepunkt. Alle HTTP 2xx-svar behandles som en vellykket levering.</string>
-    <string name="byoapi_sync_warning">Dette vil sende dine finansielle data til URLen du konfigurerer. Cashiro kan ikke bekrefte sikkerheten for det endepunktet.</string>
+    <string name="byoapi_sync_warning">Dette vil sende dine finansielle data til URLen du konfigurerer. Zakat kan ikke bekrefte sikkerheten for det endepunktet.</string>
     <string name="sync_now">Synkroniser nå</string>
     <string name="sync_now_desc">Utløse levering for alle aktiverte profiler</string>
     <string name="sync_schedule_title">Synk plan</string>
@@ -883,10 +883,10 @@
     <string name="notification_access_active">Varslingstilgang er aktiv</string>
     <string name="notification_access_desc">Aktiver for å oppdage banktransaksjoner fra push-varsler</string>
     <string name="notification_access_required">Varslingstilgang kreves</string>
-    <string name="notification_access_required_desc">For å automatisk oppdage banktransaksjoner i sanntid, krever Cashiro tilgang til varsler. Dette er en systemnivåtillatelse.</string>
+    <string name="notification_access_required_desc">For å automatisk oppdage banktransaksjoner i sanntid, krever Zakat tilgang til varsler. Dette er en systemnivåtillatelse.</string>
     <string name="how_to_enable">Hvordan aktivere:</string>
     <string name="step_1">Trykk på knappen \'Åpne innstillinger\' nedenfor.</string>
-    <string name="step_2">Finn \'Cashiro\' i listen over applikasjoner.</string>
+    <string name="step_2">Finn \'Zakat\' i listen over applikasjoner.</string>
     <string name="step_3">Slå på \'Tillat varseltilgang\'.</string>
     <string name="open_settings">Åpne Innstillinger</string>
     <string name="scan_settings">Skanninnstillinger</string>
@@ -912,7 +912,7 @@ Dette kan ta noen sekunder avhengig av meldingshistorikken din.</string>
     <string name="this_month_lbl">DENNE MÅNEDEN</string>
     <string name="this_year_lbl">DETTE ÅRET</string>
     <string name="percent_this_month_format">%1$s%2$s%%denne måneden</string>
-    <string name="app_locked_title">Cashiro er låst</string>
+    <string name="app_locked_title">Zakat er låst</string>
     <string name="authenticate_desc">Autentiser for å få tilgang til utgiftsdataene dine</string>
     <string name="unlock">Lås opp</string>
     <string name="biometric_unavailable_title">Biometrisk autentisering utilgjengelig</string>

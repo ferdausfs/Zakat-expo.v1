@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">Přidat transakci</string>
     <string name="add_subscription">Přidat odběr</string>
     <string name="add_transfer">Přidat převod</string>
@@ -275,7 +275,7 @@
     <string name="chart_type_heatmap">Teplotní mapa</string>
     <string name="chart_format">%1$s graf</string>
     <string name="toggle_view">Přepnout zobrazení</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">Další možnosti</string>
     <string name="clear_chat">Vyčistit chat</string>
     <string name="qwen_model_required">Vyžadován Qwen model</string>
@@ -307,7 +307,7 @@
     <string name="press_back_again_to_close">Stiskněte znovu pro zavření aplikace</string>
     <string name="transaction_deleted">Transakce odstraněna</string>
     <string name="undo">Zpět</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">Profil</string>
     <string name="banner">Banner</string>
     <string name="recent">Nedávné</string>
@@ -343,7 +343,7 @@
     <string name="stay_updated">Zůstat aktualizován</string>
     <string name="automatic_tracking">Automatické sledování</string>
     <string name="allow_notifications_desc">Povolit notifikace dostávat připomenutí účtu a denní shrnutí.</string>
-    <string name="automatic_tracking_desc">Cashiro může automaticky naskenovat SMS transakcí, aby vaše účty byly aktuální.</string>
+    <string name="automatic_tracking_desc">Zakat může automaticky naskenovat SMS transakcí, aby vaše účty byly aktuální.</string>
     <string name="skip_for_now">Prozatím přeskočit</string>
     <string name="verify_accounts">Ověřit účty</string>
     <string name="scanning_messages">Skenování zpráv</string>
@@ -413,7 +413,7 @@
     <string name="share">Sdílet</string>
     <string name="retry">Opakovat</string>
     <string name="share_csv">Sdílet CSV</string>
-    <string name="csv_export_subject">Export transakcí do Cashiro</string>
+    <string name="csv_export_subject">Export transakcí do Zakat</string>
     <string name="edit_transaction">Upravit transakci</string>
     <string name="transaction_details">Podrobnosti transakce</string>
     <string name="report_issue">Nahlásit problém</string>
@@ -478,7 +478,7 @@
     <string name="no_transactions_for_format">Žádné transakce pro %1$s</string>
     <string name="sync_sms_to_see_transactions">Synchronizujte SMS pro zobrazení transakcí</string>
     <string name="about">O aplikaci</string>
-    <string name="cashiro_logo_cd">Logo Cashiro</string>
+    <string name="cashiro_logo_cd">Logo Zakat</string>
     <string name="version_format">Verze %1$s, db-v%2$d</string>
     <string name="developed_by">Vyvinul Ritesh</string>
     <string name="lead_developer_cd">hlavní vývojář</string>
@@ -489,9 +489,9 @@
     <string name="faq">Nejčastější dotazy</string>
     <string name="faq_desc">Často kladené otázky</string>
     <string name="guides">Návody</string>
-    <string name="guides_desc">Jak používat Cashiro</string>
+    <string name="guides_desc">Jak používat Zakat</string>
     <string name="report_bug">Nahlásit chybu</string>
-    <string name="report_bug_desc">Pomozte nám zlepšit Cashiro</string>
+    <string name="report_bug_desc">Pomozte nám zlepšit Zakat</string>
     <string name="privacy_policy">Ochrana osobních údajů</string>
     <string name="privacy_policy_desc">Vaše využití dat a soukromí</string>
     <string name="terms_of_service">Podmínky služby</string>
@@ -545,7 +545,7 @@
     <string name="one_month">1 měsíc</string>
     <string name="two_years">2 roky</string>
     <string name="unrecognized_messages_title">Nerozpoznané zprávy</string>
-    <string name="unrecognized_bank_messages_desc">Tyto zprávy od potenciálních bank nelze automaticky analyzovat. Pomozte zlepšit Cashiro jejich oznámením, abychom mohli přidat podporu pro více bank.</string>
+    <string name="unrecognized_bank_messages_desc">Tyto zprávy od potenciálních bank nelze automaticky analyzovat. Pomozte zlepšit Zakat jejich oznámením, abychom mohli přidat podporu pro více bank.</string>
     <string name="show_reported">Zobrazit nahlášené</string>
     <string name="count_new_format">%1$d nové</string>
     <string name="count_reported_format">%1$d nahlášeno</string>
@@ -588,7 +588,7 @@
     <string name="delete_webhook_confirm_desc">Tento profil, jeho naplánované synchronizace a všechny doručovací protokoly budou odstraněny. Tuto akci nelze vrátit zpět.</string>
     <string name="byoapi_sync_title">BYOAPI Finance synchronizace</string>
     <string name="byoapi_sync_desc">Odeslat vybraná finanční data na vlastní konec. Jakákoli HTTP 2xx odpověď je považována za úspěšnou doručení.</string>
-    <string name="byoapi_sync_warning">Toto pošle vaše finanční údaje na URL, kterou nakonfigurujete. Cashiro nemůže ověřit bezpečnost tohoto koncového bodu.</string>
+    <string name="byoapi_sync_warning">Toto pošle vaše finanční údaje na URL, kterou nakonfigurujete. Zakat nemůže ověřit bezpečnost tohoto koncového bodu.</string>
     <string name="sync_now">Synchronizovat nyní</string>
     <string name="sync_now_desc">Spuštění doručení pro všechny povolené profily</string>
     <string name="sync_schedule_title">Harmonogram synchronizace</string>
@@ -883,10 +883,10 @@
     <string name="notification_access_active">Přístup k oznámením je aktivní</string>
     <string name="notification_access_desc">Povolit detekci bankovních transakcí z push oznámení</string>
     <string name="notification_access_required">Vyžadován přístup k oznámením</string>
-    <string name="notification_access_required_desc">Pro automatickou detekci bankovních transakcí v reálném čase vyžaduje Cashiro přístup k oznámením. Toto je systémové oprávnění.</string>
+    <string name="notification_access_required_desc">Pro automatickou detekci bankovních transakcí v reálném čase vyžaduje Zakat přístup k oznámením. Toto je systémové oprávnění.</string>
     <string name="how_to_enable">Jak povolit:</string>
     <string name="step_1">Klepněte na tlačítko \'Otevřít nastavení\' níže.</string>
-    <string name="step_2">Najděte \'Cashiro\' v seznamu aplikací.</string>
+    <string name="step_2">Najděte \'Zakat\' v seznamu aplikací.</string>
     <string name="step_3">Přepněte \'Povolit přístup k oznámením\' na povoleno.</string>
     <string name="open_settings">Otevřít nastavení</string>
     <string name="scan_settings">Nastavení skenování</string>
@@ -912,7 +912,7 @@ To může trvat několik sekund v závislosti na historii vašich zpráv.</strin
     <string name="this_month_lbl">TENTO MĚSÍC</string>
     <string name="this_year_lbl">TENTO ROK</string>
     <string name="percent_this_month_format">%1$s%2$s%% tento měsíc</string>
-    <string name="app_locked_title">Cashiro je uzamčen</string>
+    <string name="app_locked_title">Zakat je uzamčen</string>
     <string name="authenticate_desc">Ověřte se pro přístup k datům o výdajích</string>
     <string name="unlock">Odemknout</string>
     <string name="biometric_unavailable_title">Biometrické ověřování není dostupné</string>

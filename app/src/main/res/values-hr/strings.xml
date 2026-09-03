@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">Dodaj transakciju</string>
     <string name="add_subscription">Dodaj pretplatu</string>
     <string name="add_transfer">Dodaj prijenos</string>
@@ -277,7 +277,7 @@ Korisno za dugoročne proračune tijekom više razdoblja</string>
     <string name="chart_type_heatmap">Toplinska karta</string>
     <string name="chart_format">%1$s Graf</string>
     <string name="toggle_view">Promijeni prikaz</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">Više opcija</string>
     <string name="clear_chat">Očisti chat</string>
     <string name="qwen_model_required">Potrebno Qwen Model</string>
@@ -309,7 +309,7 @@ Korisno za dugoročne proračune tijekom više razdoblja</string>
     <string name="press_back_again_to_close">Pritisnite natrag ponovno za zatvaranje aplikacije</string>
     <string name="transaction_deleted">Transakcija izbrisana</string>
     <string name="undo">Poništi</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">Profil</string>
     <string name="banner">Baner</string>
     <string name="recent">Nedavno</string>
@@ -346,7 +346,7 @@ Zeleno (+) = Uštede | Crveno (-) = Prekomerno trošenje</string>
     <string name="stay_updated">Ostanite informirani</string>
     <string name="automatic_tracking">Automatsko praćenje</string>
     <string name="allow_notifications_desc">Dopustite obavijesti kako biste primali podsjetnike za račune i dnevne sažetke.</string>
-    <string name="automatic_tracking_desc">Cashiro može automatski skenirati vaše SMS poruke o transakcijama kako bi vaši računi bili ažurni.</string>
+    <string name="automatic_tracking_desc">Zakat može automatski skenirati vaše SMS poruke o transakcijama kako bi vaši računi bili ažurni.</string>
     <string name="skip_for_now">Preskoči za sada</string>
     <string name="verify_accounts">Verificiraj račune</string>
     <string name="scanning_messages">Skeniranje poruka</string>
@@ -481,7 +481,7 @@ Zeleno (+) = Uštede | Crveno (-) = Prekomerno trošenje</string>
     <string name="no_transactions_for_format">Nema transakcija za %1$s</string>
     <string name="sync_sms_to_see_transactions">Sinkronizirajte svoje SMS kako biste vidjeli transakcije</string>
     <string name="about">O aplikaciji</string>
-    <string name="cashiro_logo_cd">Cashiro Logo</string>
+    <string name="cashiro_logo_cd">Zakat Logo</string>
     <string name="version_format">Verzija %1$s, db-v%2$d</string>
     <string name="developed_by">Razvio Ritesh</string>
     <string name="lead_developer_cd">glavni programer</string>
@@ -492,9 +492,9 @@ Zeleno (+) = Uštede | Crveno (-) = Prekomerno trošenje</string>
     <string name="faq">FAQ</string>
     <string name="faq_desc">Često postavljana pitanja</string>
     <string name="guides">Vodiči</string>
-    <string name="guides_desc">Kako koristiti Cashiro</string>
+    <string name="guides_desc">Kako koristiti Zakat</string>
     <string name="report_bug">Prijavi grešku</string>
-    <string name="report_bug_desc">Pomozite nam poboljšati Cashiro</string>
+    <string name="report_bug_desc">Pomozite nam poboljšati Zakat</string>
     <string name="privacy_policy">Pravila privatnosti</string>
     <string name="privacy_policy_desc">Korištenje i zaštita vaših podataka</string>
     <string name="terms_of_service">Uvjeti korištenja</string>
@@ -548,7 +548,7 @@ Zeleno (+) = Uštede | Crveno (-) = Prekomerno trošenje</string>
     <string name="one_month">1 mjesec</string>
     <string name="two_years">2 godine</string>
     <string name="unrecognized_messages_title">Neprepoznate poruke</string>
-    <string name="unrecognized_bank_messages_desc">Ove poruke od potencijalnih banaka nisu se mogle automatski analizirati. Pomozite poboljšati Cashiro prijavljivanjem kako bismo mogli dodati podršku za više banaka.</string>
+    <string name="unrecognized_bank_messages_desc">Ove poruke od potencijalnih banaka nisu se mogle automatski analizirati. Pomozite poboljšati Zakat prijavljivanjem kako bismo mogli dodati podršku za više banaka.</string>
     <string name="show_reported">Prikaži prijavljeno</string>
     <string name="count_new_format">%1$d novo</string>
     <string name="count_reported_format">%1$d prijavljeno</string>
@@ -591,7 +591,7 @@ Zeleno (+) = Uštede | Crveno (-) = Prekomerno trošenje</string>
     <string name="delete_webhook_confirm_desc">Ovaj profil, njegovi zakazani sinkronizacije i svi zapisi dostave bit će uklonjeni. Ovo se ne može opozvati.</string>
     <string name="byoapi_sync_title">BYOAPI Financijska sinkronizacija</string>
     <string name="byoapi_sync_desc">Pošaljite odabrane financijske podatke na svoju krajnju točku. Bilo koji HTTP 2xx odgovor smatra se uspješnom dostavom.</string>
-    <string name="byoapi_sync_warning">Ovo će poslati vaše financijske podatke na URL koji konfigurirate. Cashiro ne može potvrditi sigurnost te krajnje točke.</string>
+    <string name="byoapi_sync_warning">Ovo će poslati vaše financijske podatke na URL koji konfigurirate. Zakat ne može potvrditi sigurnost te krajnje točke.</string>
     <string name="sync_now">Sinkroniziraj sada</string>
     <string name="sync_now_desc">Pokreni dostavu za sve omogućene profile</string>
     <string name="sync_schedule_title">Raspored sinkronizacije</string>
@@ -886,10 +886,10 @@ Zeleno (+) = Uštede | Crveno (-) = Prekomerno trošenje</string>
     <string name="notification_access_active">Pristup obavijestima je aktivan</string>
     <string name="notification_access_desc">Omogući za otkrivanje bankovnih transakcija iz push obavijesti</string>
     <string name="notification_access_required">Potrebno je omogućiti pristup obavijestima</string>
-    <string name="notification_access_required_desc">Za automatsko otkrivanje bankovnih transakcija u stvarnom vremenu, Cashiro zahtijeva pristup obavijestima. To je dozvola na razini sustava.</string>
+    <string name="notification_access_required_desc">Za automatsko otkrivanje bankovnih transakcija u stvarnom vremenu, Zakat zahtijeva pristup obavijestima. To je dozvola na razini sustava.</string>
     <string name="how_to_enable">Kako omogućiti:</string>
     <string name="step_1">Dodirnite gumb \'Otvori postavke\' ispod.</string>
-    <string name="step_2">Pronađite \'Cashiro\' na popisu aplikacija.</string>
+    <string name="step_2">Pronađite \'Zakat\' na popisu aplikacija.</string>
     <string name="step_3">Prebacite \'Dopusti pristup obavijestima\' na omogućeno.</string>
     <string name="open_settings">Otvori postavke</string>
     <string name="scan_settings">Postavke skeniranja</string>
@@ -915,7 +915,7 @@ Ovo može potrajati nekoliko sekundi, ovisno o vašoj povijesti poruka.</string>
     <string name="this_month_lbl">OVAJ MJESEC</string>
     <string name="this_year_lbl">OVA GODINA</string>
     <string name="percent_this_month_format">%1$s%2$s%% ovog mjeseca</string>
-    <string name="app_locked_title">Cashiro je Zaključan</string>
+    <string name="app_locked_title">Zakat je Zaključan</string>
     <string name="authenticate_desc">Autentificirajte se za pristup svojim podacima o troškovima</string>
     <string name="unlock">Otključaj</string>
     <string name="biometric_unavailable_title">Biometrijska autentifikacija nije dostupna</string>

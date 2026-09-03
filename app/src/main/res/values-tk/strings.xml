@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">Öňüni alyş goşmak</string>
     <string name="add_subscription">Abuna goşmak</string>
     <string name="add_transfer">Ötkermek goşmak</string>
@@ -309,7 +309,7 @@ Köp periodlar bilen uzak möhletleýin býugetler üçin peýdalydyr</string>
     <string name="press_back_again_to_close">Programmany ýapmak üçin yzy gaýtadan basyň</string>
     <string name="transaction_deleted">Amal öçürildi</string>
     <string name="undo">Yzyna al</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">Profil</string>
     <string name="banner">Banner</string>
     <string name="recent">Ýakynda</string>
@@ -346,7 +346,7 @@ Köp periodlar bilen uzak möhletleýin býugetler üçin peýdalydyr</string>
     <string name="stay_updated">Täzelikleri Alyň</string>
     <string name="automatic_tracking">Avtomatiki Yzarlaýyş</string>
     <string name="allow_notifications_desc">Hasap töleg duýduryşlaryny we gündelik jemlerini almak üçin bildirişleri razy ediň.</string>
-    <string name="automatic_tracking_desc">Cashiro hasaplaryňyzy täze saklamak üçin tranzaksiýa SMS-iňizi awtomatiki skan edip biler.</string>
+    <string name="automatic_tracking_desc">Zakat hasaplaryňyzy täze saklamak üçin tranzaksiýa SMS-iňizi awtomatiki skan edip biler.</string>
     <string name="skip_for_now">Häzir geç</string>
     <string name="verify_accounts">Hasaplary Tassyklamak</string>
     <string name="scanning_messages">Habarlar Skany</string>
@@ -416,7 +416,7 @@ Köp periodlar bilen uzak möhletleýin býugetler üçin peýdalydyr</string>
     <string name="share">Paýlaş</string>
     <string name="retry">Gaýtadan synanyş</string>
     <string name="share_csv">CSV paýlaş</string>
-    <string name="csv_export_subject">Cashiro amallaryny eksporta geçirmek</string>
+    <string name="csv_export_subject">Zakat amallaryny eksporta geçirmek</string>
     <string name="edit_transaction">Amaly redaktirläň</string>
     <string name="transaction_details">Amal maglumatlary</string>
     <string name="report_issue">Mesele habar beriň</string>
@@ -492,9 +492,9 @@ Köp periodlar bilen uzak möhletleýin býugetler üçin peýdalydyr</string>
     <string name="faq">Ýygy-ýygydan soralýan soraglar</string>
     <string name="faq_desc">Köp soralýan soraglar</string>
     <string name="guides">Gollanmalar</string>
-    <string name="guides_desc">Cashiro-dan nädip peýdalanmaly</string>
+    <string name="guides_desc">Zakat-dan nädip peýdalanmaly</string>
     <string name="report_bug">Käbir näsazlyklary habar beriň</string>
-    <string name="report_bug_desc">Cashiro-ny gowulandyrmaga kömek ediň</string>
+    <string name="report_bug_desc">Zakat-ny gowulandyrmaga kömek ediň</string>
     <string name="privacy_policy">Gizlinlik syýasaty</string>
     <string name="privacy_policy_desc">Siziň maglumat ulanyşyňyz we gizlinligiňiz</string>
     <string name="terms_of_service">Hyzmat şertleri</string>
@@ -548,7 +548,7 @@ Köp periodlar bilen uzak möhletleýin býugetler üçin peýdalydyr</string>
     <string name="one_month">1 aý</string>
     <string name="two_years">2 ýyl</string>
     <string name="unrecognized_messages_title">Tanalmadyk Habarlar</string>
-    <string name="unrecognized_bank_messages_desc">Mümkin bolan banklardan alynan bu habarlary awtomatiki usulda parse edip bolmady. Köprägi banklar üçin goldaw goşmak üçin olary hasaba alyp, Cashiro ösdürilmegine kömek ediň.</string>
+    <string name="unrecognized_bank_messages_desc">Mümkin bolan banklardan alynan bu habarlary awtomatiki usulda parse edip bolmady. Köprägi banklar üçin goldaw goşmak üçin olary hasaba alyp, Zakat ösdürilmegine kömek ediň.</string>
     <string name="show_reported">Hasabaty görkez</string>
     <string name="count_new_format">%1$d täze</string>
     <string name="count_reported_format">%1$d habar berdi</string>
@@ -591,7 +591,7 @@ Köp periodlar bilen uzak möhletleýin býugetler üçin peýdalydyr</string>
     <string name="delete_webhook_confirm_desc">Bu profil, meýilleşdirilen sinhronizasiýalary we ähli eltip bermek loglary aýrylýar. Muny gaýtarmak mümkin däl.</string>
     <string name="byoapi_sync_title">BYOAPI Maliýe Sinhronizasiýasy</string>
     <string name="byoapi_sync_desc">Saýlanan maliýe maglumatlaryny öz golyňyzdaky görkezilen nokada iberiň. Haýsy hem bolsa HTTP 2xx jogaby üstünlikli eltip bermek hasaplanýar.</string>
-    <string name="byoapi_sync_warning">Bu, maliýe maglumatlaryňyzy sazlaýan URL-ňize iberer. Cashiro şol nokadyň howpsuzlygyny tassyklap bilmez.</string>
+    <string name="byoapi_sync_warning">Bu, maliýe maglumatlaryňyzy sazlaýan URL-ňize iberer. Zakat şol nokadyň howpsuzlygyny tassyklap bilmez.</string>
     <string name="sync_now">Indi sinhronizasiýa et</string>
     <string name="sync_now_desc">Işjeň profiller üçin eltip bermegi başlat</string>
     <string name="sync_schedule_title">Sinhronizasiýa Meýilnamasy</string>
@@ -886,10 +886,10 @@ Köp periodlar bilen uzak möhletleýin býugetler üçin peýdalydyr</string>
     <string name="notification_access_active">Bildiriş erişimi işjeň</string>
     <string name="notification_access_desc">Push bildirişlerinden bank geçirimlerini anyklamaga mümkinçilik döretmek</string>
     <string name="notification_access_required">Bildiriş Elýeterligi Talap Edilýär</string>
-    <string name="notification_access_required_desc">Bank geçirimlerini wagtyň dowamynda awtomatiki anyklamak üçin Cashiro bildiriş elýeterligini talap edýär. Bu ulgam derejesindäki rugsat.</string>
+    <string name="notification_access_required_desc">Bank geçirimlerini wagtyň dowamynda awtomatiki anyklamak üçin Zakat bildiriş elýeterligini talap edýär. Bu ulgam derejesindäki rugsat.</string>
     <string name="how_to_enable">Nädip işjeňleşdirmeli:</string>
     <string name="step_1">Aşakdaky \'Sazlamalary Aç\' düwmesine basyň.</string>
-    <string name="step_2">Programmalar sanawynda \'Cashiro\' tapyň.</string>
+    <string name="step_2">Programmalar sanawynda \'Zakat\' tapyň.</string>
     <string name="step_3">\'Bildiriş elýeterligini rugsat bermek\'i işjeňleşdiriň.</string>
     <string name="open_settings">Sazlamalary Aç</string>
     <string name="scan_settings">Sazlamalary Gözden Geçir</string>
@@ -915,7 +915,7 @@ Bu, habar taryhyňyza baglylykda birnäçe sekunt wagty alyp biler.</string>
     <string name="this_month_lbl">BU AÝ</string>
     <string name="this_year_lbl">BU ÝYL</string>
     <string name="percent_this_month_format">Bu aý %1$s%2$s%%</string>
-    <string name="app_locked_title">Cashiro Gysylly</string>
+    <string name="app_locked_title">Zakat Gysylly</string>
     <string name="authenticate_desc">Çykdajy maglumatlaryňyza girmek üçin awtentifikasiýa ediň</string>
     <string name="unlock">Aç</string>
     <string name="biometric_unavailable_title">Biometrik awtentifikasiýa elýeterli däl</string>

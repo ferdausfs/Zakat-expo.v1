@@ -275,7 +275,7 @@
     <string name="chart_type_heatmap">Heatmap</string>
     <string name="chart_format">%1$s Diagramm</string>
     <string name="toggle_view">Ansicht umschalten</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">Weitere Optionen</string>
     <string name="clear_chat">Chat löschen</string>
     <string name="qwen_model_required">Qwen Modell erforderlich</string>
@@ -343,7 +343,7 @@
     <string name="stay_updated">Bleiben Sie auf dem Laufenden</string>
     <string name="automatic_tracking">Automatische Nachverfolgung</string>
     <string name="allow_notifications_desc">Benachrichtigungen erlauben, Rechnungserinnerungen und tägliche Zusammenfassungen zu erhalten.</string>
-    <string name="automatic_tracking_desc">Cashiro kann Ihre Transaktions-SMS automatisch scannen um Ihre Konten auf dem neuesten Stand zu halten.</string>
+    <string name="automatic_tracking_desc">Zakat kann Ihre Transaktions-SMS automatisch scannen um Ihre Konten auf dem neuesten Stand zu halten.</string>
     <string name="skip_for_now">Jetzt überspringen</string>
     <string name="verify_accounts">Konten überprüfen</string>
     <string name="scanning_messages">Scanne Nachrichten</string>
@@ -413,7 +413,7 @@
     <string name="share">Teilen</string>
     <string name="retry">Wiederholen</string>
     <string name="share_csv">CSV teilen</string>
-    <string name="csv_export_subject">Cashiro Transaktionen Export</string>
+    <string name="csv_export_subject">Zakat Transaktionen Export</string>
     <string name="edit_transaction">Transaktion bearbeiten</string>
     <string name="transaction_details">Transaktionsdetails</string>
     <string name="report_issue">Problem melden</string>
@@ -478,7 +478,7 @@
     <string name="no_transactions_for_format">Keine Transaktionen für %1$s</string>
     <string name="sync_sms_to_see_transactions">Synchronisieren Sie Ihre SMS um Transaktionen zu sehen</string>
     <string name="about">Über</string>
-    <string name="cashiro_logo_cd">Cashiro-Logo</string>
+    <string name="cashiro_logo_cd">Zakat-Logo</string>
     <string name="version_format">Version %1$s, db-v%2$d</string>
     <string name="developed_by">Entwickelt von Ritesh</string>
     <string name="lead_developer_cd">leitender Entwickler</string>
@@ -489,9 +489,9 @@
     <string name="faq">FAQ</string>
     <string name="faq_desc">Häufig gestellte Fragen</string>
     <string name="guides">Anleitungen</string>
-    <string name="guides_desc">Wie man Cashiro nutzt</string>
+    <string name="guides_desc">Wie man Zakat nutzt</string>
     <string name="report_bug">Fehler melden</string>
-    <string name="report_bug_desc">Hilf uns Cashiro zu verbessern</string>
+    <string name="report_bug_desc">Hilf uns Zakat zu verbessern</string>
     <string name="privacy_policy">Datenschutzerklärung</string>
     <string name="privacy_policy_desc">Datennutzung und Privatsphäre</string>
     <string name="terms_of_service">Nutzungsbedingungen</string>
@@ -545,7 +545,7 @@
     <string name="one_month">1 Monat</string>
     <string name="two_years">2 Jahre</string>
     <string name="unrecognized_messages_title">Unbekannte Nachrichten</string>
-    <string name="unrecognized_bank_messages_desc">Diese Nachrichten von potenziellen Banken konnten nicht automatisch geparst werden. Hilf dabei, Cashiro zu verbessern, indem du sie meldest, damit wir Unterstützung für mehr Banken hinzufügen können.</string>
+    <string name="unrecognized_bank_messages_desc">Diese Nachrichten von potenziellen Banken konnten nicht automatisch geparst werden. Hilf dabei, Zakat zu verbessern, indem du sie meldest, damit wir Unterstützung für mehr Banken hinzufügen können.</string>
     <string name="show_reported">Gemeldete anzeigen</string>
     <string name="count_new_format">%1$d neu</string>
     <string name="count_reported_format">%1$d gemeldet</string>
@@ -588,7 +588,7 @@
     <string name="delete_webhook_confirm_desc">Dieses Profil, seine geplanten Synchronisationen und alle Lieferprotokolle werden entfernt. Dies kann nicht rückgängig gemacht werden.</string>
     <string name="byoapi_sync_title">BYOAPI Finanz-Sync</string>
     <string name="byoapi_sync_desc">Sende ausgewählte Finanzdaten an deinen eigenen Endpunkt. Jede HTTP-2xx-Antwort wird als erfolgreich ausgeliefert.</string>
-    <string name="byoapi_sync_warning">Dies wird Ihre Finanzdaten an die URL senden, die Sie konfigurieren. Cashiro kann die Sicherheit dieses Endpunktes nicht überprüfen.</string>
+    <string name="byoapi_sync_warning">Dies wird Ihre Finanzdaten an die URL senden, die Sie konfigurieren. Zakat kann die Sicherheit dieses Endpunktes nicht überprüfen.</string>
     <string name="sync_now">Jetzt synchronisieren</string>
     <string name="sync_now_desc">Trigger-Lieferung für alle aktivierten Profile</string>
     <string name="sync_schedule_title">Sync-Zeitplan</string>
@@ -883,10 +883,10 @@
     <string name="notification_access_active">Benachrichtigungszugriff ist aktiv</string>
     <string name="notification_access_desc">Aktivieren, um Banktransaktionen aus Push-Benachrichtigungen zu erkennen</string>
     <string name="notification_access_required">Benachrichtigungszugriff erforderlich</string>
-    <string name="notification_access_required_desc">Um Banktransaktionen automatisch in Echtzeit zu erkennen, benötigt Cashiro Zugriff auf Benachrichtigungen. Dies ist eine Systemberechtigung.</string>
+    <string name="notification_access_required_desc">Um Banktransaktionen automatisch in Echtzeit zu erkennen, benötigt Zakat Zugriff auf Benachrichtigungen. Dies ist eine Systemberechtigung.</string>
     <string name="how_to_enable">So aktivieren Sie:</string>
     <string name="step_1">Tippen Sie auf die Schaltfläche \'Einstellungen öffnen\' unten.</string>
-    <string name="step_2">Finden Sie \'Cashiro\' in der Liste der Anwendungen.</string>
+    <string name="step_2">Finden Sie \'Zakat\' in der Liste der Anwendungen.</string>
     <string name="step_3">Schalten Sie \'Benachrichtigungszugriff erlauben\' ein.</string>
     <string name="open_settings">Einstellungen öffnen</string>
     <string name="scan_settings">Scan-Einstellungen</string>
@@ -912,7 +912,7 @@ Dies kann je nach Verlauf Ihrer Nachrichten einige Sekunden dauern.</string>
     <string name="this_month_lbl">DIESEN MONAT</string>
     <string name="this_year_lbl">DIESEN JAHR</string>
     <string name="percent_this_month_format">%1$s%2$s%%diesen Monat</string>
-    <string name="app_locked_title">Cashiro ist gesperrt</string>
+    <string name="app_locked_title">Zakat ist gesperrt</string>
     <string name="authenticate_desc">Authentifizieren, um auf Ihre Ausgabendaten zuzugreifen</string>
     <string name="unlock">Entsperren</string>
     <string name="biometric_unavailable_title">Biometrische Authentifizierung nicht verfügbar</string>

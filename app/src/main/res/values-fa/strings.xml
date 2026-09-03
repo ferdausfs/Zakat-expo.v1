@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">افزودن تراکنش</string>
     <string name="add_subscription">افزودن اشتراک</string>
     <string name="add_transfer">افزودن انتقال</string>
@@ -309,7 +309,7 @@
     <string name="press_back_again_to_close">برای بستن برنامه دوباره دکمه بازگشت را فشار دهید</string>
     <string name="transaction_deleted">تراکنش حذف شد</string>
     <string name="undo">واگرد</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">پروفایل</string>
     <string name="banner">بنر</string>
     <string name="recent">اخیر</string>
@@ -346,7 +346,7 @@
     <string name="stay_updated">به‌روزرسانی‌ها را دریافت کنید</string>
     <string name="automatic_tracking">ردیابی خودکار</string>
     <string name="allow_notifications_desc">اجازه دهید اعلان‌ها برای دریافت یادآوری صورتحساب و خلاصه‌های روزانه ارسال شوند.</string>
-    <string name="automatic_tracking_desc">Cashiro می‌تواند به‌صورت خودکار پیامک‌های تراکنش شما را اسکن کند تا حساب‌هایتان به‌روز بمانند.</string>
+    <string name="automatic_tracking_desc">Zakat می‌تواند به‌صورت خودکار پیامک‌های تراکنش شما را اسکن کند تا حساب‌هایتان به‌روز بمانند.</string>
     <string name="skip_for_now">فعلاً عبور کنید</string>
     <string name="verify_accounts">حساب‌ها را تأیید کنید</string>
     <string name="scanning_messages">در حال اسکن پیام‌ها</string>
@@ -416,7 +416,7 @@
     <string name="share">به اشتراک گذاری</string>
     <string name="retry">تلاش مجدد</string>
     <string name="share_csv">اشتراک‌گذاری CSV</string>
-    <string name="csv_export_subject">صادرات تراکنش‌های Cashiro</string>
+    <string name="csv_export_subject">صادرات تراکنش‌های Zakat</string>
     <string name="edit_transaction">ویرایش تراکنش</string>
     <string name="transaction_details">جزئیات تراکنش</string>
     <string name="report_issue">گزارش مشکل</string>
@@ -481,7 +481,7 @@
     <string name="no_transactions_for_format">هیچ تراکنشی برای %1$s وجود ندارد</string>
     <string name="sync_sms_to_see_transactions">برای دیدن تراکنش‌ها، پیامک‌های خود را همگام‌سازی کنید</string>
     <string name="about">درباره</string>
-    <string name="cashiro_logo_cd">لوگوی Cashiro</string>
+    <string name="cashiro_logo_cd">لوگوی Zakat</string>
     <string name="version_format">نسخه %1$s، db-v%2$d</string>
     <string name="developed_by">توسعه داده شده توسط Ritesh</string>
     <string name="lead_developer_cd">توسعه‌دهنده اصلی</string>
@@ -492,9 +492,9 @@
     <string name="faq">سوالات متداول</string>
     <string name="faq_desc">پرسش‌های متداول</string>
     <string name="guides">راهنماها</string>
-    <string name="guides_desc">چگونه از Cashiro استفاده کنیم</string>
+    <string name="guides_desc">چگونه از Zakat استفاده کنیم</string>
     <string name="report_bug">گزارش اشکال</string>
-    <string name="report_bug_desc">به ما کمک کنید تا Cashiro را بهبود دهیم</string>
+    <string name="report_bug_desc">به ما کمک کنید تا Zakat را بهبود دهیم</string>
     <string name="privacy_policy">سیاست حفظ حریم خصوصی</string>
     <string name="privacy_policy_desc">استفاده از داده‌ها و حریم خصوصی شما</string>
     <string name="terms_of_service">شرایط خدمات</string>
@@ -548,7 +548,7 @@
     <string name="one_month">۱ ماه</string>
     <string name="two_years">۲ سال</string>
     <string name="unrecognized_messages_title">پیام‌های ناشناخته</string>
-    <string name="unrecognized_bank_messages_desc">این پیام‌ها از بانک‌های احتمالی به‌طور خودکار قابل پردازش نبودند. با گزارش آن‌ها به بهبود Cashiro کمک کنید تا بتوانیم از بانک‌های بیشتری پشتیبانی کنیم.</string>
+    <string name="unrecognized_bank_messages_desc">این پیام‌ها از بانک‌های احتمالی به‌طور خودکار قابل پردازش نبودند. با گزارش آن‌ها به بهبود Zakat کمک کنید تا بتوانیم از بانک‌های بیشتری پشتیبانی کنیم.</string>
     <string name="show_reported">نمایش گزارش‌شده‌ها</string>
     <string name="count_new_format">%1$d جدید</string>
     <string name="count_reported_format">%1$d گزارش شد</string>
@@ -591,7 +591,7 @@
     <string name="delete_webhook_confirm_desc">این پروفایل، همگام‌سازی‌های برنامه‌ریزی‌شده آن و تمام گزارش‌های تحویل حذف خواهند شد. این قابل بازگشت نیست.</string>
     <string name="byoapi_sync_title">همگام‌سازی مالی BYOAPI</string>
     <string name="byoapi_sync_desc">ارسال داده‌های مالی انتخاب‌شده به نقطه پایان خودتان. هر پاسخ HTTP 2xx به عنوان تحویل موفق تلقی می‌شود.</string>
-    <string name="byoapi_sync_warning">این داده‌های مالی شما را به URL که پیکربندی می‌کنید ارسال خواهد کرد. Cashiro نمی‌تواند امنیت آن نقطه پایان را تأیید کند.</string>
+    <string name="byoapi_sync_warning">این داده‌های مالی شما را به URL که پیکربندی می‌کنید ارسال خواهد کرد. Zakat نمی‌تواند امنیت آن نقطه پایان را تأیید کند.</string>
     <string name="sync_now">همگام‌سازی اکنون</string>
     <string name="sync_now_desc">راه‌اندازی تحویل برای تمام پروفایل‌های فعال</string>
     <string name="sync_schedule_title">برنامه همگام‌سازی</string>
@@ -886,10 +886,10 @@
     <string name="notification_access_active">دسترسی به اعلان‌ها فعال است</string>
     <string name="notification_access_desc">برای شناسایی تراکنش‌های بانکی از اعلان‌های پوش فعال کنید</string>
     <string name="notification_access_required">دسترسی به اعلان‌ها لازم است</string>
-    <string name="notification_access_required_desc">برای شناسایی خودکار تراکنش‌های بانکی در زمان واقعی، Cashiro به دسترسی اعلان‌ها نیاز دارد. این مجوز در سطح سیستم است.</string>
+    <string name="notification_access_required_desc">برای شناسایی خودکار تراکنش‌های بانکی در زمان واقعی، Zakat به دسترسی اعلان‌ها نیاز دارد. این مجوز در سطح سیستم است.</string>
     <string name="how_to_enable">نحوه فعال‌سازی:</string>
     <string name="step_1">روی دکمه \'باز کردن تنظیمات\' در پایین ضربه بزنید.</string>
-    <string name="step_2">در فهرست برنامه‌ها \'Cashiro\' را پیدا کنید.</string>
+    <string name="step_2">در فهرست برنامه‌ها \'Zakat\' را پیدا کنید.</string>
     <string name="step_3">تغییر وضعیت \'دسترسی به اعلان‌ها را مجاز کن\' به فعال.</string>
     <string name="open_settings">باز کردن تنظیمات</string>
     <string name="scan_settings">تنظیمات اسکن</string>

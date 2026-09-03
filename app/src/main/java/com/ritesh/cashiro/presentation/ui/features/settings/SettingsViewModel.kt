@@ -47,7 +47,7 @@ import java.net.URLEncoder
 import java.io.File
 import javax.inject.Inject
 import androidx.core.net.toUri
-import com.ritesh.cashiro.data.database.CashiroDatabase
+import com.ritesh.cashiro.data.database.ZakatDatabase
 import com.ritesh.cashiro.data.repository.TransactionRepository
 import com.ritesh.cashiro.data.repository.AccountBalanceRepository
 import com.ritesh.cashiro.data.repository.CardRepository
@@ -85,7 +85,7 @@ class SettingsViewModel @Inject constructor(
     private val merchantMappingRepository: MerchantMappingRepository,
     private val backupExporter: BackupExporter,
     private val backupImporter: BackupImporter,
-    private val database: CashiroDatabase,
+    private val database: ZakatDatabase,
     private val webhookSyncScheduler: WebhookSyncScheduler,
     private val cloudCredentialStore: CloudCredentialStore
 ) : ViewModel() {
@@ -372,7 +372,7 @@ class SettingsViewModel @Inject constructor(
             // Create download request
             val request = DownloadManager.Request(Constants.ModelDownload.MODEL_URL.toUri())
                 .setTitle("Qwen 2.5 Chat Model")
-                .setDescription("Downloading AI chat assistant for Cashiro")
+                .setDescription("Downloading AI chat assistant for Zakat")
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                 .setDestinationInExternalFilesDir(
                     context,
@@ -499,7 +499,7 @@ class SettingsViewModel @Inject constructor(
             val notification = NotificationCompat.Builder(context, SmsBroadcastReceiver.CHANNEL_ID)
                 .setSmallIcon(R.drawable.cashiro)
                 .setContentTitle("Test Notification")
-                .setContentText("This is a test notification from Cashiro.")
+                .setContentText("This is a test notification from Zakat.")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
@@ -644,7 +644,7 @@ class SettingsViewModel @Inject constructor(
             val intent = Intent(Intent.ACTION_SEND).apply {
                 type = "application/octet-stream"
                 putExtra(Intent.EXTRA_STREAM, uri)
-                putExtra(Intent.EXTRA_SUBJECT, "Cashiro Backup")
+                putExtra(Intent.EXTRA_SUBJECT, "Zakat Backup")
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }

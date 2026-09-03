@@ -180,17 +180,17 @@ private fun LargerTopAppBar(
             NavigationForLargeTopAppBar(
                 hasBackButton = hasBackButton,
                 navigationContent = navigationContent,
-                isHomeScreen = title == "Cashiro"
+                isHomeScreen = title == "Zakat"
             )
         },
         actions = {
             ActionForLargeTopAppBar(
                 actionContent = actionContent,
-                isHomeScreen = title == "Cashiro"
+                isHomeScreen = title == "Zakat"
             )
         },
         collapsedHeight = TopAppBarDefaults.LargeAppBarCollapsedHeight,
-        expandedHeight = if (title == "Cashiro") 150.dp else 110.dp,
+        expandedHeight = if (title == "Zakat") 150.dp else 110.dp,
         windowInsets = WindowInsets(0.dp),
         scrollBehavior = scrollBehaviorLarge,
         modifier = Modifier
@@ -235,7 +235,7 @@ private fun TitleForLargeTopAppBar(
         verticalArrangement = Arrangement.spacedBy(Spacing.sm)
     ) {
         BlurredAnimatedVisibility(
-            visible = title != "Cashiro" && showTitle,
+            visible = title != "Zakat" && showTitle,
             enter = fadeIn() + scaleIn(),
             exit = fadeOut() + scaleOut()
         ) {
@@ -302,7 +302,7 @@ private fun RegularTopAppBar(
         enter = fadeIn(),
         exit = fadeOut()
     ) {
-        val isHomeScreen = title == "Cashiro"
+        val isHomeScreen = title == "Zakat"
 
         TopAppBar(
             title = {
@@ -319,7 +319,7 @@ private fun RegularTopAppBar(
                         modifier = Modifier.animatedOffsetModifier(
                             hasBackButton = hasBackButton,
                             hasActionButton = hasActionButton,
-                            isHomeScreen = title == "Cashiro",
+                            isHomeScreen = title == "Zakat",
                         )
                     )
                 }

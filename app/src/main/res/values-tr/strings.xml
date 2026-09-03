@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">İşlem Ekle</string>
     <string name="add_subscription">Abonelik Ekle</string>
     <string name="add_transfer">Transfer Ekle</string>
@@ -277,7 +277,7 @@ Birden fazla dönem boyunca uzun vadeli bütçeler için kullanışlı</string>
     <string name="chart_type_heatmap">Isı Haritası</string>
     <string name="chart_format">%1$s Grafiği</string>
     <string name="toggle_view">Görünümü Değiştir</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">Daha fazla seçenek</string>
     <string name="clear_chat">Sohbeti Temizle</string>
     <string name="qwen_model_required">Qwen Modeli Gerekli</string>
@@ -309,7 +309,7 @@ Birden fazla dönem boyunca uzun vadeli bütçeler için kullanışlı</string>
     <string name="press_back_again_to_close">Uygulamayı kapatmak için tekrar geri basın</string>
     <string name="transaction_deleted">İşlem silindi</string>
     <string name="undo">Geri Al</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">Profil</string>
     <string name="banner">Afiş</string>
     <string name="recent">Son</string>
@@ -346,7 +346,7 @@ Yeşil (+) = Tasarruf | Kırmızı (-) = Harcama Fazlası</string>
     <string name="stay_updated">Güncel Kalın</string>
     <string name="automatic_tracking">Otomatik Takip</string>
     <string name="allow_notifications_desc">Fatura hatırlatmaları ve günlük özetler almak için bildirimlere izin verin.</string>
-    <string name="automatic_tracking_desc">Cashiro, hesaplarınızı güncel tutmak için işlem SMS\'lerinizi otomatik olarak tarayabilir.</string>
+    <string name="automatic_tracking_desc">Zakat, hesaplarınızı güncel tutmak için işlem SMS\'lerinizi otomatik olarak tarayabilir.</string>
     <string name="skip_for_now">Şimdilik Atla</string>
     <string name="verify_accounts">Hesapları Doğrula</string>
     <string name="scanning_messages">Mesajlar Taraniyor</string>
@@ -416,7 +416,7 @@ Yeşil (+) = Tasarruf | Kırmızı (-) = Harcama Fazlası</string>
     <string name="share">Paylaş</string>
     <string name="retry">Tekrar dene</string>
     <string name="share_csv">CSV olarak paylaş</string>
-    <string name="csv_export_subject">Cashiro İşlem Dışa Aktarımı</string>
+    <string name="csv_export_subject">Zakat İşlem Dışa Aktarımı</string>
     <string name="edit_transaction">İşlemi Düzenle</string>
     <string name="transaction_details">İşlem Detayları</string>
     <string name="report_issue">Sorun Bildir</string>
@@ -481,7 +481,7 @@ Yeşil (+) = Tasarruf | Kırmızı (-) = Harcama Fazlası</string>
     <string name="no_transactions_for_format">%1$s için işlem yok</string>
     <string name="sync_sms_to_see_transactions">İşlemleri görmek için SMS\'inizi senkronize edin</string>
     <string name="about">Hakkında</string>
-    <string name="cashiro_logo_cd">Cashiro Logosu</string>
+    <string name="cashiro_logo_cd">Zakat Logosu</string>
     <string name="version_format">Sürüm %1$s, db-v%2$d</string>
     <string name="developed_by">Ritesh tarafından geliştirildi</string>
     <string name="lead_developer_cd">baş geliştirici</string>
@@ -492,9 +492,9 @@ Yeşil (+) = Tasarruf | Kırmızı (-) = Harcama Fazlası</string>
     <string name="faq">SSS</string>
     <string name="faq_desc">Sıkça sorulan sorular</string>
     <string name="guides">Kılavuzlar</string>
-    <string name="guides_desc">Cashiro nasıl kullanılır</string>
+    <string name="guides_desc">Zakat nasıl kullanılır</string>
     <string name="report_bug">Hata Bildir</string>
-    <string name="report_bug_desc">Cashiro\'yu geliştirmemize yardımcı olun</string>
+    <string name="report_bug_desc">Zakat\'yu geliştirmemize yardımcı olun</string>
     <string name="privacy_policy">Gizlilik Politikası</string>
     <string name="privacy_policy_desc">Veri kullanımı ve gizliliğiniz</string>
     <string name="terms_of_service">Hizmet Şartları</string>
@@ -548,7 +548,7 @@ Yeşil (+) = Tasarruf | Kırmızı (-) = Harcama Fazlası</string>
     <string name="one_month">1 ay</string>
     <string name="two_years">2 yıl</string>
     <string name="unrecognized_messages_title">Tanımlanamayan Mesajlar</string>
-    <string name="unrecognized_bank_messages_desc">Bu potansiyel banka mesajları otomatik olarak çözülemedi. Daha fazla bankayı desteklemek için Cashiro\'yu geliştirmemize yardımcı olmak adına onları rapor ederek bildirin.</string>
+    <string name="unrecognized_bank_messages_desc">Bu potansiyel banka mesajları otomatik olarak çözülemedi. Daha fazla bankayı desteklemek için Zakat\'yu geliştirmemize yardımcı olmak adına onları rapor ederek bildirin.</string>
     <string name="show_reported">Raporlananları Göster</string>
     <string name="count_new_format">%1$d yeni</string>
     <string name="count_reported_format">%1$d bildirildi</string>
@@ -591,7 +591,7 @@ Yeşil (+) = Tasarruf | Kırmızı (-) = Harcama Fazlası</string>
     <string name="delete_webhook_confirm_desc">Bu profil, planlanmış senkronizasyonları ve tüm teslimat kayıtları kaldırılacak. Bu geri alınamaz.</string>
     <string name="byoapi_sync_title">BYOAPI Finans Senkronizasyonu</string>
     <string name="byoapi_sync_desc">Seçilen finansal verileri kendi uç noktanıza gönderin. Herhangi bir HTTP 2xx yanıtı başarılı bir teslimat olarak kabul edilir.</string>
-    <string name="byoapi_sync_warning">Bu, finansal verilerinizi yapılandırdığınız URL\'ye gönderecektir. Cashiro, bu uç noktanın güvenliğini doğrulamaz.</string>
+    <string name="byoapi_sync_warning">Bu, finansal verilerinizi yapılandırdığınız URL\'ye gönderecektir. Zakat, bu uç noktanın güvenliğini doğrulamaz.</string>
     <string name="sync_now">Şimdi senkronize et</string>
     <string name="sync_now_desc">Tüm etkin profiller için teslimatı tetikle</string>
     <string name="sync_schedule_title">Senkronizasyon Programı</string>
@@ -886,10 +886,10 @@ Yeşil (+) = Tasarruf | Kırmızı (-) = Harcama Fazlası</string>
     <string name="notification_access_active">Bildirim erişimi aktif</string>
     <string name="notification_access_desc">Push bildirimlerinden banka işlemlerini algılamak için etkinleştir</string>
     <string name="notification_access_required">Bildirim Erişimi Gerekli</string>
-    <string name="notification_access_required_desc">Banka işlemlerini gerçek zamanlı olarak otomatik tespit edebilmek için, Cashiro bildirim erişimine ihtiyaç duyar. Bu sistem seviyesinde bir izindir.</string>
+    <string name="notification_access_required_desc">Banka işlemlerini gerçek zamanlı olarak otomatik tespit edebilmek için, Zakat bildirim erişimine ihtiyaç duyar. Bu sistem seviyesinde bir izindir.</string>
     <string name="how_to_enable">Nasıl etkinleştirilir:</string>
     <string name="step_1">Aşağıdaki \'Ayarları Aç\' düğmesine dokunun.</string>
-    <string name="step_2">Uygulamalar listesinde \'Cashiro\'yu bulun.</string>
+    <string name="step_2">Uygulamalar listesinde \'Zakat\'yu bulun.</string>
     <string name="step_3">\'Bildirim erişimine izin ver\' seçeneğini etkinleştirmek için geçiş yapın.</string>
     <string name="open_settings">Ayarları Aç</string>
     <string name="scan_settings">Tarama Ayarları</string>
@@ -915,7 +915,7 @@ Mesaj geçmişinize bağlı olarak birkaç saniye sürebilir.</string>
     <string name="this_month_lbl">BU AYKI</string>
     <string name="this_year_lbl">BU YIL</string>
     <string name="percent_this_month_format">%1$s%2$s%% bu ay</string>
-    <string name="app_locked_title">Cashiro Kilitli</string>
+    <string name="app_locked_title">Zakat Kilitli</string>
     <string name="authenticate_desc">Gider verilerinize erişmek için kimlik doğrulama yapın</string>
     <string name="unlock">Kilidini aç</string>
     <string name="biometric_unavailable_title">Biyometrik kimlik doğrulama mümkün değil</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">Добавить транзакцию</string>
     <string name="add_subscription">Добавить подписку</string>
     <string name="add_transfer">Добавить перевод</string>
@@ -277,7 +277,7 @@
     <string name="chart_type_heatmap">Тепловая карта</string>
     <string name="chart_format">Диаграмма %1$s</string>
     <string name="toggle_view">Переключить вид</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">Больше опций</string>
     <string name="clear_chat">Очистить чат</string>
     <string name="qwen_model_required">Требуется модель Qwen</string>
@@ -309,7 +309,7 @@
     <string name="press_back_again_to_close">Нажмите назад снова, чтобы закрыть приложение</string>
     <string name="transaction_deleted">Транзакция удалена</string>
     <string name="undo">Отменить</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">Профиль</string>
     <string name="banner">Баннер</string>
     <string name="recent">Недавние</string>
@@ -346,7 +346,7 @@
     <string name="stay_updated">Оставаться в курсе</string>
     <string name="automatic_tracking">Автоматическое отслеживание</string>
     <string name="allow_notifications_desc">Разрешите уведомления, чтобы получать напоминания о счетах и ежедневные сводки.</string>
-    <string name="automatic_tracking_desc">Cashiro может автоматически сканировать ваши SMS с транзакциями, чтобы ваши счета были обновлены.</string>
+    <string name="automatic_tracking_desc">Zakat может автоматически сканировать ваши SMS с транзакциями, чтобы ваши счета были обновлены.</string>
     <string name="skip_for_now">Пропустить на данный момент</string>
     <string name="verify_accounts">Проверить аккаунты</string>
     <string name="scanning_messages">Сканирование сообщений</string>
@@ -416,7 +416,7 @@
     <string name="share">Поделиться</string>
     <string name="retry">Повторить попытку</string>
     <string name="share_csv">Поделиться CSV</string>
-    <string name="csv_export_subject">Экспорт транзакций Cashiro</string>
+    <string name="csv_export_subject">Экспорт транзакций Zakat</string>
     <string name="edit_transaction">Редактировать транзакцию</string>
     <string name="transaction_details">Детали транзакции</string>
     <string name="report_issue">Сообщить о проблеме</string>
@@ -481,7 +481,7 @@
     <string name="no_transactions_for_format">Нет транзакций для %1$s</string>
     <string name="sync_sms_to_see_transactions">Синхронизируйте ваши SMS, чтобы увидеть транзакции</string>
     <string name="about">О приложении</string>
-    <string name="cashiro_logo_cd">Логотип Cashiro</string>
+    <string name="cashiro_logo_cd">Логотип Zakat</string>
     <string name="version_format">Версия %1$s, db-v%2$d</string>
     <string name="developed_by">Разработано Ritesh</string>
     <string name="lead_developer_cd">ведущий разработчик</string>
@@ -492,9 +492,9 @@
     <string name="faq">ЧАВО</string>
     <string name="faq_desc">Часто задаваемые вопросы</string>
     <string name="guides">Руководства</string>
-    <string name="guides_desc">Как использовать Cashiro</string>
+    <string name="guides_desc">Как использовать Zakat</string>
     <string name="report_bug">Сообщить об ошибке</string>
-    <string name="report_bug_desc">Помогите нам улучшить Cashiro</string>
+    <string name="report_bug_desc">Помогите нам улучшить Zakat</string>
     <string name="privacy_policy">Политика конфиденциальности</string>
     <string name="privacy_policy_desc">Использование и защита ваших данных</string>
     <string name="terms_of_service">Условия обслуживания</string>
@@ -548,7 +548,7 @@
     <string name="one_month">1 месяц</string>
     <string name="two_years">2 года</string>
     <string name="unrecognized_messages_title">Неопознанные сообщения</string>
-    <string name="unrecognized_bank_messages_desc">Эти сообщения от потенциальных банков не удалось автоматически распознать. Помогите улучшить Cashiro, сообщая о них, чтобы мы могли добавить поддержку большего числа банков.</string>
+    <string name="unrecognized_bank_messages_desc">Эти сообщения от потенциальных банков не удалось автоматически распознать. Помогите улучшить Zakat, сообщая о них, чтобы мы могли добавить поддержку большего числа банков.</string>
     <string name="show_reported">Показать отправленные отчеты</string>
     <string name="count_new_format">%1$d новых</string>
     <string name="count_reported_format">%1$d сообщил</string>
@@ -591,7 +591,7 @@
     <string name="delete_webhook_confirm_desc">Этот профиль, его запланированные синхронизации и все журналы доставки будут удалены. Это действие нельзя отменить.</string>
     <string name="byoapi_sync_title">BYOAPI Финансовая Синхронизация</string>
     <string name="byoapi_sync_desc">Отправляйте выбранные финансовые данные на ваш собственный конечный пункт. Любой ответ HTTP 2xx считается успешной доставкой.</string>
-    <string name="byoapi_sync_warning">Это отправит ваши финансовые данные на URL, который вы настроите. Cashiro не может проверить безопасность этого конечного пункта.</string>
+    <string name="byoapi_sync_warning">Это отправит ваши финансовые данные на URL, который вы настроите. Zakat не может проверить безопасность этого конечного пункта.</string>
     <string name="sync_now">Синхронизировать сейчас</string>
     <string name="sync_now_desc">Запустить доставку для всех включенных профилей</string>
     <string name="sync_schedule_title">Расписание синхронизации</string>
@@ -886,10 +886,10 @@
     <string name="notification_access_active">Доступ к уведомлениям активен</string>
     <string name="notification_access_desc">Включите для обнаружения банковских транзакций через push-уведомления</string>
     <string name="notification_access_required">Требуется доступ к уведомлениям</string>
-    <string name="notification_access_required_desc">Для автоматического обнаружения банковских транзакций в реальном времени приложению Cashiro требуется доступ к уведомлениям. Это системное разрешение.</string>
+    <string name="notification_access_required_desc">Для автоматического обнаружения банковских транзакций в реальном времени приложению Zakat требуется доступ к уведомлениям. Это системное разрешение.</string>
     <string name="how_to_enable">Как включить:</string>
     <string name="step_1">Нажмите кнопку \'Открыть настройки\' ниже.</string>
-    <string name="step_2">Найдите \'Cashiro\' в списке приложений.</string>
+    <string name="step_2">Найдите \'Zakat\' в списке приложений.</string>
     <string name="step_3">Переключите \'Разрешить доступ к уведомлениям\' в положение включено.</string>
     <string name="open_settings">Открыть настройки</string>
     <string name="scan_settings">Настройки сканирования</string>
@@ -915,7 +915,7 @@
     <string name="this_month_lbl">ЭТОТ МЕСЯЦ</string>
     <string name="this_year_lbl">ЭТОТ ГОД</string>
     <string name="percent_this_month_format">%1$s%2$s%% за этот месяц</string>
-    <string name="app_locked_title">Cashiro заблокирован</string>
+    <string name="app_locked_title">Zakat заблокирован</string>
     <string name="authenticate_desc">Аутентифицируйтесь, чтобы получить доступ к данным о расходах</string>
     <string name="unlock">Разблокировать</string>
     <string name="biometric_unavailable_title">Биометрическая аутентификация недоступна</string>

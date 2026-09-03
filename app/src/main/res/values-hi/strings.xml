@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">लेन-देन जोड़ें</string>
     <string name="add_subscription">सदस्यता जोड़ें</string>
     <string name="add_transfer">स्थानांतरण जोड़ें</string>
@@ -309,7 +309,7 @@
     <string name="press_back_again_to_close">ऐप बंद करने के लिए फिर से पीछे दबाएँ</string>
     <string name="transaction_deleted">लेन-देन हटाया गया</string>
     <string name="undo">पूर्ववत करें</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">प्रोफाइल</string>
     <string name="banner">बैनर</string>
     <string name="recent">हाल की बातें</string>
@@ -548,7 +548,7 @@
     <string name="one_month">1 महीना</string>
     <string name="two_years">2 साल</string>
     <string name="unrecognized_messages_title">अमान्यता प्राप्त संदेश</string>
-    <string name="unrecognized_bank_messages_desc">संभावित बैंकों से ये संदेश स्वचालित रूप से पार्स नहीं किए जा सके। उन्हें रिपोर्ट करके Cashiro को सुधारने में मदद करें ताकि हम अधिक बैंकों के लिए समर्थन जोड़ सकें।</string>
+    <string name="unrecognized_bank_messages_desc">संभावित बैंकों से ये संदेश स्वचालित रूप से पार्स नहीं किए जा सके। उन्हें रिपोर्ट करके Zakat को सुधारने में मदद करें ताकि हम अधिक बैंकों के लिए समर्थन जोड़ सकें।</string>
     <string name="show_reported">रिपोर्ट दिखाएँ</string>
     <string name="count_new_format">%1$d नया</string>
     <string name="count_reported_format">%1$d ने रिपोर्ट किया</string>
@@ -591,7 +591,7 @@
     <string name="delete_webhook_confirm_desc">इस प्रोफ़ाइल, इसके निर्धारित सिंक्स और सभी डिलीवरी लॉग हटा दिए जाएंगे। इसे पूर्ववत नहीं किया जा सकता।</string>
     <string name="byoapi_sync_title">BYOAPI वित्त सिंक</string>
     <string name="byoapi_sync_desc">चयनित वित्तीय डेटा को अपने एंडपॉइंट पर भेजें। कोई भी HTTP 2xx प्रतिक्रिया सफल डिलीवरी के रूप में मानी जाएगी।</string>
-    <string name="byoapi_sync_warning">यह आपके वित्तीय डेटा को उस URL पर भेज देगा जिसे आप कॉन्फ़िगर करते हैं। Cashiro उस एंडपॉइंट की सुरक्षा की पुष्टि नहीं कर सकता।</string>
+    <string name="byoapi_sync_warning">यह आपके वित्तीय डेटा को उस URL पर भेज देगा जिसे आप कॉन्फ़िगर करते हैं। Zakat उस एंडपॉइंट की सुरक्षा की पुष्टि नहीं कर सकता।</string>
     <string name="sync_now">अब सिंक करें</string>
     <string name="sync_now_desc">सक्रिय प्रोफाइल के लिए डिलीवरी ट्रिगर करें</string>
     <string name="sync_schedule_title">सिंक शेड्यूल</string>
@@ -889,7 +889,7 @@
     <string name="notification_access_required_desc">वास्तविक समय में बैंक लेन-देन का स्वचालित पता लगाने के लिए, कैशिरो को सूचना पहुँच की आवश्यकता है। यह एक प्रणाली-स्तरीय अनुमति है।</string>
     <string name="how_to_enable">कैसे सक्षम करें:</string>
     <string name="step_1">नीचे दिए गए \'सेटिंग्स खोलें\' बटन पर टैप करें।</string>
-    <string name="step_2">सॉफ्टवेयर की सूची में \'Cashiro\' खोजें।</string>
+    <string name="step_2">सॉफ्टवेयर की सूची में \'Zakat\' खोजें।</string>
     <string name="step_3">सुविधा \'नोटिफिकेशन एक्सेस की अनुमति दें\' को सक्षम करने के लिए टॉगल करें।</string>
     <string name="open_settings">सेटिंग्स खोलें</string>
     <string name="scan_settings">स्कैन सेटिंग्स</string>

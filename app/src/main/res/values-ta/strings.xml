@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">கடந்த கொள்கையைச் சேர்</string>
     <string name="add_subscription">சேவைக்கு இணைக்கவும்</string>
     <string name="add_transfer">பரிமாற்றத்தைச் சேர்</string>
@@ -309,7 +309,7 @@
     <string name="press_back_again_to_close">ஆப்பை மூட மீண்டும் பின்னால் அழுத்தவும்</string>
     <string name="transaction_deleted">பண chuyểnும் நீக்கப்பட்டது</string>
     <string name="undo">மீளச் செய்ய</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">சுயவிவரம்</string>
     <string name="banner">பேனர்</string>
     <string name="recent">சமீபத்தியவை</string>
@@ -346,7 +346,7 @@
     <string name="stay_updated">புதுப்பித்திருக்கவும்</string>
     <string name="automatic_tracking">தானாக கண்காணித்தல்</string>
     <string name="allow_notifications_desc">பில்லின் நினைவூட்டல்கள் மற்றும் தினசரி சுருக்கங்களை பெற அறிவிப்புகளை அனுமதிக்கவும்.</string>
-    <string name="automatic_tracking_desc">Cashiro உங்கள் பரிவர்த்தனை SMS-ஐ தானாக ஸ்கேன் செய்து உங்கள் கணக்குகளை புதுப்பிக்க முடியும்.</string>
+    <string name="automatic_tracking_desc">Zakat உங்கள் பரிவர்த்தனை SMS-ஐ தானாக ஸ்கேன் செய்து உங்கள் கணக்குகளை புதுப்பிக்க முடியும்.</string>
     <string name="skip_for_now">இப்போதைக்கு தவிர்க்கவும்</string>
     <string name="verify_accounts">கணக்குகளை உறுதிப்படுத்தவும்</string>
     <string name="scanning_messages">செய்திகளை ஸ்கேன் செய்கிறது</string>
@@ -548,7 +548,7 @@
     <string name="one_month">1 மாதம்</string>
     <string name="two_years">2 ஆண்டு</string>
     <string name="unrecognized_messages_title">அறியப்படாத செய்திகள்</string>
-    <string name="unrecognized_bank_messages_desc">சாத்தியமான வங்கிகளில் இருந்து வந்த இந்த செய்திகள் தானாகவே பாகப்பட முடியவில்லை. மேல் ஆதரவு பெற உதவ, அவற்றை அறிக்கையிடுவதன் மூலம் Cashiro-வை மேம்படுத்த உதவுங்கள்.</string>
+    <string name="unrecognized_bank_messages_desc">சாத்தியமான வங்கிகளில் இருந்து வந்த இந்த செய்திகள் தானாகவே பாகப்பட முடியவில்லை. மேல் ஆதரவு பெற உதவ, அவற்றை அறிக்கையிடுவதன் மூலம் Zakat-வை மேம்படுத்த உதவுங்கள்.</string>
     <string name="show_reported">அறிக்கையிடப்பட்டவை காண்பி</string>
     <string name="count_new_format">%1$d புதிய</string>
     <string name="count_reported_format">%1$d தெரிவித்தது</string>
@@ -591,7 +591,7 @@
     <string name="delete_webhook_confirm_desc">இந்த 프로ஃபைல், அதன் திட்டமிடப்பட்ட ஒத்திசைவு மற்றும் அனைத்து விநியோக பதிவுகளும் நீக்கப்படும். இதை திருப்பி மாற்ற முடியாது.</string>
     <string name="byoapi_sync_title">BYOAPI நிதி ஒத்திசைவு</string>
     <string name="byoapi_sync_desc">தேர்ந்தெடுக்கப்பட்ட நிதி தரவை உங்கள் சொந்த எண்ட்பாயிண்டுக்கு அனுப்பவும். எந்த HTTP 2xx பதிலும் வெற்றிகரமான விநியோகமாக கருதப்படுகிறது.</string>
-    <string name="byoapi_sync_warning">இதனால் நீங்கள் அமைக்கும் URL க்கு உங்கள் நிதி தரவு அனுப்பப்படும். Cashiro அந்த எண்ட்பாயிண்ட் பாதுகாப்பை உறுதிசெய்ய முடியாது.</string>
+    <string name="byoapi_sync_warning">இதனால் நீங்கள் அமைக்கும் URL க்கு உங்கள் நிதி தரவு அனுப்பப்படும். Zakat அந்த எண்ட்பாயிண்ட் பாதுகாப்பை உறுதிசெய்ய முடியாது.</string>
     <string name="sync_now">இப்போது ஒத்திசைவு செய்க</string>
     <string name="sync_now_desc">ஒவ்வொரு இயக்குயுக்கப்பட்ட 프로ஃபைல் க்கும் விநியோகத்தை தொடக்குக</string>
     <string name="sync_schedule_title">ஒத்திசைவு அட்டவணை</string>
@@ -886,10 +886,10 @@
     <string name="notification_access_active">அறிவிப்பு அணுகல் செயல்பாட்டில் உள்ளது</string>
     <string name="notification_access_desc">புஷ் அறிவிப்புகளில் இருந்து வங்கி பரிமாற்றங்களை கண்டறிவதற்கு செயல்படுத்தவும்</string>
     <string name="notification_access_required">அறிவிப்பு அணுகல் தேவையானது</string>
-    <string name="notification_access_required_desc">நிஜ காலத்தில் வங்கி பரிமாற்றங்களை தானாகக் கண்டறிவதற்கு, Cashiro-க்கு அறிவிப்பு அணுகல் தேவை. இது ஒரு முறைமை-நிலை அனுமதி.</string>
+    <string name="notification_access_required_desc">நிஜ காலத்தில் வங்கி பரிமாற்றங்களை தானாகக் கண்டறிவதற்கு, Zakat-க்கு அறிவிப்பு அணுகல் தேவை. இது ஒரு முறைமை-நிலை அனுமதி.</string>
     <string name="how_to_enable">எவ்வாறு செயல்படுத்துவது:</string>
     <string name="step_1">கீழே உள்ள \'அமைப்புகளை திறக்கவும்\' பொத்தானைத் தட்டவும்.</string>
-    <string name="step_2">பயன்பாடுகளின் பட்டியலில் \'Cashiro\' ஐ கண்டறியவும்.</string>
+    <string name="step_2">பயன்பாடுகளின் பட்டியலில் \'Zakat\' ஐ கண்டறியவும்.</string>
     <string name="step_3">\'அறிவிப்பை அணுக அனுமதி அளிக்கவும்\' ஐ இயக்கவும்.</string>
     <string name="open_settings">அமைப்புகளைத் திறக்கவும்</string>
     <string name="scan_settings">அமைப்புகளைச் சரிபார்</string>

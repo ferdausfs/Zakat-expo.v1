@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">取引を追加</string>
     <string name="add_subscription">サブスクリプションを追加</string>
     <string name="add_transfer">送金を追加</string>
@@ -276,7 +276,7 @@
     <string name="chart_type_heatmap">ヒートマップ</string>
     <string name="chart_format">%1$s チャート</string>
     <string name="toggle_view">表示切り替え</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">その他のオプション</string>
     <string name="clear_chat">チャットをクリア</string>
     <string name="qwen_model_required">Qwen モデルが必要</string>
@@ -308,7 +308,7 @@
     <string name="press_back_again_to_close">もう一度押してアプリを閉じる</string>
     <string name="transaction_deleted">取引が削除されました</string>
     <string name="undo">元に戻す</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">プロフィール</string>
     <string name="banner">バナー</string>
     <string name="recent">最近のもの</string>
@@ -344,7 +344,7 @@
     <string name="stay_updated">更新されたままにする</string>
     <string name="automatic_tracking">自動追跡</string>
     <string name="allow_notifications_desc">請求書のリマインダーと日々の概要を受け取る通知を許可します。</string>
-    <string name="automatic_tracking_desc">Cashiroは自動的に取引SMSをスキャンしてアカウントを最新の状態に保つことができます。</string>
+    <string name="automatic_tracking_desc">Zakatは自動的に取引SMSをスキャンしてアカウントを最新の状態に保つことができます。</string>
     <string name="skip_for_now">今はスキップ</string>
     <string name="verify_accounts">アカウントを確認</string>
     <string name="scanning_messages">メッセージをスキャン中</string>
@@ -479,7 +479,7 @@
     <string name="no_transactions_for_format">%1$s の取引はありません</string>
     <string name="sync_sms_to_see_transactions">SMSを同期してトランザクションを表示</string>
     <string name="about">情報</string>
-    <string name="cashiro_logo_cd">Cashiro ロゴ</string>
+    <string name="cashiro_logo_cd">Zakat ロゴ</string>
     <string name="version_format">バージョン %1$s, db-v%2$d</string>
     <string name="developed_by">Riteshによる開発</string>
     <string name="lead_developer_cd">リード開発者</string>
@@ -490,9 +490,9 @@
     <string name="faq">FAQ</string>
     <string name="faq_desc">よくある質問</string>
     <string name="guides">補助線</string>
-    <string name="guides_desc">Cashiro の使い方</string>
+    <string name="guides_desc">Zakat の使い方</string>
     <string name="report_bug">バグの報告</string>
-    <string name="report_bug_desc">Cashiroの改善にご協力ください</string>
+    <string name="report_bug_desc">Zakatの改善にご協力ください</string>
     <string name="privacy_policy">プライバシーポリシー</string>
     <string name="privacy_policy_desc">データ使用量とプライバシー</string>
     <string name="terms_of_service">利用規約</string>
@@ -589,7 +589,7 @@
     <string name="delete_webhook_confirm_desc">このプロファイル、スケジュールされた同期、およびすべての配信ログは削除されます。これは元に戻すことはできません。</string>
     <string name="byoapi_sync_title">BYOAPIファイナンスの同期</string>
     <string name="byoapi_sync_desc">選択した財務データを自分のエンドポイントに送信します。HTTP 2xx 応答はすべて正常な配信として扱われます。</string>
-    <string name="byoapi_sync_warning">これにより、設定したURLに財務データが送信されます。Cashiroはそのエンドポイントのセキュリティを確認できません。</string>
+    <string name="byoapi_sync_warning">これにより、設定したURLに財務データが送信されます。Zakatはそのエンドポイントのセキュリティを確認できません。</string>
     <string name="sync_now">今すぐ同期</string>
     <string name="sync_now_desc">有効なすべてのプロファイルのデリバリをトリガーします。</string>
     <string name="sync_schedule_title">スケジュールを同期</string>
@@ -884,10 +884,10 @@
     <string name="notification_access_active">通知アクセスが有効です</string>
     <string name="notification_access_desc">プッシュ通知から銀行取引を検出するために有効化してください</string>
     <string name="notification_access_required">通知アクセスが必要</string>
-    <string name="notification_access_required_desc">リアルタイムで銀行取引を自動検出するには、Cashiroは通知アクセスが必要です。これはシステムレベルの権限です。</string>
+    <string name="notification_access_required_desc">リアルタイムで銀行取引を自動検出するには、Zakatは通知アクセスが必要です。これはシステムレベルの権限です。</string>
     <string name="how_to_enable">有効にする方法:</string>
     <string name="step_1">下の「設定を開く」ボタンをタップします。</string>
-    <string name="step_2">アプリ一覧で「Cashiro」を探します。</string>
+    <string name="step_2">アプリ一覧で「Zakat」を探します。</string>
     <string name="step_3">「通知アクセスを許可」をオンに切り替えます。</string>
     <string name="open_settings">設定を開く</string>
     <string name="scan_settings">設定をスキャン</string>
@@ -913,7 +913,7 @@
     <string name="this_month_lbl">今月</string>
     <string name="this_year_lbl">今年</string>
     <string name="percent_this_month_format">今月は %1$s%2$s%%</string>
-    <string name="app_locked_title">Cashiro はロックされています</string>
+    <string name="app_locked_title">Zakat はロックされています</string>
     <string name="authenticate_desc">支出データにアクセスするには認証してください</string>
     <string name="unlock">ロック解除</string>
     <string name="biometric_unavailable_title">生体認証は使用できません</string>

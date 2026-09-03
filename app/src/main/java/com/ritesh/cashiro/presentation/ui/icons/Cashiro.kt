@@ -26,16 +26,24 @@ val Iconax.Cashiro: ImageVector
                 strokeLineCap = StrokeCap.Square,
                 strokeLineJoin = StrokeJoin.Round
             ) {
-                moveTo(132.08f, 96f)
-                lineTo(171.78f, 129.08f)
-                arcTo(79.39f, 79.39f, -0f, isMoreThanHalf = true, isPositiveArc = true, 171.78f, 62.92f)
-                lineTo(132.08f, 96f)
+                moveTo(92.06f, 28.12f)
+                arcTo(68.00f, 68.00f, -0f, isMoreThanHalf = true, isPositiveArc = false, 146.63f, 130.44f)
+                arcTo(58.00f, 58.00f, -0f, isMoreThanHalf = false, isPositiveArc = true, 92.06f, 28.12f)
                 close()
-                moveTo(99.01f, 129.08f)
-                lineTo(132.08f, 96f)
-                lineTo(99.01f, 62.92f)
-                lineTo(65.93f, 96f)
-                lineTo(99.01f, 129.08f)
+            }
+            path(
+                fill = SolidColor(Color.White),
+                strokeLineCap = StrokeCap.Square,
+                strokeLineJoin = StrokeJoin.Round
+            ) {
+                moveTo(126.00f, 44.00f)
+                lineTo(130.80f, 65.20f)
+                lineTo(152.00f, 70.00f)
+                lineTo(130.80f, 74.80f)
+                lineTo(126.00f, 96.00f)
+                lineTo(121.20f, 74.80f)
+                lineTo(100.00f, 70.00f)
+                lineTo(121.20f, 65.20f)
                 close()
             }
         }.build()

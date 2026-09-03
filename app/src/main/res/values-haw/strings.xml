@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">Pākuʻi Kūʻai</string>
     <string name="add_subscription">Hoʻohui i ke kau inoa</string>
     <string name="add_transfer">Hoʻohui i ka hoʻoili</string>
@@ -275,7 +275,7 @@
     <string name="chart_type_heatmap">Heatmap</string>
     <string name="chart_format">Palapala %1$s</string>
     <string name="toggle_view">Hoʻololi i ka Nānā</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">Nā koho hou aku</string>
     <string name="clear_chat">Hoʻomaʻemaʻe kamaʻilio</string>
     <string name="qwen_model_required">Pono ke kumu hoʻohālike Qwen</string>
@@ -307,7 +307,7 @@
     <string name="press_back_again_to_close">E kaomi hou e pani i ka polokalamu</string>
     <string name="transaction_deleted">Holoi ʻia ka hana</string>
     <string name="undo">Wehe</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">Pilikino</string>
     <string name="banner">Banner</string>
     <string name="recent">Nā mea hou aku nei</string>
@@ -343,7 +343,7 @@
     <string name="stay_updated">Noho Hou</string>
     <string name="automatic_tracking">Hoʻokolo ʻakomi</string>
     <string name="allow_notifications_desc">E ʻae i nā hoʻolaha e loaʻa nā hoʻomanaʻo bila a me nā hōʻuluʻulu o kēlā me kēia lā.</string>
-    <string name="automatic_tracking_desc">Hiki iā Cashiro ke ʻimi maʻalahi i kāu SMS kālepa e hoʻomau i kāu mau moʻokāki.</string>
+    <string name="automatic_tracking_desc">Hiki iā Zakat ke ʻimi maʻalahi i kāu SMS kālepa e hoʻomau i kāu mau moʻokāki.</string>
     <string name="skip_for_now">Holo i kēia manawa</string>
     <string name="verify_accounts">E hōʻoia i nā moʻokāki</string>
     <string name="scanning_messages">Nānā i nā memo</string>
@@ -413,7 +413,7 @@
     <string name="share">Kaʻana like</string>
     <string name="retry">E hoao hou</string>
     <string name="share_csv">Kaʻana like CSV</string>
-    <string name="csv_export_subject">Hoʻokuʻu aku i nā kālepa Cashiro</string>
+    <string name="csv_export_subject">Hoʻokuʻu aku i nā kālepa Zakat</string>
     <string name="edit_transaction">Hoʻoponopono Kūʻai</string>
     <string name="transaction_details">Nā Kūlana Kūʻai</string>
     <string name="report_issue">Hoike Puka</string>
@@ -489,9 +489,9 @@
     <string name="faq">FAQ</string>
     <string name="faq_desc">Nīnau pinepine</string>
     <string name="guides">Nā alakaʻi</string>
-    <string name="guides_desc">Pehea e hoʻohana ai iā Cashiro</string>
+    <string name="guides_desc">Pehea e hoʻohana ai iā Zakat</string>
     <string name="report_bug">Hōʻike Bug</string>
-    <string name="report_bug_desc">E kōkua iā mākou e hoʻomaikaʻi iā Cashiro</string>
+    <string name="report_bug_desc">E kōkua iā mākou e hoʻomaikaʻi iā Zakat</string>
     <string name="privacy_policy">Kulekele pilikino</string>
     <string name="privacy_policy_desc">ʻO kāu hoʻohana ʻikepili a pilikino</string>
     <string name="terms_of_service">Kūlana o ka lawelawe</string>
@@ -545,7 +545,7 @@
     <string name="one_month">1 mahina</string>
     <string name="two_years">2 makahiki</string>
     <string name="unrecognized_messages_title">Nā memo i ʻike ʻole ʻia</string>
-    <string name="unrecognized_bank_messages_desc">ʻAʻole hiki ke ʻoki ʻia kēia mau memo mai nā panakō. E kōkua i ka hoʻomaikaʻi ʻana iā Cashiro ma ka hōʻike ʻana iā lākou i hiki iā mākou ke hoʻohui i ke kākoʻo no nā panakō hou aʻe.</string>
+    <string name="unrecognized_bank_messages_desc">ʻAʻole hiki ke ʻoki ʻia kēia mau memo mai nā panakō. E kōkua i ka hoʻomaikaʻi ʻana iā Zakat ma ka hōʻike ʻana iā lākou i hiki iā mākou ke hoʻohui i ke kākoʻo no nā panakō hou aʻe.</string>
     <string name="show_reported">Hōʻike Hōʻike</string>
     <string name="count_new_format">%1$d hou</string>
     <string name="count_reported_format">%1$d i hōʻike ʻia</string>
@@ -588,7 +588,7 @@
     <string name="delete_webhook_confirm_desc">E hoʻoneʻe ʻia kēia ʻaoʻao, kona hoʻonohonoho ʻana, a me nā moʻolelo hoʻouna a pau. ʻAʻole hiki ke hoʻopau ʻia kēia.</string>
     <string name="byoapi_sync_title">BYOAPI Waiwai Sync</string>
     <string name="byoapi_sync_desc">E hoʻouna i ka ʻikepili kālā i koho ʻia i kāu wahi hope. Hana ʻia kekahi pane HTTP 2xx ma ke ʻano he hoʻopuka kūleʻa.</string>
-    <string name="byoapi_sync_warning">E hoʻouna kēia i kāu ʻikepili kālā i ka URL āu e hoʻonohonoho ai. ʻAʻole hiki iā Cashiro ke hōʻoia i ka palekana o kēlā hopena.</string>
+    <string name="byoapi_sync_warning">E hoʻouna kēia i kāu ʻikepili kālā i ka URL āu e hoʻonohonoho ai. ʻAʻole hiki iā Zakat ke hōʻoia i ka palekana o kēlā hopena.</string>
     <string name="sync_now">Hoʻopili i kēia manawa</string>
     <string name="sync_now_desc">Hoʻomaka ka hoʻouna ʻana no nā ʻaoʻao āpau i hoʻohana ʻia</string>
     <string name="sync_schedule_title">Hoʻonohonoho hoʻonohonoho</string>
@@ -883,10 +883,10 @@
     <string name="notification_access_active">Hoʻomaka ke komo ʻana i ka hoʻolaha</string>
     <string name="notification_access_desc">Hiki ke ʻike i nā kālepa panakō mai nā leka hoʻomaopopo</string>
     <string name="notification_access_required">Pono ke komo ʻana i ka hoʻolaha</string>
-    <string name="notification_access_required_desc">No ka ʻike maʻalahi i nā kālepa panakō i ka manawa maoli, koi ʻo Cashiro i ka ʻike hoʻolaha. He ʻae pae ʻōnaehana kēia.</string>
+    <string name="notification_access_required_desc">No ka ʻike maʻalahi i nā kālepa panakō i ka manawa maoli, koi ʻo Zakat i ka ʻike hoʻolaha. He ʻae pae ʻōnaehana kēia.</string>
     <string name="how_to_enable">Pehea e hiki ai:</string>
     <string name="step_1">E kaomi i ke pihi \'Open Settings\' ma lalo.</string>
-    <string name="step_2">E huli i ka \'Cashiro\' ma ka papa inoa o nā noi.</string>
+    <string name="step_2">E huli i ka \'Zakat\' ma ka papa inoa o nā noi.</string>
     <string name="step_3">E hoʻololi i ka \'Aʻe i ke komo ʻana i ka leka hoʻomaopopo\'.</string>
     <string name="open_settings">E wehe i nā ʻōkuhi</string>
     <string name="scan_settings">Hoʻonohonoho scan</string>
@@ -910,7 +910,7 @@
     <string name="this_month_lbl">KEIA MAHINA</string>
     <string name="this_year_lbl">KEIA MAKAHIKI</string>
     <string name="percent_this_month_format">%1$s%2$s%% i kēia mahina</string>
-    <string name="app_locked_title">Ua Paʻa ʻo Cashiro</string>
+    <string name="app_locked_title">Ua Paʻa ʻo Zakat</string>
     <string name="authenticate_desc">E hōʻoia no ke komo ʻana i kāu ʻikepili koina</string>
     <string name="unlock">Wehe</string>
     <string name="biometric_unavailable_title">ʻAʻole loaʻa ka hōʻoia biometric</string>

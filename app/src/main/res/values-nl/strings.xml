@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">Transactie toevoegen</string>
     <string name="add_subscription">Abonnement toevoegen</string>
     <string name="add_transfer">Overdracht toevoegen</string>
@@ -276,7 +276,7 @@ Handig voor eenmalige budgetten met aangepaste tijdsperiodes</string>
     <string name="chart_type_heatmap">Warmtekaart</string>
     <string name="chart_format">%1$s Grafiek</string>
     <string name="toggle_view">Wissel weergave</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">Meer opties</string>
     <string name="clear_chat">Chat wissen</string>
     <string name="qwen_model_required">Model Qwen Vereist</string>
@@ -308,7 +308,7 @@ Handig voor eenmalige budgetten met aangepaste tijdsperiodes</string>
     <string name="press_back_again_to_close">Druk nogmaals op terug om de app te sluiten</string>
     <string name="transaction_deleted">Transactie verwijderd</string>
     <string name="undo">Herstel</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">Profiel</string>
     <string name="banner">Spandoek</string>
     <string name="recent">Recentelijk</string>
@@ -344,7 +344,7 @@ Handig voor eenmalige budgetten met aangepaste tijdsperiodes</string>
     <string name="stay_updated">Blijf bijgewerkt</string>
     <string name="automatic_tracking">Automatisch volgen</string>
     <string name="allow_notifications_desc">Meldingen toestaan om rekeningherinneringen en dagelijkse samenvattingen te ontvangen.</string>
-    <string name="automatic_tracking_desc">Cashiro kan uw transactie-SMS automatisch scannen om uw rekeningen up-to-date te houden.</string>
+    <string name="automatic_tracking_desc">Zakat kan uw transactie-SMS automatisch scannen om uw rekeningen up-to-date te houden.</string>
     <string name="skip_for_now">Sla over voor nu</string>
     <string name="verify_accounts">Accounts verifiëren</string>
     <string name="scanning_messages">Berichten scannen</string>
@@ -414,7 +414,7 @@ Handig voor eenmalige budgetten met aangepaste tijdsperiodes</string>
     <string name="share">Delen</string>
     <string name="retry">Opnieuw</string>
     <string name="share_csv">Deel CSV</string>
-    <string name="csv_export_subject">Cashiro transacties exporteren</string>
+    <string name="csv_export_subject">Zakat transacties exporteren</string>
     <string name="edit_transaction">Transactie bewerken</string>
     <string name="transaction_details">Transactie Details</string>
     <string name="report_issue">Probleem melden</string>
@@ -479,7 +479,7 @@ Handig voor eenmalige budgetten met aangepaste tijdsperiodes</string>
     <string name="no_transactions_for_format">Geen transacties voor %1$s</string>
     <string name="sync_sms_to_see_transactions">Synchroniseer uw SMS om transacties te zien</string>
     <string name="about">Informatie</string>
-    <string name="cashiro_logo_cd">Cashiro-logo</string>
+    <string name="cashiro_logo_cd">Zakat-logo</string>
     <string name="version_format">Versie %1$s, db-v%2$d</string>
     <string name="developed_by">Ontwikkeld door Ritesh</string>
     <string name="lead_developer_cd">lead ontwikkelaar</string>
@@ -490,9 +490,9 @@ Handig voor eenmalige budgetten met aangepaste tijdsperiodes</string>
     <string name="faq">Veelgestelde vragen</string>
     <string name="faq_desc">Veel gestelde vragen</string>
     <string name="guides">Handleidingen</string>
-    <string name="guides_desc">Hoe je Cashiro gebruikt</string>
+    <string name="guides_desc">Hoe je Zakat gebruikt</string>
     <string name="report_bug">Bug melden</string>
-    <string name="report_bug_desc">Help ons Cashiro te verbeteren</string>
+    <string name="report_bug_desc">Help ons Zakat te verbeteren</string>
     <string name="privacy_policy">Privacy Beleid</string>
     <string name="privacy_policy_desc">Uw gegevensgebruik en privacy</string>
     <string name="terms_of_service">Algemene gebruiksvoorwaarden</string>
@@ -546,7 +546,7 @@ Handig voor eenmalige budgetten met aangepaste tijdsperiodes</string>
     <string name="one_month">1 maand</string>
     <string name="two_years">2 jaar</string>
     <string name="unrecognized_messages_title">Niet-herkende berichten</string>
-    <string name="unrecognized_bank_messages_desc">Deze berichten van potentiële banken konden niet automatisch worden afgeluisterd. Help Cashiro te verbeteren door ze te rapporteren, zodat we steun voor meer banken kunnen toevoegen.</string>
+    <string name="unrecognized_bank_messages_desc">Deze berichten van potentiële banken konden niet automatisch worden afgeluisterd. Help Zakat te verbeteren door ze te rapporteren, zodat we steun voor meer banken kunnen toevoegen.</string>
     <string name="show_reported">Toon gerapporteerd</string>
     <string name="count_new_format">%1$d nieuw</string>
     <string name="count_reported_format">%1$d gerapporteerd</string>
@@ -589,7 +589,7 @@ Handig voor eenmalige budgetten met aangepaste tijdsperiodes</string>
     <string name="delete_webhook_confirm_desc">Dit profiel, de geplande synchronisaties en alle leveringslogs zullen worden verwijderd. Dit kan niet ongedaan worden gemaakt.</string>
     <string name="byoapi_sync_title">BYOAPI Financiële Sync</string>
     <string name="byoapi_sync_desc">Stuur geselecteerde financieringsgegevens naar uw eigen eindpunt. Elke HTTP 2xx-reactie wordt behandeld als een succesvolle levering.</string>
-    <string name="byoapi_sync_warning">Hiermee worden uw financiële gegevens verzonden naar de URL die u configureert. Cashiro kan de veiligheid van dat eindpunt niet verifiëren.</string>
+    <string name="byoapi_sync_warning">Hiermee worden uw financiële gegevens verzonden naar de URL die u configureert. Zakat kan de veiligheid van dat eindpunt niet verifiëren.</string>
     <string name="sync_now">Nu synchroniseren</string>
     <string name="sync_now_desc">Trigger levering voor alle ingeschakelde profielen</string>
     <string name="sync_schedule_title">Synchroniseer schema</string>
@@ -884,10 +884,10 @@ Handig voor eenmalige budgetten met aangepaste tijdsperiodes</string>
     <string name="notification_access_active">Toegang tot meldingen is actief</string>
     <string name="notification_access_desc">Inschakelen om banktransacties uit pushmeldingen te detecteren</string>
     <string name="notification_access_required">Toegang tot meldingen vereist</string>
-    <string name="notification_access_required_desc">Om banktransacties automatisch in realtime te detecteren, heeft Cashiro toegang tot meldingen nodig. Dit is een systeemniveau-toestemming.</string>
+    <string name="notification_access_required_desc">Om banktransacties automatisch in realtime te detecteren, heeft Zakat toegang tot meldingen nodig. Dit is een systeemniveau-toestemming.</string>
     <string name="how_to_enable">Hoe te activeren:</string>
     <string name="step_1">Tik op de knop \'Open instellingen\' hieronder.</string>
-    <string name="step_2">Zoek \'Cashiro\' in de lijst met apps.</string>
+    <string name="step_2">Zoek \'Zakat\' in de lijst met apps.</string>
     <string name="step_3">Schakel \'Toegang tot meldingen toestaan\' in.</string>
     <string name="open_settings">Open instellingen</string>
     <string name="scan_settings">Scan instellingen</string>
@@ -913,7 +913,7 @@ Dit kan enkele seconden duren, afhankelijk van je berichtenhistorie.</string>
     <string name="this_month_lbl">DEZE MAAND</string>
     <string name="this_year_lbl">DIT JAAR</string>
     <string name="percent_this_month_format">%1$s%2$s%%deze maand</string>
-    <string name="app_locked_title">Cashiro is vergrendeld</string>
+    <string name="app_locked_title">Zakat is vergrendeld</string>
     <string name="authenticate_desc">Authenticateer om toegang te krijgen tot uw uitgavengegevens</string>
     <string name="unlock">Ontgrendel</string>
     <string name="biometric_unavailable_title">Biometrische authenticatie niet beschikbaar</string>

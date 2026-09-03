@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">Onjezani Transaction</string>
     <string name="add_subscription">Onjezani Kulembetsa</string>
     <string name="add_transfer">Onjezani Kusamutsa</string>
@@ -275,7 +275,7 @@
     <string name="chart_type_heatmap">Heatmap</string>
     <string name="chart_format">%1$s Tchati</string>
     <string name="toggle_view">Sinthani Mawonedwe</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">Zosankha zina</string>
     <string name="clear_chat">Chotsani Chat</string>
     <string name="qwen_model_required">Qwen Model Yofunika</string>
@@ -307,7 +307,7 @@
     <string name="press_back_again_to_close">Dinaninso kachiwiri kuti mutseke pulogalamuyi</string>
     <string name="transaction_deleted">Ntchito yachotsedwa</string>
     <string name="undo">Bwezerani</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">Mbiri</string>
     <string name="banner">Banner</string>
     <string name="recent">Posachedwapa</string>
@@ -343,7 +343,7 @@
     <string name="stay_updated">Khalani Osinthidwa</string>
     <string name="automatic_tracking">Kutsata Mwadzidzidzi</string>
     <string name="allow_notifications_desc">Lolani zidziwitso kulandira zikumbutso zamabilu ndi chidule chatsiku ndi tsiku.</string>
-    <string name="automatic_tracking_desc">Cashiro imatha kusanthula ma SMS anu kuti musunge akaunti yanu.</string>
+    <string name="automatic_tracking_desc">Zakat imatha kusanthula ma SMS anu kuti musunge akaunti yanu.</string>
     <string name="skip_for_now">Dumphani pakadali pano</string>
     <string name="verify_accounts">Tsimikizirani Maakaunti</string>
     <string name="scanning_messages">Kusanthula Mauthenga</string>
@@ -413,7 +413,7 @@
     <string name="share">Gawani</string>
     <string name="retry">Yesaninso</string>
     <string name="share_csv">Pezani CSV</string>
-    <string name="csv_export_subject">Cashiro Transactions Export</string>
+    <string name="csv_export_subject">Zakat Transactions Export</string>
     <string name="edit_transaction">Sinthani Transaction</string>
     <string name="transaction_details">Tsatanetsatane wa Transaction</string>
     <string name="report_issue">Nenani Nkhani</string>
@@ -478,7 +478,7 @@
     <string name="no_transactions_for_format">Palibe kusintha kwa %1$s</string>
     <string name="sync_sms_to_see_transactions">Gwirizanitsani ma SMS anu kuti muwone zochitika</string>
     <string name="about">Za</string>
-    <string name="cashiro_logo_cd">Cashiro Logo</string>
+    <string name="cashiro_logo_cd">Zakat Logo</string>
     <string name="version_format">Mtundu wa %1$s, db-v%2$d</string>
     <string name="developed_by">Yopangidwa ndi Ritesh</string>
     <string name="lead_developer_cd">wotsogolera patsogolo</string>
@@ -489,9 +489,9 @@
     <string name="faq">FAQ</string>
     <string name="faq_desc">Mafunso omwe amafunsidwa pafupipafupi</string>
     <string name="guides">Atsogoleri</string>
-    <string name="guides_desc">Momwe mungagwiritsire ntchito Cashiro</string>
+    <string name="guides_desc">Momwe mungagwiritsire ntchito Zakat</string>
     <string name="report_bug">Nenani Bug</string>
-    <string name="report_bug_desc">Tithandizeni kukonza Cashiro</string>
+    <string name="report_bug_desc">Tithandizeni kukonza Zakat</string>
     <string name="privacy_policy">Mfundo Zazinsinsi</string>
     <string name="privacy_policy_desc">Kugwiritsa ntchito deta yanu komanso zachinsinsi</string>
     <string name="terms_of_service">Terms of Service</string>
@@ -545,7 +545,7 @@
     <string name="one_month">1 mwezi</string>
     <string name="two_years">2 zaka</string>
     <string name="unrecognized_messages_title">Mauthenga Osadziwika</string>
-    <string name="unrecognized_bank_messages_desc">Mauthengawa ochokera ku mabanki omwe angakhalepo sakanathetsedwa. Thandizani kukonza Cashiro powafotokozera kuti tithe kuwonjezera thandizo kumabanki ambiri.</string>
+    <string name="unrecognized_bank_messages_desc">Mauthengawa ochokera ku mabanki omwe angakhalepo sakanathetsedwa. Thandizani kukonza Zakat powafotokozera kuti tithe kuwonjezera thandizo kumabanki ambiri.</string>
     <string name="show_reported">Onetsani Malipoti</string>
     <string name="count_new_format">%1$d zatsopano</string>
     <string name="count_reported_format">%1$d zanenedwa</string>
@@ -588,7 +588,7 @@
     <string name="delete_webhook_confirm_desc">Mbiriyi, kulunzanitsa kwake, ndi zolemba zonse zotumizira zichotsedwa. Izi sizingasinthidwe.</string>
     <string name="byoapi_sync_title">BYOAPI Finance Sync</string>
     <string name="byoapi_sync_desc">Tumizani deta yosankhidwa yazachuma kumalo anu enieni. Yankho lililonse la HTTP 2xx limatengedwa ngati kutumiza bwino.</string>
-    <string name="byoapi_sync_warning">Izi zidzatumiza deta yanu yazachuma ku URL yomwe mwakonza. Cashiro sangathe kutsimikizira chitetezo cha mapetowo.</string>
+    <string name="byoapi_sync_warning">Izi zidzatumiza deta yanu yazachuma ku URL yomwe mwakonza. Zakat sangathe kutsimikizira chitetezo cha mapetowo.</string>
     <string name="sync_now">Lunzanitsa tsopano</string>
     <string name="sync_now_desc">Yambitsirani kutumiza kwa ma profaili onse omwe adayatsidwa</string>
     <string name="sync_schedule_title">Kulunzanitsa Ndandanda</string>
@@ -883,10 +883,10 @@
     <string name="notification_access_active">Kufikira zidziwitso kulipo</string>
     <string name="notification_access_desc">Yambitsani kuzindikira mayendedwe akubanki kuchokera kuzidziwitso zokankhira</string>
     <string name="notification_access_required">Kufikira Zidziwitso Kufunika</string>
-    <string name="notification_access_required_desc">Kuti muzindikire zomwe zachitika ku banki munthawi yeniyeni, Cashiro imafuna chidziwitso. Ichi ndi chilolezo chadongosolo.</string>
+    <string name="notification_access_required_desc">Kuti muzindikire zomwe zachitika ku banki munthawi yeniyeni, Zakat imafuna chidziwitso. Ichi ndi chilolezo chadongosolo.</string>
     <string name="how_to_enable">Momwe mungayambitsire:</string>
     <string name="step_1">Dinani batani la \'Tsegulani Zikhazikiko\' pansipa.</string>
-    <string name="step_2">Pezani \'Cashiro\' pamndandanda wamapulogalamu.</string>
+    <string name="step_2">Pezani \'Zakat\' pamndandanda wamapulogalamu.</string>
     <string name="step_3">Sinthani \'Lolani mwayi wazidziwitso\' kuti uyatse.</string>
     <string name="open_settings">Tsegulani Zokonda</string>
     <string name="scan_settings">Jambulani Zokonda</string>
@@ -910,7 +910,7 @@
     <string name="this_month_lbl">MWEZI UNO</string>
     <string name="this_year_lbl">CHAKA CHINO</string>
     <string name="percent_this_month_format">%1$s%2$s%% mwezi uno</string>
-    <string name="app_locked_title">Cashiro Yatsekedwa</string>
+    <string name="app_locked_title">Zakat Yatsekedwa</string>
     <string name="authenticate_desc">Tsimikizirani kuti mupeze data yanu yandalama</string>
     <string name="unlock">Tsegulani</string>
     <string name="biometric_unavailable_title">Kutsimikizira kwa Biometric sikukupezeka</string>

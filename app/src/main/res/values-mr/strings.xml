@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">कामकाज जोडा</string>
     <string name="add_subscription">सदस्यता जोडा</string>
     <string name="add_transfer">स्थानांतरण जोडा</string>
@@ -309,7 +309,7 @@
     <string name="press_back_again_to_close">अॅप बंद करण्यासाठी पुन्हा बॅक दाबा</string>
     <string name="transaction_deleted">व्यवहार हटवला गेला</string>
     <string name="undo">मागे घेणे</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">प्रोफाइल</string>
     <string name="banner">बॅनर</string>
     <string name="recent">अलीकचे</string>
@@ -416,7 +416,7 @@
     <string name="share">सामायिक करा</string>
     <string name="retry">पुन्हा प्रयत्न करा</string>
     <string name="share_csv">CSV सामायिक करा</string>
-    <string name="csv_export_subject">Cashiro व्यवहार निर्यात</string>
+    <string name="csv_export_subject">Zakat व्यवहार निर्यात</string>
     <string name="edit_transaction">व्यवहार संपादित करा</string>
     <string name="transaction_details">व्यवहार तपशील</string>
     <string name="report_issue">समस्या नोंदवा</string>
@@ -481,7 +481,7 @@
     <string name="no_transactions_for_format">%1$s साठी कोणतेही व्यवहार नाहीत</string>
     <string name="sync_sms_to_see_transactions">व्यवहार पाहण्यासाठी आपला SMS समक्रमित करा</string>
     <string name="about">बद्दल</string>
-    <string name="cashiro_logo_cd">Cashiro लोगो</string>
+    <string name="cashiro_logo_cd">Zakat लोगो</string>
     <string name="version_format">आवृत्ती %1$s, db-v%2$d</string>
     <string name="developed_by">Ritesh द्वारा विकसित</string>
     <string name="lead_developer_cd">मुख्य विकसक</string>
@@ -492,9 +492,9 @@
     <string name="faq">वारंवार विचारले जाणारे प्रश्न</string>
     <string name="faq_desc">वारंवार विचारले जाणारे प्रश्न</string>
     <string name="guides">मार्गदर्शक</string>
-    <string name="guides_desc">Cashiro कसे वापरायचे</string>
+    <string name="guides_desc">Zakat कसे वापरायचे</string>
     <string name="report_bug">बग रिपोर्ट करा</string>
-    <string name="report_bug_desc">Cashiro सुधारण्यात आम्हाला मदत करा</string>
+    <string name="report_bug_desc">Zakat सुधारण्यात आम्हाला मदत करा</string>
     <string name="privacy_policy">गोपनीयता धोरण</string>
     <string name="privacy_policy_desc">आपल्या डेटाचा वापर आणि गोपनीयता</string>
     <string name="terms_of_service">सेवा अटी</string>
@@ -591,7 +591,7 @@
     <string name="delete_webhook_confirm_desc">हा प्रोफाइल, त्याचे नियोजित समक्रमण, आणि सर्व वितरण लॉग्स काढले जातील. हे अपरिवर्तनीय आहे.</string>
     <string name="byoapi_sync_title">BYOAPI वित्त समक्रमण</string>
     <string name="byoapi_sync_desc">निवडलेल्या वित्तीय माहितीला आपल्या स्वत:च्या एंडपॉइंटवर पाठवा. कोणताही HTTP 2xx प्रतिसाद यशस्वी वितरण म्हणून गणला जातो.</string>
-    <string name="byoapi_sync_warning">हे आपल्या वित्तीय डेटाला आपण कॉन्फिगर केलेल्या URL वर पाठवेल. Cashiro त्या एंडपॉइंटची सुरक्षितता सत्यापित करू शकत नाही.</string>
+    <string name="byoapi_sync_warning">हे आपल्या वित्तीय डेटाला आपण कॉन्फिगर केलेल्या URL वर पाठवेल. Zakat त्या एंडपॉइंटची सुरक्षितता सत्यापित करू शकत नाही.</string>
     <string name="sync_now">आता समक्रमित करा</string>
     <string name="sync_now_desc">सर्व सक्षम प्रोफाइलसाठी वितरण ट्रिगर करा</string>
     <string name="sync_schedule_title">समक्रमण वेळापत्रक</string>
@@ -886,10 +886,10 @@
     <string name="notification_access_active">सूचना प्रवेश सक्रिय आहे</string>
     <string name="notification_access_desc">पुश सूचनांमधून बँक व्यवहार ओळखण्यासाठी सक्षम करा</string>
     <string name="notification_access_required">सूचना प्रवेश आवश्यक</string>
-    <string name="notification_access_required_desc">प्रत्यक्ष वेळेत बँक व्यवहार स्वयंचलितपणे ओळखण्यासाठी, Cashiro ला सूचना प्रवेशाची आवश्यकता आहे. ही प्रणाली-स्तरीय परवानगी आहे.</string>
+    <string name="notification_access_required_desc">प्रत्यक्ष वेळेत बँक व्यवहार स्वयंचलितपणे ओळखण्यासाठी, Zakat ला सूचना प्रवेशाची आवश्यकता आहे. ही प्रणाली-स्तरीय परवानगी आहे.</string>
     <string name="how_to_enable">सक्षम कसे करावे:</string>
     <string name="step_1">खालील \'सेटिंग्ज उघडा\' बटणावर टॅप करा.</string>
-    <string name="step_2">अ‍ॅप्लिकेशन्सच्या यादीत \'Cashiro\' शोधा.</string>
+    <string name="step_2">अ‍ॅप्लिकेशन्सच्या यादीत \'Zakat\' शोधा.</string>
     <string name="step_3">\'सूचना प्रवेश अनुमती द्या\' सक्षम करण्यासाठी टॉगल चालू करा.</string>
     <string name="open_settings">सेटिंग्ज उघडा</string>
     <string name="scan_settings">सेटिंग्ज स्कॅन करा</string>
@@ -915,7 +915,7 @@
     <string name="this_month_lbl">हा महीना</string>
     <string name="this_year_lbl">हा वर्ष</string>
     <string name="percent_this_month_format">%1$s%2$s%% हा महीना</string>
-    <string name="app_locked_title">Cashiro अनलॉक केलेले नाही</string>
+    <string name="app_locked_title">Zakat अनलॉक केलेले नाही</string>
     <string name="authenticate_desc">आपला खर्च डेटा पाहण्यासाठी प्रमाणीकरण करा</string>
     <string name="unlock">अनलॉक करा</string>
     <string name="biometric_unavailable_title">बायोमेट्रिक प्रमाणीकरण उपलब्ध नाही</string>

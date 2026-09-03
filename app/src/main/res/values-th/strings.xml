@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">เพิ่มรายการธุรกรรม</string>
     <string name="add_subscription">เพิ่มการสมัครสมาชิก</string>
     <string name="add_transfer">เพิ่มการโอน</string>
@@ -277,7 +277,7 @@
     <string name="chart_type_heatmap">แผนที่ความร้อน</string>
     <string name="chart_format">แผนภูมิ %1$s</string>
     <string name="toggle_view">สลับมุมมอง</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">ตัวเลือกเพิ่มเติม</string>
     <string name="clear_chat">ล้างแชท</string>
     <string name="qwen_model_required">จำเป็นต้องใช้โมเดล Qwen</string>
@@ -309,7 +309,7 @@
     <string name="press_back_again_to_close">กดย้อนกลับอีกครั้งเพื่อปิดแอป</string>
     <string name="transaction_deleted">ธุรกรรมถูกลบ</string>
     <string name="undo">เลิกทำ</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">โปรไฟล์</string>
     <string name="banner">แบนเนอร์</string>
     <string name="recent">ล่าสุด</string>
@@ -346,7 +346,7 @@
     <string name="stay_updated">ติดตามข่าวสารล่าสุด</string>
     <string name="automatic_tracking">ติดตามอัตโนมัติ</string>
     <string name="allow_notifications_desc">อนุญาตการแจ้งเตือนเพื่อรับการแจ้งเตือนบิลและสรุปรายวัน</string>
-    <string name="automatic_tracking_desc">Cashiro สามารถสแกนข้อความธุรกรรมของคุณอัตโนมัติเพื่อให้บัญชีของคุณเป็นปัจจุบัน</string>
+    <string name="automatic_tracking_desc">Zakat สามารถสแกนข้อความธุรกรรมของคุณอัตโนมัติเพื่อให้บัญชีของคุณเป็นปัจจุบัน</string>
     <string name="skip_for_now">ข้ามตอนนี้</string>
     <string name="verify_accounts">ยืนยันบัญชี</string>
     <string name="scanning_messages">กำลังสแกนข้อความ</string>
@@ -416,7 +416,7 @@
     <string name="share">แชร์</string>
     <string name="retry">ลองอีกครั้ง</string>
     <string name="share_csv">แชร์ CSV</string>
-    <string name="csv_export_subject">ส่งออกธุรกรรม Cashiro</string>
+    <string name="csv_export_subject">ส่งออกธุรกรรม Zakat</string>
     <string name="edit_transaction">แก้ไขธุรกรรม</string>
     <string name="transaction_details">รายละเอียดธุรกรรม</string>
     <string name="report_issue">รายงานปัญหา</string>
@@ -481,7 +481,7 @@
     <string name="no_transactions_for_format">ไม่มีธุรกรรมสำหรับ %1$s</string>
     <string name="sync_sms_to_see_transactions">ซิงค์ SMS ของคุณเพื่อดูธุรกรรม</string>
     <string name="about">เกี่ยวกับ</string>
-    <string name="cashiro_logo_cd">โลโก้ Cashiro</string>
+    <string name="cashiro_logo_cd">โลโก้ Zakat</string>
     <string name="version_format">เวอร์ชัน %1$s, db-v%2$d</string>
     <string name="developed_by">พัฒนาโดย Ritesh</string>
     <string name="lead_developer_cd">หัวหน้าผู้พัฒนา</string>
@@ -492,9 +492,9 @@
     <string name="faq">คำถามที่พบบ่อย</string>
     <string name="faq_desc">คำถามที่ถามบ่อย</string>
     <string name="guides">คู่มือ</string>
-    <string name="guides_desc">วิธีการใช้ Cashiro</string>
+    <string name="guides_desc">วิธีการใช้ Zakat</string>
     <string name="report_bug">รายงานข้อบกพร่อง</string>
-    <string name="report_bug_desc">ช่วยเราปรับปรุง Cashiro</string>
+    <string name="report_bug_desc">ช่วยเราปรับปรุง Zakat</string>
     <string name="privacy_policy">นโยบายความเป็นส่วนตัว</string>
     <string name="privacy_policy_desc">การใช้ข้อมูลและความเป็นส่วนตัวของคุณ</string>
     <string name="terms_of_service">ข้อกำหนดในการให้บริการ</string>
@@ -548,7 +548,7 @@
     <string name="one_month">1 เดือน</string>
     <string name="two_years">2 ปี</string>
     <string name="unrecognized_messages_title">ข้อความที่ไม่รู้จัก</string>
-    <string name="unrecognized_bank_messages_desc">ข้อความเหล่านี้จากธนาคารที่อาจเกิดขึ้นไม่สามารถแยกวิเคราะห์โดยอัตโนมัติได้ ช่วยปรับปรุง Cashiro โดยรายงานพวกเขาเพื่อให้เราสนับสนุนธนาคารเพิ่มเติม</string>
+    <string name="unrecognized_bank_messages_desc">ข้อความเหล่านี้จากธนาคารที่อาจเกิดขึ้นไม่สามารถแยกวิเคราะห์โดยอัตโนมัติได้ ช่วยปรับปรุง Zakat โดยรายงานพวกเขาเพื่อให้เราสนับสนุนธนาคารเพิ่มเติม</string>
     <string name="show_reported">แสดงที่รายงานแล้ว</string>
     <string name="count_new_format">%1$d ใหม่</string>
     <string name="count_reported_format">%1$d รายงาน</string>
@@ -591,7 +591,7 @@
     <string name="delete_webhook_confirm_desc">โปรไฟล์นี้ การซิงค์ที่กำหนดเวลา และบันทึกการส่งทั้งหมดจะถูกลบ ซึ่งไม่สามารถกู้คืนได้</string>
     <string name="byoapi_sync_title">การซิงค์การเงิน BYOAPI</string>
     <string name="byoapi_sync_desc">ส่งข้อมูลการเงินที่เลือกไปยังปลายทางของคุณเอง การตอบสนอง HTTP 2xx ใด ๆ จะถือว่าการส่งสำเร็จ</string>
-    <string name="byoapi_sync_warning">นี่จะส่งข้อมูลการเงินของคุณไปยัง URL ที่คุณกำหนด Cashiro ไม่สามารถยืนยันความปลอดภัยของปลายทางนั้นได้</string>
+    <string name="byoapi_sync_warning">นี่จะส่งข้อมูลการเงินของคุณไปยัง URL ที่คุณกำหนด Zakat ไม่สามารถยืนยันความปลอดภัยของปลายทางนั้นได้</string>
     <string name="sync_now">ซิงค์ตอนนี้</string>
     <string name="sync_now_desc">เรียกใช้งานการส่งสำหรับโปรไฟล์ทั้งหมดที่เปิดใช้งาน</string>
     <string name="sync_schedule_title">กำหนดเวลาการซิงค์</string>
@@ -886,10 +886,10 @@
     <string name="notification_access_active">การเข้าถึงการแจ้งเตือนอยู่ในสถานะเปิดใช้งาน</string>
     <string name="notification_access_desc">เปิดใช้งานเพื่อระบุการทำธุรกรรมจากการแจ้งเตือนธนาคาร</string>
     <string name="notification_access_required">จำเป็นต้องเข้าถึงการแจ้งเตือน</string>
-    <string name="notification_access_required_desc">เพื่อระบุการทำธุรกรรมจากธนาคารแบบเรียลไทม์โดยอัตโนมัติ Cashiro จำเป็นต้องเข้าถึงการแจ้งเตือน ซึ่งเป็นสิทธิ์ในระดับระบบ</string>
+    <string name="notification_access_required_desc">เพื่อระบุการทำธุรกรรมจากธนาคารแบบเรียลไทม์โดยอัตโนมัติ Zakat จำเป็นต้องเข้าถึงการแจ้งเตือน ซึ่งเป็นสิทธิ์ในระดับระบบ</string>
     <string name="how_to_enable">วิธีเปิดใช้งาน:</string>
     <string name="step_1">แตะปุ่ม \'เปิดการตั้งค่า\' ด้านล่าง</string>
-    <string name="step_2">ค้นหา \'Cashiro\' ในรายการแอปพลิเคชัน</string>
+    <string name="step_2">ค้นหา \'Zakat\' ในรายการแอปพลิเคชัน</string>
     <string name="step_3">สลับ \'อนุญาตการเข้าถึงการแจ้งเตือน\' ให้เปิดใช้งาน</string>
     <string name="open_settings">เปิดการตั้งค่า</string>
     <string name="scan_settings">สแกนการตั้งค่า</string>
@@ -915,7 +915,7 @@
     <string name="this_month_lbl">เดือนนี้</string>
     <string name="this_year_lbl">ปีนี้</string>
     <string name="percent_this_month_format">%1$s%2$s%% เดือนนี้</string>
-    <string name="app_locked_title">Cashiro ถูกล็อก</string>
+    <string name="app_locked_title">Zakat ถูกล็อก</string>
     <string name="authenticate_desc">ตรวจสอบตัวตนเพื่อเข้าถึงข้อมูลค่าใช้จ่ายของคุณ</string>
     <string name="unlock">ปลดล็อก</string>
     <string name="biometric_unavailable_title">การตรวจสอบทางชีวมิติไม่สามารถใช้งานได้</string>

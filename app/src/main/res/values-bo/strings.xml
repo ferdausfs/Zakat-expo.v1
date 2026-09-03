@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">ཉོ་འཚོང་ཁ་སྣོན་བྱས་པ།</string>
     <string name="add_subscription">མངག་ཉོ་ཁ་སྣོན་བྱས་པ།</string>
     <string name="add_transfer">སྤོ་སྒྱུར་ཁ་སྣོན་བྱས་པ།</string>
@@ -277,7 +277,7 @@
     <string name="chart_type_heatmap">ཚ་བའི་ས་ཁྲ་</string>
     <string name="chart_format">%1$s དཔེ་རིས།</string>
     <string name="toggle_view">Toggle View</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">གདམ་ག་མང་ཙམ་ཡོད།</string>
     <string name="clear_chat">ཁ་བརྡ་ཁ་གསལ་བཟོ་དགོས།</string>
     <string name="qwen_model_required">Qwen དཔེ་དབྱིབས་དགོས་པ།</string>
@@ -309,7 +309,7 @@
     <string name="press_back_again_to_close">ཡང་བསྐྱར་མནན་ནས་ཉེར་སྤྱོད་སྒོ་རྒྱག་དགོས།</string>
     <string name="transaction_deleted">ཉོ་ཚོང་བསུབ་པ།</string>
     <string name="undo">ཕྱིར་བཤོལ་</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">གནས་ཚུལ་མདོར་བསྡུས།</string>
     <string name="banner">འཕྲེད་འགེལ་འཕྲེད་འགེལ་</string>
     <string name="recent">ཉེ་ཆར།</string>
@@ -492,7 +492,7 @@
     <string name="faq">རྒྱུན་འདྲིའི་དྲི་བ།</string>
     <string name="faq_desc">རྒྱུན་པར་འདྲི་བའི་དྲི་བ།</string>
     <string name="guides">ཕྱོགས་སྟོན་པ་</string>
-    <string name="guides_desc">Cashiro ཇི་ལྟར་བཀོལ་སྤྱོད་བྱེད་རྒྱུ།</string>
+    <string name="guides_desc">Zakat ཇི་ལྟར་བཀོལ་སྤྱོད་བྱེད་རྒྱུ།</string>
     <string name="report_bug">སྐྱོན་ཆ་སྙན་སེང་ཞུ་བ།</string>
     <string name="report_bug_desc">ང་ཚོར་ཁ་ཤི་རོ་ལེགས་བཅོས་བྱེད་རོགས་གནང་།</string>
     <string name="privacy_policy">གསང་བའི་སྲིད་ཇུས།</string>
@@ -889,7 +889,7 @@
     <string name="notification_access_required_desc">དངུལ་ཁང་གི་ཉོ་ཚོང་རང་འགུལ་གྱིས་དུས་ལྟར་ཞིབ་དཔྱད་ཚད་ལེན་བྱེད་ཆེད། ཁ་ཤི་རོ་ཡིས་བརྡ་ཐོ་གཏོང་དགོས་པའི་བླང་བྱ་བཏོན་པ་རེད། འདི་ནི་མ་ལག་རིམ་པའི་ཆོག་འཐུས་ཡིན།</string>
     <string name="how_to_enable">ཇི་ལྟར་བྱེད་ཐུབ་པ་སྟེ།</string>
     <string name="step_1">གཤམ་གྱི་\'Open Settings\' མཐེབ་གནོན་བྱེད་དགོས།</string>
-    <string name="step_2">རེ་ཞུའི་མིང་ཐོའི་ནང་\'Cashiro\'འཚོལ་དགོས།</string>
+    <string name="step_2">རེ་ཞུའི་མིང་ཐོའི་ནང་\'Zakat\'འཚོལ་དགོས།</string>
     <string name="step_3">\'བརྡ་ཐོ་འཛུལ་ཆོག་པ\'དེ་ནུས་པ་འདོན་པར་བསྒྱུར་དགོས།</string>
     <string name="open_settings">ཁ་ཕྱེ་བའི་སྒྲིག་སྟངས་</string>
     <string name="scan_settings">བཤེར་བཤེར་སྒྲིག་སྟངས་</string>

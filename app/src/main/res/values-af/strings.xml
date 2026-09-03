@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">Voeg Transaksie by</string>
     <string name="add_subscription">Voeg Subskripsie by</string>
     <string name="add_transfer">Voeg Oordrag by</string>
@@ -277,7 +277,7 @@ Nuttig vir langtermynbegrotings oor verskeie periodes</string>
     <string name="chart_type_heatmap">Hittekaart</string>
     <string name="chart_format">%1$s Grafiek</string>
     <string name="toggle_view">Skakel Vertoning</string>
-    <string name="cashiro_ai">Cashiro KI</string>
+    <string name="cashiro_ai">Zakat KI</string>
     <string name="more_options">Meer opsies</string>
     <string name="clear_chat">Maak Geselskap skoon</string>
     <string name="qwen_model_required">Qwen Model Vereis</string>
@@ -309,7 +309,7 @@ Nuttig vir langtermynbegrotings oor verskeie periodes</string>
     <string name="press_back_again_to_close">Druk weer terug om die toepassing te sluit</string>
     <string name="transaction_deleted">Transaksie verwyder</string>
     <string name="undo">Ongedaan maak</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">Profiel</string>
     <string name="banner">Banier</string>
     <string name="recent">Onlangs</string>
@@ -346,7 +346,7 @@ Groen (+) = Spaar | Rooi (-) = Oorskietwyd</string>
     <string name="stay_updated">Bly Op Datum</string>
     <string name="automatic_tracking">Outomatiese Opvolging</string>
     <string name="allow_notifications_desc">Laat kennisgewings toe om rekeningherinnerings en daaglikse opsommings te ontvang.</string>
-    <string name="automatic_tracking_desc">Cashiro kan jou transaksie-SMS outomaties skandeer om jou rekeninge op datum te hou.</string>
+    <string name="automatic_tracking_desc">Zakat kan jou transaksie-SMS outomaties skandeer om jou rekeninge op datum te hou.</string>
     <string name="skip_for_now">Slaan vir nou oor</string>
     <string name="verify_accounts">Verifieer Rekeninge</string>
     <string name="scanning_messages">Boodskappe Beskandeer</string>
@@ -416,7 +416,7 @@ Groen (+) = Spaar | Rooi (-) = Oorskietwyd</string>
     <string name="share">Deel</string>
     <string name="retry">Probeer weer</string>
     <string name="share_csv">Deel CSV</string>
-    <string name="csv_export_subject">Cashiro Transaksies Uitvoer</string>
+    <string name="csv_export_subject">Zakat Transaksies Uitvoer</string>
     <string name="edit_transaction">Wysig Transaksie</string>
     <string name="transaction_details">Transaksie Besonderhede</string>
     <string name="report_issue">Rapporteer Probleem</string>
@@ -481,7 +481,7 @@ Groen (+) = Spaar | Rooi (-) = Oorskietwyd</string>
     <string name="no_transactions_for_format">Geen transaksies vir %1$s nie</string>
     <string name="sync_sms_to_see_transactions">Sinkroniseer jou SMS om transaksies te sien</string>
     <string name="about">Oor</string>
-    <string name="cashiro_logo_cd">Cashiro Logo</string>
+    <string name="cashiro_logo_cd">Zakat Logo</string>
     <string name="version_format">Weergawe %1$s, db-v%2$d</string>
     <string name="developed_by">Ontwikkel deur Ritesh</string>
     <string name="lead_developer_cd">leidende ontwikkelaar</string>
@@ -492,9 +492,9 @@ Groen (+) = Spaar | Rooi (-) = Oorskietwyd</string>
     <string name="faq">Gereelde Vrae</string>
     <string name="faq_desc">Gereeld gevraagde vrae</string>
     <string name="guides">Gidse</string>
-    <string name="guides_desc">Hoe om Cashiro te gebruik</string>
+    <string name="guides_desc">Hoe om Zakat te gebruik</string>
     <string name="report_bug">Rapporteer fout</string>
-    <string name="report_bug_desc">Help ons om Cashiro te verbeter</string>
+    <string name="report_bug_desc">Help ons om Zakat te verbeter</string>
     <string name="privacy_policy">Privaatheidsbeleid</string>
     <string name="privacy_policy_desc">Jou data gebruik en privaatheid</string>
     <string name="terms_of_service">Diensvoorwaardes</string>
@@ -548,7 +548,7 @@ Groen (+) = Spaar | Rooi (-) = Oorskietwyd</string>
     <string name="one_month">1 maand</string>
     <string name="two_years">2 jaar</string>
     <string name="unrecognized_messages_title">Onherkende Boodskappe</string>
-    <string name="unrecognized_bank_messages_desc">Hierdie boodskappe van potensiële banke kon nie outomaties ontleed word nie. Help om Cashiro te verbeter deur dit te rapporteer sodat ons ondersteuning vir meer banke kan toevoeg.</string>
+    <string name="unrecognized_bank_messages_desc">Hierdie boodskappe van potensiële banke kon nie outomaties ontleed word nie. Help om Zakat te verbeter deur dit te rapporteer sodat ons ondersteuning vir meer banke kan toevoeg.</string>
     <string name="show_reported">Wys Gerapporteer</string>
     <string name="count_new_format">%1$d nuut</string>
     <string name="count_reported_format">%1$d gerapporteer</string>
@@ -591,7 +591,7 @@ Groen (+) = Spaar | Rooi (-) = Oorskietwyd</string>
     <string name="delete_webhook_confirm_desc">Hierdie profiel, die geskeduleerde sinkronisasies en alle leweringslogboeke sal verwyder word. Dit kan nie ongedaan gemaak word nie.</string>
     <string name="byoapi_sync_title">BYOAPI Finansiële Sinkronisasie</string>
     <string name="byoapi_sync_desc">Stuur geselekteerde finansiële data na jou eie eindpunt. Enige HTTP 2xx-reaksie word as \'n suksesvolle lewering beskou.</string>
-    <string name="byoapi_sync_warning">Dit sal jou finansiële data na die URL wat jy konfigureer, stuur. Cashiro kan nie die veiligheid van daardie eindpunt verifieer nie.</string>
+    <string name="byoapi_sync_warning">Dit sal jou finansiële data na die URL wat jy konfigureer, stuur. Zakat kan nie die veiligheid van daardie eindpunt verifieer nie.</string>
     <string name="sync_now">Sinkroniseer nou</string>
     <string name="sync_now_desc">Begin lewering vir alle geaktiveerde profiele</string>
     <string name="sync_schedule_title">Sinkronisasie Skedule</string>
@@ -886,10 +886,10 @@ Groen (+) = Spaar | Rooi (-) = Oorskietwyd</string>
     <string name="notification_access_active">Kennisgewing toegang is aktief</string>
     <string name="notification_access_desc">Skakel aan om banktransaksies van stootkennisgewings te herken</string>
     <string name="notification_access_required">Kennisgewingstoegang Vereis</string>
-    <string name="notification_access_required_desc">Om banktransaksies in reële tyd outomaties te kan opspoor, benodig Cashiro kennisgewingstoegang. Dit is \'n stelselvlak toestemming.</string>
+    <string name="notification_access_required_desc">Om banktransaksies in reële tyd outomaties te kan opspoor, benodig Zakat kennisgewingstoegang. Dit is \'n stelselvlak toestemming.</string>
     <string name="how_to_enable">Hoe om dit te aktiveer:</string>
     <string name="step_1">Tik op die \'Open Instellings\' knoppie hieronder.</string>
-    <string name="step_2">Vind \'Cashiro\' in die lys van toepassings.</string>
+    <string name="step_2">Vind \'Zakat\' in die lys van toepassings.</string>
     <string name="step_3">Skakel \'Laat kennisgewingstoegang toe\' aan.</string>
     <string name="open_settings">Open Instellings</string>
     <string name="scan_settings">Skan Instellings</string>
@@ -915,7 +915,7 @@ Dit mag \'n paar sekondes neem, afhangende van jou boodskapgeskiedenis.</string>
     <string name="this_month_lbl">HIERDIE MAAND</string>
     <string name="this_year_lbl">HIERDIE JAAR</string>
     <string name="percent_this_month_format">%1$s%2$s%% hierdie maand</string>
-    <string name="app_locked_title">Cashiro is Gesluit</string>
+    <string name="app_locked_title">Zakat is Gesluit</string>
     <string name="authenticate_desc">Verifieer om toegang tot jou uitgawesdata te kry</string>
     <string name="unlock">Ontsluit</string>
     <string name="biometric_unavailable_title">Biometriese verifikasie nie beskikbaar nie</string>

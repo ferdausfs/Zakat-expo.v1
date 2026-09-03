@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">Afegir transacció</string>
     <string name="add_subscription">Afegir subscripció</string>
     <string name="add_transfer">Afegir transferència</string>
@@ -277,7 +277,7 @@
     <string name="chart_type_heatmap">Mapa de calor</string>
     <string name="chart_format">Gràfic de %1$s</string>
     <string name="toggle_view">Canvia la vista</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">Més opcions</string>
     <string name="clear_chat">Netejar xat</string>
     <string name="qwen_model_required">Model Qwen requerit</string>
@@ -309,7 +309,7 @@
     <string name="press_back_again_to_close">Prem enrere de nou per tancar l\'aplicació</string>
     <string name="transaction_deleted">Transacció esborrada</string>
     <string name="undo">Desfés</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">Perfil</string>
     <string name="banner">Bandera</string>
     <string name="recent">Recents</string>
@@ -346,7 +346,7 @@ Verd (+) = Estalvis | Vermell (-) = Gast excessiu</string>
     <string name="stay_updated">Mantente Actualitzat</string>
     <string name="automatic_tracking">Seguiment Automàtic</string>
     <string name="allow_notifications_desc">Permet les notificacions per rebre recordatoris de factures i resums diaris.</string>
-    <string name="automatic_tracking_desc">Cashiro pot escanejar automàticament els teus SMS de transacció per mantenir els teus comptes actualitzats.</string>
+    <string name="automatic_tracking_desc">Zakat pot escanejar automàticament els teus SMS de transacció per mantenir els teus comptes actualitzats.</string>
     <string name="skip_for_now">Saltar per ara</string>
     <string name="verify_accounts">Verifica Comptes</string>
     <string name="scanning_messages">Escanejant Missatges</string>
@@ -416,7 +416,7 @@ Verd (+) = Estalvis | Vermell (-) = Gast excessiu</string>
     <string name="share">Comparteix</string>
     <string name="retry">Torna-ho a provar</string>
     <string name="share_csv">Comparteix CSV</string>
-    <string name="csv_export_subject">Exportació de transaccions de Cashiro</string>
+    <string name="csv_export_subject">Exportació de transaccions de Zakat</string>
     <string name="edit_transaction">Editar transacció</string>
     <string name="transaction_details">Detalls de la transacció</string>
     <string name="report_issue">Reporta un problema</string>
@@ -481,7 +481,7 @@ Verd (+) = Estalvis | Vermell (-) = Gast excessiu</string>
     <string name="no_transactions_for_format">Cap transacció per a %1$s</string>
     <string name="sync_sms_to_see_transactions">Sincronitza els teus SMS per veure les transaccions</string>
     <string name="about">Quant a</string>
-    <string name="cashiro_logo_cd">Logotip de Cashiro</string>
+    <string name="cashiro_logo_cd">Logotip de Zakat</string>
     <string name="version_format">Versió %1$s, db-v%2$d</string>
     <string name="developed_by">Desenvolupat per Ritesh</string>
     <string name="lead_developer_cd">desenvolupador principal</string>
@@ -492,9 +492,9 @@ Verd (+) = Estalvis | Vermell (-) = Gast excessiu</string>
     <string name="faq">FAQ</string>
     <string name="faq_desc">Preguntes freqüents</string>
     <string name="guides">Guies</string>
-    <string name="guides_desc">Com utilitzar Cashiro</string>
+    <string name="guides_desc">Com utilitzar Zakat</string>
     <string name="report_bug">Reporta un error</string>
-    <string name="report_bug_desc">Ajuda\'ns a millorar Cashiro</string>
+    <string name="report_bug_desc">Ajuda\'ns a millorar Zakat</string>
     <string name="privacy_policy">Política de privadesa</string>
     <string name="privacy_policy_desc">L\'ús i la privadesa de les teves dades</string>
     <string name="terms_of_service">Termes del servei</string>
@@ -548,7 +548,7 @@ Verd (+) = Estalvis | Vermell (-) = Gast excessiu</string>
     <string name="one_month">1 mes</string>
     <string name="two_years">2 anys</string>
     <string name="unrecognized_messages_title">Missatges no reconeguts</string>
-    <string name="unrecognized_bank_messages_desc">Aquests missatges de possibles bancs no es poden analitzar automàticament. Ajuda a millorar Cashiro informant-los perquè puguem afegir suport per a més bancs.</string>
+    <string name="unrecognized_bank_messages_desc">Aquests missatges de possibles bancs no es poden analitzar automàticament. Ajuda a millorar Zakat informant-los perquè puguem afegir suport per a més bancs.</string>
     <string name="show_reported">Mostra Informats</string>
     <string name="count_new_format">%1$d nou</string>
     <string name="count_reported_format">%1$d reportat</string>
@@ -591,7 +591,7 @@ Verd (+) = Estalvis | Vermell (-) = Gast excessiu</string>
     <string name="delete_webhook_confirm_desc">Aquest perfil, les seves sincronitzacions programades i tots els registres d\'entrega seran eliminats. Això no es pot desfer.</string>
     <string name="byoapi_sync_title">Sincronització Finance BYOAPI</string>
     <string name="byoapi_sync_desc">Envia les dades financeres seleccionades al teu propi endpoint. Qualsevol resposta HTTP 2xx es considera una entrega exitosa.</string>
-    <string name="byoapi_sync_warning">Això enviarà les teves dades financeres a la URL que configuris. Cashiro no pot verificar la seguretat d\'aquest endpoint.</string>
+    <string name="byoapi_sync_warning">Això enviarà les teves dades financeres a la URL que configuris. Zakat no pot verificar la seguretat d\'aquest endpoint.</string>
     <string name="sync_now">Sincronitza ara</string>
     <string name="sync_now_desc">Dispara l\'entrega per a tots els perfils habilitats</string>
     <string name="sync_schedule_title">Programació de la sincronització</string>
@@ -886,10 +886,10 @@ Verd (+) = Estalvis | Vermell (-) = Gast excessiu</string>
     <string name="notification_access_active">L\'accés a les notificacions està actiu</string>
     <string name="notification_access_desc">Activa-ho per detectar transaccions bancàries a partir de notificacions push</string>
     <string name="notification_access_required">Es requereix accés a les notificacions</string>
-    <string name="notification_access_required_desc">Per detectar automàticament transaccions bancàries en temps real, Cashiro necessita accés a les notificacions. Aquesta és un permís a nivell del sistema.</string>
+    <string name="notification_access_required_desc">Per detectar automàticament transaccions bancàries en temps real, Zakat necessita accés a les notificacions. Aquesta és un permís a nivell del sistema.</string>
     <string name="how_to_enable">Com habilitar-ho:</string>
     <string name="step_1">Toca el botó \'Obrir Configuració\' a continuació.</string>
-    <string name="step_2">Troba \'Cashiro\' a la llista d\'aplicacions.</string>
+    <string name="step_2">Troba \'Zakat\' a la llista d\'aplicacions.</string>
     <string name="step_3">Activa \'Permetre accés a notificacions\'.</string>
     <string name="open_settings">Obrir Configuració</string>
     <string name="scan_settings">Escanejar Configuració</string>
@@ -915,7 +915,7 @@ Això pot trigar uns segons depenent de l\'historial dels vostres missatges.</st
     <string name="this_month_lbl">AQUEST MES</string>
     <string name="this_year_lbl">AQUEST ANY</string>
     <string name="percent_this_month_format">%1$s%2$s%% aquest mes</string>
-    <string name="app_locked_title">Cashiro està bloquejat</string>
+    <string name="app_locked_title">Zakat està bloquejat</string>
     <string name="authenticate_desc">Autentiqueu-vos per accedir a les vostres dades de despeses</string>
     <string name="unlock">Desbloquejar</string>
     <string name="biometric_unavailable_title">Autenticació biomètrica no disponible</string>

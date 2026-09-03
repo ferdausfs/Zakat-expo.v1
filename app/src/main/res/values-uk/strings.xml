@@ -276,7 +276,7 @@
     <string name="chart_type_heatmap">Теплокарта</string>
     <string name="chart_format">%1$s діаграма</string>
     <string name="toggle_view">Перемкнути перегляд</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">Більше опцій</string>
     <string name="clear_chat">Очистити чат</string>
     <string name="qwen_model_required">Необхідна Qwen модель</string>
@@ -345,7 +345,7 @@
     <string name="stay_updated">Залишатися оновленим</string>
     <string name="automatic_tracking">Автоматичне відслідковування</string>
     <string name="allow_notifications_desc">Дозвольте повідомлення про отримання нагадувань і щоденних резюме.</string>
-    <string name="automatic_tracking_desc">Cashiro може автоматично сканувати SMS транзакцій, щоб підтримувати їх в актуальному стані.</string>
+    <string name="automatic_tracking_desc">Zakat може автоматично сканувати SMS транзакцій, щоб підтримувати їх в актуальному стані.</string>
     <string name="skip_for_now">Поки що пропустити</string>
     <string name="verify_accounts">Підтвердити облікові записи</string>
     <string name="scanning_messages">Сканування повідомлень</string>
@@ -415,7 +415,7 @@
     <string name="share">Поділитись</string>
     <string name="retry">Повторити спробу</string>
     <string name="share_csv">Поділитись через CSV</string>
-    <string name="csv_export_subject">Експорт операцій Cashiro</string>
+    <string name="csv_export_subject">Експорт операцій Zakat</string>
     <string name="edit_transaction">Редагувати транзакцію</string>
     <string name="transaction_details">Деталі операції</string>
     <string name="report_issue">Повідомити про проблему</string>
@@ -493,7 +493,7 @@
     <string name="guides">Посібники</string>
     <string name="guides_desc">Як користуватися Касіро</string>
     <string name="report_bug">Повідомити про помилку</string>
-    <string name="report_bug_desc">Допоможіть нам покращити Cashiro</string>
+    <string name="report_bug_desc">Допоможіть нам покращити Zakat</string>
     <string name="privacy_policy">Політика конфіденційності</string>
     <string name="privacy_policy_desc">Використання та конфіденційність даних</string>
     <string name="terms_of_service">Умови Використання</string>
@@ -885,10 +885,10 @@
     <string name="notification_access_active">Доступ до повідомлень активний</string>
     <string name="notification_access_desc">Увімкніть, щоб виявляти банківські транзакції з push-повідомлень</string>
     <string name="notification_access_required">Необхідний доступ до повідомлень</string>
-    <string name="notification_access_required_desc">Щоб автоматично виявляти банківські транзакції в реальному часі, Cashiro вимагає доступу до повідомлень. Це системний рівень дозволу.</string>
+    <string name="notification_access_required_desc">Щоб автоматично виявляти банківські транзакції в реальному часі, Zakat вимагає доступу до повідомлень. Це системний рівень дозволу.</string>
     <string name="how_to_enable">Як увімкнути:</string>
     <string name="step_1">Натисніть кнопку \'Відкрити налаштування\' нижче.</string>
-    <string name="step_2">Знайдіть \'Cashiro\' у списку програм.</string>
+    <string name="step_2">Знайдіть \'Zakat\' у списку програм.</string>
     <string name="step_3">Увімкніть \'Дозволити доступ до сповіщень\'.</string>
     <string name="open_settings">Відкрити Налаштування</string>
     <string name="scan_settings">Налаштування сканування</string>
@@ -914,7 +914,7 @@
     <string name="this_month_lbl">ЦЬОГО МІСЯЦЯ</string>
     <string name="this_year_lbl">ЦЬОГО РОКУ</string>
     <string name="percent_this_month_format">%1$s%2$s%% цього місяця</string>
-    <string name="app_locked_title">Cashiro заблоковано</string>
+    <string name="app_locked_title">Zakat заблоковано</string>
     <string name="authenticate_desc">Аутентифікуйтесь для доступу до даних витрат</string>
     <string name="unlock">Розблокувати</string>
     <string name="biometric_unavailable_title">Біометрична автентифікація недоступна</string>

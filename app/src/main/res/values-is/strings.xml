@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">Bæta við færslu</string>
     <string name="add_subscription">Bæta við áskrift</string>
     <string name="add_transfer">Bæta við millifærslu</string>
@@ -277,7 +277,7 @@ Hentugt fyrir langtímafjárhagsáætlanir yfir mörg tímabil</string>
     <string name="chart_type_heatmap">Hitakort</string>
     <string name="chart_format">%1$s Myndrit</string>
     <string name="toggle_view">Skipta um Sýn</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">Fleiri valkostir</string>
     <string name="clear_chat">Hreinsa spjall</string>
     <string name="qwen_model_required">Krafist Qwen Líkans</string>
@@ -309,7 +309,7 @@ Hentugt fyrir langtímafjárhagsáætlanir yfir mörg tímabil</string>
     <string name="press_back_again_to_close">Ýttu aftur til að loka forritinu</string>
     <string name="transaction_deleted">Færsla eytt</string>
     <string name="undo">Afturkalla</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">Prófíl</string>
     <string name="banner">Borði</string>
     <string name="recent">Nýleg</string>
@@ -346,7 +346,7 @@ Grænn (+) = Sparnaður | Rauður (-) = Ofureyðsla</string>
     <string name="stay_updated">Fá að uppfærast</string>
     <string name="automatic_tracking">Sjálfvirk rekstrarvöktun</string>
     <string name="allow_notifications_desc">Leyfa tilkynningar til að fá áminningar um reikninga og dagleg yfirlit.</string>
-    <string name="automatic_tracking_desc">Cashiro getur sjálfkrafa skannað SMS-færslur þínar til að halda reikningum þínum uppfærðum.</string>
+    <string name="automatic_tracking_desc">Zakat getur sjálfkrafa skannað SMS-færslur þínar til að halda reikningum þínum uppfærðum.</string>
     <string name="skip_for_now">Sleppa núna</string>
     <string name="verify_accounts">Staðfesta reikninga</string>
     <string name="scanning_messages">Skönnun skilaboða</string>
@@ -416,7 +416,7 @@ Grænn (+) = Sparnaður | Rauður (-) = Ofureyðsla</string>
     <string name="share">Deila</string>
     <string name="retry">Reyna aftur</string>
     <string name="share_csv">Deila CSV</string>
-    <string name="csv_export_subject">Útflutningur Cashiro-færslna</string>
+    <string name="csv_export_subject">Útflutningur Zakat-færslna</string>
     <string name="edit_transaction">Breyta færslu</string>
     <string name="transaction_details">Upplýsingar um færslu</string>
     <string name="report_issue">Tilkynna vandamál</string>
@@ -481,7 +481,7 @@ Grænn (+) = Sparnaður | Rauður (-) = Ofureyðsla</string>
     <string name="no_transactions_for_format">Engar færslur fyrir %1$s</string>
     <string name="sync_sms_to_see_transactions">Samstilltu SMS-skilaboðin þín til að sjá færslur</string>
     <string name="about">Um</string>
-    <string name="cashiro_logo_cd">Cashiro Merki</string>
+    <string name="cashiro_logo_cd">Zakat Merki</string>
     <string name="version_format">Útgáfa %1$s, db-v%2$d</string>
     <string name="developed_by">Hannað af Ritesh</string>
     <string name="lead_developer_cd">aðalforritari</string>
@@ -492,9 +492,9 @@ Grænn (+) = Sparnaður | Rauður (-) = Ofureyðsla</string>
     <string name="faq">FAQ</string>
     <string name="faq_desc">Algengar spurningar</string>
     <string name="guides">Leiðbeiningar</string>
-    <string name="guides_desc">Hvernig á að nota Cashiro</string>
+    <string name="guides_desc">Hvernig á að nota Zakat</string>
     <string name="report_bug">Tilkynna villu</string>
-    <string name="report_bug_desc">Hjálpaðu okkur að bæta Cashiro</string>
+    <string name="report_bug_desc">Hjálpaðu okkur að bæta Zakat</string>
     <string name="privacy_policy">Persónuverndarstefna</string>
     <string name="privacy_policy_desc">Notkun gagna þinna og friðhelgi</string>
     <string name="terms_of_service">Notkunarskilmálar</string>
@@ -548,7 +548,7 @@ Grænn (+) = Sparnaður | Rauður (-) = Ofureyðsla</string>
     <string name="one_month">1 mánuður</string>
     <string name="two_years">2 ár</string>
     <string name="unrecognized_messages_title">Óþekkt skilaboð</string>
-    <string name="unrecognized_bank_messages_desc">Þessi skilaboð frá mögulegum bönkum gátu ekki verið lesin sjálfkrafa. Hjálpaðu til við að bæta Cashiro með því að tilkynna þau svo við getum bætt við stuðning við fleiri banka.</string>
+    <string name="unrecognized_bank_messages_desc">Þessi skilaboð frá mögulegum bönkum gátu ekki verið lesin sjálfkrafa. Hjálpaðu til við að bæta Zakat með því að tilkynna þau svo við getum bætt við stuðning við fleiri banka.</string>
     <string name="show_reported">Sýna tilkynnt</string>
     <string name="count_new_format">%1$d ný</string>
     <string name="count_reported_format">%1$d tilkynnt</string>
@@ -591,7 +591,7 @@ Grænn (+) = Sparnaður | Rauður (-) = Ofureyðsla</string>
     <string name="delete_webhook_confirm_desc">Þessi prófíll, áætlunar samstillingar hans og öll afhendingarskrá verða fjarlægð. Þetta er ekki hægt að afturkalla.</string>
     <string name="byoapi_sync_title">BYOAPI Fjármálasamstilling</string>
     <string name="byoapi_sync_desc">Senda valdar fjármálaupplýsingar á eigin enda. Öll HTTP 2xx svör eru talin sem árangursrík afhending.</string>
-    <string name="byoapi_sync_warning">Þetta mun senda fjármálaupplýsingar þínar á þann URL sem þú stillir. Cashiro getur ekki staðfest öryggi þess enda.</string>
+    <string name="byoapi_sync_warning">Þetta mun senda fjármálaupplýsingar þínar á þann URL sem þú stillir. Zakat getur ekki staðfest öryggi þess enda.</string>
     <string name="sync_now">Samstilla núna</string>
     <string name="sync_now_desc">Kveikja á afhendingu fyrir alla virka prófíla</string>
     <string name="sync_schedule_title">Samstillingaráætlun</string>
@@ -886,10 +886,10 @@ Grænn (+) = Sparnaður | Rauður (-) = Ofureyðsla</string>
     <string name="notification_access_active">Aðgangur að tilkynningum er virkur</string>
     <string name="notification_access_desc">Virkja til að greina bankaviðskipti úr push-tilkynningum</string>
     <string name="notification_access_required">Krefst aðgangs að tilkynningum</string>
-    <string name="notification_access_required_desc">Til að greina bankaviðskipti sjálfkrafa í rauntíma krefst Cashiro aðgangs að tilkynningum. Þetta er kerfisleyfi.</string>
+    <string name="notification_access_required_desc">Til að greina bankaviðskipti sjálfkrafa í rauntíma krefst Zakat aðgangs að tilkynningum. Þetta er kerfisleyfi.</string>
     <string name="how_to_enable">Hvernig á að virkja:</string>
     <string name="step_1">Ýttu á hnappinn \'Opna stillingar\' hér að neðan.</string>
-    <string name="step_2">Finndu \'Cashiro\' í forritalistanum.</string>
+    <string name="step_2">Finndu \'Zakat\' í forritalistanum.</string>
     <string name="step_3">Skiptu um \'Leyfa tilkynninga aðgang\' til að virkja.</string>
     <string name="open_settings">Opna stillingar</string>
     <string name="scan_settings">Skrá tilkynningar</string>
@@ -915,7 +915,7 @@ Grænn (+) = Sparnaður | Rauður (-) = Ofureyðsla</string>
     <string name="this_month_lbl">ÞESSI MÁNUÐ</string>
     <string name="this_year_lbl">ÞESSU ÁRI</string>
     <string name="percent_this_month_format">%1$s%2$s%% þennan mánuð</string>
-    <string name="app_locked_title">Cashiro er læst</string>
+    <string name="app_locked_title">Zakat er læst</string>
     <string name="authenticate_desc">Staðfestu til að fá aðgang að útgjaldagögnum þínum</string>
     <string name="unlock">Læsa upp</string>
     <string name="biometric_unavailable_title">Líkamsræktaraðgangur ekki tiltækur</string>

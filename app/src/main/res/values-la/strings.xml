@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">Addere Transactionem</string>
     <string name="add_subscription">Addere Subscriptionem</string>
     <string name="add_transfer">Addere Transferre</string>
@@ -277,7 +277,7 @@ Utilis pro budget diuturnis per plures periodos</string>
     <string name="chart_type_heatmap">Calor Map</string>
     <string name="chart_format">%1$s Graphice</string>
     <string name="toggle_view">Mutare Visum</string>
-    <string name="cashiro_ai">AI Cashiro</string>
+    <string name="cashiro_ai">AI Zakat</string>
     <string name="more_options">Plura Optiones</string>
     <string name="clear_chat">Purga Sermonem</string>
     <string name="qwen_model_required">Qwen Modulum Requisitum</string>
@@ -309,7 +309,7 @@ Utilis pro budget diuturnis per plures periodos</string>
     <string name="press_back_again_to_close">Iterum preme ut app claudas</string>
     <string name="transaction_deleted">Negotium deletum</string>
     <string name="undo">Rescindere</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">Profilum</string>
     <string name="banner">Vexillum</string>
     <string name="recent">Recentius</string>
@@ -346,7 +346,7 @@ Viridis (+) = Pecunia Servata | Ruber (-) = Superfluum Expensum</string>
     <string name="stay_updated">Manere Update</string>
     <string name="automatic_tracking">Automatica Tractatio</string>
     <string name="allow_notifications_desc">Permitte notificationes ad recipiendas admonitiones solutionum et summaria quotidiana.</string>
-    <string name="automatic_tracking_desc">Cashiro potest automatice transigere SMS vestigium facere ut rationes tuas recentes teneat.</string>
+    <string name="automatic_tracking_desc">Zakat potest automatice transigere SMS vestigium facere ut rationes tuas recentes teneat.</string>
     <string name="skip_for_now">Praeterea Nunc Saltare</string>
     <string name="verify_accounts">Rationes Verifica</string>
     <string name="scanning_messages">Epistulas Scanas</string>
@@ -416,7 +416,7 @@ Viridis (+) = Pecunia Servata | Ruber (-) = Superfluum Expensum</string>
     <string name="share">Communicare</string>
     <string name="retry">Iterum conare</string>
     <string name="share_csv">Communicare CSV</string>
-    <string name="csv_export_subject">Exportatio Transactionum Cashiro</string>
+    <string name="csv_export_subject">Exportatio Transactionum Zakat</string>
     <string name="edit_transaction">Editare Transactionem</string>
     <string name="transaction_details">Details Transactionis</string>
     <string name="report_issue">Referre Problema</string>
@@ -481,7 +481,7 @@ Viridis (+) = Pecunia Servata | Ruber (-) = Superfluum Expensum</string>
     <string name="no_transactions_for_format">Nullae transactiones pro %1$s</string>
     <string name="sync_sms_to_see_transactions">Coniunge tuum SMS ut videas transactiones</string>
     <string name="about">fere</string>
-    <string name="cashiro_logo_cd">Logo Cashiro</string>
+    <string name="cashiro_logo_cd">Logo Zakat</string>
     <string name="version_format">Versio %1$s, db-v%2$d</string>
     <string name="developed_by">Per Ritesh Elaboratum</string>
     <string name="lead_developer_cd">praecipuus programmator</string>
@@ -492,9 +492,9 @@ Viridis (+) = Pecunia Servata | Ruber (-) = Superfluum Expensum</string>
     <string name="faq">Interrogationes Frequentes</string>
     <string name="faq_desc">Saepe rogata quaestiones</string>
     <string name="guides">Ductores</string>
-    <string name="guides_desc">Quomodo uti Cashiro</string>
+    <string name="guides_desc">Quomodo uti Zakat</string>
     <string name="report_bug">Renuntia Insectum</string>
-    <string name="report_bug_desc">Adiuvate nos emendare Cashiro</string>
+    <string name="report_bug_desc">Adiuvate nos emendare Zakat</string>
     <string name="privacy_policy">Politica Privatum</string>
     <string name="privacy_policy_desc">Usus tuus data et secretum</string>
     <string name="terms_of_service">Termini Servitii</string>
@@ -548,7 +548,7 @@ Viridis (+) = Pecunia Servata | Ruber (-) = Superfluum Expensum</string>
     <string name="one_month">1 mensis</string>
     <string name="two_years">2 anni</string>
     <string name="unrecognized_messages_title">Nuntios non recogniti</string>
-    <string name="unrecognized_bank_messages_desc">Hi nuntii a potentialibus bankis non potuerunt automatice interpretari. Auxilia Meliorare Cashiro reportando eos ut possimus addere sustinere pro pluribus bankis.</string>
+    <string name="unrecognized_bank_messages_desc">Hi nuntii a potentialibus bankis non potuerunt automatice interpretari. Auxilia Meliorare Zakat reportando eos ut possimus addere sustinere pro pluribus bankis.</string>
     <string name="show_reported">Monstra Relatum</string>
     <string name="count_new_format">%1$d novus</string>
     <string name="count_reported_format">%1$d renuntiavit</string>
@@ -591,7 +591,7 @@ Viridis (+) = Pecunia Servata | Ruber (-) = Superfluum Expensum</string>
     <string name="delete_webhook_confirm_desc">Hic profilum, eius temporalibus synchronisationibus, et omnes logisticae traditiones eradicabuntur. Hoc restituere non potest.</string>
     <string name="byoapi_sync_title">Synchronizatio Rerum Oeconomicarum BYOAPI</string>
     <string name="byoapi_sync_desc">Mittas electa data financial tua ad proprium finem. Quaelibet responsio HTTP 2xx habetur ut successus traditio.</string>
-    <string name="byoapi_sync_warning">Hoc mittet tua data financial ad URL quem configuras. Cashiro securitatem illius finis verificare non potest.</string>
+    <string name="byoapi_sync_warning">Hoc mittet tua data financial ad URL quem configuras. Zakat securitatem illius finis verificare non potest.</string>
     <string name="sync_now">Synchronize nunc</string>
     <string name="sync_now_desc">Excita traditionem pro omnibus profilibus activatis</string>
     <string name="sync_schedule_title">Temporis Synchronisationis</string>
@@ -886,10 +886,10 @@ Viridis (+) = Pecunia Servata | Ruber (-) = Superfluum Expensum</string>
     <string name="notification_access_active">Accessus Notificationis est activus</string>
     <string name="notification_access_desc">Permittere ad detegere ripam transactiones ex push notificationes</string>
     <string name="notification_access_required">Accessus Notificationis Requisitus</string>
-    <string name="notification_access_required_desc">Ad automatice detegere ripam transactiones in reali tempore, Cashiro requirit accessum notificationis. Haec est systema gradu permissionem.</string>
+    <string name="notification_access_required_desc">Ad automatice detegere ripam transactiones in reali tempore, Zakat requirit accessum notificationis. Haec est systema gradu permissionem.</string>
     <string name="how_to_enable">Quomodo permittere:</string>
     <string name="step_1">Tange clavem \'Aperi Occasus\' infra.</string>
-    <string name="step_2">Invenire \'Cashiro\' in indice applicationum.</string>
+    <string name="step_2">Invenire \'Zakat\' in indice applicationum.</string>
     <string name="step_3">Vertere \'Permitte accessum notificationis\' ad activum.</string>
     <string name="open_settings">Aperi Occasus</string>
     <string name="scan_settings">Scan Occasus</string>
@@ -915,7 +915,7 @@ Hoc potest capere paucis secundis secundum tuum nuntium historiam.</string>
     <string name="this_month_lbl">HOC MENSE</string>
     <string name="this_year_lbl">HOC ANNO</string>
     <string name="percent_this_month_format">%1$s%2$s%% hoc mense</string>
-    <string name="app_locked_title">Cashiro claudit</string>
+    <string name="app_locked_title">Zakat claudit</string>
     <string name="authenticate_desc">Authentica ut accessum ad tua expensa data</string>
     <string name="unlock">reserare</string>
     <string name="biometric_unavailable_title">Biometrica authentificatio non praesto est</string>

@@ -55,7 +55,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.FileProvider
 import com.ritesh.cashiro.R
-import com.ritesh.cashiro.presentation.ui.theme.CashiroTheme
+import com.ritesh.cashiro.presentation.ui.theme.ZakatTheme
 import com.ritesh.cashiro.utils.CrashHandler
 import java.io.File
 import java.text.SimpleDateFormat
@@ -84,7 +84,7 @@ class CrashActivity : ComponentActivity() {
 
         setContent {
             val darkTheme = isSystemInDarkTheme()
-            CashiroTheme(darkTheme = darkTheme) {
+            ZakatTheme(darkTheme = darkTheme) {
                 CrashScreen(
                     crashLog = crashLog,
                     onClose = { finishAffinity() },
@@ -123,7 +123,7 @@ class CrashActivity : ComponentActivity() {
             val shareIntent = Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
                 putExtra(Intent.EXTRA_TEXT, crashLog)
-                putExtra(Intent.EXTRA_SUBJECT, "Cashiro Crash Report")
+                putExtra(Intent.EXTRA_SUBJECT, "Zakat Crash Report")
             }
             startActivity(Intent.createChooser(shareIntent, "Share crash report"))
         }
@@ -224,7 +224,7 @@ fun CrashScreen(
                             color = MaterialTheme.colorScheme.onErrorContainer
                         )
                         Text(
-                            text = "Cashiro encountered a fatal error and had to stop. Please share the report below to help us fix the issue.",
+                            text = "Zakat encountered a fatal error and had to stop. Please share the report below to help us fix the issue.",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.85f),
                             lineHeight = 16.sp

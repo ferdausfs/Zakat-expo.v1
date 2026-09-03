@@ -72,7 +72,7 @@ class CrashHandler private constructor(
         }.toString()
 
         return buildString {
-            appendLine("Cashiro AI Tracker — Crash Report")
+            appendLine("Zakat AI Tracker — Crash Report")
             appendLine("=".repeat(50))
             appendLine()
             appendLine("Manufacturer : ${Build.MANUFACTURER}")

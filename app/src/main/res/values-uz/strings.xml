@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">Tranzaksiyani qo\'shish</string>
     <string name="add_subscription">Obunani qo\'shish</string>
     <string name="add_transfer">O\'tkazmani qo\'shish</string>
@@ -277,7 +277,7 @@ Foydali: bir necha davrlar bo\'yicha uzoq muddatli byudjetlar uchun</string>
     <string name="chart_type_heatmap">Issiqlik xaritasi</string>
     <string name="chart_format">%1$s Diagramma</string>
     <string name="toggle_view">Korni O\'zgartirish</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">Ko\'proq variantlar</string>
     <string name="clear_chat">Chatni Tozalash</string>
     <string name="qwen_model_required">Qwen Modeli Talab etiladi</string>
@@ -309,7 +309,7 @@ Foydali: bir necha davrlar bo\'yicha uzoq muddatli byudjetlar uchun</string>
     <string name="press_back_again_to_close">Ilovani yopish uchun yana orqaga bosing</string>
     <string name="transaction_deleted">Tranzaksiya o‘chirildi</string>
     <string name="undo">Bekor qilish</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">Profil</string>
     <string name="banner">Banner</string>
     <string name="recent">So‘nggi</string>
@@ -346,7 +346,7 @@ Yashil (+) = Tejash | Qizil (-) = Haddan tashqari sarflash</string>
     <string name="stay_updated">Yangilanishlardan xabardor bo\'ling</string>
     <string name="automatic_tracking">Avtomatik kuzatuv</string>
     <string name="allow_notifications_desc">Hisob-kitoblar eslatmalari va kunlik hisobotlarni olish uchun bildirishnomalarga ruxsat bering.</string>
-    <string name="automatic_tracking_desc">Cashiro hisoblaringizni yangilab turish uchun tranzaksiyalar SMSini avtomatik skanerlashi mumkin.</string>
+    <string name="automatic_tracking_desc">Zakat hisoblaringizni yangilab turish uchun tranzaksiyalar SMSini avtomatik skanerlashi mumkin.</string>
     <string name="skip_for_now">Hozircha o\'tkazib yuborish</string>
     <string name="verify_accounts">Hisoblarni tasdiqlash</string>
     <string name="scanning_messages">Xabarlar skanerlanyapti</string>
@@ -416,7 +416,7 @@ Yashil (+) = Tejash | Qizil (-) = Haddan tashqari sarflash</string>
     <string name="share">Ulashish</string>
     <string name="retry">Qayta urinish</string>
     <string name="share_csv">CSV ni ulashish</string>
-    <string name="csv_export_subject">Cashiro tranzaksiyalari eksporti</string>
+    <string name="csv_export_subject">Zakat tranzaksiyalari eksporti</string>
     <string name="edit_transaction">Tranzaksiyani tahrirlash</string>
     <string name="transaction_details">Tranzaksiya tafsilotlari</string>
     <string name="report_issue">Muammo haqida xabar berish</string>
@@ -481,7 +481,7 @@ Yashil (+) = Tejash | Qizil (-) = Haddan tashqari sarflash</string>
     <string name="no_transactions_for_format">%1$s uchun tranzaksiyalar yo‘q</string>
     <string name="sync_sms_to_see_transactions">Tranzaksiyalarni ko‘rish uchun SMSingizni sinxronlashtiring</string>
     <string name="about">Haqida</string>
-    <string name="cashiro_logo_cd">Cashiro Logosi</string>
+    <string name="cashiro_logo_cd">Zakat Logosi</string>
     <string name="version_format">Versiya %1$s, db-v%2$d</string>
     <string name="developed_by">Ritesh tomonidan ishlab chiqilgan</string>
     <string name="lead_developer_cd">asosiy dasturchi</string>
@@ -492,9 +492,9 @@ Yashil (+) = Tejash | Qizil (-) = Haddan tashqari sarflash</string>
     <string name="faq">Ko\'p so\'raladigan savollar</string>
     <string name="faq_desc">Ko‘p so‘raladigan savollar</string>
     <string name="guides">Qo‘llanmalar</string>
-    <string name="guides_desc">Cashironi qanday ishlatish</string>
+    <string name="guides_desc">Zakatni qanday ishlatish</string>
     <string name="report_bug">Xatolik haqida xabar berish</string>
-    <string name="report_bug_desc">Cashironi yaxshilashga yordam bering</string>
+    <string name="report_bug_desc">Zakatni yaxshilashga yordam bering</string>
     <string name="privacy_policy">Maxfiylik siyosati</string>
     <string name="privacy_policy_desc">Sizning ma’lumotlaringizdan foydalanish va maxfiylik</string>
     <string name="terms_of_service">Xizmat ko‘rsatish shartlari</string>
@@ -548,7 +548,7 @@ Yashil (+) = Tejash | Qizil (-) = Haddan tashqari sarflash</string>
     <string name="one_month">1 oy</string>
     <string name="two_years">2 yil</string>
     <string name="unrecognized_messages_title">Tanish bo‘lmagan xabarlar</string>
-    <string name="unrecognized_bank_messages_desc">Potensial banklardan kelgan bu xabarlar avtomatik tarzda tahlil qilinmadi. Ularni xabar qilib, Cashironi yaxshilashga yordam bering, shunda qo‘shimcha banklarni qo‘llab-quvvatlashni qo‘shishimiz mumkin.</string>
+    <string name="unrecognized_bank_messages_desc">Potensial banklardan kelgan bu xabarlar avtomatik tarzda tahlil qilinmadi. Ularni xabar qilib, Zakatni yaxshilashga yordam bering, shunda qo‘shimcha banklarni qo‘llab-quvvatlashni qo‘shishimiz mumkin.</string>
     <string name="show_reported">Hisobot ko‘rsatish</string>
     <string name="count_new_format">%1$d yangi</string>
     <string name="count_reported_format">%1$d xabar qildi</string>
@@ -591,7 +591,7 @@ Yashil (+) = Tejash | Qizil (-) = Haddan tashqari sarflash</string>
     <string name="delete_webhook_confirm_desc">Ushbu profil, uning belgilangan sinxronizatsiyalari va barcha yetkazib berish loglari o\'chiriladi. Bu bekor qilinmaydi.</string>
     <string name="byoapi_sync_title">BYOAPI Moliyaviy Sinx</string>
     <string name="byoapi_sync_desc">Tanlangan moliyaviy ma\'lumotlarni o\'zingizning endpoint\'ingizga yuboring. Har qanday HTTP 2xx javobi muvaffaqiyatli yetkazib berish deb hisoblanadi.</string>
-    <string name="byoapi_sync_warning">Bu sizning moliyaviy ma\'lumotlaringizni sozlagan URL manzilingizga yuboradi. Cashiro ushbu endpoint xavfsizligini tasdiqlay olmaydi.</string>
+    <string name="byoapi_sync_warning">Bu sizning moliyaviy ma\'lumotlaringizni sozlagan URL manzilingizga yuboradi. Zakat ushbu endpoint xavfsizligini tasdiqlay olmaydi.</string>
     <string name="sync_now">Hozir sinxronizatsiya qiling</string>
     <string name="sync_now_desc">Barcha yoqilgan profillar uchun yetkazib berishni boshlash</string>
     <string name="sync_schedule_title">Sinxronizatsiya Jadvali</string>
@@ -886,10 +886,10 @@ Yashil (+) = Tejash | Qizil (-) = Haddan tashqari sarflash</string>
     <string name="notification_access_active">Bildirishnoma kirish faol</string>
     <string name="notification_access_desc">Push bildirishnomalardan bank tranzaksiyalarini aniqlash uchun yoqing</string>
     <string name="notification_access_required">Bildirishnoma kirish talab qilinadi</string>
-    <string name="notification_access_required_desc">Bank operatsiyalarini real vaqtda avtomatik aniqlash uchun Cashiro bildirishnoma kirishiga ehtiyoj sezadi. Bu tizim darajasidagi ruxsatdir.</string>
+    <string name="notification_access_required_desc">Bank operatsiyalarini real vaqtda avtomatik aniqlash uchun Zakat bildirishnoma kirishiga ehtiyoj sezadi. Bu tizim darajasidagi ruxsatdir.</string>
     <string name="how_to_enable">Qanday yoqish:</string>
     <string name="step_1">Quyidagi \'Sozlamalarni ochish\' tugmasini bosing.</string>
-    <string name="step_2">Ilovalar roʻyxatida \'Cashiro\' ni toping.</string>
+    <string name="step_2">Ilovalar roʻyxatida \'Zakat\' ni toping.</string>
     <string name="step_3">\'Bildirishnoma kirishiga ruxsat berishni\' yoqish uchun almashtirgichni yoqing.</string>
     <string name="open_settings">Sozlamalarni ochish</string>
     <string name="scan_settings">Skaner Sozlamalari</string>
@@ -915,7 +915,7 @@ Bu xabar tarixingizga qarab bir necha soniya davom etishi mumkin.</string>
     <string name="this_month_lbl">USHBU OY</string>
     <string name="this_year_lbl">USHBU YIL</string>
     <string name="percent_this_month_format">%1$s%2$s%% bu oy</string>
-    <string name="app_locked_title">Cashiro qulflangan</string>
+    <string name="app_locked_title">Zakat qulflangan</string>
     <string name="authenticate_desc">Xarajat maʼlumotlaringizga kirish uchun autentifikatsiya qiling</string>
     <string name="unlock">Qulfni ochish</string>
     <string name="biometric_unavailable_title">Biometrik autentifikatsiya mavjud emas</string>

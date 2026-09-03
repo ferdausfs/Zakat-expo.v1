@@ -102,8 +102,8 @@ fun AboutScreen(
                 val tertiary = MaterialTheme.colorScheme.tertiary
                 val alternatingIcons = remember {
                     listOf(
-                        IconResource.VectorIcon(Iconax.Cashiro, primary),
-                        IconResource.VectorIcon(Iconax.CashiroOutline, tertiary)
+                        IconResource.VectorIcon(Iconax.Zakat, primary),
+                        IconResource.VectorIcon(Iconax.ZakatOutline, tertiary)
                     )
                 }
 
@@ -190,7 +190,7 @@ fun AboutScreen(
                     onClick = {
                         val intent = Intent(Intent.ACTION_SENDTO).apply {
                             data = "mailto:modestcat0309@gmail.com".toUri()
-                            putExtra(Intent.EXTRA_SUBJECT, "Feedback for Cashiro")
+                            putExtra(Intent.EXTRA_SUBJECT, "Feedback for Zakat")
                         }
                         context.startActivity(Intent.createChooser(intent, "Send Email"))
                     },
@@ -239,7 +239,7 @@ fun AboutScreen(
                     )
                     AboutListItem(
                         title = stringResource(R.string.github),
-                        subtitle = "ritesh-kanwar/Cashiro",
+                        subtitle = "ferdausfs/Zakat-expo.v1",
                         icon = Iconax.Github,
                         iconColor = green_dark,
                         iconBackground = green_light,
@@ -397,7 +397,7 @@ fun AboutScreen(
                 Need to check Google play policy for donation. for now, I'll comment out these sections
                  */
 
-//                CashiroCard(
+//                ZakatCard(
 //                    modifier = Modifier.fillMaxWidth(),
 //                ){
 //                    Row(
@@ -429,7 +429,7 @@ fun AboutScreen(
 //                    }
 //                    Spacer(modifier = Modifier.height(Spacing.md))
 //                    Text(
-//                        text = "Cashiro is developed and maintained with passion. If you find the app helpful, consider supporting the development.",
+//                        text = "Zakat is developed and maintained with passion. If you find the app helpful, consider supporting the development.",
 //                        style = MaterialTheme.typography.bodySmall,
 //                        color = MaterialTheme.colorScheme.onSurface.copy(0.5f)
 //                    )

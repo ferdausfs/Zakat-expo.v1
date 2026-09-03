@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">Adaugă Tranzacție</string>
     <string name="add_subscription">Adaugă Abonament</string>
     <string name="add_transfer">Adaugă Transfer</string>
@@ -275,7 +275,7 @@
     <string name="chart_type_heatmap">Hartă</string>
     <string name="chart_format">Grafic %1$s</string>
     <string name="toggle_view">Activează/dezactivează vizualizarea</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">Mai multe opțiuni</string>
     <string name="clear_chat">Curăță Chat</string>
     <string name="qwen_model_required">Este necesar un model Qwen</string>
@@ -307,7 +307,7 @@
     <string name="press_back_again_to_close">Apăsați înapoi din nou pentru a închide aplicația</string>
     <string name="transaction_deleted">Tranzacție ștearsă</string>
     <string name="undo">Anulează</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">Profil</string>
     <string name="banner">Banner</string>
     <string name="recent">Recente</string>
@@ -343,7 +343,7 @@
     <string name="stay_updated">Rămâi actualizat</string>
     <string name="automatic_tracking">Urmărire automată</string>
     <string name="allow_notifications_desc">Permiteți notificărilor să primească memento-uri pentru facturi și rezumate zilnice.</string>
-    <string name="automatic_tracking_desc">Cashiro poate scana automat SMS-ul tranzacției pentru a actualiza conturile.</string>
+    <string name="automatic_tracking_desc">Zakat poate scana automat SMS-ul tranzacției pentru a actualiza conturile.</string>
     <string name="skip_for_now">Omite pentru moment</string>
     <string name="verify_accounts">Verifică conturile</string>
     <string name="scanning_messages">Scanarea mesajelor</string>
@@ -413,7 +413,7 @@
     <string name="share">Distribuie</string>
     <string name="retry">Reîncercați</string>
     <string name="share_csv">Distribuie CSV</string>
-    <string name="csv_export_subject">Export tranzacții Cashiro</string>
+    <string name="csv_export_subject">Export tranzacții Zakat</string>
     <string name="edit_transaction">Editează Tranzacția</string>
     <string name="transaction_details">Detalii tranzacție</string>
     <string name="report_issue">Raportează problema</string>
@@ -478,7 +478,7 @@
     <string name="no_transactions_for_format">Nicio tranzacție pentru %1$s</string>
     <string name="sync_sms_to_see_transactions">Sincronizează-ți SMS pentru a vedea tranzacțiile</string>
     <string name="about">Despre</string>
-    <string name="cashiro_logo_cd">Logo Cashiro</string>
+    <string name="cashiro_logo_cd">Logo Zakat</string>
     <string name="version_format">Versiunea %1$s, db-v%2$d</string>
     <string name="developed_by">Dezvoltat de Ritesh</string>
     <string name="lead_developer_cd">dezvoltator principal</string>
@@ -489,9 +489,9 @@
     <string name="faq">Întrebări</string>
     <string name="faq_desc">Întrebări frecvente</string>
     <string name="guides">Ghiduri</string>
-    <string name="guides_desc">Cum să utilizaţi Cashiro</string>
+    <string name="guides_desc">Cum să utilizaţi Zakat</string>
     <string name="report_bug">Raportează eroarea</string>
-    <string name="report_bug_desc">Ajutați-ne să îmbunătățim Cashiro</string>
+    <string name="report_bug_desc">Ajutați-ne să îmbunătățim Zakat</string>
     <string name="privacy_policy">Politica de confidenţialitate</string>
     <string name="privacy_policy_desc">Utilizarea datelor și confidențialitatea datelor</string>
     <string name="terms_of_service">Condiții de utilizare</string>
@@ -545,7 +545,7 @@
     <string name="one_month">1 lună</string>
     <string name="two_years">2 ani</string>
     <string name="unrecognized_messages_title">Mesaje nerecunoscute</string>
-    <string name="unrecognized_bank_messages_desc">Aceste mesaje din partea băncilor potențiale nu au putut fi analizate automat. Ajutați la îmbunătățirea Cashiro raportându-le astfel încât să putem adăuga sprijin pentru mai multe bănci.</string>
+    <string name="unrecognized_bank_messages_desc">Aceste mesaje din partea băncilor potențiale nu au putut fi analizate automat. Ajutați la îmbunătățirea Zakat raportându-le astfel încât să putem adăuga sprijin pentru mai multe bănci.</string>
     <string name="show_reported">Arată Raportat</string>
     <string name="count_new_format">%1$d nou</string>
     <string name="count_reported_format">%1$d raportat</string>
@@ -588,7 +588,7 @@
     <string name="delete_webhook_confirm_desc">Acest profil, sincronizările programate și toate jurnalele de livrare vor fi eliminate. Acest lucru nu poate fi anulat.</string>
     <string name="byoapi_sync_title">Sincronizare finanțe BYOAPI</string>
     <string name="byoapi_sync_desc">Trimite datele financiare selectate la propriul dvs. punct final. Orice răspuns HTTP 2xx este tratat ca o livrare reușită.</string>
-    <string name="byoapi_sync_warning">Acest lucru va trimite datele financiare către URL-ul pe care îl configurați. Cashiro nu poate verifica securitatea acelui punct.</string>
+    <string name="byoapi_sync_warning">Acest lucru va trimite datele financiare către URL-ul pe care îl configurați. Zakat nu poate verifica securitatea acelui punct.</string>
     <string name="sync_now">Sincronizează acum</string>
     <string name="sync_now_desc">Livrare declanșator pentru toate profilurile activate</string>
     <string name="sync_schedule_title">Sincronizare sincronizare</string>
@@ -883,10 +883,10 @@
     <string name="notification_access_active">Accesul la notificări este activ</string>
     <string name="notification_access_desc">Permite detectarea tranzacțiilor bancare din notificările push</string>
     <string name="notification_access_required">Acces la notificări necesar</string>
-    <string name="notification_access_required_desc">Pentru a detecta automat tranzacțiile bancare în timp real, Cashiro necesită acces la notificări. Aceasta este o permisiune la nivel de sistem.</string>
+    <string name="notification_access_required_desc">Pentru a detecta automat tranzacțiile bancare în timp real, Zakat necesită acces la notificări. Aceasta este o permisiune la nivel de sistem.</string>
     <string name="how_to_enable">Cum să activezi:</string>
     <string name="step_1">Apasă butonul \'Deschide Setările\' de mai jos.</string>
-    <string name="step_2">Găsește \'Cashiro\' în lista de aplicații.</string>
+    <string name="step_2">Găsește \'Zakat\' în lista de aplicații.</string>
     <string name="step_3">Activează \'Permite acces la notificări\'.</string>
     <string name="open_settings">Deschide Setările</string>
     <string name="scan_settings">Setările Scanării</string>
@@ -912,7 +912,7 @@ Acest proces poate dura câteva secunde, în funcție de istoricul mesajelor dvs
     <string name="this_month_lbl">ACEASTĂ LUNĂ</string>
     <string name="this_year_lbl">ACEST AN</string>
     <string name="percent_this_month_format">%1$s%2$s%% în această lună</string>
-    <string name="app_locked_title">Cashiro este blocat</string>
+    <string name="app_locked_title">Zakat este blocat</string>
     <string name="authenticate_desc">Autentifică-te pentru a accesa datele tale despre cheltuieli</string>
     <string name="unlock">Deblochează</string>
     <string name="biometric_unavailable_title">Autentificarea biometrică indisponibilă</string>

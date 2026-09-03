@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">ਲੈਣ-ਦੇਣ ਸ਼ਾਮਲ ਕਰੋ</string>
     <string name="add_subscription">ਸਬਸਕ੍ਰਿਪਸ਼ਨ ਸ਼ਾਮਲ ਕਰੋ</string>
     <string name="add_transfer">ਟ੍ਰਾਂਸਫਰ ਸ਼ਾਮਲ ਕਰੋ</string>
@@ -309,7 +309,7 @@
     <string name="press_back_again_to_close">ਐਪ ਨੂੰ ਬੰਦ ਕਰਨ ਲਈ ਵਾਪਸ ਦਰਬਾਜ਼ਾ ਤੇ ਦੁਬਾਰਾ ਦਬਾਓ</string>
     <string name="transaction_deleted">ਲੈਣ-ਦੇਣ ਮਿਟਾਇਆ ਗਿਆ</string>
     <string name="undo">ਰੱਦ ਕਰੋ</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">ਪ੍ਰੋਫ਼ਾਈਲ</string>
     <string name="banner">ਬੈਨਰ</string>
     <string name="recent">ਹਾਲੀਆ</string>
@@ -548,7 +548,7 @@
     <string name="one_month">1 ਮਹੀਨਾ</string>
     <string name="two_years">2 ਸਾਲ</string>
     <string name="unrecognized_messages_title">ਅਣਪਛਾਤੇ ਸੁਨੇਸ਼ੇ</string>
-    <string name="unrecognized_bank_messages_desc">ਇਹ ਸੰਦੇਸ਼ ਸੰਭਾਵਿਤ ਬੈਂਕਾਂ ਤੋਂ ਆਏ ਹਨ, ਜੋ ਆਟੋਮੈਟਿਕ ਤੌਰ \'ਤੇ ਪਾਰਸ ਨਹੀਂ ਕੀਤੇ ਜਾ ਸਕੇ। ਕਿਰਪਾ ਕਰਕੇ Cashiro ਨੂੰ ਸੁਧਾਰਨ ਵਿੱਚ ਮਦਦ ਕਰੋ, ਇਨ੍ਹਾਂ ਨੂੰ ਰਿਪੋਰਟ ਕਰਕੇ ਅਸੀਂ ਹੋਰ ਬੈਂਕਾਂ ਲਈ ਸਮਰਥਨ ਜੋੜ ਸਕੀਏ।</string>
+    <string name="unrecognized_bank_messages_desc">ਇਹ ਸੰਦੇਸ਼ ਸੰਭਾਵਿਤ ਬੈਂਕਾਂ ਤੋਂ ਆਏ ਹਨ, ਜੋ ਆਟੋਮੈਟਿਕ ਤੌਰ \'ਤੇ ਪਾਰਸ ਨਹੀਂ ਕੀਤੇ ਜਾ ਸਕੇ। ਕਿਰਪਾ ਕਰਕੇ Zakat ਨੂੰ ਸੁਧਾਰਨ ਵਿੱਚ ਮਦਦ ਕਰੋ, ਇਨ੍ਹਾਂ ਨੂੰ ਰਿਪੋਰਟ ਕਰਕੇ ਅਸੀਂ ਹੋਰ ਬੈਂਕਾਂ ਲਈ ਸਮਰਥਨ ਜੋੜ ਸਕੀਏ।</string>
     <string name="show_reported">ਰਿਪੋਰਟ ਕੀਤੇ ਵੇਖਾਓ</string>
     <string name="count_new_format">%1$d ਨਵੇਂ</string>
     <string name="count_reported_format">%1$d ਨੇ ਰਿਪੋਰਟ ਕੀਤਾ</string>

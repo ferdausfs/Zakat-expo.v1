@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">Aggiungi Transazione</string>
     <string name="add_subscription">Aggiungi Abbonamento</string>
     <string name="add_transfer">Aggiungi Trasferimento</string>
@@ -275,7 +275,7 @@
     <string name="chart_type_heatmap">Mappa di calore</string>
     <string name="chart_format">Grafico %1$s</string>
     <string name="toggle_view">Attiva/Disattiva Vista</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">Altre opzioni</string>
     <string name="clear_chat">Cancella Chat</string>
     <string name="qwen_model_required">Modello Qwen Richiesto</string>
@@ -307,7 +307,7 @@
     <string name="press_back_again_to_close">Premi di nuovo per chiudere l\'app</string>
     <string name="transaction_deleted">Transazione eliminata</string>
     <string name="undo">Annulla</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">Profilo</string>
     <string name="banner">Banner</string>
     <string name="recent">Recenti</string>
@@ -343,7 +343,7 @@
     <string name="stay_updated">Rimani Aggiornato</string>
     <string name="automatic_tracking">Tracciamento Automatico</string>
     <string name="allow_notifications_desc">Consenti alle notifiche di ricevere promemoria e sintesi giornaliere.</string>
-    <string name="automatic_tracking_desc">Cashiro può eseguire automaticamente la scansione del tuo SMS di transazione per mantenere i tuoi account aggiornati.</string>
+    <string name="automatic_tracking_desc">Zakat può eseguire automaticamente la scansione del tuo SMS di transazione per mantenere i tuoi account aggiornati.</string>
     <string name="skip_for_now">Salta per ora</string>
     <string name="verify_accounts">Verifica Account</string>
     <string name="scanning_messages">Scansione Messaggi</string>
@@ -413,7 +413,7 @@
     <string name="share">Condividi</string>
     <string name="retry">Riprova</string>
     <string name="share_csv">Condividi CSV</string>
-    <string name="csv_export_subject">Esportazione Transazioni Cashiro</string>
+    <string name="csv_export_subject">Esportazione Transazioni Zakat</string>
     <string name="edit_transaction">Modifica Transazione</string>
     <string name="transaction_details">Dettagli Transazione</string>
     <string name="report_issue">Segnala Problema</string>
@@ -478,7 +478,7 @@
     <string name="no_transactions_for_format">Nessuna transazione per %1$s</string>
     <string name="sync_sms_to_see_transactions">Sincronizza il tuo SMS per vedere le transazioni</string>
     <string name="about">Informazioni</string>
-    <string name="cashiro_logo_cd">Logo Cashiro</string>
+    <string name="cashiro_logo_cd">Logo Zakat</string>
     <string name="version_format">Versione %1$s, db-v%2$d</string>
     <string name="developed_by">Sviluppato Da Ritesh</string>
     <string name="lead_developer_cd">sviluppatore principale</string>
@@ -489,9 +489,9 @@
     <string name="faq">FAQ</string>
     <string name="faq_desc">Domande frequenti</string>
     <string name="guides">Guide</string>
-    <string name="guides_desc">Come usare Cashiro</string>
+    <string name="guides_desc">Come usare Zakat</string>
     <string name="report_bug">Segnala Un Bug</string>
-    <string name="report_bug_desc">Aiutaci a migliorare Cashiro</string>
+    <string name="report_bug_desc">Aiutaci a migliorare Zakat</string>
     <string name="privacy_policy">Politica Sulla Privacy</string>
     <string name="privacy_policy_desc">Utilizzo e privacy dei tuoi dati</string>
     <string name="terms_of_service">Termini di servizio</string>
@@ -545,7 +545,7 @@
     <string name="one_month">1 mese</string>
     <string name="two_years">2 anni</string>
     <string name="unrecognized_messages_title">Messaggi Non Riconosciuti</string>
-    <string name="unrecognized_bank_messages_desc">Questi messaggi da potenziali banche non possono essere analizzati automaticamente. Aiuta a migliorare Cashiro segnalandoli in modo da poter aggiungere il supporto per altre banche.</string>
+    <string name="unrecognized_bank_messages_desc">Questi messaggi da potenziali banche non possono essere analizzati automaticamente. Aiuta a migliorare Zakat segnalandoli in modo da poter aggiungere il supporto per altre banche.</string>
     <string name="show_reported">Mostra Segnalato</string>
     <string name="count_new_format">%1$d nuovo</string>
     <string name="count_reported_format">%1$d segnalato</string>
@@ -588,7 +588,7 @@
     <string name="delete_webhook_confirm_desc">Questo profilo, le sue sincronizzazioni pianificate e tutti i log di consegna saranno rimossi. Questo non può essere annullato.</string>
     <string name="byoapi_sync_title">Sincronizzazione Finanza ByoAPI</string>
     <string name="byoapi_sync_desc">Invia i dati finanziari selezionati al tuo endpoint. Qualsiasi risposta HTTP 2xx è trattata come una consegna di successo.</string>
-    <string name="byoapi_sync_warning">Questo invierà i tuoi dati finanziari all\'URL configurato. Cashiro non può verificare la sicurezza dell\'endpoint.</string>
+    <string name="byoapi_sync_warning">Questo invierà i tuoi dati finanziari all\'URL configurato. Zakat non può verificare la sicurezza dell\'endpoint.</string>
     <string name="sync_now">Sincronizza ora</string>
     <string name="sync_now_desc">Consegna trigger per tutti i profili abilitati</string>
     <string name="sync_schedule_title">Sincronizza Pianificazione</string>
@@ -883,10 +883,10 @@
     <string name="notification_access_active">L\'accesso alle notifiche è attivo</string>
     <string name="notification_access_desc">Abilita per rilevare le transazioni bancarie dalle notifiche push</string>
     <string name="notification_access_required">Accesso alle notifiche richiesto</string>
-    <string name="notification_access_required_desc">Per rilevare automaticamente le transazioni bancarie in tempo reale, Cashiro richiede l\'accesso alle notifiche. Si tratta di un permesso a livello di sistema.</string>
+    <string name="notification_access_required_desc">Per rilevare automaticamente le transazioni bancarie in tempo reale, Zakat richiede l\'accesso alle notifiche. Si tratta di un permesso a livello di sistema.</string>
     <string name="how_to_enable">Come abilitare:</string>
     <string name="step_1">Tocca il pulsante \'Apri impostazioni\' qui sotto.</string>
-    <string name="step_2">Trova \'Cashiro\' nell\'elenco delle applicazioni.</string>
+    <string name="step_2">Trova \'Zakat\' nell\'elenco delle applicazioni.</string>
     <string name="step_3">Attiva \'Consenti accesso alle notifiche\'.</string>
     <string name="open_settings">Apri Impostazioni</string>
     <string name="scan_settings">Impostazioni di scansione</string>
@@ -912,7 +912,7 @@ Questo potrebbe richiedere qualche secondo a seconda della cronologia dei tuoi m
     <string name="this_month_lbl">QUESTO MESE</string>
     <string name="this_year_lbl">QUESTO ANNO</string>
     <string name="percent_this_month_format">%1$s%2$s%% questo mese</string>
-    <string name="app_locked_title">Cashiro è bloccato</string>
+    <string name="app_locked_title">Zakat è bloccato</string>
     <string name="authenticate_desc">Autenticati per accedere ai tuoi dati di spesa</string>
     <string name="unlock">Sblocca</string>
     <string name="biometric_unavailable_title">Autenticazione biometrica non disponibile</string>

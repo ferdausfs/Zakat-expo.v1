@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">Lägg till transaktion</string>
     <string name="add_subscription">Lägg till prenumeration</string>
     <string name="add_transfer">Lägg till överföring</string>
@@ -277,7 +277,7 @@ Användbart för långtidsbudgetar över flera perioder</string>
     <string name="chart_type_heatmap">Värmekarta</string>
     <string name="chart_format">%1$s Diagram</string>
     <string name="toggle_view">Växla vy</string>
-    <string name="cashiro_ai">Cashiro AI</string>
+    <string name="cashiro_ai">Zakat AI</string>
     <string name="more_options">Fler alternativ</string>
     <string name="clear_chat">Rensa chatt</string>
     <string name="qwen_model_required">Qwen-modell krävs</string>
@@ -309,7 +309,7 @@ Användbart för långtidsbudgetar över flera perioder</string>
     <string name="press_back_again_to_close">Tryck bakåt igen för att stänga appen</string>
     <string name="transaction_deleted">Transaktion raderad</string>
     <string name="undo">Ångra</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">Profil</string>
     <string name="banner">Banner</string>
     <string name="recent">Senaste</string>
@@ -346,7 +346,7 @@ Grön (+) = Sparande | Röd (-) = Överspending</string>
     <string name="stay_updated">Håll dig uppdaterad</string>
     <string name="automatic_tracking">Automatisk spårning</string>
     <string name="allow_notifications_desc">Tillåt aviseringar för att få betalningspåminnelser och dagliga sammanfattningar.</string>
-    <string name="automatic_tracking_desc">Cashiro kan automatiskt skanna dina transaktions-SMS för att hålla dina konton uppdaterade.</string>
+    <string name="automatic_tracking_desc">Zakat kan automatiskt skanna dina transaktions-SMS för att hålla dina konton uppdaterade.</string>
     <string name="skip_for_now">Hoppa över för nu</string>
     <string name="verify_accounts">Verifiera konton</string>
     <string name="scanning_messages">Skannar meddelanden</string>
@@ -416,7 +416,7 @@ Grön (+) = Sparande | Röd (-) = Överspending</string>
     <string name="share">Dela</string>
     <string name="retry">Försök igen</string>
     <string name="share_csv">Dela CSV</string>
-    <string name="csv_export_subject">Cashiro Transaktionsexport</string>
+    <string name="csv_export_subject">Zakat Transaktionsexport</string>
     <string name="edit_transaction">Redigera transaktion</string>
     <string name="transaction_details">Transaktionsdetaljer</string>
     <string name="report_issue">Rapportera problem</string>
@@ -481,7 +481,7 @@ Grön (+) = Sparande | Röd (-) = Överspending</string>
     <string name="no_transactions_for_format">Inga transaktioner för %1$s</string>
     <string name="sync_sms_to_see_transactions">Synkronisera dina SMS för att se transaktioner</string>
     <string name="about">Om</string>
-    <string name="cashiro_logo_cd">Cashiro-logotyp</string>
+    <string name="cashiro_logo_cd">Zakat-logotyp</string>
     <string name="version_format">Version %1$s, db-v%2$d</string>
     <string name="developed_by">Utvecklad av Ritesh</string>
     <string name="lead_developer_cd">huvudutvecklare</string>
@@ -492,9 +492,9 @@ Grön (+) = Sparande | Röd (-) = Överspending</string>
     <string name="faq">Vanliga frågor</string>
     <string name="faq_desc">Vanliga frågor och svar</string>
     <string name="guides">Guider</string>
-    <string name="guides_desc">Hur man använder Cashiro</string>
+    <string name="guides_desc">Hur man använder Zakat</string>
     <string name="report_bug">Rapportera fel</string>
-    <string name="report_bug_desc">Hjälp oss förbättra Cashiro</string>
+    <string name="report_bug_desc">Hjälp oss förbättra Zakat</string>
     <string name="privacy_policy">Integritetspolicy</string>
     <string name="privacy_policy_desc">Din dataanvändning och integritet</string>
     <string name="terms_of_service">Användarvillkor</string>
@@ -548,7 +548,7 @@ Grön (+) = Sparande | Röd (-) = Överspending</string>
     <string name="one_month">1 månad</string>
     <string name="two_years">2 år</string>
     <string name="unrecognized_messages_title">Oidentifierade meddelanden</string>
-    <string name="unrecognized_bank_messages_desc">Dessa meddelanden från potentiella banker kunde inte tolkas automatiskt. Hjälp till att förbättra Cashiro genom att rapportera dem så att vi kan lägga till stöd för fler banker.</string>
+    <string name="unrecognized_bank_messages_desc">Dessa meddelanden från potentiella banker kunde inte tolkas automatiskt. Hjälp till att förbättra Zakat genom att rapportera dem så att vi kan lägga till stöd för fler banker.</string>
     <string name="show_reported">Visa rapporterade</string>
     <string name="count_new_format">%1$d nya</string>
     <string name="count_reported_format">%1$d rapporterat</string>
@@ -591,7 +591,7 @@ Grön (+) = Sparande | Röd (-) = Överspending</string>
     <string name="delete_webhook_confirm_desc">Denna profil, dess schemalagda synkroniseringar och alla leveransloggar kommer att tas bort. Detta kan inte ångras.</string>
     <string name="byoapi_sync_title">BYOAPI Finance Sync</string>
     <string name="byoapi_sync_desc">Skicka valda finansiella data till din egen slutpunkt. Alla HTTP 2xx-svar behandlas som en lyckad leverans.</string>
-    <string name="byoapi_sync_warning">Detta kommer att skicka dina finansiella data till den URL du konfigurerar. Cashiro kan inte verifiera säkerheten för den slutpunkten.</string>
+    <string name="byoapi_sync_warning">Detta kommer att skicka dina finansiella data till den URL du konfigurerar. Zakat kan inte verifiera säkerheten för den slutpunkten.</string>
     <string name="sync_now">Synkronisera nu</string>
     <string name="sync_now_desc">Trigga leverans för alla aktiverade profiler</string>
     <string name="sync_schedule_title">Synkroniseringsschema</string>
@@ -886,10 +886,10 @@ Grön (+) = Sparande | Röd (-) = Överspending</string>
     <string name="notification_access_active">Aviseringstillgång är aktiv</string>
     <string name="notification_access_desc">Aktivera för att upptäcka banktransaktioner från push-aviseringar</string>
     <string name="notification_access_required">Aviseringstillgång krävs</string>
-    <string name="notification_access_required_desc">För att automatiskt upptäcka banktransaktioner i realtid kräver Cashiro aviseringstillgång. Detta är ett systembehörighets tillstånd.</string>
+    <string name="notification_access_required_desc">För att automatiskt upptäcka banktransaktioner i realtid kräver Zakat aviseringstillgång. Detta är ett systembehörighets tillstånd.</string>
     <string name="how_to_enable">Hur man aktiverar:</string>
     <string name="step_1">Tryck på knappen \'Öppna inställningar\' nedan.</string>
-    <string name="step_2">Hitta \'Cashiro\' i listan över applikationer.</string>
+    <string name="step_2">Hitta \'Zakat\' i listan över applikationer.</string>
     <string name="step_3">Växla \'Tillåt aviseringstillgång\' till aktiverad.</string>
     <string name="open_settings">Öppna inställningar</string>
     <string name="scan_settings">Skanna inställningar</string>
@@ -915,7 +915,7 @@ Detta kan ta några sekunder beroende på din meddelandehistorik.</string>
     <string name="this_month_lbl">DENNA MÅNAD</string>
     <string name="this_year_lbl">DETTA ÅR</string>
     <string name="percent_this_month_format">%1$s%2$s%%denna månad</string>
-    <string name="app_locked_title">Cashiro är låst</string>
+    <string name="app_locked_title">Zakat är låst</string>
     <string name="authenticate_desc">Autentisera för att komma åt dina utgiftsdata</string>
     <string name="unlock">Lås upp</string>
     <string name="biometric_unavailable_title">Biometrisk autentisering är inte tillgänglig</string>

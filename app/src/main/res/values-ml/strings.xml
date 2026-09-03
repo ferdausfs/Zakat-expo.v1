@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">പേര് ചേർക്കുക</string>
     <string name="add_subscription">സബ്സ്ക്രിപ്ഷൻ ചേർക്കുക</string>
     <string name="add_transfer">ട്രാൻസ്ഫർ ചേർക്കുക</string>
@@ -309,7 +309,7 @@
     <string name="press_back_again_to_close">ആപ്പ് അടയ്ക്കാൻ വീണ്ടും ബാക്ക് സമ്മർദ്ദിക്കുക</string>
     <string name="transaction_deleted">വ്യാപാരം മായ്ക്കപ്പെട്ടു</string>
     <string name="undo">പിന്‍വലിക്കുക</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">പ്രൊഫൈൽ</string>
     <string name="banner">ബാനർ</string>
     <string name="recent">സമീപകാലം</string>
@@ -889,7 +889,7 @@
     <string name="notification_access_required_desc">റിയൽ-ടൈം ബാങ്ക് ഇടപാടുകൾ സ്വയം കണ്ടെത്താൻ, ക്യാഷിരോയ്ക്ക് അറിയിപ്പ് ആക്‌സസ് ആവശ്യമുണ്ട്. ഇത് ഒരു സിസ്റ്റം തല അംഗീകൃത അനുമതിയാണ്.</string>
     <string name="how_to_enable">സജ്ജമാക്കിയെടുക്കുന്നത് എങ്ങനെ:</string>
     <string name="step_1">താഴെയുള്ള \'സെറ്റിംഗ്സ് തുറയ്ക്കുക\' ബട്ടൻ തട്ടി തുറക്കുക.</string>
-    <string name="step_2">ആപ്ലിക്കേഷനുകളുടെ ലിസ്റ്റിൽ \'Cashiro\' കണ്ടെത്തുക.</string>
+    <string name="step_2">ആപ്ലിക്കേഷനുകളുടെ ലിസ്റ്റിൽ \'Zakat\' കണ്ടെത്തുക.</string>
     <string name="step_3">\'അറിയിപ്പുകൾ അനുവദിക്കുക\' സവിശേഷത എനേബിൾ ചെയ്യുക.</string>
     <string name="open_settings">സെറ്റിംഗ്സ് തുറക്കുക</string>
     <string name="scan_settings">സെറ്റിംഗ്സ് സ്‌കാൻ ചെയ്യുക</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">ٹرانزیکشن کٔرِو شٲمِل</string>
     <string name="add_subscription">سبسکرپشن کٔرِو شٲمِل</string>
     <string name="add_transfer">اؠڈِٹ کَرنہٕ آمُت</string>
@@ -309,7 +309,7 @@
     <string name="press_back_again_to_close">ایپ بنٛد کرنہٕ خٲطرٕ کٔرِو دُبارٕ دَبٲیِو بیک</string>
     <string name="transaction_deleted">ٹرانزیکشن کَرنہٕ آمُت حِ</string>
     <string name="undo">واپس کٔرِو</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">پروفائل</string>
     <string name="banner">بینر</string>
     <string name="recent">حالٕے</string>

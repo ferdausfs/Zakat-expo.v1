@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">إضافة عملية</string>
     <string name="add_subscription">إضافة اشتراك</string>
     <string name="add_transfer">إضافة تحويل</string>
@@ -309,7 +309,7 @@
     <string name="press_back_again_to_close">اضغط العودة مرة أخرى لإغلاق التطبيق</string>
     <string name="transaction_deleted">تم حذف المعاملة</string>
     <string name="undo">تراجع</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">الملف الشخصي</string>
     <string name="banner">لافتة</string>
     <string name="recent">الأحدث</string>
@@ -346,7 +346,7 @@
     <string name="stay_updated">البقاء على اطلاع</string>
     <string name="automatic_tracking">التتبع التلقائي</string>
     <string name="allow_notifications_desc">السماح بالإشعارات لتلقي تذكيرات الفواتير والملخصات اليومية.</string>
-    <string name="automatic_tracking_desc">يمكن لـ Cashiro مسح رسائل المعاملات تلقائيًا للحفاظ على تحديث حساباتك.</string>
+    <string name="automatic_tracking_desc">يمكن لـ Zakat مسح رسائل المعاملات تلقائيًا للحفاظ على تحديث حساباتك.</string>
     <string name="skip_for_now">تخطي الآن</string>
     <string name="verify_accounts">تحقق من الحسابات</string>
     <string name="scanning_messages">جارٍ مسح الرسائل</string>
@@ -548,7 +548,7 @@
     <string name="one_month">شهر واحد</string>
     <string name="two_years">سنتان</string>
     <string name="unrecognized_messages_title">الرسائل غير المعروفة</string>
-    <string name="unrecognized_bank_messages_desc">لا يمكن تحليل هذه الرسائل من البنوك المحتملة تلقائياً. ساعد في تحسين Cashiro عن طريق الإبلاغ عنها حتى نتمكن من دعم المزيد من البنوك.</string>
+    <string name="unrecognized_bank_messages_desc">لا يمكن تحليل هذه الرسائل من البنوك المحتملة تلقائياً. ساعد في تحسين Zakat عن طريق الإبلاغ عنها حتى نتمكن من دعم المزيد من البنوك.</string>
     <string name="show_reported">عرض التقارير المبلغ عنها</string>
     <string name="count_new_format">%1$d جديد</string>
     <string name="count_reported_format">%1$d تم الإبلاغ عنه</string>
@@ -591,7 +591,7 @@
     <string name="delete_webhook_confirm_desc">سيتم إزالة هذا الملف الشخصي، ومزامناته المجدولة، وجميع سجلات التسليم. لا يمكن التراجع عن هذا.</string>
     <string name="byoapi_sync_title">مزامنة التمويل عبر BYOAPI</string>
     <string name="byoapi_sync_desc">أرسل بيانات مالية محددة إلى نقطة النهاية الخاصة بك. أي استجابة HTTP 2xx تُعتبر تسليم ناجح.</string>
-    <string name="byoapi_sync_warning">سيتم إرسال بياناتك المالية إلى عنوان URL الذي تقوم بتكوينه. لا يمكن لـ Cashiro التحقق من أمان تلك النقطة النهائية.</string>
+    <string name="byoapi_sync_warning">سيتم إرسال بياناتك المالية إلى عنوان URL الذي تقوم بتكوينه. لا يمكن لـ Zakat التحقق من أمان تلك النقطة النهائية.</string>
     <string name="sync_now">مزامنة الآن</string>
     <string name="sync_now_desc">تشغيل التسليم لجميع الملفات الشخصية المُمكَّنة</string>
     <string name="sync_schedule_title">جدول المزامنة</string>
@@ -886,10 +886,10 @@
     <string name="notification_access_active">وصول الإشعارات نشط</string>
     <string name="notification_access_desc">تمكين لاكتشاف المعاملات البنكية من الإشعارات الفورية</string>
     <string name="notification_access_required">وصول الإشعارات مطلوب</string>
-    <string name="notification_access_required_desc">لكي يتم اكتشاف المعاملات البنكية تلقائيًا في الوقت الفعلي، يتطلب Cashiro وصول الإشعارات. هذه إذن على مستوى النظام.</string>
+    <string name="notification_access_required_desc">لكي يتم اكتشاف المعاملات البنكية تلقائيًا في الوقت الفعلي، يتطلب Zakat وصول الإشعارات. هذه إذن على مستوى النظام.</string>
     <string name="how_to_enable">كيفية التمكين:</string>
     <string name="step_1">اضغط على زر \'فتح الإعدادات\' أدناه.</string>
-    <string name="step_2">ابحث عن \'Cashiro\' في قائمة التطبيقات.</string>
+    <string name="step_2">ابحث عن \'Zakat\' في قائمة التطبيقات.</string>
     <string name="step_3">قم بتبديل \'السماح بالوصول إلى الإشعارات\' ليكون مفعلاً.</string>
     <string name="open_settings">فتح الإعدادات</string>
     <string name="scan_settings">إعدادات المسح</string>
@@ -915,7 +915,7 @@
     <string name="this_month_lbl">هذا الشهر</string>
     <string name="this_year_lbl">هذا العام</string>
     <string name="percent_this_month_format">%1$s%2$s%% هذا الشهر</string>
-    <string name="app_locked_title">Cashiro مغلق</string>
+    <string name="app_locked_title">Zakat مغلق</string>
     <string name="authenticate_desc">قم بالمصادقة للوصول إلى بيانات نفقاتك</string>
     <string name="unlock">افتح القفل</string>
     <string name="biometric_unavailable_title">المصادقة البيومترية غير متوفرة</string>

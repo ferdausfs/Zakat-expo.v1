@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cashiro</string>
+    <string name="app_name">Zakat</string>
     <string name="add_transaction">लेनदेन थप्नुहोस्</string>
     <string name="add_subscription">सदस्यता थप्नुहोस्</string>
     <string name="add_transfer">स्थानान्तरण थप्नुहोस्</string>
@@ -309,7 +309,7 @@
     <string name="press_back_again_to_close">एप बन्द गर्न फेरि पछाडि थिच्नुहोस्</string>
     <string name="transaction_deleted">लेनदेन मेटाइयो</string>
     <string name="undo">पूर्ववत गर्नुहोस्</string>
-    <string name="cashiro_title">Cashiro</string>
+    <string name="cashiro_title">Zakat</string>
     <string name="profile">प्रोफाइल</string>
     <string name="banner">ब्यानर</string>
     <string name="recent">हालैको</string>
@@ -481,7 +481,7 @@
     <string name="no_transactions_for_format">%1$s का लागि कुनै कारोबार छैन</string>
     <string name="sync_sms_to_see_transactions">कारोबार हेर्न आफ्नो SMS समक्रमण गर्नुहोस्</string>
     <string name="about">बारेमा</string>
-    <string name="cashiro_logo_cd">Cashiro लोगो</string>
+    <string name="cashiro_logo_cd">Zakat लोगो</string>
     <string name="version_format">संस्करण %1$s, db-v%2$d</string>
     <string name="developed_by">Ritesh द्वारा विकसित</string>
     <string name="lead_developer_cd">प्रमुख विकासकर्ता</string>
@@ -492,9 +492,9 @@
     <string name="faq">सोधिने प्रश्नहरू</string>
     <string name="faq_desc">बारम्बार सोधिने प्रश्नहरू</string>
     <string name="guides">मार्गदर्शकहरू</string>
-    <string name="guides_desc">Cashiro कसरी प्रयोग गर्ने</string>
+    <string name="guides_desc">Zakat कसरी प्रयोग गर्ने</string>
     <string name="report_bug">Bug रिपोर्ट गर्नुहोस्</string>
-    <string name="report_bug_desc">हामीलाई Cashiro सुधार गर्न मद्दत गर्नुहोस्</string>
+    <string name="report_bug_desc">हामीलाई Zakat सुधार गर्न मद्दत गर्नुहोस्</string>
     <string name="privacy_policy">गोपनीयता नीति</string>
     <string name="privacy_policy_desc">तपाईंको डाटा प्रयोग र गोपनीयता</string>
     <string name="terms_of_service">सेवा सर्तहरू</string>
@@ -548,7 +548,7 @@
     <string name="one_month">1 महिना</string>
     <string name="two_years">2 वर्ष</string>
     <string name="unrecognized_messages_title">अचिन्तित सन्देशहरू</string>
-    <string name="unrecognized_bank_messages_desc">संभावित बैंकहरूबाट आएका यी सन्देशहरू स्वचालित रुपमा पार्स गर्न सकिएन। कृपया तिनीहरूलाई रिपोर्ट गरेर Cashiro सुधार गर्न मद्दत गर्नुहोस् ताकि हामी थप बैंकहरूको समर्थन थप्न सकौं।</string>
+    <string name="unrecognized_bank_messages_desc">संभावित बैंकहरूबाट आएका यी सन्देशहरू स्वचालित रुपमा पार्स गर्न सकिएन। कृपया तिनीहरूलाई रिपोर्ट गरेर Zakat सुधार गर्न मद्दत गर्नुहोस् ताकि हामी थप बैंकहरूको समर्थन थप्न सकौं।</string>
     <string name="show_reported">रिपोर्ट गरिएको देखाउनुहोस्</string>
     <string name="count_new_format">%1$d नयाँ</string>
     <string name="count_reported_format">%1$d प्रतिवेदन</string>
@@ -591,7 +591,7 @@
     <string name="delete_webhook_confirm_desc">यो प्रोफाइल, यसको तालिकाबद्ध समक्रमण, र सबै डेलिभरी लगहरू हटाइनेछन्। यसलाई उल्ट्याउन सकिँदैन।</string>
     <string name="byoapi_sync_title">BYOAPI वित्त समक्रमण</string>
     <string name="byoapi_sync_desc">छानिएको वित्तीय डेटा तपाईंको आफ्नै एन्डपोइन्टमा पठाउनुहोस्। कुनै पनि HTTP 2xx प्रतिक्रिया सफल डेलिभरीको रूपमा व्यवहार गरिन्छ।</string>
-    <string name="byoapi_sync_warning">यसले तपाईंले कन्फिगर गर्नुभएको URL मा तपाईंको वित्तीय डेटा पठाउनेछ। Cashiro त्यस एन्डपोइन्टको सुरक्षा पुष्टि गर्न सक्दैन।</string>
+    <string name="byoapi_sync_warning">यसले तपाईंले कन्फिगर गर्नुभएको URL मा तपाईंको वित्तीय डेटा पठाउनेछ। Zakat त्यस एन्डपोइन्टको सुरक्षा पुष्टि गर्न सक्दैन।</string>
     <string name="sync_now">अहिले समक्रमण गर्नुहोस्</string>
     <string name="sync_now_desc">सबै सक्षम प्रोफाइलहरूको डेलिभरी ट्रिगर गर्नुहोस्</string>
     <string name="sync_schedule_title">समक्रमण तालिका</string>
@@ -889,7 +889,7 @@
     <string name="notification_access_required_desc">बैंक लेनदेनलाई वास्तविक समयमा स्वचालित रूपमा पत्ता लगाउन, क्यासिरोलाई नोटिफिकेशन पहुँच आवश्यक छ। यो प्रणाली-स्तरको अनुमति हो।</string>
     <string name="how_to_enable">सक्षम गर्ने तरिका:</string>
     <string name="step_1">तलको \'सेटिङ्स खोल्नुहोस्\' बटनमा ट्याप गर्नुहोस्।</string>
-    <string name="step_2">एप्लिकेसनहरूको सूचीमा \'Cashiro\' फेला पार्नुहोस्।</string>
+    <string name="step_2">एप्लिकेसनहरूको सूचीमा \'Zakat\' फेला पार्नुहोस्।</string>
     <string name="step_3">\'Allow notification access\' लाई सक्षम गर्नुहोस्।</string>
     <string name="open_settings">सेटिङ खोल्नुहोस्</string>
     <string name="scan_settings">सेटिङ स्क्यान गर्नुहोस्</string>
