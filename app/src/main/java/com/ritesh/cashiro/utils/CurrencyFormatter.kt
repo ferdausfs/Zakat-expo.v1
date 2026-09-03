@@ -53,6 +53,7 @@ object CurrencyFormatter {
         "PHP" to Locale("en", "PH"),
         "IDR" to Locale("in", "ID"),
         "SAR" to Locale("ar", "SA"),
+        "BDT" to Locale("en", "BD"),
         "COP" to Locale("es", "CO"),
         "KES" to Locale("sw", "KE")
     )

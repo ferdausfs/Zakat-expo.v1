@@ -30,6 +30,7 @@ data class Currency(
             Currency("KWD", "Kuwaiti Dinar", "KD"),
             Currency("KRW", "South Korean Won", "₩"),
             Currency("SAR", "Saudi Riyal", "﷼"),
+            Currency("BDT", "Bangladeshi Taka", "৳"),
             Currency("BYN", "Belarusian Ruble", "Br"),
             Currency("COP", "Colombian Peso", "$"),
             Currency("KES", "Kenyan Shilling", "Ksh"),

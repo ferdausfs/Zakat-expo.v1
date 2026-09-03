@@ -34,6 +34,7 @@ object CurrencySymbols {
         "IDR" to "Rp",
         "AED" to "د.إ",
         "SAR" to "﷼",
+        "BDT" to "৳",
         "NZD" to "NZ$",
         "BTC" to "₿",
         "ETH" to "Ξ",
