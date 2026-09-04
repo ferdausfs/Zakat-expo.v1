@@ -281,26 +281,6 @@ class NavigationStressTest {
             assertAppAlive(where)
         }
 
-        /**
-         * The dashboard grew (deduction/net rows, calendar+madhhab settings,
-         * module links) so after back-navigation the restored LazyColumn
-         * scroll can leave the top wealth card outside the composed window.
-         * Fling back to the top before asserting screen identity.
-         */
-        fun scrollDashboardToTop() {
-            repeat(4) {
-                composeRule.onRoot().performTouchInput {
-                    swipeDown(startX = centerX, endX = centerX, durationMillis = 150)
-                }
-                composeRule.waitForIdle()
-            }
-        }
-
-        /** Waits for a dashboard marker, scrolling to top first. */
-        fun awaitDashboardHome(marker: String, where: String) {
-            scrollDashboardToTop()
-            awaitText(marker, where)
-        }
         fun awaitText(marker: String, where: String, timeoutMs: Long = 15_000) {
             try {
                 composeRule.waitUntil(timeoutMillis = timeoutMs) {
@@ -310,6 +290,25 @@ class NavigationStressTest {
             } catch (t: Throwable) {
                 throw AssertionError("[NavStress] $where: '$marker' not found; tree:\n${dumpTree()}", t)
             }
+        }
+
+        /**
+         * The dashboard grew (deduction/net rows, calendar+madhhab settings,
+         * module links) so after back-navigation the restored LazyColumn
+         * scroll can leave the top wealth card outside the composed window.
+         * Fling back to the top before asserting screen identity.
+         */
+        fun scrollDashboardToTop() {
+            repeat(4) {
+                composeRule.onRoot().performTouchInput { swipeDown() }
+                composeRule.waitForIdle()
+            }
+        }
+
+        /** Waits for a dashboard marker, scrolling to top first. */
+        fun awaitDashboardHome(marker: String, where: String) {
+            scrollDashboardToTop()
+            awaitText(marker, where)
         }
 
         repeat(3) { round ->
