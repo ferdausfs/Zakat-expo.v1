@@ -296,11 +296,20 @@ class NavigationStressTest {
          * The dashboard grew (deduction/net rows, calendar+madhhab settings,
          * module links) so after back-navigation the restored LazyColumn
          * scroll can leave the top wealth card outside the composed window.
-         * Fling back to the top before asserting screen identity.
+         * Touch flings are eaten by the collapsing top app bar's nested
+         * scroll, so scroll SEMANTICALLY: ask every scrollable container to
+         * bring the marker into view (vertical LazyColumn obeys; horizontal
+         * chip rows simply settle at their end without harm).
          */
         fun scrollDashboardToTop() {
-            repeat(4) {
-                composeRule.onRoot().performTouchInput { swipeDown() }
+            val scrollables = composeRule.onAllNodes(hasScrollAction())
+            val count = scrollables.fetchSemanticsNodes().size
+            for (i in 0 until count) {
+                runCatching {
+                    scrollables[i].performScrollToNode(
+                        hasText("Total zakatable wealth")
+                    )
+                }
                 composeRule.waitForIdle()
             }
         }
