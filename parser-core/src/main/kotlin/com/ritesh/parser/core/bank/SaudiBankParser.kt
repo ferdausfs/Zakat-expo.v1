@@ -1,22 +1,30 @@
 package com.ritesh.parser.core.bank
 
+import com.ritesh.parser.core.ParsedTransaction
 import com.ritesh.parser.core.TransactionType
 import java.math.BigDecimal
 
 /**
  * Parser for Saudi banks and payment rails not covered by the dedicated
- * Saudi parsers (AlRajhi, Alinma, SNB AlAhli, SABB, STC Bank):
+ * Saudi parsers (AlRajhi, Alinma, SNB AlAhli, SABB, STC Bank) and the
+ * Saudi wallets (mada Pay / urpay / Alinma Pay via SaudiWalletParser):
  *
  *  - Riyad Bank            (senders like "RiyadBank")
- *  - Arab National Bank    ("ANB")
- *  - Banque Saudi Fransi   ("BSF")
- *  - Bank Albilad          ("AlBilad")
- *  - Bank AlJazira         ("BAJ" / "AlJazira")
+ *  - Arab National Bank    ("ANB" / "ANB.9200" / "ARAB NATIONAL")
+ *  - Banque Saudi Fransi   ("BSF" / "SAUDI FRANSI")
+ *  - Bank Albilad          ("AlBilad" / "BILAD")
+ *  - Bank AlJazira         ("BAJ" / "AlJazira" / "ALJAZEERA")
  *  - Saudi Investment Bank ("SAIB")
+ *  - Gulf International Bank (Saudi) ("GIBSA" / "GIBSAUDI")
  *  - SARIE instant-payment notifications ("SARIE")
  *
- * Covers the common English SAR debit/credit formats shared by these
- * banks, including mada purchases and SARIE transfers. Currency is SAR.
+ * Sender identification is data-driven via [SaudiBankRegistry] — adding a
+ * bank later means adding one registry entry, no parser restructuring.
+ *
+ * Covers the common English AND Arabic SAR debit/credit formats shared by
+ * these banks, including mada purchases and SARIE transfers. Currency is
+ * SAR. Arabic keywords handled: خصم/شراء/سحب/مدفوع (expense),
+ * إيداع/إضافة/حوالة واردة/استلمت (income), الرصيد المتاح (balance).
  */
 class SaudiBankParser : BankParser() {
 
@@ -25,18 +33,22 @@ class SaudiBankParser : BankParser() {
     override fun getCurrency() = "SAR"
 
     override fun canHandle(sender: String): Boolean {
-        val s = sender.uppercase().trim()
-        return s.contains("RIYAD") ||
-                s.contains("SARIE") ||
-                s.contains("ALBILAD") ||
-                s.contains("AL BLAD") ||
-                s.contains("ALJAZIRA") ||
-                s.contains("AL JAZIRA") ||
-                s == "BAJ" ||
-                s.contains("SAIB") ||
-                s == "ANB" ||
-                s.startsWith("ANB.") ||
-                s.contains("BSF")
+        // Stateless (thread-safe): parser instances in BankParserFactory are
+        // shared across parallel parse coroutines, so sender-specific state
+        // must never be cached on the instance.
+        return SaudiBankRegistry.findGeneric(sender) != null
+    }
+
+    /**
+     * Resolves the specific registered bank name (e.g. "Riyad Bank",
+     * "Bank Albilad") from the SENDER for every parsed transaction, so
+     * account grouping stays per-bank instead of a generic "Saudi Bank"
+     * bucket. Stateless: derives everything from the parse arguments.
+     */
+    override fun parse(smsBody: String, sender: String, timestamp: Long): ParsedTransaction? {
+        val base = super.parse(smsBody, sender, timestamp) ?: return null
+        val specificName = SaudiBankRegistry.findGeneric(sender)?.name ?: return base
+        return if (specificName == base.bankName) base else base.copy(bankName = specificName)
     }
 
     override fun extractAmount(message: String): BigDecimal? {
@@ -67,6 +79,8 @@ class SaudiBankParser : BankParser() {
             lowerMessage.contains("refund") -> TransactionType.INCOME
             lowerMessage.contains("received") -> TransactionType.INCOME
             lowerMessage.contains("inward") -> TransactionType.INCOME
+            lowerMessage.contains("added to your") -> TransactionType.INCOME
+            lowerMessage.contains("topped up") -> TransactionType.INCOME
             lowerMessage.contains("debited") -> TransactionType.EXPENSE
             lowerMessage.contains("withdrawn") -> TransactionType.EXPENSE
             lowerMessage.contains("spent") -> TransactionType.EXPENSE
@@ -74,6 +88,19 @@ class SaudiBankParser : BankParser() {
             lowerMessage.contains("paid") -> TransactionType.EXPENSE
             lowerMessage.contains("payment of") -> TransactionType.EXPENSE
             lowerMessage.contains("outward") -> TransactionType.EXPENSE
+            // Arabic keyword support — Saudi banks commonly send Arabic SMS.
+            //expense: خصم (deducted), شراء (purchase), سحب (withdrawal), مدفوع (paid)
+            message.contains("خصم") -> TransactionType.EXPENSE
+            message.contains("شراء") -> TransactionType.EXPENSE
+            message.contains("سحب") -> TransactionType.EXPENSE
+            message.contains("مدفوع") -> TransactionType.EXPENSE
+            // income: إيداع (deposit), إضافة (added), حوالة واردة (incoming
+            // transfer), استلمت (received)
+            message.contains("إيداع") -> TransactionType.INCOME
+            message.contains("اضاف") -> TransactionType.INCOME
+            message.contains("إضافة") -> TransactionType.INCOME
+            message.contains("حوالة واردة") -> TransactionType.INCOME
+            message.contains("استلمت") -> TransactionType.INCOME
             else -> null
         }
     }
@@ -87,14 +114,26 @@ class SaudiBankParser : BankParser() {
         if (lowerMessage.contains("otp") || lowerMessage.contains("verification code")) {
             return false
         }
-        return lowerMessage.contains("purchase")
+        if (lowerMessage.contains("purchase")) return true
+        // Arabic transaction keywords — without these, Arabic-only bank SMS
+        // were silently dropped by the English-only base filter.
+        val arabicKeywords = listOf(
+            "خصم", "شراء", "سحب", "مدفوع",          // expense
+            "إيداع", "إضافة", "حوالة واردة", "استلمت" // income
+        )
+        return arabicKeywords.any { message.contains(it) }
     }
 
     override fun extractBalance(message: String): BigDecimal? {
         val patterns = listOf(
             Regex("""Bal\.?\s*[:\-]?\s*SAR\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)""", RegexOption.IGNORE_CASE),
             Regex("""Balance\s*[:\-]?\s*SAR\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)""", RegexOption.IGNORE_CASE),
-            Regex("""Avl\.?\s*Bal\.?\s*[:\-]?\s*SAR\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)""", RegexOption.IGNORE_CASE)
+            Regex("""Avl\.?\s*Bal\.?\s*[:\-]?\s*SAR\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)""", RegexOption.IGNORE_CASE),
+            // "Avail. Balance: SAR 1,200.00" (Riyad Bank wording)
+            Regex("""Avail\.?\s*Bal(?:ance)?\.?\s*[:\-]?\s*(?:SAR)?\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)""", RegexOption.IGNORE_CASE),
+            // "الرصيد المتاح: SAR 1,200.00" / "الرصيد 1,200.00 ريال"
+            Regex("""الرصيد\s*(?:المتاح)?\s*[:\-]?\s*(?:SAR)?\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)"""),
+            Regex("""Balance\s*[:\-]?\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)\s*(?:SAR|ريال)""", RegexOption.IGNORE_CASE)
         )
         for (pattern in patterns) {
             pattern.find(message)?.let { match ->
@@ -117,7 +156,9 @@ class SaudiBankParser : BankParser() {
             // "card **1234" / "Card: *1234"
             Regex("""Card\s*[:\-]?\s*(?:XX|\*{1,4}|x{2})?(\d{4})\b""", RegexOption.IGNORE_CASE),
             // "IBAN **7788" / "IBAN SA03*1234" masked styles
-            Regex("""IBAN\s*[:\-]?\s*(?:[A-Z]{2}[0-9A-Z]*)?(?:[X*]{2,4})?(\d{4})\b""")
+            Regex("""IBAN\s*[:\-]?\s*(?:[A-Z]{2}[0-9A-Z]*)?(?:[X*]{2,4})?(\d{4})\b"""),
+            // Arabic: "حساب 1234" / "حسابك المنتهي بـ1234"
+            Regex("""حساب\s*(?:رقم)?\s*(?:ك)?\s*[:\-]?\s*(?:[X*]{2,4})?(\d{4})\b""")
         )
         for (pattern in patterns) {
             pattern.find(message)?.let { match ->
