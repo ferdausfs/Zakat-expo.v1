@@ -29,6 +29,7 @@ import com.ritesh.parser.core.bank.IndusIndBankParser
 import com.ritesh.cashiro.utils.capitalizeFirst
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -302,8 +303,15 @@ class OptimizedSmsReaderWorker @AssistedInject constructor(
     ) = coroutineScope {
         val totalBatches = (stats.totalMessages + batchSize - 1) / batchSize
 
-        val inputChannel = Channel<SmsMessage>(Channel.UNLIMITED)
-        val outputChannel = Channel<ParseResult>(Channel.UNLIMITED)
+        // Bounded channels: the whole inbox must NEVER sit in memory at once.
+        // Unbounded channels previously loaded every SMS (plus every parse
+        // result, including full message bodies) into RAM simultaneously and
+        // crashed low-memory devices with OutOfMemoryError while analyzing a
+        // large inbox. Bounded capacity gives us true streaming with constant
+        // memory: producers suspend when the consumer (parse/save stage) is
+        // behind, exactly like batch processing.
+        val inputChannel = Channel<SmsMessage>(batchSize)
+        val outputChannel = Channel<ParseResult>(batchSize)
 
         val atomicProcessed = java.util.concurrent.atomic.AtomicInteger(0)
 
@@ -330,18 +338,27 @@ class OptimizedSmsReaderWorker @AssistedInject constructor(
         var savedCount = 0
         val saveJob = launch {
             for (result in outputChannel) {
-                when (result) {
-                    is ParseResult.Transaction -> {
-                        parsedCount++
-                        val success = smsTransactionProcessor.saveParsedTransaction(
-                            result.parsed,
-                            result.smsBody
-                        ).success
-                        if (success) savedCount++
+                // Defensive isolation: one poisoned result must never kill the
+                // save stage. Errors (OOM, StackOverflowError) are not
+                // Exceptions and would otherwise escape and crash the scan.
+                try {
+                    when (result) {
+                        is ParseResult.Transaction -> {
+                            parsedCount++
+                            val success = smsTransactionProcessor.saveParsedTransaction(
+                                result.parsed,
+                                result.smsBody
+                            ).success
+                            if (success) savedCount++
+                        }
+                        is ParseResult.Subscription -> { /* counted during parse */ }
+                        is ParseResult.Unrecognized -> { /* already stored during parse */ }
+                        is ParseResult.Skipped -> { /* no-op */ }
                     }
-                    is ParseResult.Subscription -> { /* counted during parse */ }
-                    is ParseResult.Unrecognized -> { /* already stored during parse */ }
-                    is ParseResult.Skipped -> { /* no-op */ }
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (t: Throwable) {
+                    Log.e(TAG, "Error saving parsed SMS (skipped): ${t.message}")
                 }
             }
         }
@@ -406,7 +423,6 @@ private suspend fun parseMessage(sms: SmsMessage): ParseResult {
         if ((senderUpper.endsWith("-P") || senderUpper.endsWith("-G")) && !isKnownBank) {
             return ParseResult.Skipped("Promotional/government message")
         }
-
         val matchingParsers = BankParserFactory.getParsers(sms.sender)
         if (matchingParsers.isEmpty()) {
             val upperSender = sms.sender.uppercase()
@@ -448,9 +464,15 @@ private suspend fun parseMessage(sms: SmsMessage): ParseResult {
             }
             ParseResult.Skipped("Parsing returned null")
         }
-    } catch (e: Exception) {
-        Log.e(TAG, "Error parsing SMS from ${sms.sender}: ${e.message}")
-        ParseResult.Skipped("Error: ${e.message}")
+    } catch (e: CancellationException) {
+        throw e // never swallow coroutine cancellation
+    } catch (t: Throwable) {
+        // Throwable (not just Exception): malformed messages must be skipped,
+        // never allowed to crash the whole scan. This also catches Error-level
+        // failures (regex StackOverflowError, OOM) that `catch (Exception)`
+        // lets through — the crash class seen while analyzing large SMS sets.
+        Log.e(TAG, "Error parsing SMS from ${sms.sender}: ${t.message}")
+        ParseResult.Skipped("Error: ${t.message}")
     }
 }
 

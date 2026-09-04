@@ -76,9 +76,15 @@ class SmsTransactionProcessor @Inject constructor(
 
             // Save the transaction
             return saveParsedTransaction(parsedTransaction, body)
-        } catch (e: Exception) {
-            Log.e(TAG, "Error processing SMS", e)
-            return ProcessingResult(false, reason = e.message)
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e // never swallow coroutine cancellation
+        } catch (t: Throwable) {
+            // Throwable, not Exception: parse/save failures on a single SMS
+            // must degrade to a rejected result, never crash the caller
+            // (worker/receiver/notification service). Also covers Error-level
+            // failures that catch(Exception) lets through.
+            Log.e(TAG, "Error processing SMS", t)
+            return ProcessingResult(false, reason = t.message)
         }
     }
 

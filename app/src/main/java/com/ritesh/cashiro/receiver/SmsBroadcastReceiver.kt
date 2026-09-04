@@ -50,7 +50,15 @@ class SmsBroadcastReceiver : BroadcastReceiver() {
             return
         }
 
-        val messages = Telephony.Sms.Intents.getMessagesFromIntent(intent)
+        // getMessagesFromIntent can throw on malformed/corrupt PDUs (device
+        // and carrier dependent). A single bad delivery must never crash the
+        // process — BroadcastReceiver exceptions are fatal to the app.
+        val messages = try {
+            Telephony.Sms.Intents.getMessagesFromIntent(intent)
+        } catch (t: Throwable) {
+            Log.e(TAG, "Malformed SMS delivery ignored", t)
+            return
+        }
         if (messages.isNullOrEmpty()) {
             return
         }
@@ -58,17 +66,22 @@ class SmsBroadcastReceiver : BroadcastReceiver() {
         // Combine multi-part SMS messages with their timestamps
         data class SmsData(val body: StringBuilder, var timestamp: Long)
         val smsMap = mutableMapOf<String, SmsData>()
-        for (message in messages) {
-            val sender = message.originatingAddress ?: continue
-            val body = message.messageBody ?: continue
-            val timestamp = message.timestampMillis
+        try {
+            for (message in messages) {
+                val sender = message.originatingAddress ?: continue
+                val body = message.messageBody ?: continue
+                val timestamp = message.timestampMillis
 
-            val existing = smsMap.getOrPut(sender) { SmsData(StringBuilder(), timestamp) }
-            existing.body.append(body)
-            // Use the earliest timestamp for multi-part messages
-            if (timestamp < existing.timestamp) {
-                existing.timestamp = timestamp
+                val existing = smsMap.getOrPut(sender) { SmsData(StringBuilder(), timestamp) }
+                existing.body.append(body)
+                // Use the earliest timestamp for multi-part messages
+                if (timestamp < existing.timestamp) {
+                    existing.timestamp = timestamp
+                }
             }
+        } catch (t: Throwable) {
+            Log.e(TAG, "Error assembling SMS parts", t)
+            return
         }
 
         // Get the processor via Hilt EntryPoint

@@ -28,6 +28,17 @@ class BankNotificationListenerService : NotificationListenerService() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
+        // NotificationListenerService methods run in system-bound context: any
+        // uncaught Throwable here crashes the service and can trigger a crash
+        // loop. Extract/parse defensively — one bad notification is skipped.
+        try {
+            processNotification(sbn)
+        } catch (t: Throwable) {
+            Log.e(TAG, "Error handling bank notification (skipped)", t)
+        }
+    }
+
+    private fun processNotification(sbn: StatusBarNotification) {
         val packageName = sbn.packageName
 
         if (!BankNotificationConfig.isAllowed(packageName)) return
