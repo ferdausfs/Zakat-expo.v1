@@ -2,6 +2,7 @@ package com.ritesh.cashiro.presentation.ui.features.profile
 
 import android.net.Uri
 import androidx.compose.ui.graphics.Color
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.domain.model.LendBorrowPerson
 import java.math.BigDecimal
 
@@ -15,7 +16,7 @@ data class ProfileScreenState(
     val totalIncome: BigDecimal = BigDecimal.ZERO,
     val totalExpense: BigDecimal = BigDecimal.ZERO,
     val activeSubscriptions: Int = 0,
-    val baseCurrency: String = "INR",
+    val baseCurrency: String = Currency.DEFAULT_CURRENCY_CODE,
     val contacts: List<LendBorrowPerson> = emptyList(),
     val isLoading: Boolean = false,
     val isEditSheetOpen: Boolean = false,

@@ -21,6 +21,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import javax.inject.Inject
 import javax.inject.Singleton
+import com.ritesh.cashiro.data.model.Currency
 
 @Singleton
 class CashewImporter @Inject constructor(
@@ -113,7 +114,7 @@ class CashewImporter @Inject constructor(
                     while (c.moveToNext()) {
                         val pk = if (pkIdx != -1) c.getString(pkIdx) ?: "" else ""
                         val name = if (nameIdx != -1) c.getString(nameIdx) ?: "Cashew Wallet" else "Cashew Wallet"
-                        val currency = if (currIdx != -1) (c.getString(currIdx) ?: "INR").uppercase() else "INR"
+                        val currency = if (currIdx != -1) (c.getString(currIdx) ?: com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE).uppercase() else com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE
                         val color = if (colIdx != -1) CashewImportMapper.normalizeColor(c.getString(colIdx)) else "#4CAF50"
 
                         if (pk.isNotEmpty()) {
@@ -227,7 +228,7 @@ class CashewImporter @Inject constructor(
                         } else null
                         val categoryFk = if (catFkIdx != -1) c.getString(catFkIdx) else null
                         val subCategoryFk = if (subCatFkIdx != -1) c.getString(subCatFkIdx) else null
-                        val currency = if (currIdx != -1) (c.getString(currIdx) ?: "INR").uppercase() else "INR"
+                        val currency = if (currIdx != -1) (c.getString(currIdx) ?: com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE).uppercase() else com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE
                         val modifiedVal: Any? = if (modIdx != -1) {
                             if (c.getType(modIdx) == android.database.Cursor.FIELD_TYPE_INTEGER) c.getLong(modIdx) else c.getString(modIdx)
                         } else null
@@ -607,7 +608,7 @@ class CashewImporter @Inject constructor(
                         amount = BigDecimal.valueOf(budget.amount).setScale(2, RoundingMode.HALF_UP),
                         year = startLdt.year,
                         month = startLdt.monthValue,
-                        currency = "INR", // Default currency
+                        currency = com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE, // App default currency fallback
                         isActive = budget.isActive,
                         startDate = startLdt,
                         endDate = endLdt,
@@ -752,7 +753,7 @@ class CashewImporter @Inject constructor(
                         val catVal = if (catIdx != -1 && catIdx < cols.size) cols[catIdx] else "Miscellaneous"
                         val subCatVal = if (subCatIdx != -1 && subCatIdx < cols.size) cols[subCatIdx].takeIf { it.isNotBlank() } else null
                         val walletVal = if (walletIdx != -1 && walletIdx < cols.size) cols[walletIdx] else "Cashew Wallet"
-                        val currVal = if (currIdx != -1 && currIdx < cols.size) cols[currIdx].uppercase() else "INR"
+                        val currVal = if (currIdx != -1 && currIdx < cols.size) cols[currIdx].uppercase() else com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE
 
                         // Dedup via stable row properties hash
                         val hash = CashewImportMapper.deriveLast4("$titleVal$amtVal$dateVal") + "_$rowCounter"

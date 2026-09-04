@@ -47,4 +47,12 @@ class CurrencySupportTest {
         assertEquals(codes.size, codes.toSet().size)
         assertTrue(codes.containsAll(listOf("SAR", "BDT", "INR", "USD")))
     }
+
+    @Test
+    fun `app default currency is SAR`() {
+        // Currency-consistency fix: the app-wide default must be SAR
+        // (user-changeable). Guards against template-leftover defaults
+        // (e.g. INR) sneaking back into UI states or preferences.
+        assertEquals("SAR", Currency.DEFAULT_CURRENCY_CODE)
+    }
 }

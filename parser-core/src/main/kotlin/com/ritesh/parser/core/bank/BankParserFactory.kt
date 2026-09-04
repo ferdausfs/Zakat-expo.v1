@@ -147,7 +147,11 @@ object BankParserFactory {
         BkashParser(),  // bKash (Bangladesh MFS)
         NagadParser(),  // Nagad (Bangladesh MFS)
         RocketParser(),  // Rocket / DBBL mobile banking (Bangladesh MFS)
-        BangladeshBankParser()  // BRAC / City / EBL / IBBL / UCB / MTB and other BD banks
+        BangladeshBankParser(),  // BRAC / City / EBL / IBBL / UCB / MTB and other BD banks (registry-driven, see BangladeshBankRegistry)
+        // --- Registered after all existing parsers: they only claim NEW
+        // --- senders, so no existing parser's matching or behaviour changes.
+        UpayParser(),  // upay (Bangladesh MFS)
+        SaudiWalletParser()  // mada Pay / urpay / Alinma Pay (Saudi wallets)
         // Add more bank parsers here as we implement them
     )
 

@@ -4,6 +4,7 @@ import com.ritesh.cashiro.data.database.entity.TransactionType
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
+import com.ritesh.cashiro.data.model.Currency
 
 /**
  * Data models for AI chat context
@@ -31,7 +32,7 @@ data class MonthSummary(
 data class TransactionSummary(
     val merchantName: String,
     val amount: BigDecimal,
-    val originalCurrency: String = "INR",
+    val originalCurrency: String = Currency.DEFAULT_CURRENCY_CODE,
     val convertedAmount: BigDecimal? = null,
     val category: String,
     val subcategory: String? = null,

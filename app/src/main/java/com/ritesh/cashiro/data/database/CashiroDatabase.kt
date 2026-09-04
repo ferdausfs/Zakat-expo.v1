@@ -88,7 +88,7 @@ import com.ritesh.cashiro.data.database.entity.WebhookProfileEntity
             com.ritesh.cashiro.data.database.entity.LendBorrowTransactionEntity::class,
             ZakatAssetEntity::class
         ],
-        version = 63,
+        version = 64,
     exportSchema = true,
     autoMigrations =
         [
@@ -178,7 +178,8 @@ MIGRATION_55_56,
                                 MIGRATION_59_60,
                                 MIGRATION_60_61,
                                 MIGRATION_61_62,
-                                MIGRATION_62_63
+                                MIGRATION_62_63,
+                                MIGRATION_63_64
                             )
                             .build()
                     INSTANCE = instance
@@ -704,6 +705,27 @@ MIGRATION_55_56,
                     )
                     db.execSQL(
                         "CREATE INDEX IF NOT EXISTS `index_zakat_assets_acquisition_date` ON `zakat_assets` (`acquisition_date`)"
+                    )
+                }
+            }
+
+        // Performance: add hot-path indices on transactions (list screens
+        // filter is_deleted + range-scan date_time; analytics filter by
+        // currency; type/category filters). Purely additive, no data change.
+        val MIGRATION_63_64 =
+            object : Migration(63, 64) {
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    db.execSQL(
+                        "CREATE INDEX IF NOT EXISTS `index_transactions_is_deleted_date_time` ON `transactions` (`is_deleted`, `date_time`)"
+                    )
+                    db.execSQL(
+                        "CREATE INDEX IF NOT EXISTS `index_transactions_currency` ON `transactions` (`currency`)"
+                    )
+                    db.execSQL(
+                        "CREATE INDEX IF NOT EXISTS `index_transactions_transaction_type` ON `transactions` (`transaction_type`)"
+                    )
+                    db.execSQL(
+                        "CREATE INDEX IF NOT EXISTS `index_transactions_category` ON `transactions` (`category`)"
                     )
                 }
             }

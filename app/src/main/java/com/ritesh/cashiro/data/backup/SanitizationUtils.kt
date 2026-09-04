@@ -3,6 +3,7 @@ package com.ritesh.cashiro.data.backup
 import com.ritesh.cashiro.data.database.entity.*
 import java.math.BigDecimal
 import java.time.LocalDateTime
+import com.ritesh.cashiro.data.model.Currency
 
 /**
  * Extension functions to sanitize entities deserialized from backup.
@@ -70,7 +71,7 @@ fun TransactionEntity.sanitize(): TransactionEntity {
         isDeleted = isDeleted,
         createdAt = createdAt ?: LocalDateTime.now(),
         updatedAt = updatedAt ?: LocalDateTime.now(),
-        currency = currency ?: "INR",
+        currency = currency ?: Currency.DEFAULT_CURRENCY_CODE,
         fromAccount = fromAccount,
         toAccount = toAccount,
         billingCycle = billingCycle,
@@ -93,7 +94,7 @@ fun CardEntity.sanitize(): CardEntity {
         lastBalanceDate = lastBalanceDate,
         createdAt = createdAt ?: LocalDateTime.now(),
         updatedAt = updatedAt ?: LocalDateTime.now(),
-        currency = currency ?: "INR",
+        currency = currency ?: Currency.DEFAULT_CURRENCY_CODE,
         isSample = isSample
     )
 }
@@ -112,7 +113,7 @@ fun SubscriptionEntity.sanitize(): SubscriptionEntity {
         smsBody = smsBody,
         createdAt = createdAt ?: LocalDateTime.now(),
         updatedAt = updatedAt ?: LocalDateTime.now(),
-        currency = currency ?: "INR",
+        currency = currency ?: Currency.DEFAULT_CURRENCY_CODE,
         billingCycle = billingCycle,
         lastPaidDate = lastPaidDate,
         isSample = isSample
@@ -126,7 +127,7 @@ fun BudgetEntity.sanitize(): BudgetEntity {
         amount = amount ?: BigDecimal.ZERO,
         year = year,
         month = month,
-        currency = currency ?: "INR",
+        currency = currency ?: Currency.DEFAULT_CURRENCY_CODE,
         isActive = isActive,
         createdAt = createdAt ?: LocalDateTime.now(),
         updatedAt = updatedAt ?: LocalDateTime.now(),
@@ -156,7 +157,7 @@ fun AccountBalanceEntity.sanitize(): AccountBalanceEntity {
         smsSource = smsSource,
         sourceType = sourceType,
         createdAt = createdAt ?: LocalDateTime.now(),
-        currency = currency ?: "INR",
+        currency = currency ?: Currency.DEFAULT_CURRENCY_CODE,
         isWallet = isWallet,
         color = color ?: "#33B5E5",
         isSample = isSample

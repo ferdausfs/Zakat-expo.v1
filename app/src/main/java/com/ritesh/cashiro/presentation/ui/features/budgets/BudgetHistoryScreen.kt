@@ -38,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.presentation.effects.overScrollVertical
 import com.ritesh.cashiro.presentation.effects.rememberOverscrollFlingBehavior
 import com.ritesh.cashiro.presentation.ui.components.CustomTitleTopAppBar
@@ -122,7 +123,7 @@ fun BudgetHistoryScreen(
                                 Column(modifier = Modifier.padding(Spacing.md)) {
                                     SpendingLineChart(
                                         data = uiState.chartPoints,
-                                        currency = uiState.budget?.currency ?: "INR"
+                                        currency = uiState.budget?.currency ?: Currency.DEFAULT_CURRENCY_CODE
                                     )
                                 }
                             }

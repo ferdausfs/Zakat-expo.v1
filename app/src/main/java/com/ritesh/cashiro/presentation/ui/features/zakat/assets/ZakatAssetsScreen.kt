@@ -60,6 +60,7 @@ import com.ritesh.cashiro.data.database.entity.ZakatAssetType
 import com.ritesh.cashiro.data.database.entity.ZakatAssetUnit
 import com.ritesh.cashiro.domain.zakat.WealthPoolCalculator
 import com.ritesh.cashiro.presentation.ui.components.CustomTitleTopAppBar
+import com.ritesh.cashiro.presentation.ui.components.CashiroCard
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
 import com.ritesh.cashiro.utils.CurrencyFormatter
 import java.math.BigDecimal
@@ -67,6 +68,8 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import androidx.compose.ui.text.TextStyle
+import com.ritesh.cashiro.presentation.ui.features.zakat.ZakatSectionUi
 import java.time.format.FormatStyle
 
 /**
@@ -232,10 +235,10 @@ private fun AssetCard(
     val dateFormatter = remember {
         DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
     }
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
+    // Shared card language (theme shape + surfaceContainerLow) for cohesion
+    CashiroCard(
+        modifier = Modifier.fillMaxWidth(),
+        onClick = onClick
     ) {
         Column(modifier = Modifier.padding(Spacing.md)) {
             Row(

@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.ritesh.cashiro.data.model.Currency
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,15 +49,13 @@ fun CurrencySelectionBottomSheet(
             availableCurrencies.forEachIndexed { index, currency ->
                 ListItem(
                     headline = {
+                        // Resolve display name + symbol from the shared currency
+                        // model so every supported currency (SAR, BDT, ...)
+                        // shows a proper label; custom codes fall back to the code.
                         Text(
-                            text = when (currency) {
-                                "INR" -> "Indian Rupee (₹)"
-                                "USD" -> "US Dollar ($)"
-                                "AED" -> "UAE Dirham (AED)"
-                                "NPR" -> "Nepalese Rupee (₨)"
-                                "ETB" -> "Ethiopian Birr (ብር)"
-                                else -> currency
-                            }
+                            text = Currency.getByCode(currency)
+                                ?.let { "${it.name} (${it.symbol})" }
+                                ?: currency
                         )
                     },
                     trailing = {

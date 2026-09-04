@@ -1,5 +1,6 @@
 package com.ritesh.cashiro.presentation.common
 
+import com.ritesh.cashiro.data.model.Currency
 import java.math.BigDecimal
 
 /**
@@ -10,6 +11,11 @@ data class CurrencyGroupedTotals(
     val availableCurrencies: List<String> = emptyList(),
     val transactionCount: Int = 0
 ) {
+    companion object {
+        /** App default currency, used when no preferred currency is set. */
+        private val DEFAULT_FALLBACK = Currency.DEFAULT_CURRENCY_CODE
+    }
+
     fun getTotalsForCurrency(currency: String): CurrencyTotals {
         return totalsByCurrency[currency] ?: CurrencyTotals(currency = currency)
     }
@@ -20,12 +26,12 @@ data class CurrencyGroupedTotals(
         return when {
             // If a preferred currency is given and exists in available currencies, use it
             preferredCurrency != null && availableCurrencies.contains(preferredCurrency) -> preferredCurrency
-            // Otherwise fall back to INR if available
-            availableCurrencies.contains("INR") -> "INR"
+            // Otherwise fall back to the app default currency (SAR) if available
+            availableCurrencies.contains(DEFAULT_FALLBACK) -> DEFAULT_FALLBACK
             // Then first available currency
             availableCurrencies.isNotEmpty() -> availableCurrencies.first()
             // Final fallback
-            else -> preferredCurrency ?: "INR"
+            else -> preferredCurrency ?: DEFAULT_FALLBACK
         }
     }
 }

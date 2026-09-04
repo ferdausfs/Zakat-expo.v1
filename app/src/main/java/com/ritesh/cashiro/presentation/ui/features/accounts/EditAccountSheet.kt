@@ -66,6 +66,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import com.ritesh.cashiro.R
 import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.presentation.effects.BlurredAnimatedVisibility
 import com.ritesh.cashiro.presentation.ui.components.BrandIcon
 import com.ritesh.cashiro.presentation.ui.components.ColorPickerContent
@@ -89,7 +90,7 @@ import java.math.BigDecimal
 fun EditAccountSheet(
     account: AccountBalanceEntity? = null,
     allAccounts: List<AccountBalanceEntity> = emptyList(),
-    defaultCurrency: String = "INR",
+    defaultCurrency: String = Currency.DEFAULT_CURRENCY_CODE,
     onDismiss: () -> Unit,
     onDelete: (() -> Unit)? = null,
     onSave: (bankName: String,

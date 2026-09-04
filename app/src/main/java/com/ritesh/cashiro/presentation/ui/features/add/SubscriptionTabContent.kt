@@ -73,6 +73,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.presentation.effects.overScrollVertical
 import com.ritesh.cashiro.presentation.effects.rememberOverscrollFlingBehavior
 import com.ritesh.cashiro.presentation.ui.components.AccountSelectionSheet
@@ -214,7 +215,7 @@ fun SubscriptionTabContent(
             AmountInput(
                 amount = uiState.amount.ifEmpty { "0" },
                 currencySymbol = CurrencyFormatter.getCurrencySymbol(
-                    uiState.selectedAccount?.currency ?: "INR"
+                    uiState.selectedAccount?.currency ?: Currency.DEFAULT_CURRENCY_CODE
                 ),
                 onClick = {
                     showNumberPad = true

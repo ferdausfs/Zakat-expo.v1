@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ritesh.cashiro.R
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.domain.model.LendBorrowSummary
 import com.ritesh.cashiro.presentation.ui.theme.Dimensions
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
@@ -43,7 +44,7 @@ fun SharedTransitionScope.LendBorrowCard(
     onLentClick: () -> Unit,
     onBorrowedClick: () -> Unit,
     modifier: Modifier = Modifier,
-    currency: String = "INR",
+    currency: String = Currency.DEFAULT_CURRENCY_CODE,
     blurEffects: Boolean = false,
     hazeState: HazeState = remember { HazeState() },
     animatedContentScope: AnimatedContentScope? = null

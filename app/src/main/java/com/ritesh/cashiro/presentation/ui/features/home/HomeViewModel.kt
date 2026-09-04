@@ -16,6 +16,7 @@ import androidx.work.workDataOf
 import com.ritesh.cashiro.data.currency.CurrencyConversionService
 import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
 import com.ritesh.cashiro.data.database.entity.TransactionEntity
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.utils.sumOfBigDecimal
 import com.ritesh.cashiro.data.database.entity.TransactionType
 import com.ritesh.cashiro.data.manager.InAppReviewManager
@@ -110,7 +111,7 @@ class HomeViewModel @Inject constructor(
         emptyMap()
 
     private val baseCurrency = currencyRepository.effectiveBaseCurrencyCode
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "INR")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE)
 
     private val _selectedCurrency = MutableStateFlow<String?>(null)
     private val selectedCurrencyCombined = combine(
@@ -118,7 +119,7 @@ class HomeViewModel @Inject constructor(
         _selectedCurrency
     ) { base, selected ->
         selected ?: base
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "INR")
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), Currency.DEFAULT_CURRENCY_CODE)
 
     init {
         loadHomeData()
@@ -705,11 +706,12 @@ class HomeViewModel @Inject constructor(
             }
 
             val currentAvailableCurrencies = _uiState.value.availableCurrencies.toSet()
+            val base = baseCurrency.value
             val updatedAvailableCurrencies = (currentAvailableCurrencies + allAccountCurrencies)
                 .sortedWith { a, b ->
                     when {
-                        a == "INR" -> -1
-                        b == "INR" -> 1
+                        a == base -> -1 // base currency first
+                        b == base -> 1
                         else -> a.compareTo(b)
                     }
                 }
@@ -836,8 +838,8 @@ class HomeViewModel @Inject constructor(
         val allCurrencies = (currentMonthBreakdownMap.keys + lastMonthBreakdownMap.keys + currentYearBreakdownMap.keys + effectiveCurrency).distinct()
         val availableCurrencies = allCurrencies.sortedWith { a, b ->
             when {
-                a == "INR" -> -1 // INR first
-                b == "INR" -> 1
+                a == effectiveCurrency -> -1 // base currency first
+                b == effectiveCurrency -> 1
                 else -> a.compareTo(b) // Alphabetical for others
             }
         }

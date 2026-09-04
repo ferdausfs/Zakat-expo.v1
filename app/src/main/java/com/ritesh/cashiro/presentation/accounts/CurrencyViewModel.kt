@@ -111,7 +111,7 @@ class CurrencyViewModel @Inject constructor(
 
                 val effectiveCurrencyCode = currencyRepository.effectiveBaseCurrencyCode.first()
                 val selectedCurrency = currencies.find { it.code.equals(effectiveCurrencyCode, ignoreCase = true) } 
-                    ?: currencies.find { it.code == "USD" }
+                    ?: currencies.find { it.code == com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE }
                     ?: currencies.firstOrNull()
 
                 _uiState.update {
@@ -219,7 +219,7 @@ class CurrencyViewModel @Inject constructor(
             val customCurrency = com.ritesh.cashiro.data.model.CustomCurrency(code.uppercase(), name, symbol)
             userPreferencesRepository.addCustomCurrency(customCurrency)
             
-            val baseCurrency = _uiState.value.selectedCurrency?.code ?: "USD"
+            val baseCurrency = _uiState.value.selectedCurrency?.code ?: Currency.DEFAULT_CURRENCY_CODE
             currencyConversionService.saveCustomRate(baseCurrency, code.uppercase(), BigDecimal.valueOf(rate))
             
             loadCurrencies()

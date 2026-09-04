@@ -9,6 +9,7 @@ import com.ritesh.cashiro.data.database.entity.CategoryEntity
 import com.ritesh.cashiro.data.database.entity.SubcategoryEntity
 import com.ritesh.cashiro.data.database.entity.TransactionEntity
 import com.ritesh.cashiro.data.database.entity.TransactionType
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.data.repository.CategoryRepository
 import com.ritesh.cashiro.data.repository.TransactionRepository
 import com.ritesh.cashiro.presentation.common.TimePeriod
@@ -83,14 +84,14 @@ class TransactionsViewModel @Inject constructor(
     private val _sortOption = MutableStateFlow(SortOption.DATE_NEWEST)
     val sortOption: StateFlow<SortOption> = _sortOption.asStateFlow()
 
-    private val _selectedCurrency = MutableStateFlow("INR") // Default to INR
+    private val _selectedCurrency = MutableStateFlow(Currency.DEFAULT_CURRENCY_CODE) // Defaults to the app default currency (SAR)
     val selectedCurrency: StateFlow<String> = _selectedCurrency.asStateFlow()
 
     val baseCurrency: StateFlow<String> = currencyRepository.effectiveBaseCurrencyCode
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = "INR"
+            initialValue = Currency.DEFAULT_CURRENCY_CODE
         )
 
     // Store custom date range as epoch days to survive process death
@@ -146,10 +147,11 @@ class TransactionsViewModel @Inject constructor(
             }
         }
         transactionCurrenciesFlow.map { txCurrencies ->
+            val base = baseCurrency.value
             (txCurrencies + accountCurrencies).distinct().sortedWith { a, b ->
                 when {
-                    a == "INR" -> -1 // INR first
-                    b == "INR" -> 1
+                    a == base -> -1 // base currency first
+                    b == base -> 1
                     else -> a.compareTo(b) // Alphabetical for others
                 }
             }
@@ -395,7 +397,7 @@ class TransactionsViewModel @Inject constructor(
                     isLoading = false
                 )
                 // Calculate totals for filtered transactions
-                _currencyGroupedTotals.value = calculateCurrencyGroupedTotals(transactions)
+                _currencyGroupedTotals.value = calculateCurrencyGroupedTotals(transactions, baseCurrency.value)
 
                 // Auto-select primary currency if not already selected or if current currency no longer exists
                 val currentCurrency = selectedCurrency.value
@@ -967,7 +969,10 @@ class TransactionsViewModel @Inject constructor(
         }
     }
     
-    private fun calculateCurrencyGroupedTotals(transactions: List<TransactionEntity>): CurrencyGroupedTotals {
+    private fun calculateCurrencyGroupedTotals(
+        transactions: List<TransactionEntity>,
+        baseCurrencyCode: String = com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE
+    ): CurrencyGroupedTotals {
         // Group transactions by currency
         val transactionsByCurrency = transactions.groupBy { it.currency }
 
@@ -1004,7 +1009,8 @@ class TransactionsViewModel @Inject constructor(
         }
 
         val filteredAvailableCurrencies = CurrencyUtils.sortCurrencies(
-            totalsByCurrency.keys.toList()
+            totalsByCurrency.keys.toList(),
+            preferredFirst = baseCurrencyCode
         )
 
         return CurrencyGroupedTotals(

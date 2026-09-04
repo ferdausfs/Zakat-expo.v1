@@ -92,6 +92,80 @@ class BangladeshBankParserTest {
                 )
             ),
 
+            // ----- State-owned banks (registry extension) -----
+
+            // Sonali Bank ATM debit
+            ParserTestCase(
+                name = "Sonali Bank - ATM debit",
+                message = "Sonali Bank: Your A/C **1234 is debited with Tk 2,500.00 on 01/02/2026 at 10:30. Info: ATM Cash Withdrawal. Avl Bal: Tk 15,000.00",
+                sender = "SONALIBANK",
+                expected = ExpectedTransaction(
+                    amount = BigDecimal("2500.00"),
+                    currency = "BDT",
+                    type = TransactionType.EXPENSE,
+                    accountLast4 = "1234",
+                    balance = BigDecimal("15000.00")
+                )
+            ),
+
+            // Agrani Bank credit
+            ParserTestCase(
+                name = "Agrani Bank - credit",
+                message = "Agrani Bank: Tk 10,000.00 credited to your A/C XX4455 on 01/02/2026. Avl Bal: Tk 30,000.00",
+                sender = "AGRANIBANK",
+                expected = ExpectedTransaction(
+                    amount = BigDecimal("10000.00"),
+                    currency = "BDT",
+                    type = TransactionType.INCOME,
+                    accountLast4 = "4455",
+                    balance = BigDecimal("30000.00")
+                )
+            ),
+
+            // Janata Bank purchase debit
+            ParserTestCase(
+                name = "Janata Bank - purchase debit",
+                message = "Janata Bank: A/C **8899 debited with BDT 1,200.00 on 02/02/2026 for Purchase at PATHAO. Avl Bal: BDT 9,800.00",
+                sender = "JANATABANK",
+                expected = ExpectedTransaction(
+                    amount = BigDecimal("1200.00"),
+                    currency = "BDT",
+                    type = TransactionType.EXPENSE,
+                    merchant = "PATHAO",
+                    accountLast4 = "8899",
+                    balance = BigDecimal("9800.00")
+                )
+            ),
+
+            // Rupali Bank internet-banking payment
+            ParserTestCase(
+                name = "Rupali Bank - internet banking payment",
+                message = "Rupali Bank: Tk 750.00 debited from your account 1234 on 03/02/2026 for Internet Banking payment to DARAZ. Balance: Tk 5,250.00",
+                sender = "RUPALIBANK",
+                expected = ExpectedTransaction(
+                    amount = BigDecimal("750.00"),
+                    currency = "BDT",
+                    type = TransactionType.EXPENSE,
+                    merchant = "DARAZ",
+                    accountLast4 = "1234",
+                    balance = BigDecimal("5250.00")
+                )
+            ),
+
+            // IFIC Bank salary credit
+            ParserTestCase(
+                name = "IFIC Bank - salary credit",
+                message = "IFIC Bank: BDT 25,000.00 credited to your A/C XX3210 on 05/02/2026. Avl Bal: BDT 60,000.00",
+                sender = "IFIC",
+                expected = ExpectedTransaction(
+                    amount = BigDecimal("25000.00"),
+                    currency = "BDT",
+                    type = TransactionType.INCOME,
+                    accountLast4 = "3210",
+                    balance = BigDecimal("60000.00")
+                )
+            ),
+
             // Negative: bill reminder without transaction keywords
             ParserTestCase(
                 name = "Bill reminder rejected",
@@ -120,6 +194,18 @@ class BangladeshBankParserTest {
             "MTB" to true,
             "PRIMEBANK" to true,
             "DUTCHBANG" to true,
+            // Registry extension: state-owned + additional banks
+            "SONALIBANK" to true,
+            "Sonali Bank" to true,
+            "AGRANI" to true,
+            "JANATABANK" to true,
+            "RUPALI" to true,
+            "IFICBANK" to true,
+            "BDBL" to true,
+            "ABBANK" to true,
+            "EXIMBANK" to true,
+            "MERCANTILE" to true,
+            "ONEBANK" to true,
             // MFS and foreign senders stay with their own parsers
             "bKash" to false,
             "NAGAD" to false,

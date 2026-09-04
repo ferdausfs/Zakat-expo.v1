@@ -104,6 +104,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.zIndex
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.presentation.ui.theme.CashiroTheme
 import androidx.work.WorkInfo
 import androidx.compose.ui.geometry.CornerRadius
@@ -1282,7 +1283,7 @@ fun OnBoardingAccountVerificationPreview() {
         bankName = "HDFC Bank",
         accountLast4 = "1234",
         balance = BigDecimal("50000.00"),
-        currency = "INR",
+        currency = Currency.DEFAULT_CURRENCY_CODE,
         timestamp = LocalDateTime.now(),
     )
     CashiroTheme {

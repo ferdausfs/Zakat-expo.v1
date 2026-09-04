@@ -42,6 +42,7 @@ import com.ritesh.cashiro.core.Constants
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import java.net.URLEncoder
 import java.io.File
@@ -687,6 +688,9 @@ class SettingsViewModel @Inject constructor(
                 _uiState.update { it.copy(isSeeding = true) }
 
                 val now = LocalDateTime.now()
+                // Sample data follows the user's current default currency so
+                // the demo never introduces an unexpected currency (e.g. INR).
+                val sampleCurrency = userPreferencesRepository.baseCurrency.first()
 
                 // HDFC Bank (Savings) with History
                 val hdfcLast4 = "1234"
@@ -761,7 +765,7 @@ class SettingsViewModel @Inject constructor(
                         accountLast4 = hdfcLast4,
                         nickname = "Salary Card",
                         lastBalance = BigDecimal(48000),
-                        lastBalanceSource = "Your HDFC Bank account ending in 1234 has been credited with INR 50,000.00. Avl bal: INR 48,000.00",
+                        lastBalanceSource = "Your HDFC Bank account ending in 1234 has been credited with $sampleCurrency 50,000.00. Avl bal: $sampleCurrency 48,000.00",
                         lastBalanceDate = now,
                         isSample = true
                     )
@@ -775,7 +779,7 @@ class SettingsViewModel @Inject constructor(
                         bankName = "Axis Bank",
                         nickname = "Travel Card",
                         lastBalance = BigDecimal(15420),
-                        lastBalanceSource = "Bank Alert: Your Axis Bank Card XX8765 was used for a transaction of INR 500 at STARBUCKS. Avl Bal: INR 15,420.75",
+                        lastBalanceSource = "Bank Alert: Your Axis Bank Card XX8765 was used for a transaction of $sampleCurrency 500 at STARBUCKS. Avl Bal: $sampleCurrency 15,420.75",
                         lastBalanceDate = now,
                         isSample = true
                     )
@@ -831,7 +835,7 @@ class SettingsViewModel @Inject constructor(
                                 transactionType = TransactionType.EXPENSE,
                                 dateTime = monthDate.withDayOfMonth(i * 5).withHour(12),
                                 transactionHash = UUID.randomUUID().toString(),
-                                currency = "INR",
+                                currency = sampleCurrency,
                                 bankName = "HDFC Bank",
                                 accountNumber = hdfcLast4,
                                 isSample = true
@@ -885,7 +889,7 @@ class SettingsViewModel @Inject constructor(
                             dateTime = weekDate.withHour(20),
                             transactionHash = UUID.randomUUID().toString(),
                             isSample = true,
-                            currency = "INR"
+                            currency = sampleCurrency
                         )
                     )
                 }

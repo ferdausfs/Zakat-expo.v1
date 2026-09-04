@@ -71,6 +71,7 @@ import com.ritesh.cashiro.R
 import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
 import com.ritesh.cashiro.data.database.entity.CategoryEntity
 import com.ritesh.cashiro.data.database.entity.LendBorrowType
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.data.service.AttachmentService
 import com.ritesh.cashiro.domain.model.LendBorrowPerson
 import com.ritesh.cashiro.domain.model.LendBorrowTransactionItem
@@ -283,7 +284,7 @@ fun AddEditLendBorrowTransactionSheet(
                 AmountInput(
                     amount = amountText,
                     currencySymbol = CurrencyFormatter.getCurrencySymbol(
-                        selectedAccount?.currency ?: "INR"
+                        selectedAccount?.currency ?: Currency.DEFAULT_CURRENCY_CODE
                     ),
                     onClick = { showNumberPad = true },
                     modifier = Modifier.fillMaxWidth()

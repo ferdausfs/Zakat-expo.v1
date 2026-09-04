@@ -51,6 +51,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ritesh.cashiro.R
 import com.ritesh.cashiro.domain.zakat.ZakatCalculator
 import com.ritesh.cashiro.presentation.ui.components.CustomTitleTopAppBar
+import com.ritesh.cashiro.presentation.ui.components.CashiroCard
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
 import com.ritesh.cashiro.utils.CurrencyFormatter
 import java.time.Instant
@@ -501,16 +502,16 @@ private fun ResultRow(
 
 @Composable
 private fun SectionCard(
-    containerColor: Color = MaterialTheme.colorScheme.surfaceVariant,
+    containerColor: Color = MaterialTheme.colorScheme.surfaceContainerLow,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    Card(
+    // Uses the shared CashiroCard language (theme shape + surfaceContainerLow)
+    // so the Zakat calculator matches the rest of the app.
+    CashiroCard(
         modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = containerColor),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+        colors = CardDefaults.cardColors(containerColor = containerColor)
     ) {
         Column(
-            modifier = Modifier.padding(Spacing.md),
             verticalArrangement = Arrangement.spacedBy(0.dp)
         ) {
             content()

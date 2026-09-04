@@ -14,6 +14,7 @@ import java.security.MessageDigest
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.inject.Inject
+import com.ritesh.cashiro.data.model.Currency
 
 class AddTransactionUseCase
 @Inject
@@ -33,7 +34,7 @@ constructor(
             isRecurring: Boolean = false,
             bankName: String? = null,
             accountLast4: String? = null,
-            currency: String = "INR",
+            currency: String = com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE,
             sourceAccountId: Long? = null,
             targetAccountBankName: String? = null,
             targetAccountLast4: String? = null,

@@ -13,6 +13,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import com.ritesh.cashiro.utils.IconResolutionUtils
 import javax.inject.Inject
 import javax.inject.Singleton
+import com.ritesh.cashiro.data.model.Currency
 
 @Singleton
 class AccountBalanceRepository @Inject constructor(
@@ -190,7 +191,7 @@ class AccountBalanceRepository @Inject constructor(
         timestamp: LocalDateTime,
         smsSource: String? = null,
         sourceType: String? = null,
-        currency: String = "INR"
+        currency: String = com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE
     ): Long {
         val latest = getLatestBalance(bankName, accountLast4)
         val balanceEntity = AccountBalanceEntity(

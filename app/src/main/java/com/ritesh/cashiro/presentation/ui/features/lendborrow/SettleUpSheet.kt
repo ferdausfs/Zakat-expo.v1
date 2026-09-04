@@ -43,6 +43,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ritesh.cashiro.R
 import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.domain.model.LendBorrowPerson
 import com.ritesh.cashiro.presentation.ui.components.AccountSelectionSheet
 import com.ritesh.cashiro.presentation.ui.components.BrandIcon
@@ -167,7 +168,7 @@ fun SettleUpSheet(
                 AmountInput(
                     amount = if (amountText.isBlank()) "0" else amountText,
                     currencySymbol = CurrencyFormatter.getCurrencySymbol(
-                        selectedAccount?.currency ?: "INR"
+                        selectedAccount?.currency ?: Currency.DEFAULT_CURRENCY_CODE
                     ),
                     onClick = { showNumberPad = true },
                     modifier = Modifier.fillMaxWidth(),

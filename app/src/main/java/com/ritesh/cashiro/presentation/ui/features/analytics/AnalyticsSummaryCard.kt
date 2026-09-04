@@ -32,6 +32,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.presentation.common.icons.CategoryMapping
 import com.ritesh.cashiro.presentation.ui.components.CategoryIcon
 import com.ritesh.cashiro.presentation.ui.icons.Iconax
@@ -246,7 +247,7 @@ fun AnalyticsSummaryCardPreview() {
                 averageAmount = BigDecimal("1946"),
                 topCategory = "Miscellaneous",
                 topCategoryPercentage = 92f,
-                currency = "INR"
+                currency = Currency.DEFAULT_CURRENCY_CODE
             )
         }
     }

@@ -1,5 +1,6 @@
 package com.ritesh.cashiro.presentation.ui.features.analytics
 
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.presentation.ui.components.BalancePoint
 import com.ritesh.cashiro.presentation.common.TimePeriod
 import com.ritesh.cashiro.presentation.common.TransactionTypeFilter
@@ -25,8 +26,8 @@ data class AnalyticsUiState(
     val averageAmount: BigDecimal = BigDecimal.ZERO,
     val topCategory: String? = null,
     val topCategoryPercentage: Float = 0f,
-    val currency: String = "INR",
-    val baseCurrency: String = "INR",
+    val currency: String = Currency.DEFAULT_CURRENCY_CODE,
+    val baseCurrency: String = Currency.DEFAULT_CURRENCY_CODE,
     val isLoading: Boolean = true,
     val spendingTrend: List<BalancePoint> = emptyList(),
     val convertedMerchantAmounts: Map<String, BigDecimal> = emptyMap()

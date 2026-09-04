@@ -1,5 +1,6 @@
 package com.ritesh.cashiro.presentation.ui.features.add
 
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.utils.SubscriptionUtils
 
 import android.content.Context
@@ -361,7 +362,7 @@ constructor(
         _transactionUiState.update { currentState -> 
             currentState.copy(
                 selectedAccount = account,
-                currency = account?.currency ?: "INR"
+                currency = account?.currency ?: Currency.DEFAULT_CURRENCY_CODE
             ) 
         }
     }
@@ -571,7 +572,7 @@ constructor(
         _subscriptionUiState.update { currentState -> 
             currentState.copy(
                 selectedAccount = account,
-                currency = account?.currency ?: "INR"
+                currency = account?.currency ?: Currency.DEFAULT_CURRENCY_CODE
             ) 
         }
     }
@@ -737,7 +738,7 @@ data class TransactionUiState(
     val isRecurring: Boolean = false,
     val selectedAccount: AccountBalanceEntity? = null,
     val targetAccount: AccountBalanceEntity? = null,
-    val currency: String = "INR",
+    val currency: String = Currency.DEFAULT_CURRENCY_CODE,
     val isLoading: Boolean = false,
     val error: String? = null,
     val selectedPersonId: Long? = null,
@@ -776,7 +777,7 @@ data class SubscriptionUiState(
     val subcategory: String? = null,
     val categoryError: String? = null,
     val selectedAccount: AccountBalanceEntity? = null,
-    val currency: String = "INR",
+    val currency: String = Currency.DEFAULT_CURRENCY_CODE,
     val notes: String = "",
     val isCustomCycle: Boolean = false,
     val customCycleCount: Int = 1,

@@ -2,6 +2,7 @@ package com.ritesh.cashiro.presentation.ui.features.onboarding
 
 import androidx.work.WorkInfo
 import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.presentation.ui.features.profile.EditProfileState
 
 data class OnBoardingUiState(
@@ -20,7 +21,7 @@ data class OnBoardingUiState(
     val manualAccountName: String = "",
     val manualAccountBalance: String = "",
     val manualAccountLast4: String = "",
-    val selectedCurrency: String = "INR", // Default currency
+    val selectedCurrency: String = Currency.DEFAULT_CURRENCY_CODE, // Default currency (SAR, user-changeable)
     val showCurrencyBottomSheet: Boolean = false,
     val permissionSubStep: Int = 0 // 0: SMS, 1: Notification
 )

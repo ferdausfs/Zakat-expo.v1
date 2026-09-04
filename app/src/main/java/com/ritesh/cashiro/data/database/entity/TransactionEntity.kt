@@ -8,8 +8,21 @@ import androidx.room.PrimaryKey
 import com.ritesh.cashiro.R
 import java.math.BigDecimal
 import java.time.LocalDateTime
+import com.ritesh.cashiro.data.model.Currency
 
-@Entity(tableName = "transactions", indices = [Index(value = ["transaction_hash"], unique = true)])
+@Entity(
+    tableName = "transactions",
+    indices = [
+        Index(value = ["transaction_hash"], unique = true),
+        // Hot-path performance indices: list screens filter is_deleted and
+        // sort/range-scan on date_time; analytics filter by currency; type
+        // and category queries scan those columns. Added in migration 63->64.
+        Index(value = ["is_deleted", "date_time"]),
+        Index(value = ["currency"]),
+        Index(value = ["transaction_type"]),
+        Index(value = ["category"])
+    ]
+)
 data class TransactionEntity(
         @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Long = 0,
         @ColumnInfo(name = "amount") val amount: BigDecimal,
@@ -29,7 +42,7 @@ data class TransactionEntity(
         @ColumnInfo(name = "is_deleted", defaultValue = "0") val isDeleted: Boolean = false,
         @ColumnInfo(name = "created_at") val createdAt: LocalDateTime = LocalDateTime.now(),
         @ColumnInfo(name = "updated_at") val updatedAt: LocalDateTime = LocalDateTime.now(),
-        @ColumnInfo(name = "currency", defaultValue = "INR") val currency: String = "INR",
+        @ColumnInfo(name = "currency", defaultValue = "INR") val currency: String = Currency.DEFAULT_CURRENCY_CODE,
         @ColumnInfo(name = "from_account") val fromAccount: String? = null,
         @ColumnInfo(name = "to_account") val toAccount: String? = null,
         @ColumnInfo(name = "reference") val reference: String? = null,

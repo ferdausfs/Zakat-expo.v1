@@ -134,9 +134,11 @@ class AnalyticsViewModel @Inject constructor(
                 startDate = dateRange.first,
                 endDate = dateRange.second
             ).flatMapLatest { allTransactions: List<TransactionEntity> ->
-                // Update available currencies using standard sorting (INR first, then alphabetical)
+                // Update available currencies using standard sorting (base currency first, then alphabetical)
+                val base = currencyRepository.effectiveBaseCurrencyCode.first()
                 val allCurrencies = CurrencyUtils.sortCurrencies(
-                    allTransactions.map { it.currency }.distinct()
+                    allTransactions.map { it.currency }.distinct(),
+                    preferredFirst = base
                 )
                 _availableCurrencies.value = allCurrencies
 

@@ -7,6 +7,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.math.BigDecimal
 import java.time.LocalDateTime
+import com.ritesh.cashiro.data.model.Currency
 
 /**
  * Entity representing an individual entry (Lending, Borrowing, or Settlement) for a person.
@@ -45,7 +46,7 @@ data class LendBorrowTransactionEntity(
     val amount: BigDecimal,
 
     @ColumnInfo(name = "currency", defaultValue = "'INR'")
-    val currency: String = "INR",
+    val currency: String = Currency.DEFAULT_CURRENCY_CODE,
 
     @ColumnInfo(name = "title")
     val title: String,

@@ -72,6 +72,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.ritesh.cashiro.data.database.entity.WebhookDataType
 import com.ritesh.cashiro.data.database.entity.WebhookRangePreset
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.data.webhook.WebhookHeader
 import com.ritesh.cashiro.data.webhook.WebhookProfileDraft
 import com.ritesh.cashiro.data.webhook.WebhookValidation
@@ -109,7 +110,7 @@ fun WebhookEditorScreen(
     var loaded by remember { mutableStateOf(false) }
     var name by remember { mutableStateOf("") }
     var url by remember { mutableStateOf("") }
-    var currency by remember { mutableStateOf("INR") }
+    var currency by remember { mutableStateOf(Currency.DEFAULT_CURRENCY_CODE) }
     var enabled by remember { mutableStateOf(true) }
     var rangePreset by remember { mutableStateOf(WebhookRangePreset.SINCE_LAST_SUCCESS) }
     var customStart by remember { mutableStateOf<LocalDateTime?>(null) }

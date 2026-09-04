@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.ritesh.cashiro.data.model.Currency
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -46,7 +47,7 @@ data class ZakatAssetEntity(
     /** Gold purity in karat (24/22/21/18); null for silver and non-metals. */
     @ColumnInfo(name = "karat") val karat: Int? = null,
     /** Currency the asset is denominated/valued in (e.g. SAR, BDT). */
-    @ColumnInfo(name = "currency") val currency: String = "INR",
+    @ColumnInfo(name = "currency") val currency: String = Currency.DEFAULT_CURRENCY_CODE,
     /** Date the asset was acquired; drives per-asset hawl. */
     @ColumnInfo(name = "acquisition_date") val acquisitionDate: LocalDate = LocalDate.now(),
     /**

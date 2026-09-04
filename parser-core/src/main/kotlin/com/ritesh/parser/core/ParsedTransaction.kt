@@ -17,7 +17,7 @@ data class ParsedTransaction(
     val bankName: String,
     val transactionHash: String? = null,
     val isFromCard: Boolean = false,
-    val currency: String = "INR",
+    val currency: String = "SAR", // app default currency; parsers override via getCurrency()
     val fromAccount: String? = null,
     val toAccount: String? = null
 ) {

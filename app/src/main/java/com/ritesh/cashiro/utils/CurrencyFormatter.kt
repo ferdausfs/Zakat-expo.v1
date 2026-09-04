@@ -63,7 +63,7 @@ object CurrencyFormatter {
     /**
      * Formats a BigDecimal amount as currency with the specified currency code
      */
-    fun formatCurrency(amount: BigDecimal, currencyCode: String = "INR"): String {
+    fun formatCurrency(amount: BigDecimal, currencyCode: String = com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE): String {
         return try {
             val locale = CURRENCY_LOCALES[currencyCode] ?: if (currencyCode == "INR" || currencyCode == "NPR") INDIAN_LOCALE else DEFAULT_LOCALE
             val formatter = NumberFormat.getCurrencyInstance(locale)
@@ -107,7 +107,7 @@ object CurrencyFormatter {
     /**
      * Formats a Double amount as currency with the specified currency code
      */
-    fun formatCurrency(amount: Double, currencyCode: String = "INR"): String {
+    fun formatCurrency(amount: Double, currencyCode: String = com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE): String {
         return formatCurrency(amount.toBigDecimal(), currencyCode)
     }
 
@@ -115,7 +115,7 @@ object CurrencyFormatter {
      * Formats an amount with proper grouping and decimals
      * Uses Indian grouping (#,##,##0.00) for INR and NPR, standard (#,###.00) otherwise
      */
-    fun formatAmount(amount: BigDecimal, currencyCode: String = "INR"): String {
+    fun formatAmount(amount: BigDecimal, currencyCode: String = com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE): String {
         val locale = CURRENCY_LOCALES[currencyCode] ?: if (currencyCode == "INR" || currencyCode == "NPR") INDIAN_LOCALE else DEFAULT_LOCALE
         val pattern = if (currencyCode == "INR" || currencyCode == "NPR") "#,##,##0.00" else "#,###.00"
         val symbols = DecimalFormatSymbols(locale)
@@ -126,7 +126,7 @@ object CurrencyFormatter {
     /**
      * Formats a double amount with proper grouping and decimals
      */
-    fun formatAmount(amount: Double, currencyCode: String = "INR"): String {
+    fun formatAmount(amount: Double, currencyCode: String = com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE): String {
         return formatAmount(amount.toBigDecimal(), currencyCode)
     }
 
@@ -138,18 +138,19 @@ object CurrencyFormatter {
     }
 
     /**
-     * Gets the base currency for a bank using the BankParserFactory
-     * Returns INR as default for unknown banks
+     * Gets the base currency for a bank using the BankParserFactory.
+     * Returns the app default currency (SAR) for unknown banks — never a
+     * hardcoded template leftover.
      */
     fun getBankBaseCurrency(bankName: String?): String {
-        if (bankName == null) return "INR"
+        if (bankName == null) return com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE
 
         // Try to find a parser that can handle this bank name
         return try {
             val parser = BankParserFactory.getParser(bankName)
-            parser?.getCurrency() ?: "INR"
+            parser?.getCurrency() ?: com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE
         } catch (e: Exception) {
-            "INR"
+            com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE
         }
     }
 }

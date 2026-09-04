@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ritesh.cashiro.R
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.presentation.accounts.CurrencyViewModel
 import com.ritesh.cashiro.presentation.effects.overScrollVertical
 import com.ritesh.cashiro.presentation.ui.components.CurrencyBottomSheet
@@ -119,7 +120,7 @@ fun CurrencySettingsScreen(
                     icon = Icons.AutoMirrored.Filled.ShowChart,
                     onClick = {
                         currencyViewModel.loadConversions(
-                            ratesUiState.selectedCurrency?.code ?: "INR"
+                            ratesUiState.selectedCurrency?.code ?: Currency.DEFAULT_CURRENCY_CODE
                         )
                         showExchangeRateSheet = true
                     },
@@ -242,7 +243,7 @@ fun CurrencySettingsScreen(
 
     if (showUnifiedCurrencyPicker) {
         CurrencyBottomSheet(
-            selectedCurrency = uiState.unifiedCurrencyCode ?: "INR",
+            selectedCurrency = uiState.unifiedCurrencyCode ?: Currency.DEFAULT_CURRENCY_CODE,
             onCurrencySelected = { code ->
                 currencySettingsViewModel.setUnifiedCurrency(code)
                 showUnifiedCurrencyPicker = false
@@ -253,7 +254,7 @@ fun CurrencySettingsScreen(
 
     if (showDefaultCurrencyPicker) {
         CurrencyBottomSheet(
-            selectedCurrency = uiState.defaultCurrencyCode ?: "INR",
+            selectedCurrency = uiState.defaultCurrencyCode ?: Currency.DEFAULT_CURRENCY_CODE,
             onCurrencySelected = { code ->
                 currencySettingsViewModel.setDefaultCurrency(code)
                 showDefaultCurrencyPicker = false

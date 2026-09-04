@@ -1,6 +1,7 @@
 package com.ritesh.cashiro.presentation.ui.features.budgets
 
 import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.data.repository.BudgetWithSpending
 import com.ritesh.cashiro.data.repository.CategoryLimitWithSpending
 import com.ritesh.cashiro.data.database.entity.BudgetPeriod
@@ -22,7 +23,7 @@ data class BudgetUiState(
     val selectedBudgetTransactions: List<TransactionEntity> = emptyList(),
     val allAccounts: List<AccountBalanceEntity> = emptyList(),
     val convertedAmounts: Map<Long, BigDecimal> = emptyMap(),
-    val baseCurrency: String = "INR",
+    val baseCurrency: String = Currency.DEFAULT_CURRENCY_CODE,
     val transactionPersonMapping: Map<Long, PersonInfo> = emptyMap(),
     val error: String? = null
 )
@@ -40,7 +41,7 @@ data class EditBudgetState(
     val budgetType: BudgetType = BudgetType.EXPENSE,
     val accountIds: List<String> = emptyList(),
     val color: String = "#4CAF50",
-    val currency: String = "INR",
+    val currency: String = Currency.DEFAULT_CURRENCY_CODE,
     val categoryLimits: List<EditCategoryLimit> = emptyList()
 ) {
     val isNewBudget: Boolean get() = budgetId == null

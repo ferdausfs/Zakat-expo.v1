@@ -50,6 +50,7 @@ import androidx.compose.ui.zIndex
 import androidx.core.graphics.toColorInt
 import coil3.compose.AsyncImage
 import com.ritesh.cashiro.R
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.domain.model.LendBorrowPerson
 import com.ritesh.cashiro.domain.model.LendBorrowSummary
 import com.ritesh.cashiro.presentation.ui.theme.CashiroTheme
@@ -74,7 +75,7 @@ fun SharedTransitionScope.LoanBalanceCard(
     summary: LendBorrowSummary,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    currency: String = "INR",
+    currency: String = Currency.DEFAULT_CURRENCY_CODE,
     blurEffects: Boolean = false,
     hazeState: HazeState = remember { HazeState() },
     animatedContentScope: AnimatedContentScope? = null,

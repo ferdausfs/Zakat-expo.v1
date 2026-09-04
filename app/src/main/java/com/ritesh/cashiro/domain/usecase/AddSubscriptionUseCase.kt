@@ -8,6 +8,7 @@ import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.inject.Inject
+import com.ritesh.cashiro.data.model.Currency
 
 class AddSubscriptionUseCase
 @Inject
@@ -22,7 +23,7 @@ constructor(private val subscriptionRepository: SubscriptionRepository) {
         bankName: String? = null,
         autoRenewal: Boolean = true,
         paymentReminder: Boolean = true,
-        currency: String = "INR",
+        currency: String = com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE,
         notes: String? = null,
         lastPaidDate: LocalDate? = null
     ): Long {

@@ -6,6 +6,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.math.BigDecimal
 import java.time.LocalDateTime
+import com.ritesh.cashiro.data.model.Currency
 
 /**
  * Entity representing a debit or credit card.
@@ -61,7 +62,7 @@ data class CardEntity(
     val updatedAt: LocalDateTime = LocalDateTime.now(),
 
     @ColumnInfo(name = "currency", defaultValue = "INR")
-    val currency: String = "INR",
+    val currency: String = Currency.DEFAULT_CURRENCY_CODE,
     
     @ColumnInfo(name = "is_sample", defaultValue = "0")
     val isSample: Boolean = false

@@ -2,6 +2,7 @@ package com.ritesh.cashiro.presentation.ui.features.transactions
 
 import com.ritesh.cashiro.data.database.entity.SubscriptionEntity
 import com.ritesh.cashiro.data.database.entity.TransactionEntity
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.domain.model.LendBorrowTransactionItem
 import com.ritesh.cashiro.domain.model.PersonInfo
 import java.math.BigDecimal
@@ -9,7 +10,7 @@ import java.time.LocalDate
 
 data class TransactionDetailUiState(
     val transaction: TransactionEntity? = null,
-    val primaryCurrency: String = "INR",
+    val primaryCurrency: String = Currency.DEFAULT_CURRENCY_CODE,
     val convertedAmount: BigDecimal? = null,
     val isEditMode: Boolean = false,
     val editableTransaction: TransactionEntity? = null,

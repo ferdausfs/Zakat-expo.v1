@@ -10,6 +10,15 @@ data class Currency(
 ) {
     companion object {
         /**
+         * App-wide default currency code (used when no more specific
+         * currency is set: new accounts without an explicit choice, the
+         * Zakat section, and any UI fallback). Per product decision the
+         * default is SAR; the user can change it in Settings, and every
+         * consumer must read the setting rather than hardcode a code.
+         */
+        const val DEFAULT_CURRENCY_CODE = "SAR"
+
+        /**
          * List of supported currencies based on CurrencyFormatter mappings
          */
         val SUPPORTED_CURRENCIES = listOf(
@@ -44,8 +53,8 @@ data class Currency(
          * Popular currency codes for quick access
          */
         val POPULAR_CURRENCY_CODES = listOf(
-            "INR", "USD", "EUR", "GBP", "JPY", "AUD", "CAD", "CHF",
-            "CNY", "SEK", "NZD", "MXN", "SGD", "AED", "KRW"
+            "SAR", "BDT", "AED", "INR", "USD", "EUR", "GBP", "JPY",
+            "AUD", "CAD", "CHF", "CNY", "SEK", "NZD", "MXN", "SGD", "KRW"
         )
 
         /**

@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import com.ritesh.cashiro.data.model.Currency
 
 /**
  * ViewModel for the zakat asset ledger (Phase 2b).
@@ -42,7 +43,7 @@ class ZakatAssetsViewModel @Inject constructor(
 
     data class UiState(
         val loading: Boolean = true,
-        val currencyCode: String = "INR",
+        val currencyCode: String = com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE,
         val rows: List<AssetRow> = emptyList(),
         val totalValue: BigDecimal = BigDecimal.ZERO,
         val goldPricePerGram: String = "",

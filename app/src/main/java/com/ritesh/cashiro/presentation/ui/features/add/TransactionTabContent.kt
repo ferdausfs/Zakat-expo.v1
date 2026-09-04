@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
@@ -75,6 +76,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.ritesh.cashiro.R
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.presentation.ui.features.lendborrow.AddEditPersonSheet
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -177,7 +179,7 @@ fun TransactionTabContent(
             AmountInput(
                 amount = uiState.amount.ifEmpty { "0" },
                 currencySymbol = CurrencyFormatter.getCurrencySymbol(
-                    uiState.selectedAccount?.currency ?: "INR"
+                    uiState.selectedAccount?.currency ?: Currency.DEFAULT_CURRENCY_CODE
                 ),
                 onClick = {
                     showNumberPad = true
@@ -761,7 +763,7 @@ fun TransactionTabContent(
                             Modifier.fillMaxWidth()
                                 .clickable(
                                     interactionSource = categoryInteractionSource,
-                                    indication = null
+                                    indication = LocalIndication.current
                                 ) {
                                     showCategoryMenu = true
                                 },
@@ -884,7 +886,7 @@ fun TransactionTabContent(
                             Modifier.fillMaxWidth()
                                 .clickable(
                                     interactionSource = categoryInteractionSource,
-                                    indication = null
+                                    indication = LocalIndication.current
                                 ) {
                                     showCategoryMenu = true
                                 },

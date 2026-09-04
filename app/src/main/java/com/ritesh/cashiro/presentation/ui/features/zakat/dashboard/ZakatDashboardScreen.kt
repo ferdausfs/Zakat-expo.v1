@@ -22,13 +22,13 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,6 +44,11 @@ import com.ritesh.cashiro.R
 import com.ritesh.cashiro.domain.zakat.WealthPoolCalculator
 import com.ritesh.cashiro.domain.zakat.ZakatCalculator
 import com.ritesh.cashiro.presentation.ui.components.CustomTitleTopAppBar
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.text.TextStyle
+import com.ritesh.cashiro.presentation.ui.features.zakat.ZakatGradientProgressBar
+import com.ritesh.cashiro.presentation.ui.features.zakat.ZakatSectionCard
+import com.ritesh.cashiro.presentation.ui.features.zakat.ZakatSectionUi
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
 import com.ritesh.cashiro.utils.CurrencyFormatter
 import java.math.BigDecimal
@@ -118,18 +123,17 @@ fun ZakatDashboardScreen(
 
             // ----- Total zakatable wealth + breakdown -----
             item {
-                SectionCard {
-                    Text(
-                        text = stringResource(R.string.zakat_dash_wealth_title),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
-                    )
+                ZakatSectionCard(title = stringResource(R.string.zakat_dash_wealth_title)) {
                     Spacer(modifier = Modifier.height(Spacing.sm))
+                    // Brand gradient on the hero amount — the Zakat accent
+                    // within the shared design system.
                     Text(
                         text = CurrencyFormatter.formatCurrency(state.breakdown.total, currencyCode),
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary
+                        style = TextStyle(
+                            fontSize = MaterialTheme.typography.headlineMedium.fontSize,
+                            fontWeight = FontWeight.Bold,
+                            brush = ZakatSectionUi.brandGradient
+                        )
                     )
                     Spacer(modifier = Modifier.height(Spacing.md))
                     BreakdownRow(
@@ -163,7 +167,7 @@ fun ZakatDashboardScreen(
 
             // ----- Nisab status -----
             item {
-                SectionCard {
+                ZakatSectionCard {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -235,19 +239,7 @@ fun ZakatDashboardScreen(
 
             // ----- Hawl -----
             item {
-                SectionCard {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = stringResource(R.string.zakat_dash_hawl_title),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(Spacing.sm))
+                ZakatSectionCard(title = stringResource(R.string.zakat_dash_hawl_title)) {
                     Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                         FilterChip(
                             selected = state.hawlMode == ZakatDashboardViewModel.HawlMode.POOL,
@@ -272,14 +264,7 @@ fun ZakatDashboardScreen(
             // ----- Zakat due (when hawl complete and above nisab) -----
             if (state.hawlComplete && state.aboveNisab && state.hawlMode == ZakatDashboardViewModel.HawlMode.POOL) {
                 item {
-                    SectionCard(containerColor = MaterialTheme.colorScheme.primaryContainer) {
-                        Text(
-                            text = stringResource(R.string.zakat_dash_due_title),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
-                        Spacer(modifier = Modifier.height(Spacing.sm))
+                    ZakatSectionCard(containerColor = MaterialTheme.colorScheme.primaryContainer, title = stringResource(R.string.zakat_dash_due_title)) {
                         Text(
                             text = CurrencyFormatter.formatCurrency(state.zakatDue, currencyCode),
                             style = MaterialTheme.typography.headlineMedium,
@@ -313,13 +298,7 @@ fun ZakatDashboardScreen(
 
             // ----- Quick links -----
             item {
-                SectionCard {
-                    Text(
-                        text = stringResource(R.string.zakat_dash_quick_links),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Spacer(modifier = Modifier.height(Spacing.sm))
+                ZakatSectionCard(title = stringResource(R.string.zakat_dash_quick_links)) {
                     LazyRow(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                         items(QUICK_LINKS) { link ->
                             when (link) {
@@ -352,7 +331,7 @@ private val QUICK_LINKS = listOf("assets", "calculator", "currency")
 
 @Composable
 private fun PoolHawlSection(state: ZakatDashboardViewModel.UiState, currencyCode: String) {
-    val dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+    val dateFormatter = remember { DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM) }
     val start = state.crossingDate
     if (start == null) {
         Text(
@@ -389,9 +368,11 @@ private fun PoolHawlSection(state: ZakatDashboardViewModel.UiState, currencyCode
     val fraction = if (state.hawlDaysInYear > 0) {
         (state.hawlDaysElapsed.toFloat() / state.hawlDaysInYear).coerceIn(0f, 1f)
     } else 0f
-    LinearProgressIndicator(
-        progress = { fraction },
-        modifier = Modifier.fillMaxWidth()
+    ZakatGradientProgressBar(
+        fraction = fraction,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(8.dp)
     )
     Spacer(modifier = Modifier.height(Spacing.xs))
     Text(
@@ -443,7 +424,7 @@ private fun PoolHawlSection(state: ZakatDashboardViewModel.UiState, currencyCode
 
 @Composable
 private fun PerAssetHawlSection(state: ZakatDashboardViewModel.UiState, currencyCode: String) {
-    val dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+    val dateFormatter = remember { DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM) }
     if (state.perAssetStatuses.isEmpty()) {
         Text(
             text = stringResource(R.string.zakat_dash_per_asset_empty),
@@ -486,11 +467,12 @@ private fun PerAssetHawlSection(state: ZakatDashboardViewModel.UiState, currency
             val fraction = if (item.daysInYear > 0) {
                 (item.daysElapsed.toFloat() / item.daysInYear).coerceIn(0f, 1f)
             } else 0f
-            LinearProgressIndicator(
-                progress = { fraction },
+            ZakatGradientProgressBar(
+                fraction = fraction,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = Spacing.xs)
+                    .height(6.dp)
+                    .padding(vertical = 0.dp)
             )
             Text(
                 text = if (item.hawlComplete) {
@@ -608,21 +590,4 @@ private fun DueRow(
     }
 }
 
-@Composable
-private fun SectionCard(
-    containerColor: Color = MaterialTheme.colorScheme.surfaceVariant,
-    content: @Composable ColumnScope.() -> Unit
-) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = containerColor),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(Spacing.md),
-            verticalArrangement = Arrangement.spacedBy(0.dp)
-        ) {
-            content()
-        }
-    }
-}
+

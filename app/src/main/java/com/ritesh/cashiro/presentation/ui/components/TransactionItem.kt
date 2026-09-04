@@ -37,6 +37,7 @@ import com.ritesh.cashiro.data.database.entity.CategoryEntity
 import com.ritesh.cashiro.data.database.entity.SubcategoryEntity
 import com.ritesh.cashiro.data.database.entity.TransactionEntity
 import com.ritesh.cashiro.data.database.entity.TransactionType
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.presentation.effects.BlurredAnimatedVisibility
 import com.ritesh.cashiro.presentation.ui.icons.Card
 import com.ritesh.cashiro.presentation.ui.icons.Iconax
@@ -240,7 +241,7 @@ fun SharedTransitionScope.TransactionItem(
     // Build subtitle parts
     val recurringStr = stringResource(R.string.recurring)
     val balanceAfterStr = balanceAfter?.let { balance ->
-        stringResource(R.string.balance_after_format, CurrencyFormatter.formatCurrency(balance, balanceCurrency ?: "INR"))
+        stringResource(R.string.balance_after_format, CurrencyFormatter.formatCurrency(balance, balanceCurrency ?: Currency.DEFAULT_CURRENCY_CODE))
     }
     val (subtitleParts, subtitleFinal) = remember(
         subtitleOverride,
@@ -363,7 +364,7 @@ fun SharedTransitionScope.TransactionItem(
                         balanceAfter?.let { balance ->
                             TagSeparator()
                             SubtitleTag(
-                                text = stringResource(R.string.balance_after_format, CurrencyFormatter.formatCurrency(balance, balanceCurrency ?: "INR")),
+                                text = stringResource(R.string.balance_after_format, CurrencyFormatter.formatCurrency(balance, balanceCurrency ?: Currency.DEFAULT_CURRENCY_CODE)),
                                 color = MaterialTheme.colorScheme.secondary
                             )
                             needsSeparator = true

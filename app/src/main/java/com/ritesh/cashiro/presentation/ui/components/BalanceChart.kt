@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
 import com.ritesh.cashiro.utils.CurrencyFormatter
 import java.math.BigDecimal
@@ -31,7 +32,7 @@ import java.time.format.DateTimeFormatter
 data class BalancePoint(
     val timestamp: LocalDateTime,
     val balance: BigDecimal,
-    val currency: String = "INR"
+    val currency: String = Currency.DEFAULT_CURRENCY_CODE
 )
 
 @Composable

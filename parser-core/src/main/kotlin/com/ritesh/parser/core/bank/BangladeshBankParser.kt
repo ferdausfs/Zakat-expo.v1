@@ -29,25 +29,9 @@ class BangladeshBankParser : BankParser() {
     override fun getCurrency() = "BDT"
 
     override fun canHandle(sender: String): Boolean {
-        val s = sender.uppercase()
-        return s.contains("BRAC") ||
-                s.contains("CITYBANK") || s.contains("CITY BANK") || s == "CITY" ||
-                s == "EBL" || s.contains("EBLBD") ||
-                s.contains("IBBL") ||
-                s == "UCB" || s.contains("UCBBANK") ||
-                s.contains("MTB") ||
-                s.contains("PUBLALI") ||
-                s.contains("PRIMEBANK") || s.contains("PRIME BANK") ||
-                s.contains("BANKASIA") || s.contains("BANK ASIA") ||
-                s.contains("SOUTHEAST") ||
-                s.contains("TRUSTBANK") || s.contains("TRUST BANK") ||
-                s.contains("DUTCHBANG") || s.contains("DUTCH-BANG") || s.contains("DUTCH BANG") ||
-                s.contains("JAMUNA") ||
-                s.contains("NCC") ||
-                s.contains("SHAHJAL") ||
-                s.contains("ALARAFAH") || s.contains("AL-ARAFAH") || s.contains("AL ARAFAH") ||
-                s.contains("MIDLAND") ||
-                s.contains("DHAKABANK") || s.contains("DHAKA BANK")
+        // Data-driven: see BangladeshBankRegistry (add new banks there).
+        // Existing sender-token semantics are preserved verbatim.
+        return BangladeshBankRegistry.matches(sender)
     }
 
     override fun isTransactionMessage(message: String): Boolean {

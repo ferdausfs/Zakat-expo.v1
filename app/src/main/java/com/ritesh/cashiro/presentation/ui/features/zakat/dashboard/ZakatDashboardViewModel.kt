@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
 import com.ritesh.cashiro.data.database.entity.ZakatAssetEntity
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.data.preferences.UserPreferencesRepository
 import com.ritesh.cashiro.data.repository.ZakatRepository
 import com.ritesh.cashiro.domain.zakat.WealthPoolCalculator
@@ -13,9 +14,11 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 import java.time.LocalDate
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -50,7 +53,7 @@ class ZakatDashboardViewModel @Inject constructor(
     )
 
     data class UiState(
-        val currencyCode: String = "INR",
+        val currencyCode: String = Currency.DEFAULT_CURRENCY_CODE,
         val loading: Boolean = true,
         val breakdown: WealthPoolCalculator.PoolBreakdown =
             WealthPoolCalculator.PoolBreakdown(
@@ -121,6 +124,9 @@ class ZakatDashboardViewModel @Inject constructor(
     }
 
     val uiState: StateFlow<UiState> = combined
+        // The wealth-history rebuild (up to 730 daily points) and nisab
+        // scanning inside buildState are CPU-bound; keep them off Main.
+        .flowOn(Dispatchers.Default)
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
 import com.ritesh.cashiro.data.database.entity.CardEntity
 import com.ritesh.cashiro.data.database.entity.CardType
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.data.preferences.UserPreferencesRepository
 import com.ritesh.cashiro.data.repository.AccountBalanceRepository
 import com.ritesh.cashiro.data.repository.CardRepository
@@ -44,7 +45,7 @@ data class AccountFormState(
     val accountType: AccountType = AccountType.SAVINGS,
     val iconResId: Int = 0,
     val iconName: String = "",
-    val currency: String = "INR",
+    val currency: String = Currency.DEFAULT_CURRENCY_CODE,
     val isValid: Boolean = false,
     val errorMessage: String? = null
 )
@@ -79,8 +80,8 @@ constructor(
         userPreferencesRepository.defaultCurrencyEnabled,
         userPreferencesRepository.defaultCurrencyCode
     ) { enabled, code ->
-        if (enabled && !code.isNullOrBlank()) code else "INR"
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "INR")
+        if (enabled && !code.isNullOrBlank()) code else Currency.DEFAULT_CURRENCY_CODE
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), Currency.DEFAULT_CURRENCY_CODE)
 
     init {
         loadAccounts()
@@ -111,7 +112,7 @@ constructor(
                 if (code.isNotBlank()) return code
             }
         }
-        return "INR"
+        return Currency.DEFAULT_CURRENCY_CODE
     }
 
     private fun initializeDefaultWallet() {
@@ -276,7 +277,7 @@ constructor(
         isCreditCard: Boolean = false,
         isWallet: Boolean = false,
         creditLimit: BigDecimal? = null,
-        currency: String = "INR"
+        currency: String = Currency.DEFAULT_CURRENCY_CODE
     ) {
         viewModelScope.launch {
             // Check for duplicates

@@ -24,6 +24,7 @@ import java.time.LocalDateTime
 import java.time.YearMonth
 import javax.inject.Inject
 import javax.inject.Singleton
+import com.ritesh.cashiro.data.model.Currency
 
 data class BudgetWithSpending(
     val budget: BudgetEntity,
@@ -102,7 +103,7 @@ class BudgetRepository @Inject constructor(
         amount: BigDecimal,
         year: Int,
         month: Int,
-        currency: String = "INR"
+        currency: String = com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE
     ): Long {
         val budget = BudgetEntity(
             name = name,

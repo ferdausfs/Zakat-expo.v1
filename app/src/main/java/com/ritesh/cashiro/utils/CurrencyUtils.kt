@@ -62,23 +62,29 @@ object CurrencyUtils {
     }
 
     /**
-     * Sorts a list of currency codes with INR prioritized first, then alphabetically.
-     * This is the standard sorting for currency lists throughout the app.
+     * Sorts a list of currency codes with the preferred (base/default)
+     * currency first, then alphabetically. This is the standard sorting for
+     * currency lists throughout the app.
      *
      * @param currencies List of currency codes to sort
-     * @return Sorted list with INR first (if present), then alphabetically
+     * @param preferredFirst Currency code to put first (defaults to the app
+     *   default currency, SAR); pass the user's base currency where available
+     * @return Sorted list with the preferred currency first (if present), then alphabetically
      *
      * Example:
      * ```
-     * sortCurrencies(listOf("USD", "EUR", "INR", "GBP"))
-     * // Returns: ["INR", "EUR", "GBP", "USD"]
+     * sortCurrencies(listOf("USD", "EUR", "SAR", "GBP"))
+     * // Returns: ["SAR", "EUR", "GBP", "USD"]
      * ```
      */
-    fun sortCurrencies(currencies: List<String>): List<String> {
+    fun sortCurrencies(
+        currencies: List<String>,
+        preferredFirst: String = com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE
+    ): List<String> {
         return currencies.sortedWith { a, b ->
             when {
-                a == "INR" -> -1 // INR first
-                b == "INR" -> 1
+                a == preferredFirst -> -1 // preferred currency first
+                b == preferredFirst -> 1
                 else -> a.compareTo(b) // Alphabetical for others
             }
         }

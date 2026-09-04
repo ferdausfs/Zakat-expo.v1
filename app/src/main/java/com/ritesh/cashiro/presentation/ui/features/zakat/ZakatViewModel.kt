@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import com.ritesh.cashiro.data.model.Currency
 
 /**
  * ViewModel for the Zakat calculator screen.
@@ -28,7 +29,7 @@ class ZakatViewModel @Inject constructor(
 ) : ViewModel() {
 
     data class UiState(
-        val currencyCode: String = "INR",
+        val currencyCode: String = com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE,
         val cash: String = "",
         val goldGrams: String = "",
         val silverGrams: String = "",
@@ -48,7 +49,7 @@ class ZakatViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = "INR"
+            initialValue = com.ritesh.cashiro.data.model.Currency.DEFAULT_CURRENCY_CODE
         )
 
     init {

@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.math.BigDecimal
 import java.time.LocalDateTime
+import com.ritesh.cashiro.data.model.Currency
 
 /**
  * Entity representing a monthly budget.
@@ -29,7 +30,7 @@ data class BudgetEntity(
     val month: Int,
 
     @ColumnInfo(name = "currency", defaultValue = "INR")
-    val currency: String = "INR",
+    val currency: String = Currency.DEFAULT_CURRENCY_CODE,
 
     @ColumnInfo(name = "is_active", defaultValue = "1")
     val isActive: Boolean = true,

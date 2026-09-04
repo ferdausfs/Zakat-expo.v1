@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ritesh.cashiro.data.database.entity.LendBorrowType
+import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.data.repository.CurrencyRepository
 import com.ritesh.cashiro.domain.model.LendBorrowPerson
 import com.ritesh.cashiro.domain.model.LendBorrowTransactionItem
@@ -43,7 +44,7 @@ data class PersonDetailUiState(
     val showDeleteTransactionDialog: Boolean = false,
     val isSelectionMode: Boolean = false,
     val selectedRecordIds: Set<Long> = emptySet(),
-    val baseCurrency: String = "INR",
+    val baseCurrency: String = Currency.DEFAULT_CURRENCY_CODE,
     val accounts: List<AccountBalanceEntity> = emptyList(),
     val categories: List<CategoryEntity> = emptyList()
 )
