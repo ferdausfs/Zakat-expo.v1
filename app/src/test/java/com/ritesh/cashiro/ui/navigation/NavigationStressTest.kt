@@ -5,6 +5,7 @@ import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasScrollAction
 import androidx.compose.ui.test.click
 import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.swipeDown
 import androidx.compose.ui.test.swipeUp
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasSetTextAction
@@ -279,6 +280,27 @@ class NavigationStressTest {
             composeRule.waitForIdle()
             assertAppAlive(where)
         }
+
+        /**
+         * The dashboard grew (deduction/net rows, calendar+madhhab settings,
+         * module links) so after back-navigation the restored LazyColumn
+         * scroll can leave the top wealth card outside the composed window.
+         * Fling back to the top before asserting screen identity.
+         */
+        fun scrollDashboardToTop() {
+            repeat(4) {
+                composeRule.onRoot().performTouchInput {
+                    swipeDown(startX = centerX, endX = centerX, durationMillis = 150)
+                }
+                composeRule.waitForIdle()
+            }
+        }
+
+        /** Waits for a dashboard marker, scrolling to top first. */
+        fun awaitDashboardHome(marker: String, where: String) {
+            scrollDashboardToTop()
+            awaitText(marker, where)
+        }
         fun awaitText(marker: String, where: String, timeoutMs: Long = 15_000) {
             try {
                 composeRule.waitUntil(timeoutMillis = timeoutMs) {
@@ -292,7 +314,7 @@ class NavigationStressTest {
 
         repeat(3) { round ->
             // Dashboard is visible: Phase 2b total-wealth card marker.
-            awaitText("Total zakatable wealth", "round $round: zakat dashboard")
+            awaitDashboardHome("Total zakatable wealth", "round $round: zakat dashboard")
             assertAppAlive("round $round: dashboard")
 
             // Dashboard -> Assets ledger via the manage-assets button.
@@ -303,7 +325,7 @@ class NavigationStressTest {
 
             // Assets -> back to dashboard.
             pressBackOnce("round $round: back from assets")
-            awaitText("Total zakatable wealth", "round $round: back on dashboard")
+            awaitDashboardHome("Total zakatable wealth", "round $round: back on dashboard")
 
             // Dashboard -> Calculator (Phase 2a screen) via quick-link chip.
             tapTextAnywhere("Calculator", "round $round dashboard")
@@ -313,7 +335,7 @@ class NavigationStressTest {
 
             // Calculator -> back to dashboard.
             pressBackOnce("round $round: back from calculator")
-            awaitText("Total zakatable wealth", "round $round: back on dashboard again")
+            awaitDashboardHome("Total zakatable wealth", "round $round: back on dashboard again")
             println("[NavStress] phase-2b round ${round + 1}/3 done; ${heapSnapshot()}")
         }
 
