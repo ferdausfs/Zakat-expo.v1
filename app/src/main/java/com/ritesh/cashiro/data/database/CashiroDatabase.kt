@@ -29,6 +29,7 @@ import com.ritesh.cashiro.data.database.dao.UnrecognizedSmsDao
 import com.ritesh.cashiro.data.database.dao.WebhookCursorDao
 import com.ritesh.cashiro.data.database.dao.WebhookLogDao
 import com.ritesh.cashiro.data.database.dao.WebhookProfileDao
+import com.ritesh.cashiro.data.database.dao.ZakatAssetDao
 import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
 import com.ritesh.cashiro.data.database.entity.BankNotificationEntity
 import com.ritesh.cashiro.data.database.entity.BudgetCategoryLimitEntity
@@ -46,6 +47,7 @@ import com.ritesh.cashiro.data.database.entity.SubcategoryEntity
 import com.ritesh.cashiro.data.database.entity.SubscriptionEntity
 import com.ritesh.cashiro.data.database.entity.TransactionEntity
 import com.ritesh.cashiro.data.database.entity.UnrecognizedSmsEntity
+import com.ritesh.cashiro.data.database.entity.ZakatAssetEntity
 import com.ritesh.cashiro.data.database.entity.WebhookCursorEntity
 import com.ritesh.cashiro.data.database.entity.WebhookLogEntity
 import com.ritesh.cashiro.data.database.entity.WebhookProfileEntity
@@ -83,9 +85,10 @@ import com.ritesh.cashiro.data.database.entity.WebhookProfileEntity
             WebhookCursorEntity::class,
             BankNotificationEntity::class,
             com.ritesh.cashiro.data.database.entity.LendBorrowPersonEntity::class,
-            com.ritesh.cashiro.data.database.entity.LendBorrowTransactionEntity::class
+            com.ritesh.cashiro.data.database.entity.LendBorrowTransactionEntity::class,
+            ZakatAssetEntity::class
         ],
-        version = 62,
+        version = 63,
     exportSchema = true,
     autoMigrations =
         [
@@ -133,6 +136,7 @@ abstract class CashiroDatabase : RoomDatabase() {
     abstract fun webhookCursorDao(): WebhookCursorDao
     abstract fun bankNotificationDao(): BankNotificationDao
     abstract fun lendBorrowDao(): com.ritesh.cashiro.data.database.dao.LendBorrowDao
+    abstract fun zakatAssetDao(): ZakatAssetDao
 
     companion object {
         const val DATABASE_NAME = "pennywise_database"
@@ -172,7 +176,9 @@ MIGRATION_55_56,
                                 MIGRATION_57_58,
                                 MIGRATION_58_59,
                                 MIGRATION_59_60,
-                                MIGRATION_60_61
+                                MIGRATION_60_61,
+                                MIGRATION_61_62,
+                                MIGRATION_62_63
                             )
                             .build()
                     INSTANCE = instance
@@ -666,6 +672,38 @@ MIGRATION_55_56,
                             datetime('now'), datetime('now')
                         )
                         """.trimIndent()
+                    )
+                }
+            }
+
+        /** Phase 2b: zakat asset entries (additive table, no existing schema touched). */
+        val MIGRATION_62_63 =
+            object : Migration(62, 63) {
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    db.execSQL(
+                        """
+                        CREATE TABLE IF NOT EXISTS `zakat_assets` (
+                            `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                            `type` TEXT NOT NULL,
+                            `name` TEXT NOT NULL,
+                            `quantity` TEXT NOT NULL,
+                            `unit` TEXT NOT NULL,
+                            `karat` INTEGER,
+                            `currency` TEXT NOT NULL,
+                            `acquisition_date` TEXT NOT NULL,
+                            `estimated_value` TEXT,
+                            `notes` TEXT,
+                            `is_deleted` INTEGER NOT NULL DEFAULT 0,
+                            `created_at` TEXT NOT NULL,
+                            `updated_at` TEXT NOT NULL
+                        )
+                        """.trimIndent()
+                    )
+                    db.execSQL(
+                        "CREATE INDEX IF NOT EXISTS `index_zakat_assets_type` ON `zakat_assets` (`type`)"
+                    )
+                    db.execSQL(
+                        "CREATE INDEX IF NOT EXISTS `index_zakat_assets_acquisition_date` ON `zakat_assets` (`acquisition_date`)"
                     )
                 }
             }

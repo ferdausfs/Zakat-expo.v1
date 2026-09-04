@@ -59,6 +59,37 @@ class ZakatViewModel @Inject constructor(
                 reevaluate()
             }
         }
+        // Phase 2b: keep the calculator in sync with the persisted zakat
+        // settings shared with the dashboard (nisab method, metal prices).
+        viewModelScope.launch {
+            userPreferencesRepository.zakatNisabMethod.collect { raw ->
+                val method = try {
+                    ZakatCalculator.NisabMethod.valueOf(raw.trim().uppercase())
+                } catch (e: IllegalArgumentException) {
+                    null
+                }
+                if (method != null && method != _uiState.value.nisabMethod) {
+                    _uiState.value = _uiState.value.copy(nisabMethod = method)
+                    reevaluate()
+                }
+            }
+        }
+        viewModelScope.launch {
+            userPreferencesRepository.zakatGoldPricePerGram.collect { price ->
+                if (price != _uiState.value.goldPricePerGram) {
+                    _uiState.value = _uiState.value.copy(goldPricePerGram = price)
+                    reevaluate()
+                }
+            }
+        }
+        viewModelScope.launch {
+            userPreferencesRepository.zakatSilverPricePerGram.collect { price ->
+                if (price != _uiState.value.silverPricePerGram) {
+                    _uiState.value = _uiState.value.copy(silverPricePerGram = price)
+                    reevaluate()
+                }
+            }
+        }
     }
 
     fun onCashChange(value: String) = updateAndEvaluate { it.copy(cash = value) }
@@ -71,12 +102,23 @@ class ZakatViewModel @Inject constructor(
 
     fun onDebtsOwedChange(value: String) = updateAndEvaluate { it.copy(debtsOwed = value) }
 
-    fun onGoldPriceChange(value: String) = updateAndEvaluate { it.copy(goldPricePerGram = value) }
+    fun onGoldPriceChange(value: String) {
+        _uiState.value = _uiState.value.copy(goldPricePerGram = value)
+        reevaluate()
+        viewModelScope.launch { userPreferencesRepository.setZakatGoldPricePerGram(value) }
+    }
 
-    fun onSilverPriceChange(value: String) = updateAndEvaluate { it.copy(silverPricePerGram = value) }
+    fun onSilverPriceChange(value: String) {
+        _uiState.value = _uiState.value.copy(silverPricePerGram = value)
+        reevaluate()
+        viewModelScope.launch { userPreferencesRepository.setZakatSilverPricePerGram(value) }
+    }
 
-    fun onNisabMethodChange(method: ZakatCalculator.NisabMethod) =
-        updateAndEvaluate { it.copy(nisabMethod = method) }
+    fun onNisabMethodChange(method: ZakatCalculator.NisabMethod) {
+        _uiState.value = _uiState.value.copy(nisabMethod = method)
+        reevaluate()
+        viewModelScope.launch { userPreferencesRepository.setZakatNisabMethod(method.name) }
+    }
 
     fun onHawlStartDateChange(date: LocalDate) =
         updateAndEvaluate { it.copy(hawlStartDate = date) }

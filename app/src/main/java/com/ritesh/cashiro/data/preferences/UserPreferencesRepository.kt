@@ -44,6 +44,13 @@ constructor(@ApplicationContext private val context: Context) {
         val LAST_SCAN_PERIOD = intPreferencesKey("last_scan_period")
         val BASE_CURRENCY = stringPreferencesKey("base_currency")
 
+        // Zakat settings (Phase 2b) — shared by the calculator, dashboard
+        // and wealth pool so every surface agrees on method and prices.
+        val ZAKAT_NISAB_METHOD = stringPreferencesKey("zakat_nisab_method")
+        val ZAKAT_GOLD_PRICE_PER_GRAM = stringPreferencesKey("zakat_gold_price_per_gram")
+        val ZAKAT_SILVER_PRICE_PER_GRAM = stringPreferencesKey("zakat_silver_price_per_gram")
+        val ZAKAT_HAWL_MODE = stringPreferencesKey("zakat_hawl_mode")
+
         // Currency Settings preferences
         val UNIFIED_CURRENCY_ENABLED = booleanPreferencesKey("unified_currency_enabled")
         val UNIFIED_CURRENCY_CODE = stringPreferencesKey("unified_currency_code")
@@ -259,6 +266,52 @@ constructor(@ApplicationContext private val context: Context) {
                 scheduledTimes = scheduledTimes
             )
         }
+
+    // ---------------- Zakat settings (Phase 2b, additive) ----------------
+
+    val zakatNisabMethod: Flow<String> =
+        context.dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.ZAKAT_NISAB_METHOD] ?: "SILVER"
+        }
+
+    val zakatGoldPricePerGram: Flow<String> =
+        context.dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.ZAKAT_GOLD_PRICE_PER_GRAM] ?: ""
+        }
+
+    val zakatSilverPricePerGram: Flow<String> =
+        context.dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.ZAKAT_SILVER_PRICE_PER_GRAM] ?: ""
+        }
+
+    val zakatHawlMode: Flow<String> =
+        context.dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.ZAKAT_HAWL_MODE] ?: "POOL"
+        }
+
+    suspend fun setZakatNisabMethod(method: String) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.ZAKAT_NISAB_METHOD] = method
+        }
+    }
+
+    suspend fun setZakatGoldPricePerGram(price: String) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.ZAKAT_GOLD_PRICE_PER_GRAM] = price
+        }
+    }
+
+    suspend fun setZakatSilverPricePerGram(price: String) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.ZAKAT_SILVER_PRICE_PER_GRAM] = price
+        }
+    }
+
+    suspend fun setZakatHawlMode(mode: String) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.ZAKAT_HAWL_MODE] = mode
+        }
+    }
 
     private fun defaultScheduledTimes(): List<WebhookScheduledTime> = listOf(
         WebhookScheduledTime(hour = 8, minute = 0),

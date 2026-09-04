@@ -2,6 +2,10 @@ package com.ritesh.cashiro.ui.navigation
 
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.hasClickAction
+import androidx.compose.ui.test.hasScrollAction
+import androidx.compose.ui.test.click
+import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.swipeUp
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.hasText
@@ -10,6 +14,7 @@ import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.printToString
 import com.ritesh.cashiro.CashiroApplication
 import com.ritesh.cashiro.MainActivity
@@ -229,9 +234,92 @@ class NavigationStressTest {
             println("[NavStress] rapid round ${round + 1}/6 done; ${heapSnapshot()}")
         }
 
-        // ---------- Phase D: settle & final verification ----------
+        // ---------- Phase D: Phase 2b zakat screens (dashboard/assets/calculator) ----------
+        // The Zakat tab was the last tab tapped in Phase C, so the dashboard
+        // should be showing. Drive: dashboard -> assets -> back -> calculator
+        // -> back, repeatedly, asserting the app survives every step.
+        /**
+         * Swipes the visible scrollable (the screen's LazyColumn) until a
+         * node carrying [marker] is composed — off-viewport lazy items do
+         * not exist in the semantics tree until scrolled into view.
+         */
+        fun scrollUntilVisible(marker: String, maxSwipes: Int = 10) {
+            repeat(maxSwipes) {
+                val present = composeRule.onAllNodes(
+                    hasText(marker, substring = true), useUnmergedTree = true
+                ).fetchSemanticsNodes().isNotEmpty()
+                if (present) return
+                composeRule.onRoot().performTouchInput { swipeUp() }
+                composeRule.waitForIdle()
+            }
+        }
+
+        /** Taps the first node carrying [marker], via merged clickable or touch injection. */
+        fun tapTextAnywhere(marker: String, where: String) {
+            scrollUntilVisible(marker)
+            val clickable = composeRule.onAllNodes(hasText(marker, substring = true) and hasClickAction())
+            if (clickable.fetchSemanticsNodes().isNotEmpty()) {
+                clickable[0].performClick()
+                return
+            }
+            val anyNode = composeRule.onAllNodes(
+                hasText(marker, substring = true), useUnmergedTree = true
+            )
+            if (anyNode.fetchSemanticsNodes().isNotEmpty()) {
+                anyNode[0].performTouchInput { click(center) }
+                return
+            }
+            throw AssertionError("[NavStress] $where: '$marker' not found; tree:\n" + dumpTree())
+        }
+
+        fun pressBackOnce(where: String) {
+            composeRule.activityRule.scenario.onActivity { activity: MainActivity ->
+                activity.onBackPressedDispatcher.onBackPressed()
+            }
+            composeRule.waitForIdle()
+            assertAppAlive(where)
+        }
+        fun awaitText(marker: String, where: String, timeoutMs: Long = 15_000) {
+            try {
+                composeRule.waitUntil(timeoutMillis = timeoutMs) {
+                    composeRule.onAllNodes(hasText(marker, substring = true))
+                        .fetchSemanticsNodes().isNotEmpty()
+                }
+            } catch (t: Throwable) {
+                throw AssertionError("[NavStress] $where: '$marker' not found; tree:\n${dumpTree()}", t)
+            }
+        }
+
+        repeat(3) { round ->
+            // Dashboard is visible: Phase 2b total-wealth card marker.
+            awaitText("Total zakatable wealth", "round $round: zakat dashboard")
+            assertAppAlive("round $round: dashboard")
+
+            // Dashboard -> Assets ledger via the manage-assets button.
+            tapTextAnywhere("Manage assets", "round $round dashboard")
+            composeRule.waitForIdle()
+            assertAppAlive("round $round: assets screen")
+            awaitText("Total assets value", "round $round: assets ledger")
+
+            // Assets -> back to dashboard.
+            pressBackOnce("round $round: back from assets")
+            awaitText("Total zakatable wealth", "round $round: back on dashboard")
+
+            // Dashboard -> Calculator (Phase 2a screen) via quick-link chip.
+            tapTextAnywhere("Calculator", "round $round dashboard")
+            composeRule.waitForIdle()
+            assertAppAlive("round $round: calculator screen")
+            awaitText("Hawl (lunar year)", "round $round: zakat calculator")
+
+            // Calculator -> back to dashboard.
+            pressBackOnce("round $round: back from calculator")
+            awaitText("Total zakatable wealth", "round $round: back on dashboard again")
+            println("[NavStress] phase-2b round ${round + 1}/3 done; ${heapSnapshot()}")
+        }
+
+        // ---------- Phase E: settle & final verification ----------
         composeRule.waitForIdle()
         assertAppAlive("final")
-        println("[NavStress] PASS: 40 rotation taps + 24 rapid taps completed; ${heapSnapshot()}")
+        println("[NavStress] PASS: 40 rotation taps + 24 rapid taps + 18 zakat phase-2b actions; ${heapSnapshot()}")
     }
 }

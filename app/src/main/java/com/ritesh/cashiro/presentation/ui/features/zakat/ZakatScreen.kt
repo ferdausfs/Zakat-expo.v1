@@ -2,6 +2,8 @@ package com.ritesh.cashiro.presentation.ui.features.zakat
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,6 +23,8 @@ import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -56,16 +60,21 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
 /**
- * Zakat calculator screen.
+ * Zakat calculator screen (Phase 2a).
  *
  * Lets the user enter zakatable wealth (cash, gold, silver, investments,
  * debts), current gold/silver gram prices and the hawl start date, then
  * shows the nisab threshold, eligibility and the 2.5% zakat due — all in
  * the user's base currency unit (e.g. SAR or BDT).
+ *
+ * Since Phase 2b this screen is reached from the Zakat dashboard via the
+ * [onNavigateBack] callback; the method and metal-price fields stay in
+ * sync with the dashboard through the persisted zakat settings.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ZakatScreen(
+    onNavigateBack: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
     viewModel: ZakatViewModel = hiltViewModel()
 ) {
@@ -82,7 +91,17 @@ fun ZakatScreen(
                 title = stringResource(R.string.zakat_title),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
-                hasBackButton = false
+                hasBackButton = onNavigateBack != null,
+                navigationContent = {
+                    if (onNavigateBack != null) {
+                        IconButton(onClick = onNavigateBack) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                                contentDescription = null
+                            )
+                        }
+                    }
+                }
             )
         }
     ) { paddingValues ->

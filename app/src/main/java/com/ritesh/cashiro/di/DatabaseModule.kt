@@ -277,6 +277,12 @@ object DatabaseModule {
     fun provideLendBorrowDao(database: CashiroDatabase): com.ritesh.cashiro.data.database.dao.LendBorrowDao {
         return database.lendBorrowDao()
     }
+
+    @Provides
+    @Singleton
+    fun provideZakatAssetDao(database: CashiroDatabase): com.ritesh.cashiro.data.database.dao.ZakatAssetDao {
+        return database.zakatAssetDao()
+    }
 }
 /** Database callback to seed initial data when database is first created */
 class DatabaseCallback(private val context: Context) : RoomDatabase.Callback() {
