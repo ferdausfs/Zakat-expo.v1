@@ -181,4 +181,109 @@ class SmsScanStressTest {
         check(hangs.isEmpty()) { "Parsing hung (catastrophic backtracking / ReDoS):\n$report" }
         check(failures.isEmpty()) { "Parsing crashed:\n$report" }
     }
+
+    /**
+     * Simulates a full manual-scan pass over a LARGE realistic mixed inbox —
+     * the same per-message routing the app worker performs
+     * (BankParserFactory.getParsers -> firstNotNullOfOrNull parse) — and
+     * reports processed / parsed / skipped / no-parser counts.
+     *
+     * Guarantees proven here (and on device by construction, since the worker
+     * wraps each of these same calls per-message):
+     *  - the pass ALWAYS terminates (no hang),
+     *  - no message can throw (the pass itself would fail),
+     *  - unmatched/malformed messages are SKIPPED, never fatal.
+     */
+    @Test
+    fun `large mixed inbox scan completes without crash - with counts`() {
+        val saudiRealistic = listOf(
+            "خصم\nحساب:*1234\nمبلغ SAR 350.00\nالتاجر: JARIR BOOKSTORE\nالرصيد المتاح SAR 6,500.00",
+            "SNB: SAR 89.00 debited from account *1234 for purchase at JARIR. Avail. Bal: SAR 6,411.00",
+            "إيداع\nحساب:*1234\nمبلغ SAR 2,000.00\nمن: AHMED SALEH\nالرصيد المتاح SAR 8,500.00",
+            "SABB\nشراء\nبطاقة *1234\nمبلغ SAR 55.25\nالتاجر: DUNKIN DONUTS\nالرصيد SAR 835.50",
+            "SABB: SAR 55.25 spent using debit card ending 1234 at DUNKIN DONUTS on 05-03. Available balance SAR 890.75",
+            "Al Rajhi Bank: Purchase of SAR 125.50 with mada card 4567* at PANDA MARKET on 12/03. Avail. Bal: SAR 4,200.00",
+            "AlRajhi\nبطاقة:4567*شراء\nمبلغ:SAR 25.00\nالتاجر: PANDA\nالرصيد:SAR 4,200.00",
+            "AlRajhi\nحوالة واردة\nمبلغ:SAR 8,500.00\nمن: MINISTRY OF FINANCE\nالرصيد:SAR 12,750.00",
+            "Riyad Bank: A purchase of SAR 150.00 using mada card **1234 at AL NAHDI PHARMACY on 01/02/2026. Acct **5678. Bal SAR 5,500.75",
+            "تم خصم مبلغ SAR 75.00 من حسابك *5678 شراء من متجر\nالرصيد المتاح: SAR 5,425.75",
+            "شراء\nبطاقة مدى*1234\nبمبلغ: 75.50 SAR\nلدى: TAMIMI MARKETS\nالرصيد: 4,500.00 SAR",
+            "BSF\nتم خصم SAR 120.00 من حسابك *5678\nالرصيد المتاح SAR 2,000.00",
+            "ANB: تم خصم مبلغ SAR 300.00 من حسابك *4567\nالرصيد: SAR 610.01",
+            "بنك البلياد\nتم شراء SAR 75.00 ببطاقة *8899\nالتاجر: HUNGERSTATION\nالرصيد المتاح SAR 980.00",
+            "SAIB\nإيداع مبلغ SAR 1,500.00 في حسابك *3344\nالرصيد SAR 4,290.00",
+            "mada Pay: Purchase of SAR 30.00 at JARIR using card **1234. Avl. Balance: SAR 470.00",
+            "Alinma Pay: You have sent SAR 150.00 to MOHAMMED ALI. New Balance: SAR 320.00",
+            "STC Pay\nمدفوع\nمبلغ SAR 60.00\nالتاجر: SALAMA\nالرصيد المتاح SAR 180.00",
+            "urpay: Purchase of SAR 45.50 at NOON using card **5678. Avl. Bal: SAR 954.50",
+            "SARIE: You have received SAR 2,500.00 from AHMED ALI via RiyadBank. IBAN **7788. Ref 2026090112345. Balance: SAR 12,000.00",
+            "خصم\nحساب *7788\nمبلغ SAR 199.00\nالتاجر: EXTRA\nالرصيد المتاح SAR 1,801.00"
+        )
+        val otherRealistic = listOf(
+            "bKash: You have received Tk 1,250.00 from 01712345678. Fee Tk 0.00. Balance Tk 5,300.75. TrxID 9A7B6C5D4E",
+            "IBBL Tk 2,500.00 debited from A/C XX1234 on 01/09/2026 at DJS Traders, Dhaka. Avl. Bal: Tk 12,300.00",
+            "Rs.1,234.56 debited from a/c XX1234 on 01-09-26 towards AMAZON INDIA. Avl Lmt Rs.45,000",
+            "INR 500.00 credited to your account 5678 on 02-09-26 ref UPI/123456789012/JOHN"
+        )
+        val junk = listOf(
+            "Your OTP is 4821. Do not share.", "", " ", "😀😀😀", "offer! 50% discount today!",
+            "Tk", "SAR", "د brawl بيتكوم debit ٠١٢٣٤٥", "a\u0000b\u0007c debited"
+        )
+        val allSenders = bdSenders + saudiSenders + indiaSenders
+        val rnd = Random(909090)
+
+        // 20,000-message inbox: 55% realistic financial, 25% junk/unrelated,
+        // 20% seeded fuzz (malformed by construction)
+        val inbox = ArrayList<Pair<String, String>>(20_000)
+        repeat(20_000) { i ->
+            val sender = allSenders.random(rnd)
+            val roll = i % 20
+            val body = when {
+                roll < 11 -> (saudiRealistic + otherRealistic).random(rnd)
+                roll < 15 -> junk.random(rnd)
+                else -> {
+                    val alphabet = "0123456789 TkSARRs.,:-/ab word debited credited at to paid \n\t😀مخص"
+                    val len = rnd.nextInt(1, 500)
+                    buildString { repeat(len) { append(alphabet.random(rnd)) } }
+                }
+            }
+            inbox += sender to body
+        }
+
+        // THE SCAN — same routing as OptimizedSmsReaderWorker.parseMessage
+        var processed = 0
+        var parsed = 0
+        var skippedNoParser = 0
+        var skippedUnmatched = 0
+        val started = System.currentTimeMillis()
+        for ((sender, body) in inbox) {
+            processed++
+            val parsers = BankParserFactory.getParsers(sender)
+            if (parsers.isEmpty()) {
+                skippedNoParser++
+                continue
+            }
+            val result = parsers.firstNotNullOfOrNull { parser ->
+                parser.parse(body, sender, 1_770_000_000_000L)
+            }
+            if (result != null) parsed++ else skippedUnmatched++
+        }
+        val elapsed = System.currentTimeMillis() - started
+
+        val summary = buildString {
+            appendLine("Large mixed-inbox scan simulation (${inbox.size} messages):")
+            appendLine("  processed:        $processed")
+            appendLine("  parsed OK:        $parsed")
+            appendLine("  skipped unmatched:$skippedUnmatched")
+            appendLine("  skipped no-parser:$skippedNoParser")
+            appendLine("  elapsed:          ${elapsed}ms")
+        }
+        println(summary)
+
+        check(processed == 20_000) { "scan did not process the whole inbox" }
+        check(parsed > 0) { "no message parsed — routing is broken" }
+        check(skippedUnmatched + skippedNoParser > 0) {
+            "unmatched messages were not ignored gracefully"
+        }
+    }
 }

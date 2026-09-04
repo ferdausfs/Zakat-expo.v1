@@ -33,16 +33,12 @@ class AlRajhiBankParser : BankParser() {
     }
 
     override fun extractAmount(message: String): BigDecimal? {
-        // Pattern 1: "بـSAR 5.75" or "بـSAR 140"
-        val bPattern = Regex(
-            """بـSAR\s+([0-9,]+(?:\.\d{1,2})?)""",
-            RegexOption.IGNORE_CASE
-        )
-        bPattern.find(message)?.let { match ->
-            return parseSarAmount(match.groupValues[1])
-        }
+        // Arabic templates first (existing behaviour unchanged), then the
+        // shared Saudi set which also covers plain English forms like
+        // "Purchase of SAR 125.50" (balance figures are excluded).
+        SaudiSmsSupport.extractAmount(message)?.let { return it }
 
-        // Pattern 2: "مبلغ:SAR 100" or "مبلغ: SAR 100"
+        // Pattern: "مبلغ:SAR 100" or "مبلغ: SAR 100"
         val amountPattern = Regex(
             """مبلغ:\s*SAR\s+([0-9,]+(?:\.\d{1,2})?)""",
             RegexOption.IGNORE_CASE
@@ -51,7 +47,7 @@ class AlRajhiBankParser : BankParser() {
             return parseSarAmount(match.groupValues[1])
         }
 
-        // Pattern 3: "القسط: 2304.58 SAR" (loan installment)
+        // Pattern: "القسط: 2304.58 SAR" (loan installment)
         val installmentPattern = Regex(
             """القسط:\s*([0-9,]+(?:\.\d{1,2})?)\s*SAR""",
             RegexOption.IGNORE_CASE
@@ -84,7 +80,9 @@ class AlRajhiBankParser : BankParser() {
             message.contains("خصم") -> TransactionType.EXPENSE            // deduction
             message.contains("سداد") -> TransactionType.EXPENSE           // payment/settlement
 
-            else -> null
+            // English formats — e.g. "Purchase of SAR 125.50", "debited",
+            // "received SAR ..." (shared Saudi keyword vocabulary)
+            else -> SaudiSmsSupport.transactionType(message)
         }
     }
 
@@ -161,6 +159,18 @@ class AlRajhiBankParser : BankParser() {
             }
         }
 
+        // English merchant clause: "at PANDA MARKET on 12/03"
+        for (candidate in SaudiSmsSupport.merchantCandidates(message)) {
+            if (candidate.contains("التاجر") || candidate.contains("لدى") ||
+                candidate.contains("مكان السحب")) {
+                continue // Arabic candidates already tried above
+            }
+            val merchant = cleanMerchantName(candidate)
+            if (isValidMerchantName(merchant)) {
+                return merchant
+            }
+        }
+
         // ATM fallback
         if (message.contains("صراف آلي")) {
             return "ATM Withdrawal"
@@ -178,6 +188,10 @@ class AlRajhiBankParser : BankParser() {
         remainingPattern.find(message)?.let { match ->
             return parseSarAmount(match.groupValues[1])
         }
+
+        // Arabic/English balance clauses: "الرصيد:SAR 4,200.00",
+        // "Avail. Bal: SAR 4,200.00" (shared Saudi patterns)
+        SaudiSmsSupport.extractBalance(message)?.let { return it }
 
         return null
     }

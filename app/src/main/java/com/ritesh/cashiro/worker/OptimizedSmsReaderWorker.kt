@@ -289,8 +289,15 @@ class OptimizedSmsReaderWorker @AssistedInject constructor(
             )
 
             Result.success()
-        } catch (e: Exception) {
-            Log.e(TAG, "Error in optimized SMS parsing work", e)
+        } catch (e: CancellationException) {
+            throw e // never swallow coroutine cancellation
+        } catch (t: Throwable) {
+            // Throwable, not Exception: an Error escaping a CoroutineWorker
+            // (e.g. OOM from Channel/coroutine internals) is FATAL to the app
+            // process — the user experiences it as the scan "silently crashing".
+            // Degrade to a failed scan (the progress dialog already shows a
+            // "scan failed" state) instead of killing the whole app.
+            Log.e(TAG, "Fatal error in optimized SMS parsing work", t)
             Result.failure()
         }
     }
@@ -315,11 +322,17 @@ class OptimizedSmsReaderWorker @AssistedInject constructor(
 
         val atomicProcessed = java.util.concurrent.atomic.AtomicInteger(0)
 
-        // Stage 1: Feed — stream messages into input channel
+        // Stage 1: Feed — stream messages into input channel.
+        // finally-close: if streaming dies mid-way (cursor Error, OOM), the
+        // channel MUST still be closed or the parse stage blocks forever and
+        // the scan appears to hang/crash silently.
         val feedJob = launch {
-            streamSmsToChannel(inputChannel, scanStartTime)
-            streamRcsToChannel(inputChannel, scanStartTime)
-            inputChannel.close()
+            try {
+                streamSmsToChannel(inputChannel, scanStartTime)
+                streamRcsToChannel(inputChannel, scanStartTime)
+            } finally {
+                inputChannel.close()
+            }
         }
 
         // Stage 2: Parse — N coroutines pull from input, parse, emit results

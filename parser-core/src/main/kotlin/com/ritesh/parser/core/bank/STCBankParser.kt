@@ -3,6 +3,18 @@ package com.ritesh.parser.core.bank
 import com.ritesh.parser.core.TransactionType
 import java.math.BigDecimal
 
+/**
+ * STC Bank / stc pay — Saudi Arabia digital bank + wallet.
+ *
+ * Handles both Arabic and English notification formats:
+ *  - "STC Pay\nمدفوع\nمبلغ SAR 60.00\nالتاجر: SALAMA\nالرصيد المتاح SAR 180.00"
+ *  - "STC Pay: SAR 60.00 paid to SALAMA INSURANCE using wallet 1234. Available balance SAR 240.00"
+ *
+ * Senders: STCPay, STC, STCBank ...
+ *
+ * Extraction delegates to [SaudiSmsSupport] so keyword/regex handling stays
+ * consistent across all Saudi parsers.
+ */
 class STCBankParser : BankParser() {
 
     override fun getBankName() = "STC Bank"
@@ -13,38 +25,32 @@ class STCBankParser : BankParser() {
         return sender.uppercase().contains("STC")
     }
 
-    override fun extractAmount(message: String): BigDecimal? {
-        val patterns = listOf(
-            Regex("""SAR\s+([0-9,]+(?:\.[0-9]{1,2})?)""", RegexOption.IGNORE_CASE),
-            Regex("""sar\s+([0-9,]+(?:\.[0-9]{1,2})?)""", RegexOption.IGNORE_CASE)
-        )
-        for (pattern in patterns) {
-            pattern.find(message)?.let { match ->
-                val amountStr = match.groupValues[1].replace(",", "")
-                return try {
-                    BigDecimal(amountStr)
-                } catch (e: NumberFormatException) {
-                    null
-                }
-            }
+    override fun isTransactionMessage(message: String): Boolean =
+        SaudiSmsSupport.isTransactionMessage(message)
+
+    override fun extractAmount(message: String): BigDecimal? =
+        SaudiSmsSupport.extractAmount(message)
+
+    override fun extractTransactionType(message: String): TransactionType? =
+        SaudiSmsSupport.transactionType(message)
+
+    override fun extractBalance(message: String): BigDecimal? =
+        SaudiSmsSupport.extractBalance(message)
+            ?: super.extractBalance(message)
+
+    override fun extractAccountLast4(message: String): String? {
+        for (candidate in SaudiSmsSupport.accountLast4Candidates(message)) {
+            val last4 = extractLast4Digits(candidate)
+            if (last4 != null) return last4
         }
-        return null
+        return super.extractAccountLast4(message)
     }
 
-    override fun extractTransactionType(message: String): TransactionType? {
-        val lowerMessage = message.lowercase()
-        return when {
-            lowerMessage.contains("credited") -> TransactionType.INCOME
-            lowerMessage.contains("deposited") -> TransactionType.INCOME
-            lowerMessage.contains("refund") -> TransactionType.INCOME
-            lowerMessage.contains("received") -> TransactionType.INCOME
-            lowerMessage.contains("debited") -> TransactionType.EXPENSE
-            lowerMessage.contains("withdrawn") -> TransactionType.EXPENSE
-            lowerMessage.contains("spent") -> TransactionType.EXPENSE
-            lowerMessage.contains("purchase") -> TransactionType.EXPENSE
-            lowerMessage.contains("paid") -> TransactionType.EXPENSE
-            lowerMessage.contains("payment") -> TransactionType.EXPENSE
-            else -> null
+    override fun extractMerchant(message: String, sender: String): String? {
+        for (candidate in SaudiSmsSupport.merchantCandidates(message)) {
+            val merchant = cleanMerchantName(candidate)
+            if (isValidMerchantName(merchant)) return merchant
         }
+        return super.extractMerchant(message, sender)
     }
 }

@@ -650,11 +650,19 @@ class HomeViewModel @Inject constructor(
         observeWorkProgress()
     }
 
+    /**
+     * Single progress observer, registered once. observeForever must never be
+     * called per-scan: every registration previously added ANOTHER permanent
+     * listener (never removed), leaking the ViewModel and duplicating state
+     * updates for each scan the user started in the session.
+     */
+    private var workInfoObserver: androidx.lifecycle.Observer<List<WorkInfo>>? = null
+
     private fun observeWorkProgress() {
+        if (workInfoObserver != null) return // already registered
         val workManager = WorkManager.getInstance(context)
 
-        // Use getWorkInfosById for more direct observation
-        workManager.getWorkInfosByTagLiveData(OptimizedSmsReaderWorker.WORK_NAME).observeForever { workInfos ->
+        val observer = androidx.lifecycle.Observer<List<WorkInfo>> { workInfos ->
             val currentWork = workInfos.firstOrNull { it.tags.contains(OptimizedSmsReaderWorker.WORK_NAME) }
             if (currentWork != null) {
                 _smsScanWorkInfo.value = currentWork
@@ -674,6 +682,8 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
+        workInfoObserver = observer
+        workManager.getWorkInfosByTagLiveData(OptimizedSmsReaderWorker.WORK_NAME).observeForever(observer)
     }
 
     fun cancelSmsScan() {
@@ -929,5 +939,15 @@ class HomeViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         inAppUpdateManager.cleanup()
+        // Detach the permanent WorkInfo observer — without this the LiveData
+        // (owned by the app-wide WorkManager) keeps the ViewModel alive.
+        workInfoObserver?.let { observer ->
+            runCatching {
+                WorkManager.getInstance(context)
+                    .getWorkInfosByTagLiveData(OptimizedSmsReaderWorker.WORK_NAME)
+                    .removeObserver(observer)
+            }
+            workInfoObserver = null
+        }
     }
 }
