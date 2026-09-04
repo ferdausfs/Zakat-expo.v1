@@ -73,12 +73,25 @@ class OptimizedSmsReaderWorker @AssistedInject constructor(
         // Input keys
         const val INPUT_FORCE_RESYNC = "input_force_resync"
 
+        /**
+         * Explicit scan-range bounds (epoch millis) selected by the user in
+         * the scan-range picker. When [INPUT_SCAN_FROM_MS] > 0 the worker
+         * scans exactly [INPUT_SCAN_FROM_MS, [INPUT_SCAN_TO_MS]] (or "now"
+         * when the upper bound is 0) and ignores the preference-based range
+         * logic, so the queried rows are date-bounded AT THE PROVIDER level
+         * — the entire inbox is never fetched just to be filtered later.
+         */
+        const val INPUT_SCAN_FROM_MS = "input_scan_from_ms"
+        const val INPUT_SCAN_TO_MS = "input_scan_to_ms"
+
         // Progress keys
         const val PROGRESS_TOTAL = "progress_total"
         const val PROGRESS_PROCESSED = "progress_processed"
         const val PROGRESS_PARSED = "progress_parsed"
         const val PROGRESS_SAVED = "progress_saved"
         const val PROGRESS_BLOCKED = "progress_blocked"
+        const val PROGRESS_SKIPPED_UNMATCHED = "progress_skipped_unmatched"
+        const val PROGRESS_FAILED_PARSE = "progress_failed_parse"
         const val PROGRESS_TIME_ELAPSED = "progress_time_elapsed"
         const val PROGRESS_ESTIMATED_TIME_REMAINING = "progress_estimated_time_remaining"
         const val PROGRESS_CURRENT_BATCH = "progress_current_batch"
@@ -132,6 +145,10 @@ class OptimizedSmsReaderWorker @AssistedInject constructor(
         var savedTransactions: Int = 0,
         var blockedTransactions: Int = 0,
         var subscriptionCount: Int = 0,
+        /** Messages with no matching bank/wallet pattern (or promo/non-transaction). */
+        var skippedUnmatched: Int = 0,
+        /** Messages from a known sender that failed to parse (parse error/null). */
+        var failedToParse: Int = 0,
         var startTime: Long = System.currentTimeMillis(),
         var messagesPerSecond: Double = 0.0
     ) {
@@ -166,42 +183,60 @@ class OptimizedSmsReaderWorker @AssistedInject constructor(
 
             val stats = ProcessingStats()
 
-            // Calculate scan parameters
+            // Calculate scan parameters. An explicit user-selected range
+            // (from the scan-range picker) always wins over the preference
+            // logic so the scan covers exactly the requested window.
+            val explicitFrom = inputData.getLong(INPUT_SCAN_FROM_MS, 0L)
+            val explicitTo = inputData.getLong(INPUT_SCAN_TO_MS, 0L)
+            val hasExplicitRange = explicitFrom > 0L
+
             val lastScanTimestamp = userPreferencesRepository.getLastScanTimestamp().first() ?: 0L
             val scanMonths = userPreferencesRepository.getSmsScanMonths()
             val scanAllTime = userPreferencesRepository.getSmsScanAllTime()
             val lastScanPeriod = userPreferencesRepository.getLastScanPeriod().first() ?: 0
             val now = System.currentTimeMillis()
 
-            val needsFullScan = forceResync || lastScanTimestamp == 0L || scanAllTime || scanMonths > lastScanPeriod
-
-            val scanStartTime = if (needsFullScan) {
-                val calendar = java.util.Calendar.getInstance().apply {
-                    if (scanAllTime) {
-                        add(java.util.Calendar.YEAR, -10)
-                    } else {
-                        add(java.util.Calendar.MONTH, -scanMonths)
-                    }
-                    set(java.util.Calendar.HOUR_OF_DAY, 0)
-                    set(java.util.Calendar.MINUTE, 0)
-                    set(java.util.Calendar.SECOND, 0)
-                    set(java.util.Calendar.MILLISECOND, 0)
-                }
-                calendar.timeInMillis
+            val needsFullScan = if (hasExplicitRange) {
+                false
             } else {
-                val threeDaysAgo = now - (3 * 24 * 60 * 60 * 1000L)
-                val periodLimit = java.util.Calendar.getInstance().apply {
-                    add(java.util.Calendar.MONTH, -scanMonths)
-                }.timeInMillis
-
-                maxOf(
-                    minOf(lastScanTimestamp, threeDaysAgo),
-                    periodLimit
-                )
+                forceResync || lastScanTimestamp == 0L || scanAllTime || scanMonths > lastScanPeriod
             }
 
-            // Get total count upfront for stats
-            val totalMsgCount = getSmsAndRcsCount(scanStartTime)
+            val scanStartTime: Long
+            val scanEndTime: Long
+            if (hasExplicitRange) {
+                scanStartTime = explicitFrom
+                scanEndTime = if (explicitTo > explicitFrom) explicitTo else now
+            } else {
+                scanStartTime = if (needsFullScan) {
+                    val calendar = java.util.Calendar.getInstance().apply {
+                        if (scanAllTime) {
+                            add(java.util.Calendar.YEAR, -10)
+                        } else {
+                            add(java.util.Calendar.MONTH, -scanMonths)
+                        }
+                        set(java.util.Calendar.HOUR_OF_DAY, 0)
+                        set(java.util.Calendar.MINUTE, 0)
+                        set(java.util.Calendar.SECOND, 0)
+                        set(java.util.Calendar.MILLISECOND, 0)
+                    }
+                    calendar.timeInMillis
+                } else {
+                    val threeDaysAgo = now - (3 * 24 * 60 * 60 * 1000L)
+                    val periodLimit = java.util.Calendar.getInstance().apply {
+                        add(java.util.Calendar.MONTH, -scanMonths)
+                    }.timeInMillis
+
+                    maxOf(
+                        minOf(lastScanTimestamp, threeDaysAgo),
+                        periodLimit
+                    )
+                }
+                scanEndTime = now
+            }
+
+            // Get total count upfront for stats (bounded at the provider)
+            val totalMsgCount = getSmsAndRcsCount(scanStartTime, scanEndTime)
             stats.totalMessages = totalMsgCount
             Log.d(TAG, "Found $totalMsgCount SMS & RCS messages to process")
 
@@ -238,7 +273,7 @@ class OptimizedSmsReaderWorker @AssistedInject constructor(
 
             // Process messages via 3-stage channel pipeline
             val processingTime = measureTimeMillis {
-                processWithChannelPipeline(scanStartTime, stats, batchSize, parseParallelism)
+                processWithChannelPipeline(scanStartTime, scanEndTime, stats, batchSize, parseParallelism)
             }
 
             stats.updateTimeElapsed()
@@ -251,6 +286,8 @@ class OptimizedSmsReaderWorker @AssistedInject constructor(
                 - Processed: ${stats.processedMessages}
                 - Parsed Transactions: ${stats.parsedTransactions}
                 - Saved Transactions: ${stats.savedTransactions}
+                - Skipped/Unmatched: ${stats.skippedUnmatched}
+                - Failed to parse: ${stats.failedToParse}
                 - Subscriptions: ${stats.subscriptionCount}
                 - Processing Speed: ${"%.2f".format(stats.messagesPerSecond)} msg/sec
             """.trimIndent()
@@ -274,13 +311,15 @@ class OptimizedSmsReaderWorker @AssistedInject constructor(
                 }
             }
 
-            // Report final progress
+            // Report final progress (includes the end-of-scan summary counts)
             setProgress(
                 workDataOf(
                     PROGRESS_TOTAL to totalMsgCount,
                     PROGRESS_PROCESSED to totalMsgCount,
                     PROGRESS_PARSED to stats.parsedTransactions,
                     PROGRESS_SAVED to stats.savedTransactions,
+                    PROGRESS_SKIPPED_UNMATCHED to stats.skippedUnmatched,
+                    PROGRESS_FAILED_PARSE to stats.failedToParse,
                     PROGRESS_TIME_ELAPSED to stats.updateTimeElapsed(),
                     PROGRESS_ESTIMATED_TIME_REMAINING to 0L,
                     PROGRESS_CURRENT_BATCH to (totalMsgCount + batchSize - 1) / batchSize,
@@ -288,7 +327,17 @@ class OptimizedSmsReaderWorker @AssistedInject constructor(
                 )
             )
 
-            Result.success()
+            Result.success(
+                workDataOf(
+                    PROGRESS_TOTAL to totalMsgCount,
+                    PROGRESS_PROCESSED to totalMsgCount,
+                    PROGRESS_PARSED to stats.parsedTransactions,
+                    PROGRESS_SAVED to stats.savedTransactions,
+                    PROGRESS_SKIPPED_UNMATCHED to stats.skippedUnmatched,
+                    PROGRESS_FAILED_PARSE to stats.failedToParse,
+                    PROGRESS_TIME_ELAPSED to stats.updateTimeElapsed()
+                )
+            )
         } catch (e: CancellationException) {
             throw e // never swallow coroutine cancellation
         } catch (t: Throwable) {
@@ -304,6 +353,7 @@ class OptimizedSmsReaderWorker @AssistedInject constructor(
 
     private suspend fun processWithChannelPipeline(
         scanStartTime: Long,
+        scanEndTime: Long,
         stats: ProcessingStats,
         batchSize: Int,
         parseParallelism: Int
@@ -328,8 +378,8 @@ class OptimizedSmsReaderWorker @AssistedInject constructor(
         // the scan appears to hang/crash silently.
         val feedJob = launch {
             try {
-                streamSmsToChannel(inputChannel, scanStartTime)
-                streamRcsToChannel(inputChannel, scanStartTime)
+                streamSmsToChannel(inputChannel, scanStartTime, scanEndTime)
+                streamRcsToChannel(inputChannel, scanStartTime, scanEndTime)
             } finally {
                 inputChannel.close()
             }
@@ -349,6 +399,8 @@ class OptimizedSmsReaderWorker @AssistedInject constructor(
         // Stage 3: Save — single coroutine, sequential DB writes
         var parsedCount = 0
         var savedCount = 0
+        var skippedCount = 0
+        var failedCount = 0
         val saveJob = launch {
             for (result in outputChannel) {
                 // Defensive isolation: one poisoned result must never kill the
@@ -366,7 +418,17 @@ class OptimizedSmsReaderWorker @AssistedInject constructor(
                         }
                         is ParseResult.Subscription -> { /* counted during parse */ }
                         is ParseResult.Unrecognized -> { /* already stored during parse */ }
-                        is ParseResult.Skipped -> { /* no-op */ }
+                        is ParseResult.Skipped -> {
+                            // Classify skips for the end-of-scan summary:
+                            // parse errors are failures; everything else
+                            // (no matching pattern, promo, unparseable body)
+                            // is reported as skipped/unmatched.
+                            if (result.reason.startsWith("Error:")) {
+                                failedCount++
+                            } else {
+                                skippedCount++
+                            }
+                        }
                     }
                 } catch (e: CancellationException) {
                     throw e
@@ -392,6 +454,8 @@ class OptimizedSmsReaderWorker @AssistedInject constructor(
                             PROGRESS_PROCESSED to current,
                             PROGRESS_PARSED to parsedCount,
                             PROGRESS_SAVED to savedCount,
+                            PROGRESS_SKIPPED_UNMATCHED to skippedCount,
+                            PROGRESS_FAILED_PARSE to failedCount,
                             PROGRESS_TIME_ELAPSED to stats.updateTimeElapsed(),
                             PROGRESS_ESTIMATED_TIME_REMAINING to stats.getEstimatedTimeRemaining(),
                             PROGRESS_CURRENT_BATCH to (current + batchSize - 1) / batchSize,
@@ -413,6 +477,8 @@ class OptimizedSmsReaderWorker @AssistedInject constructor(
         stats.processedMessages = stats.totalMessages
         stats.parsedTransactions = parsedCount
         stats.savedTransactions = savedCount
+        stats.skippedUnmatched = skippedCount
+        stats.failedToParse = failedCount
         stats.updateMessagesPerSecond()
 
         setProgress(
@@ -421,6 +487,8 @@ class OptimizedSmsReaderWorker @AssistedInject constructor(
                 PROGRESS_PROCESSED to stats.totalMessages,
                 PROGRESS_PARSED to parsedCount,
                 PROGRESS_SAVED to savedCount,
+                PROGRESS_SKIPPED_UNMATCHED to skippedCount,
+                PROGRESS_FAILED_PARSE to failedCount,
                 PROGRESS_TIME_ELAPSED to stats.updateTimeElapsed(),
                 PROGRESS_ESTIMATED_TIME_REMAINING to 0L,
                 PROGRESS_CURRENT_BATCH to totalBatches,
@@ -802,14 +870,18 @@ private suspend fun processUnrecognizedSms(sms: SmsMessage) {
     }
 }
 
-private fun getSmsAndRcsCount(scanStartTime: Long): Int {
+private fun getSmsAndRcsCount(scanStartTime: Long, scanEndTime: Long): Int {
     var total = 0
     try {
         val smsCursor = applicationContext.contentResolver.query(
             Telephony.Sms.CONTENT_URI,
             arrayOf(Telephony.Sms._ID),
-            "${Telephony.Sms.TYPE} = ? AND ${Telephony.Sms.DATE} >= ?",
-            arrayOf(Telephony.Sms.MESSAGE_TYPE_INBOX.toString(), scanStartTime.toString()),
+            "${Telephony.Sms.TYPE} = ? AND ${Telephony.Sms.DATE} >= ? AND ${Telephony.Sms.DATE} <= ?",
+            arrayOf(
+                Telephony.Sms.MESSAGE_TYPE_INBOX.toString(),
+                scanStartTime.toString(),
+                scanEndTime.toString()
+            ),
             null
         )
         smsCursor?.use {
@@ -854,14 +926,19 @@ private fun getSmsAndRcsCount(scanStartTime: Long): Int {
 
 private suspend fun streamSmsToChannel(
     channel: Channel<SmsMessage>,
-    scanStartTime: Long
+    scanStartTime: Long,
+    scanEndTime: Long
 ) {
     try {
         val cursor = applicationContext.contentResolver.query(
             Telephony.Sms.CONTENT_URI,
             SMS_PROJECTION,
-            "${Telephony.Sms.TYPE} = ? AND ${Telephony.Sms.DATE} >= ?",
-            arrayOf(Telephony.Sms.MESSAGE_TYPE_INBOX.toString(), scanStartTime.toString()),
+            "${Telephony.Sms.TYPE} = ? AND ${Telephony.Sms.DATE} >= ? AND ${Telephony.Sms.DATE} <= ?",
+            arrayOf(
+                Telephony.Sms.MESSAGE_TYPE_INBOX.toString(),
+                scanStartTime.toString(),
+                scanEndTime.toString()
+            ),
             "${Telephony.Sms.DATE} ASC"  // Process oldest first (chronological order)
         )
 
@@ -890,16 +967,18 @@ private suspend fun streamSmsToChannel(
 
 private suspend fun streamRcsToChannel(
     channel: Channel<SmsMessage>,
-    scanStartTime: Long
+    scanStartTime: Long,
+    scanEndTime: Long
 ) {
     try {
         val scanStartTimeSeconds = scanStartTime / 1000
+        val scanEndTimeSeconds = scanEndTime / 1000
 
         val mmsCursor = applicationContext.contentResolver.query(
             Uri.parse("content://mms"),
             arrayOf("_id", "thread_id", "date", "tr_id", "m_id"),
-            "date >= ?",
-            arrayOf(scanStartTimeSeconds.toString()),
+            "date >= ? AND date <= ?",
+            arrayOf(scanStartTimeSeconds.toString(), scanEndTimeSeconds.toString()),
             "date ASC"  // Process oldest first (chronological order)
         )
 

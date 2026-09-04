@@ -86,9 +86,14 @@ import com.ritesh.cashiro.data.database.entity.WebhookProfileEntity
             BankNotificationEntity::class,
             com.ritesh.cashiro.data.database.entity.LendBorrowPersonEntity::class,
             com.ritesh.cashiro.data.database.entity.LendBorrowTransactionEntity::class,
-            ZakatAssetEntity::class
+            ZakatAssetEntity::class,
+            com.ritesh.cashiro.data.database.entity.ZakatLiabilityEntity::class,
+            com.ritesh.cashiro.data.database.entity.UshrEntryEntity::class,
+            com.ritesh.cashiro.data.database.entity.LivestockEntryEntity::class,
+            com.ritesh.cashiro.data.database.entity.FitrEntryEntity::class,
+            com.ritesh.cashiro.data.database.entity.ZakatPaymentEntity::class
         ],
-        version = 64,
+        version = 65,
     exportSchema = true,
     autoMigrations =
         [
@@ -137,6 +142,11 @@ abstract class CashiroDatabase : RoomDatabase() {
     abstract fun bankNotificationDao(): BankNotificationDao
     abstract fun lendBorrowDao(): com.ritesh.cashiro.data.database.dao.LendBorrowDao
     abstract fun zakatAssetDao(): ZakatAssetDao
+    abstract fun zakatLiabilityDao(): com.ritesh.cashiro.data.database.dao.ZakatLiabilityDao
+    abstract fun ushrEntryDao(): com.ritesh.cashiro.data.database.dao.UshrEntryDao
+    abstract fun livestockEntryDao(): com.ritesh.cashiro.data.database.dao.LivestockEntryDao
+    abstract fun fitrEntryDao(): com.ritesh.cashiro.data.database.dao.FitrEntryDao
+    abstract fun zakatPaymentDao(): com.ritesh.cashiro.data.database.dao.ZakatPaymentDao
 
     companion object {
         const val DATABASE_NAME = "pennywise_database"
@@ -179,7 +189,8 @@ MIGRATION_55_56,
                                 MIGRATION_60_61,
                                 MIGRATION_61_62,
                                 MIGRATION_62_63,
-                                MIGRATION_63_64
+                                MIGRATION_63_64,
+                                MIGRATION_64_65
                             )
                             .build()
                     INSTANCE = instance
@@ -726,6 +737,123 @@ MIGRATION_55_56,
                     )
                     db.execSQL(
                         "CREATE INDEX IF NOT EXISTS `index_transactions_category` ON `transactions` (`category`)"
+                    )
+                }
+            }
+
+        // Zakat A-Z master spec: asset-purpose flags + 5 new module tables
+        // (liabilities, Ushr, livestock, Zakatul Fitr, payment log).
+        // Purely additive — no existing column is modified or dropped.
+        val MIGRATION_64_65 =
+            object : Migration(64, 65) {
+                override fun migrate(db: SupportSQLiteDatabase) {
+                    // New zakat_assets columns (defaults keep old rows
+                    // zakatable exactly as before).
+                    db.execSQL(
+                        "ALTER TABLE `zakat_assets` ADD COLUMN `purpose` TEXT NOT NULL DEFAULT 'RESALE'"
+                    )
+                    db.execSQL(
+                        "ALTER TABLE `zakat_assets` ADD COLUMN `holding_intent` TEXT NOT NULL DEFAULT 'TRADING'"
+                    )
+                    db.execSQL(
+                        "ALTER TABLE `zakat_assets` ADD COLUMN `is_amanat` INTEGER NOT NULL DEFAULT 0"
+                    )
+                    db.execSQL(
+                        "ALTER TABLE `zakat_assets` ADD COLUMN `personal_use` INTEGER NOT NULL DEFAULT 0"
+                    )
+
+                    // Deductible debts (spec 2.1).
+                    db.execSQL(
+                        """CREATE TABLE IF NOT EXISTS `zakat_liabilities` (
+                            `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                            `name` TEXT NOT NULL,
+                            `amount` TEXT NOT NULL,
+                            `due_date` TEXT NOT NULL,
+                            `notes` TEXT,
+                            `is_deleted` INTEGER NOT NULL DEFAULT 0,
+                            `created_at` TEXT NOT NULL,
+                            `updated_at` TEXT NOT NULL
+                        )""".trimIndent()
+                    )
+                    db.execSQL(
+                        "CREATE INDEX IF NOT EXISTS `index_zakat_liabilities_due_date` ON `zakat_liabilities` (`due_date`)"
+                    )
+
+                    // Ushr harvests (spec 5).
+                    db.execSQL(
+                        """CREATE TABLE IF NOT EXISTS `ushr_entries` (
+                            `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                            `crop_name` TEXT NOT NULL,
+                            `quantity_kg` TEXT NOT NULL,
+                            `market_value` TEXT NOT NULL,
+                            `irrigation_type` TEXT NOT NULL,
+                            `harvest_date` TEXT NOT NULL,
+                            `is_paid` INTEGER NOT NULL DEFAULT 0,
+                            `notes` TEXT,
+                            `is_deleted` INTEGER NOT NULL DEFAULT 0,
+                            `created_at` TEXT NOT NULL,
+                            `updated_at` TEXT NOT NULL
+                        )""".trimIndent()
+                    )
+                    db.execSQL(
+                        "CREATE INDEX IF NOT EXISTS `index_ushr_entries_harvest_date` ON `ushr_entries` (`harvest_date`)"
+                    )
+
+                    // Traditional grazing livestock (spec 6).
+                    db.execSQL(
+                        """CREATE TABLE IF NOT EXISTS `livestock_entries` (
+                            `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                            `name` TEXT NOT NULL,
+                            `animal_type` TEXT NOT NULL,
+                            `count` INTEGER NOT NULL,
+                            `is_grazing` INTEGER NOT NULL DEFAULT 1,
+                            `is_paid` INTEGER NOT NULL DEFAULT 0,
+                            `notes` TEXT,
+                            `is_deleted` INTEGER NOT NULL DEFAULT 0,
+                            `created_at` TEXT NOT NULL,
+                            `updated_at` TEXT NOT NULL
+                        )""".trimIndent()
+                    )
+                    db.execSQL(
+                        "CREATE INDEX IF NOT EXISTS `index_livestock_entries_animal_type` ON `livestock_entries` (`animal_type`)"
+                    )
+
+                    // Zakatul Fitr records (spec 9).
+                    db.execSQL(
+                        """CREATE TABLE IF NOT EXISTS `zakatul_fitr` (
+                            `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                            `year_label` TEXT NOT NULL,
+                            `staple_name` TEXT NOT NULL,
+                            `price_per_kg` TEXT NOT NULL,
+                            `kg_per_person` TEXT NOT NULL DEFAULT '2.5',
+                            `household_count` INTEGER NOT NULL,
+                            `due_date` TEXT,
+                            `is_paid` INTEGER NOT NULL DEFAULT 0,
+                            `paid_at` TEXT,
+                            `notes` TEXT,
+                            `is_deleted` INTEGER NOT NULL DEFAULT 0,
+                            `created_at` TEXT NOT NULL,
+                            `updated_at` TEXT NOT NULL
+                        )""".trimIndent()
+                    )
+
+                    // Zakat/sadaqah payment log (spec 12).
+                    db.execSQL(
+                        """CREATE TABLE IF NOT EXISTS `zakat_payments` (
+                            `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                            `kind` TEXT NOT NULL,
+                            `amount` TEXT NOT NULL,
+                            `date` TEXT NOT NULL,
+                            `recipient` TEXT NOT NULL,
+                            `category` TEXT NOT NULL,
+                            `notes` TEXT,
+                            `is_deleted` INTEGER NOT NULL DEFAULT 0,
+                            `created_at` TEXT NOT NULL,
+                            `updated_at` TEXT NOT NULL
+                        )""".trimIndent()
+                    )
+                    db.execSQL(
+                        "CREATE INDEX IF NOT EXISTS `index_zakat_payments_date` ON `zakat_payments` (`date`)"
                     )
                 }
             }

@@ -35,6 +35,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
@@ -55,6 +56,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ritesh.cashiro.R
+import com.ritesh.cashiro.data.database.entity.HoldingIntent
+import com.ritesh.cashiro.data.database.entity.PropertyPurpose
 import com.ritesh.cashiro.data.database.entity.ZakatAssetEntity
 import com.ritesh.cashiro.data.database.entity.ZakatAssetType
 import com.ritesh.cashiro.data.database.entity.ZakatAssetUnit
@@ -319,6 +322,8 @@ private fun assetTypeLabel(type: String): String = when (
     ZakatAssetType.PROPERTY -> stringResource(R.string.zakat_asset_type_property)
     ZakatAssetType.BUSINESS -> stringResource(R.string.zakat_asset_type_business)
     ZakatAssetType.INVESTMENT -> stringResource(R.string.zakat_asset_type_investment)
+    ZakatAssetType.RECEIVABLE -> stringResource(R.string.zakat_asset_type_receivable)
+    ZakatAssetType.PERSONAL -> stringResource(R.string.zakat_asset_type_personal)
     ZakatAssetType.OTHER -> stringResource(R.string.zakat_asset_type_other)
 }
 
@@ -357,6 +362,14 @@ private fun AssetEditorSheet(
     }
     var notes by remember { mutableStateOf(initial?.notes ?: "") }
     var showDatePicker by remember { mutableStateOf(false) }
+    var purpose by remember {
+        mutableStateOf(initial?.purpose ?: PropertyPurpose.RESALE.name)
+    }
+    var holdingIntent by remember {
+        mutableStateOf(initial?.holdingIntent ?: HoldingIntent.TRADING.name)
+    }
+    var isAmanat by remember { mutableStateOf(initial?.isAmanat ?: false) }
+    var personalUse by remember { mutableStateOf(initial?.personalUse ?: false) }
 
     val assetType = runCatching { ZakatAssetType.valueOf(type) }
         .getOrDefault(ZakatAssetType.OTHER)
@@ -521,6 +534,111 @@ private fun AssetEditorSheet(
                 )
             }
         }
+
+        // PROPERTY purpose (spec 1.9): personal residence / rental are NOT
+        // zakatable; resale property is zakatable at market value.
+        if (assetType == ZakatAssetType.PROPERTY) {
+            Spacer(modifier = Modifier.height(Spacing.xs))
+            Text(
+                text = stringResource(R.string.zakat_asset_purpose),
+                style = MaterialTheme.typography.labelLarge
+            )
+            Spacer(modifier = Modifier.height(Spacing.xs))
+            LazyRow(horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+                items(PropertyPurpose.entries) { p ->
+                    FilterChip(
+                        selected = purpose == p.name,
+                        onClick = { purpose = p.name },
+                        label = {
+                            Text(
+                                stringResource(
+                                    when (p) {
+                                        PropertyPurpose.PERSONAL -> R.string.zakat_purpose_personal
+                                        PropertyPurpose.RENTAL -> R.string.zakat_purpose_rental
+                                        PropertyPurpose.RESALE -> R.string.zakat_purpose_resale
+                                    }
+                                )
+                            )
+                        }
+                    )
+                }
+            }
+        }
+
+        // INVESTMENT intent (spec 1.5): trading stock fully zakatable;
+        // long-term dividend holdings excluded (documented simplification).
+        if (assetType == ZakatAssetType.INVESTMENT) {
+            Spacer(modifier = Modifier.height(Spacing.xs))
+            Text(
+                text = stringResource(R.string.zakat_asset_intent),
+                style = MaterialTheme.typography.labelLarge
+            )
+            Spacer(modifier = Modifier.height(Spacing.xs))
+            LazyRow(horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+                items(HoldingIntent.entries) { h ->
+                    FilterChip(
+                        selected = holdingIntent == h.name,
+                        onClick = { holdingIntent = h.name },
+                        label = {
+                            Text(
+                                stringResource(
+                                    when (h) {
+                                        HoldingIntent.TRADING -> R.string.zakat_intent_trading
+                                        HoldingIntent.LONG_TERM -> R.string.zakat_intent_long_term
+                                    }
+                                )
+                            )
+                        }
+                    )
+                }
+            }
+            Text(
+                text = stringResource(R.string.zakat_intent_long_term_hint),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        // Metals: personal-use jewelry flag (spec 1.10/10.1). Whether it
+        // exempts the jewelry depends on the madhhab setting.
+        if (isMetal) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(R.string.zakat_asset_personal_use),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Switch(checked = personalUse, onCheckedChange = { personalUse = it })
+            }
+            Text(
+                text = stringResource(R.string.zakat_asset_personal_use_hint),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        // Amanat (spec 7.1): excluded from ALL zakat calculations.
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = stringResource(R.string.zakat_asset_amanat),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    text = stringResource(R.string.zakat_asset_amanat_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            Switch(checked = isAmanat, onCheckedChange = { isAmanat = it })
+        }
         Spacer(modifier = Modifier.height(Spacing.sm))
 
         OutlinedTextField(
@@ -586,6 +704,10 @@ private fun AssetEditorSheet(
                         currency = currency.trim().uppercase().ifBlank { defaultCurrency },
                         acquisitionDate = acquisitionDate,
                         estimatedValue = if (isMetal) value else value,
+                        purpose = purpose,
+                        holdingIntent = holdingIntent,
+                        isAmanat = isAmanat,
+                        personalUse = if (isMetal) personalUse else false,
                         notes = notes.trim().takeIf { it.isNotEmpty() }
                     )
                     onSave(entity)

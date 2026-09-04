@@ -25,6 +25,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Switch
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -73,7 +75,12 @@ fun ZakatDashboardScreen(
     onNavigateToCalculator: () -> Unit,
     onNavigateToCurrencySettings: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: ZakatDashboardViewModel = hiltViewModel()
+    viewModel: ZakatDashboardViewModel = hiltViewModel(),
+    onNavigateToUshr: () -> Unit = {},
+    onNavigateToLivestock: () -> Unit = {},
+    onNavigateToFitr: () -> Unit = {},
+    onNavigateToPayments: () -> Unit = {},
+    onNavigateToLiabilities: () -> Unit = {}
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val currencyCode = state.currencyCode
@@ -162,6 +169,27 @@ fun ZakatDashboardScreen(
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
+                    if (state.breakdown.excluded.signum() > 0) {
+                        BreakdownRow(
+                            label = stringResource(R.string.zakat_excluded_line),
+                            value = state.breakdown.excluded.negate(),
+                            currencyCode = currencyCode
+                        )
+                    }
+                    if (state.deductions.signum() > 0) {
+                        BreakdownRow(
+                            label = stringResource(R.string.zakat_deductions_line),
+                            value = state.deductions.negate(),
+                            currencyCode = currencyCode
+                        )
+                        HorizontalDivider(modifier = Modifier.padding(vertical = Spacing.xs))
+                        BreakdownRow(
+                            label = stringResource(R.string.zakat_net_line),
+                            value = state.breakdown.netWealth,
+                            currencyCode = currencyCode,
+                            bold = true
+                        )
+                    }
                 }
             }
 
@@ -282,6 +310,8 @@ fun ZakatDashboardScreen(
                                 "cash" -> stringResource(R.string.zakat_dash_cash)
                                 "gold" -> stringResource(R.string.zakat_dash_gold)
                                 "silver" -> stringResource(R.string.zakat_dash_silver)
+                                "deductions" -> stringResource(R.string.zakat_deductions_line)
+                                "net" -> stringResource(R.string.zakat_net_line)
                                 else -> stringResource(R.string.zakat_dash_other_assets)
                             }
                             DueRow(
@@ -291,6 +321,129 @@ fun ZakatDashboardScreen(
                                 currencyCode = currencyCode,
                                 onContainer = true
                             )
+                        }
+                        Spacer(modifier = Modifier.height(Spacing.xs))
+                        Text(
+                            text = stringResource(
+                                R.string.zakat_rate_line,
+                                state.appliedRate.multiply(java.math.BigDecimal(100))
+                                    .stripTrailingZeros().toPlainString() + "%"
+                            ) + " • " + stringResource(
+                                if (state.calendarMode == ZakatCalculator.CalendarMode.SOLAR)
+                                    R.string.zakat_calendar_solar else R.string.zakat_calendar_lunar
+                            ),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                    }
+                }
+            }
+
+            // ----- Settings: calendar mode + madhhab + amanat (spec 7/8/10) -----
+            item {
+                ZakatSectionCard(title = stringResource(R.string.zakat_calendar_mode)) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
+                        FilterChip(
+                            selected = state.calendarMode == ZakatCalculator.CalendarMode.LUNAR,
+                            onClick = { viewModel.setCalendarMode(ZakatCalculator.CalendarMode.LUNAR) },
+                            label = { Text(stringResource(R.string.zakat_calendar_lunar)) }
+                        )
+                        FilterChip(
+                            selected = state.calendarMode == ZakatCalculator.CalendarMode.SOLAR,
+                            onClick = { viewModel.setCalendarMode(ZakatCalculator.CalendarMode.SOLAR) },
+                            label = { Text(stringResource(R.string.zakat_calendar_solar)) }
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(Spacing.xs))
+                    Text(
+                        text = stringResource(R.string.zakat_calendar_hint),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(modifier = Modifier.height(Spacing.sm))
+                    Text(
+                        text = stringResource(R.string.zakat_madhhab_label),
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Spacer(modifier = Modifier.height(Spacing.xs))
+                    LazyRow(horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+                        items(com.ritesh.cashiro.domain.zakat.ZakatMadhhab.entries) { m ->
+                            FilterChip(
+                                selected = state.madhhab == m,
+                                onClick = { viewModel.setMadhhab(m) },
+                                label = {
+                                    Text(
+                                        stringResource(
+                                            when (m) {
+                                                com.ritesh.cashiro.domain.zakat.ZakatMadhhab.MAINSTREAM -> R.string.zakat_madhhab_mainstream
+                                                com.ritesh.cashiro.domain.zakat.ZakatMadhhab.HANAFI -> R.string.zakat_madhhab_hanafi
+                                                com.ritesh.cashiro.domain.zakat.ZakatMadhhab.SHAFII -> R.string.zakat_madhhab_shafii
+                                                com.ritesh.cashiro.domain.zakat.ZakatMadhhab.MALIKI -> R.string.zakat_madhhab_maliki
+                                                com.ritesh.cashiro.domain.zakat.ZakatMadhhab.HANBALI -> R.string.zakat_madhhab_hanbali
+                                            }
+                                        )
+                                    )
+                                }
+                            )
+                        }
+                    }
+                    if (state.knownAccounts.isNotEmpty()) {
+                        Spacer(modifier = Modifier.height(Spacing.sm))
+                        Text(
+                            text = stringResource(R.string.zakat_asset_amanat),
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                        Spacer(modifier = Modifier.height(Spacing.xs))
+                        state.knownAccounts.forEach { (bank, last4) ->
+                            val key = "$bank|$last4"
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = "$bank ••$last4",
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                                Switch(
+                                    checked = key in state.amanatAccountKeys,
+                                    onCheckedChange = { viewModel.toggleAmanatAccount(key) }
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+            // ----- Other zakat duties (spec 5/6/9/12 + 2.1) -----
+            item {
+                ZakatSectionCard(title = stringResource(R.string.zakat_modules_title)) {
+                    LazyRow(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
+                        items(MODULE_LINKS) { link ->
+                            when (link) {
+                                "ushr" -> AssistChip(
+                                    onClick = onNavigateToUshr,
+                                    label = { Text(stringResource(R.string.zakat_modules_ushr)) }
+                                )
+                                "livestock" -> AssistChip(
+                                    onClick = onNavigateToLivestock,
+                                    label = { Text(stringResource(R.string.zakat_modules_livestock)) }
+                                )
+                                "fitr" -> AssistChip(
+                                    onClick = onNavigateToFitr,
+                                    label = { Text(stringResource(R.string.zakat_modules_fitr)) }
+                                )
+                                "payments" -> AssistChip(
+                                    onClick = onNavigateToPayments,
+                                    label = { Text(stringResource(R.string.zakat_modules_payments)) }
+                                )
+                                else -> AssistChip(
+                                    onClick = onNavigateToLiabilities,
+                                    label = { Text(stringResource(R.string.zakat_modules_liabilities)) }
+                                )
+                            }
                         }
                     }
                 }
@@ -328,6 +481,7 @@ fun ZakatDashboardScreen(
 }
 
 private val QUICK_LINKS = listOf("assets", "calculator", "currency")
+private val MODULE_LINKS = listOf("liabilities", "ushr", "livestock", "fitr", "payments")
 
 @Composable
 private fun PoolHawlSection(state: ZakatDashboardViewModel.UiState, currencyCode: String) {
@@ -531,7 +685,12 @@ private fun NisabBadge(above: Boolean) {
 }
 
 @Composable
-private fun BreakdownRow(label: String, value: BigDecimal, currencyCode: String) {
+private fun BreakdownRow(
+    label: String,
+    value: BigDecimal,
+    currencyCode: String,
+    bold: Boolean = false
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -541,6 +700,7 @@ private fun BreakdownRow(label: String, value: BigDecimal, currencyCode: String)
         Text(
             text = label,
             style = MaterialTheme.typography.bodyMedium,
+            fontWeight = if (bold) FontWeight.SemiBold else null,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Text(

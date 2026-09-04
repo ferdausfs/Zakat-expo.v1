@@ -1,15 +1,35 @@
 package com.ritesh.cashiro.domain.zakat
 
 import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
+import com.ritesh.cashiro.data.database.entity.HoldingIntent
+import com.ritesh.cashiro.data.database.entity.PropertyPurpose
 import com.ritesh.cashiro.data.database.entity.ZakatAssetEntity
 import com.ritesh.cashiro.data.database.entity.ZakatAssetType
 import com.ritesh.cashiro.data.database.entity.ZakatAssetUnit
+import com.ritesh.cashiro.data.database.entity.ZakatLiabilityEntity
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.chrono.HijrahDate
 import java.time.temporal.ChronoUnit
+
+/**
+ * Madhhab profile (spec 10.1). The only place a genuine, implementable
+ * difference exists today is personal-use jewelry: Hanafi treats ALL
+ * gold/silver jewelry as zakatable, while the Shafi'i/Maliki/Hanbali
+ * positions exempt jewelry worn for personal use. MAINSTREAM keeps the
+ * conservative default (all jewelry zakatable — overpaying is permitted,
+ * underpaying is not). Where no meaningful difference exists for a
+ * calculation, the setting has no effect.
+ */
+enum class ZakatMadhhab {
+    MAINSTREAM, HANAFI, SHAFII, MALIKI, HANBALI;
+
+    /** Whether personal-use gold/silver jewelry is exempt under this profile. */
+    val exemptsPersonalJewelry: Boolean
+        get() = this == SHAFII || this == MALIKI || this == HANBALI
+}
 
 /**
  * Pure domain layer for the combined zakatable wealth pool (Phase 2b).
@@ -51,8 +71,66 @@ object WealthPoolCalculator {
         val gold: BigDecimal,
         val silver: BigDecimal,
         val otherAssets: BigDecimal,
-        val total: BigDecimal
+        val total: BigDecimal,
+        /** Value of asset entries EXCLUDED by amanat/purpose/madhhab rules. */
+        val excluded: BigDecimal = BigDecimal.ZERO,
+        /** Near-term deductible debts (spec 2.1). */
+        val deductions: BigDecimal = BigDecimal.ZERO,
+        /** total − deductions, floored at zero — compared to nisab & taxed. */
+        val netWealth: BigDecimal = total
     )
+
+    /**
+     * Sum of deductible debt entries due within the next 12 months
+     * (spec 2.1): the user records liabilities with due dates; only the
+     * near-term portion is deducted from gross zakatable wealth. Long-term
+     * debts are handled by entering the coming year's portion as its own
+     * liability row.
+     */
+    fun nearTermDebts(
+        liabilities: List<ZakatLiabilityEntity>,
+        today: LocalDate = LocalDate.now()
+    ): BigDecimal {
+        val limit = today.plusMonths(12)
+        return liabilities
+            .filter { !it.dueDate.isAfter(limit) && it.amount.signum() > 0 }
+            .map { it.amount }
+            .fold(BigDecimal.ZERO) { acc, a -> acc.add(a) }
+            .setScale(SCALE, RoundingMode.HALF_UP)
+    }
+
+    /**
+     * Inclusion rule for one asset entry, encoding spec sections 1.5, 1.9,
+     * 1.10 and 7.1:
+     *  - Amanat entries are excluded entirely (7.1);
+     *  - PERSONAL entries (personal-use items) are excluded (1.10);
+     *  - PROPERTY is included only when purpose == RESALE (1.9);
+     *  - INVESTMENT is included only when holdingIntent == TRADING (1.5);
+     *    long-term holdings are excluded (flagged informational — no
+     *    forced look-through calculation);
+     *  - metals marked personal-use are excluded only under madhhabs that
+     *    exempt personal jewelry (10.1).
+     */
+    fun isIncluded(
+        asset: ZakatAssetEntity,
+        madhhab: ZakatMadhhab = ZakatMadhhab.MAINSTREAM
+    ): Boolean {
+        if (asset.isAmanat) return false
+        val type = runCatching { ZakatAssetType.valueOf(asset.type) }
+            .getOrDefault(ZakatAssetType.OTHER)
+        return when (type) {
+            ZakatAssetType.PERSONAL -> false
+            ZakatAssetType.PROPERTY ->
+                runCatching { PropertyPurpose.valueOf(asset.purpose.uppercase()) }
+                    .getOrDefault(PropertyPurpose.RESALE) == PropertyPurpose.RESALE
+            ZakatAssetType.INVESTMENT ->
+                runCatching { HoldingIntent.valueOf(asset.holdingIntent.uppercase()) }
+                    .getOrDefault(HoldingIntent.TRADING) == HoldingIntent.TRADING
+            ZakatAssetType.GOLD, ZakatAssetType.SILVER ->
+                !(asset.personalUse && madhhab.exemptsPersonalJewelry)
+            else -> true
+        }
+    }
 
     /** Result of scanning history for nisab crossings. */
     data class NisabCrossing(
@@ -94,10 +172,16 @@ object WealthPoolCalculator {
         return quantity.multiply(factor)
     }
 
-    /** Purity factor for a gold karat grade (24k = 1.0). */
+    /**
+     * Purity factor for a gold karat grade (24k = 1.0). Computed at 10
+     * decimal places so purity-adjusted weights match hand calculation to
+     * the paisa (e.g. 1 vori of 22k = 11.664 x 22/24 = exactly 10.692 g
+     * pure gold) — an earlier 6-dp scale drifted by a few hundredths on
+     * typical jewellery weights.
+     */
     fun karatPurity(karat: Int?): BigDecimal {
         if (karat == null || karat <= 0 || karat > 24) return BigDecimal.ONE
-        return BigDecimal(karat).divide(BigDecimal(24), 6, RoundingMode.HALF_UP)
+        return BigDecimal(karat).divide(BigDecimal(24), 10, RoundingMode.HALF_UP)
     }
 
     /**
@@ -154,13 +238,55 @@ object WealthPoolCalculator {
         assets: List<ZakatAssetEntity>,
         goldPricePerGram: BigDecimal,
         silverPricePerGram: BigDecimal
+    ): PoolBreakdown = currentBreakdown(
+        latestBalances = latestBalances,
+        assets = assets,
+        goldPricePerGram = goldPricePerGram,
+        silverPricePerGram = silverPricePerGram,
+        amanatAccountKeys = emptySet(),
+        madhhab = ZakatMadhhab.MAINSTREAM,
+        liabilities = emptyList()
+    )
+
+    /**
+     * Full pool breakdown with the spec's inclusion rules and debt
+     * deduction: cash excludes Amanat-tagged accounts; assets are filtered
+     * through [isIncluded]; near-term liabilities are subtracted to give
+     * the NET zakatable wealth that is compared to nisab and taxed (2.2).
+     */
+    fun currentBreakdown(
+        latestBalances: List<AccountBalanceEntity>,
+        assets: List<ZakatAssetEntity>,
+        goldPricePerGram: BigDecimal,
+        silverPricePerGram: BigDecimal,
+        amanatAccountKeys: Set<String>,
+        madhhab: ZakatMadhhab,
+        liabilities: List<ZakatLiabilityEntity>
     ): PoolBreakdown {
-        val cash = currentCash(latestBalances)
+        // Cash: same as before, but Amanat-tagged accounts are excluded.
+        val cash = latestBalances
+            .filter { !it.isCreditCard }
+            .filter { "${it.bankName}|${it.accountLast4}" !in amanatAccountKeys }
+            .map { it.balance.max(BigDecimal.ZERO) }
+            .fold(BigDecimal.ZERO) { acc, b -> acc.add(b) }
+            .setScale(SCALE, RoundingMode.HALF_UP)
+        // Amanat cash is reported as excluded so the user sees it is
+        // deliberately left out of the pool (7.1).
+        val amanatCashValue = latestBalances
+            .filter { !it.isCreditCard }
+            .filter { "${it.bankName}|${it.accountLast4}" in amanatAccountKeys }
+            .map { it.balance.max(BigDecimal.ZERO) }
+            .fold(BigDecimal.ZERO) { acc, b -> acc.add(b) }
         var gold = BigDecimal.ZERO
         var silver = BigDecimal.ZERO
         var other = BigDecimal.ZERO
+        var excluded = amanatCashValue
         for (asset in assets) {
             val value = assetValue(asset, goldPricePerGram, silverPricePerGram)
+            if (!isIncluded(asset, madhhab)) {
+                excluded = excluded.add(value)
+                continue
+            }
             when (runCatching { ZakatAssetType.valueOf(asset.type) }
                 .getOrDefault(ZakatAssetType.OTHER)) {
                 ZakatAssetType.GOLD -> gold = gold.add(value)
@@ -169,12 +295,17 @@ object WealthPoolCalculator {
             }
         }
         val total = cash.add(gold).add(silver).add(other)
+        val deductions = nearTermDebts(liabilities)
+        val net = total.subtract(deductions).max(BigDecimal.ZERO)
         return PoolBreakdown(
             cash = cash,
             gold = gold.setScale(SCALE, RoundingMode.HALF_UP),
             silver = silver.setScale(SCALE, RoundingMode.HALF_UP),
             otherAssets = other.setScale(SCALE, RoundingMode.HALF_UP),
-            total = total.setScale(SCALE, RoundingMode.HALF_UP)
+            total = total.setScale(SCALE, RoundingMode.HALF_UP),
+            excluded = excluded.setScale(SCALE, RoundingMode.HALF_UP),
+            deductions = deductions,
+            netWealth = net.setScale(SCALE, RoundingMode.HALF_UP)
         )
     }
 
@@ -204,6 +335,37 @@ object WealthPoolCalculator {
         silverPricePerGram: BigDecimal,
         from: LocalDate,
         to: LocalDate
+    ): List<DatedWealth> = buildDailySeries(
+        balances = balances,
+        assets = assets,
+        goldPricePerGram = goldPricePerGram,
+        silverPricePerGram = silverPricePerGram,
+        from = from,
+        to = to,
+        amanatAccountKeys = emptySet(),
+        madhhab = ZakatMadhhab.MAINSTREAM,
+        dailyDeduction = BigDecimal.ZERO
+    )
+
+    /**
+     * Daily series with the spec's inclusion rules applied. Assets excluded
+     * by [isIncluded] never contribute; Amanat accounts never contribute to
+     * cash; [dailyDeduction] (the current near-term debt level) is applied
+     * uniformly to every day, floored at zero — a documented simplification,
+     * since liabilities are recorded with due dates rather than a full
+     * history. Hawl resets therefore track the net figure as closely as the
+     * recorded data allows (spec 3.4/4.1).
+     */
+    fun buildDailySeries(
+        balances: List<AccountBalanceEntity>,
+        assets: List<ZakatAssetEntity>,
+        goldPricePerGram: BigDecimal,
+        silverPricePerGram: BigDecimal,
+        from: LocalDate,
+        to: LocalDate,
+        amanatAccountKeys: Set<String>,
+        madhhab: ZakatMadhhab,
+        dailyDeduction: BigDecimal
     ): List<DatedWealth> {
         if (to.isBefore(from)) return emptyList()
 
@@ -213,12 +375,17 @@ object WealthPoolCalculator {
         val accounts = HashMap<Pair<String, String>, AccountState>()
         for (b in balances) {
             if (b.isCreditCard) continue
+            if ("${b.bankName}|${b.accountLast4}" in amanatAccountKeys) continue
             val key = b.bankName to b.accountLast4
             accounts.getOrPut(key) { AccountState(null) }
         }
         val sortedBalances = balances
             .filter { !it.isCreditCard }
+            .filter { "${it.bankName}|${it.accountLast4}" !in amanatAccountKeys }
             .sortedWith(compareBy({ it.timestamp }, { it.id }))
+
+        // Excluded assets never enter the running totals.
+        val includedAssets = assets.filter { isIncluded(it, madhhab) }
 
         // Assets grouped by acquisition date, values precomputed, so the
         // daily loop advances running totals in O(assets) overall.
@@ -227,7 +394,7 @@ object WealthPoolCalculator {
         var otherRunning = BigDecimal.ZERO
         data class Categorized(val type: ZakatAssetType, val value: BigDecimal)
 
-        val contributionsByDate = assets
+        val contributionsByDate = includedAssets
             .map { asset ->
                 Triple(
                     asset.acquisitionDate,
@@ -277,7 +444,12 @@ object WealthPoolCalculator {
                 }
             }
 
-            val total = lastCash.add(goldRunning).add(silverRunning).add(otherRunning)
+            val grossTotal = lastCash.add(goldRunning).add(silverRunning).add(otherRunning)
+            val total = if (dailyDeduction.signum() > 0) {
+                grossTotal.subtract(dailyDeduction).max(BigDecimal.ZERO)
+            } else {
+                grossTotal
+            }
             series.add(
                 DatedWealth(
                     date = day,

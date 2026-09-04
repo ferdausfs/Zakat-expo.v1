@@ -38,6 +38,7 @@ class ZakatViewModel @Inject constructor(
         val goldPricePerGram: String = "",
         val silverPricePerGram: String = "",
         val nisabMethod: ZakatCalculator.NisabMethod = ZakatCalculator.NisabMethod.SILVER,
+        val calendarMode: ZakatCalculator.CalendarMode = ZakatCalculator.CalendarMode.LUNAR,
         val hawlStartDate: LocalDate = LocalDate.now(),
         val assessment: ZakatCalculator.Assessment? = null
     )
@@ -71,6 +72,21 @@ class ZakatViewModel @Inject constructor(
                 }
                 if (method != null && method != _uiState.value.nisabMethod) {
                     _uiState.value = _uiState.value.copy(nisabMethod = method)
+                    reevaluate()
+                }
+            }
+        }
+        // Calendar mode (LUNAR/SOLAR) is shared with the dashboard; the
+        // hawl length AND the rate switch together (spec 4.3/8.2).
+        viewModelScope.launch {
+            userPreferencesRepository.zakatCalendarMode.collect { raw ->
+                val mode = try {
+                    ZakatCalculator.CalendarMode.valueOf(raw.trim().uppercase())
+                } catch (e: IllegalArgumentException) {
+                    null
+                }
+                if (mode != null && mode != _uiState.value.calendarMode) {
+                    _uiState.value = _uiState.value.copy(calendarMode = mode)
                     reevaluate()
                 }
             }
@@ -121,6 +137,12 @@ class ZakatViewModel @Inject constructor(
         viewModelScope.launch { userPreferencesRepository.setZakatNisabMethod(method.name) }
     }
 
+    fun onCalendarModeChange(mode: ZakatCalculator.CalendarMode) {
+        _uiState.value = _uiState.value.copy(calendarMode = mode)
+        reevaluate()
+        viewModelScope.launch { userPreferencesRepository.setZakatCalendarMode(mode.name) }
+    }
+
     fun onHawlStartDateChange(date: LocalDate) =
         updateAndEvaluate { it.copy(hawlStartDate = date) }
 
@@ -149,7 +171,8 @@ class ZakatViewModel @Inject constructor(
             hawl = ZakatCalculator.Hawl(
                 startDate = state.hawlStartDate,
                 today = LocalDate.now()
-            )
+            ),
+            calendarMode = state.calendarMode
         )
         _uiState.value = state.copy(assessment = assessment)
     }

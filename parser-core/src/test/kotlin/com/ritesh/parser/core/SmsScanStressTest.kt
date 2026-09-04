@@ -286,4 +286,80 @@ class SmsScanStressTest {
             "unmatched messages were not ignored gracefully"
         }
     }
+
+    /**
+     * Bounded-range scan simulation (spec 13.2/13.4): the provider query is
+     * date-filtered BEFORE any message is read (only rows inside the window
+     * are ever fetched), and the scan classifies every message into
+     * matched / skipped / failed exactly like the worker's save stage now
+     * does. A 12k-message inbox spread across 13 months is scanned twice:
+     * once for the last 30 days, once for all time — the bounded scan must
+     * only ever see the rows inside its window and complete without crash.
+     */
+    @Test
+    fun `bounded date-range scan only processes the selected window`() {
+        val realistic = listOf(
+            "Al Rajhi Bank: Purchase of SAR 125.50 with mada card 4567* at PANDA MARKET on 12/03. Avail. Bal: SAR 4,200.00",
+            "SNB: SAR 89.00 debited from account *1234 for purchase at JARIR. Avail. Bal: SAR 6,411.00",
+            "خصم\nحساب:*1234\nمبلغ SAR 350.00\nالتاجر: JARIR BOOKSTORE\nالرصيد المتاح SAR 6,500.00",
+            "Your OTP is 4821. Do not share.",
+            "50% discount today only!"
+        )
+        val rnd = Random(424242)
+        val now = 1_788_000_000_000L // fixed "now" for determinism
+        val dayMs = 24L * 60 * 60 * 1000
+
+        // 12,000 messages spread over ~13 months.
+        data class Row(val sender: String, val body: String, val date: Long)
+        val inbox = ArrayList<Row>(12_000)
+        repeat(12_000) {
+            inbox += Row(
+                (bdSenders + saudiSenders + indiaSenders).random(rnd),
+                realistic.random(rnd),
+                now - rnd.nextLong(0, 396) * dayMs
+            )
+        }
+
+        fun scan(fromMs: Long, toMs: Long): Triple<Int, Int, Int> {
+            // Provider-level filter: only rows within the window are read.
+            val windowRows = inbox.filter { it.date in fromMs..toMs }
+            var parsed = 0
+            var skipped = 0
+            var failed = 0
+            for (row in windowRows) {
+                try {
+                    val parsers = BankParserFactory.getParsers(row.sender)
+                    if (parsers.isEmpty()) {
+                        skipped++
+                        continue
+                    }
+                    val result = parsers.firstNotNullOfOrNull { parser ->
+                        parser.parse(row.body, row.sender, row.date)
+                    }
+                    if (result != null) parsed++ else skipped++
+                } catch (t: Throwable) {
+                    failed++ // per-message isolation: one bad message never halts the scan
+                }
+            }
+            return Triple(parsed, skipped, failed)
+        }
+
+        val month = scan(now - 30 * dayMs, now)
+        val all = scan(0, now)
+
+        // Bounded scan only sees its own window; full scan sees everything.
+        val monthRows = inbox.count { it.date >= now - 30 * dayMs }
+        check(month.first + month.second + month.third == monthRows) {
+            "bounded scan must process exactly the rows in the window"
+        }
+        check(all.first + all.second + all.third == 12_000) {
+            "all-time scan must process the entire inbox"
+        }
+        check(all.first > 0 && month.first > 0) { "routing broken in range scan" }
+        println(
+            "Bounded-range scan: last-30-days window rows=$monthRows " +
+                "(parsed=${month.first}, skipped=${month.second}, failed=${month.third}); " +
+                "all-time=12000 (parsed=${all.first}, skipped=${all.second}, failed=${all.third})"
+        )
+    }
 }

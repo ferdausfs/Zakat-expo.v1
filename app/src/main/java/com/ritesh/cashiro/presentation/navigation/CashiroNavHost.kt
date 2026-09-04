@@ -71,6 +71,7 @@ import androidx.navigation.toRoute
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ritesh.cashiro.data.preferences.NavigationBarStyle
+import com.ritesh.cashiro.presentation.ui.components.ScanRangePickerDialog
 import com.ritesh.cashiro.presentation.ui.components.SmsParsingProgressDialog
 import com.ritesh.cashiro.presentation.ui.features.accounts.AccountDetailScreen
 import com.ritesh.cashiro.presentation.ui.features.accounts.AddAccountScreen
@@ -94,6 +95,11 @@ import com.ritesh.cashiro.presentation.ui.features.settings.about.AboutScreen
 import com.ritesh.cashiro.presentation.ui.features.zakat.ZakatScreen
 import com.ritesh.cashiro.presentation.ui.features.zakat.assets.ZakatAssetsScreen
 import com.ritesh.cashiro.presentation.ui.features.zakat.dashboard.ZakatDashboardScreen
+import com.ritesh.cashiro.presentation.ui.features.zakat.modules.FitrScreen
+import com.ritesh.cashiro.presentation.ui.features.zakat.modules.LivestockScreen
+import com.ritesh.cashiro.presentation.ui.features.zakat.modules.UshrScreen
+import com.ritesh.cashiro.presentation.ui.features.zakat.modules.ZakatLiabilitiesScreen
+import com.ritesh.cashiro.presentation.ui.features.zakat.modules.ZakatPaymentsScreen
 import com.ritesh.cashiro.presentation.ui.features.settings.about.LicensesScreen
 import com.ritesh.cashiro.presentation.ui.features.settings.currency.CurrencySettingsScreen
 import com.ritesh.cashiro.presentation.ui.features.settings.appearance.AppearanceScreen
@@ -163,6 +169,8 @@ fun CashiroNavHost(
     // State for full resync confirmation dialog
     var showFullResyncDialog by remember { mutableStateOf(false) }
     var showExportDialog by remember { mutableStateOf(false) }
+    // State for the scan-range picker shown before every manual SMS scan
+    var showScanRangeDialog by remember { mutableStateOf(false) }
 
     val isHomeScreen = currentRoute?.contains(Home::class.qualifiedName ?: "") == true
     val isAnalyticsScreen = currentRoute?.contains(Analytics::class.qualifiedName ?: "") == true
@@ -290,7 +298,12 @@ fun CashiroNavHost(
                     ZakatDashboardScreen(
                         onNavigateToAssets = { navController.safeNavigate(ZakatAssets) },
                         onNavigateToCalculator = { navController.safeNavigate(ZakatCalculator) },
-                        onNavigateToCurrencySettings = { navController.safeNavigate(CurrencySettings) }
+                        onNavigateToCurrencySettings = { navController.safeNavigate(CurrencySettings) },
+                        onNavigateToUshr = { navController.safeNavigate(Ushr) },
+                        onNavigateToLivestock = { navController.safeNavigate(Livestock) },
+                        onNavigateToFitr = { navController.safeNavigate(Fitr) },
+                        onNavigateToPayments = { navController.safeNavigate(ZakatPayments) },
+                        onNavigateToLiabilities = { navController.safeNavigate(ZakatLiabilities) }
                     )
                 }
 
@@ -314,6 +327,62 @@ fun CashiroNavHost(
                     popExitTransition = CashiroTransitions.horizontalSlidePopExit
                 ) {
                     ZakatScreen(
+                        onNavigateBack = { navController.safePopBackStack() }
+                    )
+                }
+
+                // Zakat module screens (A-Z spec: 2.1, 5, 6, 9, 12)
+                composable<ZakatLiabilities>(
+                    enterTransition = CashiroTransitions.horizontalSlideEnter,
+                    exitTransition = CashiroTransitions.horizontalSlideExit,
+                    popEnterTransition = CashiroTransitions.horizontalSlidePopEnter,
+                    popExitTransition = CashiroTransitions.horizontalSlidePopExit
+                ) {
+                    ZakatLiabilitiesScreen(
+                        onNavigateBack = { navController.safePopBackStack() }
+                    )
+                }
+
+                composable<Ushr>(
+                    enterTransition = CashiroTransitions.horizontalSlideEnter,
+                    exitTransition = CashiroTransitions.horizontalSlideExit,
+                    popEnterTransition = CashiroTransitions.horizontalSlidePopEnter,
+                    popExitTransition = CashiroTransitions.horizontalSlidePopExit
+                ) {
+                    UshrScreen(
+                        onNavigateBack = { navController.safePopBackStack() }
+                    )
+                }
+
+                composable<Livestock>(
+                    enterTransition = CashiroTransitions.horizontalSlideEnter,
+                    exitTransition = CashiroTransitions.horizontalSlideExit,
+                    popEnterTransition = CashiroTransitions.horizontalSlidePopEnter,
+                    popExitTransition = CashiroTransitions.horizontalSlidePopExit
+                ) {
+                    LivestockScreen(
+                        onNavigateBack = { navController.safePopBackStack() }
+                    )
+                }
+
+                composable<Fitr>(
+                    enterTransition = CashiroTransitions.horizontalSlideEnter,
+                    exitTransition = CashiroTransitions.horizontalSlideExit,
+                    popEnterTransition = CashiroTransitions.horizontalSlidePopEnter,
+                    popExitTransition = CashiroTransitions.horizontalSlidePopExit
+                ) {
+                    FitrScreen(
+                        onNavigateBack = { navController.safePopBackStack() }
+                    )
+                }
+
+                composable<ZakatPayments>(
+                    enterTransition = CashiroTransitions.horizontalSlideEnter,
+                    exitTransition = CashiroTransitions.horizontalSlideExit,
+                    popEnterTransition = CashiroTransitions.horizontalSlidePopEnter,
+                    popExitTransition = CashiroTransitions.horizontalSlidePopExit
+                ) {
+                    ZakatPaymentsScreen(
                         onNavigateBack = { navController.safePopBackStack() }
                     )
                 }
@@ -872,7 +941,7 @@ fun CashiroNavHost(
                                 onClick = {
                                     if (isHomeScreen) {
                                         view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-                                        homeViewModel.scanSmsMessages()
+                                        showScanRangeDialog = true
                                     } else if (isTransactionsScreen) {
                                         showExportDialog = true
                                     }
@@ -1080,6 +1149,19 @@ fun CashiroNavHost(
                 )
             }
 
+            // Scan-range picker: shown BEFORE a manual scan starts so the
+            // user chooses how far back to scan (default: last 1 month).
+            ScanRangePickerDialog(
+                isVisible = showScanRangeDialog,
+                onDismiss = { showScanRangeDialog = false },
+                onScan = { fromMs, toMs ->
+                    showScanRangeDialog = false
+                    homeViewModel.scanSmsMessages(fromMs = fromMs, toMs = toMs)
+                },
+                blurEffects = themeUiState.blurEffects,
+                hazeState = hazeState
+            )
+
             // SMS Parsing Progress Dialog
             SmsParsingProgressDialog(
                 isVisible = homeUiState.isScanning,
@@ -1132,7 +1214,7 @@ fun CashiroNavHost(
                                         onClick = {
                                             view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
                                             dismiss()
-                                            homeViewModel.scanSmsMessages()
+                                            showScanRangeDialog = true
                                         },
                                         onLongClick = {
                                             view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)

@@ -56,6 +56,41 @@ data class ZakatAssetEntity(
      * computed from quantity and the current metal price.
      */
     @ColumnInfo(name = "estimated_value") val estimatedValue: BigDecimal? = null,
+    /**
+     * PROPERTY only: why the property is held.
+     * - RESALE: held for resale/trading — fully zakatable at market value
+     *   (spec 1.9).
+     * - PERSONAL: personal residence — NOT zakatable.
+     * - RENTAL: income-generating rental — NOT zakatable (only the received
+     *   rent, once it sits in an account a full hawl, is zakatable as cash).
+     * Default RESALE keeps existing entries zakatable (conservative for
+     * wealth; the user marks personal/rental property to exclude it).
+     */
+    @ColumnInfo(name = "purpose", defaultValue = "RESALE") val purpose: String =
+        PropertyPurpose.RESALE.name,
+    /**
+     * INVESTMENT only (spec 1.5):
+     * - TRADING: held for resale — fully zakatable at market value.
+     * - LONG_TERM: held for long-term dividend income — excluded from the
+     *   pool. The app applies the documented simplification: it does not
+     *   force a look-through calculation of the underlying company's
+     *   zakatable assets; the entry is flagged for informational purposes.
+     */
+    @ColumnInfo(name = "holding_intent", defaultValue = "TRADING") val holdingIntent: String =
+        HoldingIntent.TRADING.name,
+    /**
+     * Amanat (spec 7.1): money/assets held in trust or as a deposit on
+     * behalf of someone else. Excluded ENTIRELY from the zakatable pool,
+     * nisab comparison and hawl tracking.
+     */
+    @ColumnInfo(name = "is_amanat", defaultValue = "0") val isAmanat: Boolean = false,
+    /**
+     * Metals only: jewelry worn for personal use. Under the Hanafi madhhab
+     * all gold/silver jewelry is zakatable regardless of use; under the
+     * other madhhabs personal-use jewelry is exempt. The pool applies the
+     * user's madhhab setting (spec 1.10); default false (zakatable).
+     */
+    @ColumnInfo(name = "personal_use", defaultValue = "0") val personalUse: Boolean = false,
     @ColumnInfo(name = "notes") val notes: String? = null,
     @ColumnInfo(name = "is_deleted", defaultValue = "0") val isDeleted: Boolean = false,
     @ColumnInfo(name = "created_at") val createdAt: LocalDateTime = LocalDateTime.now(),
@@ -69,10 +104,27 @@ enum class ZakatAssetType {
     PROPERTY,
     BUSINESS,
     INVESTMENT,
+    /** Money owed TO the user, reasonably expected to be repaid (spec 1.6). */
+    RECEIVABLE,
+    /** Personal-use items explicitly excluded from zakatable wealth (spec 1.10). */
+    PERSONAL,
     OTHER;
 
     val isMetal: Boolean get() = this == GOLD || this == SILVER
+
+    /** Types whose entries are ALWAYS included in the pool by default. */
+    val defaultZakatable: Boolean get() = when (this) {
+        GOLD, SILVER, BUSINESS, RECEIVABLE, OTHER -> true
+        // PROPERTY and INVESTMENT depend on purpose/holdingIntent flags.
+        PROPERTY, INVESTMENT, PERSONAL -> false
+    }
 }
+
+/** Why a PROPERTY entry is held (spec 1.9). */
+enum class PropertyPurpose { PERSONAL, RENTAL, RESALE }
+
+/** Whether an INVESTMENT entry is trading stock or a long-term holding (spec 1.5). */
+enum class HoldingIntent { TRADING, LONG_TERM }
 
 /** Measurement units for metal quantities (Bangladeshi jeweller's system). */
 enum class ZakatAssetUnit(val grams: BigDecimal?) {

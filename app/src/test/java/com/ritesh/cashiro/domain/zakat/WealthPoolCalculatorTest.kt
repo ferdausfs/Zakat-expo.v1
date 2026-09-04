@@ -69,8 +69,8 @@ class WealthPoolCalculatorTest {
 
     @Test
     fun `karat purity matches karat over 24`() {
-        assertEquals(0, bd("1").compareTo(WealthPoolCalculator.karatPurity(24).setScale(6)))
-        assertEquals(0, bd("0.916667").compareTo(WealthPoolCalculator.karatPurity(22)))
+        assertEquals(0, bd("1").compareTo(WealthPoolCalculator.karatPurity(24).setScale(10)))
+        assertEquals(0, bd("0.9166666667").compareTo(WealthPoolCalculator.karatPurity(22)))
         assertEquals(0, bd("1").compareTo(WealthPoolCalculator.karatPurity(null)))
     }
 
@@ -79,10 +79,10 @@ class WealthPoolCalculatorTest {
     @Test
     fun `gold value uses grams purity and price`() {
         // 1 vori 22k gold at 12000/gram:
-        // 11.664 g x (22/24 = 0.916667) x 12000 = 128304.05
+        // 11.664 g x (22/24) x 12000 = exactly 128304.00
         val gold = asset(ZakatAssetType.GOLD, "1", ZakatAssetUnit.VORI, 22)
         val value = WealthPoolCalculator.assetValue(gold, goldPrice, silverPrice)
-        assertEquals(0, bd("128304.05").compareTo(value))
+        assertEquals(0, bd("128304.00").compareTo(value))
     }
 
     @Test

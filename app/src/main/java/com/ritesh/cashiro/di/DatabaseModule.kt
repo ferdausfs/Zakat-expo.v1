@@ -283,6 +283,36 @@ object DatabaseModule {
     fun provideZakatAssetDao(database: CashiroDatabase): com.ritesh.cashiro.data.database.dao.ZakatAssetDao {
         return database.zakatAssetDao()
     }
+
+    @Provides
+    @Singleton
+    fun provideZakatLiabilityDao(database: CashiroDatabase): com.ritesh.cashiro.data.database.dao.ZakatLiabilityDao {
+        return database.zakatLiabilityDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideUshrEntryDao(database: CashiroDatabase): com.ritesh.cashiro.data.database.dao.UshrEntryDao {
+        return database.ushrEntryDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideLivestockEntryDao(database: CashiroDatabase): com.ritesh.cashiro.data.database.dao.LivestockEntryDao {
+        return database.livestockEntryDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFitrEntryDao(database: CashiroDatabase): com.ritesh.cashiro.data.database.dao.FitrEntryDao {
+        return database.fitrEntryDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideZakatPaymentDao(database: CashiroDatabase): com.ritesh.cashiro.data.database.dao.ZakatPaymentDao {
+        return database.zakatPaymentDao()
+    }
 }
 /** Database callback to seed initial data when database is first created */
 class DatabaseCallback(private val context: Context) : RoomDatabase.Callback() {

@@ -197,6 +197,16 @@ data class Transactions(
 
 @Serializable object ZakatCalculator
 
+@Serializable object ZakatLiabilities
+
+@Serializable object Ushr
+
+@Serializable object Livestock
+
+@Serializable object Fitr
+
+@Serializable object ZakatPayments
+
 @Serializable object Chat
 
 @Serializable data class TransactionDetail(val transactionId: Long, val sharedElementKey: String? = null)

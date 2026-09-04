@@ -20,7 +20,12 @@ import kotlinx.coroutines.flow.first
 @Singleton
 class ZakatRepository @Inject constructor(
     private val zakatAssetDao: ZakatAssetDao,
-    private val accountBalanceRepository: AccountBalanceRepository
+    private val accountBalanceRepository: AccountBalanceRepository,
+    private val liabilityDao: com.ritesh.cashiro.data.database.dao.ZakatLiabilityDao,
+    private val ushrEntryDao: com.ritesh.cashiro.data.database.dao.UshrEntryDao,
+    private val livestockEntryDao: com.ritesh.cashiro.data.database.dao.LivestockEntryDao,
+    private val fitrEntryDao: com.ritesh.cashiro.data.database.dao.FitrEntryDao,
+    private val zakatPaymentDao: com.ritesh.cashiro.data.database.dao.ZakatPaymentDao
 ) {
 
     // ---------------- Assets CRUD ----------------
@@ -72,4 +77,100 @@ class ZakatRepository @Inject constructor(
      */
     suspend fun getBalanceHistory(): List<AccountBalanceEntity> =
         accountBalanceRepository.getAllBalances().first()
+
+    // ---------------- Liabilities (deductible debts, spec 2.1) ----------------
+
+    fun observeLiabilities(): Flow<List<com.ritesh.cashiro.data.database.entity.ZakatLiabilityEntity>> =
+        liabilityDao.observeAll()
+
+    suspend fun getLiabilities(): List<com.ritesh.cashiro.data.database.entity.ZakatLiabilityEntity> =
+        liabilityDao.getAll()
+
+    suspend fun upsertLiability(entry: com.ritesh.cashiro.data.database.entity.ZakatLiabilityEntity): Long {
+        return if (entry.id == 0L) {
+            liabilityDao.insert(entry)
+        } else {
+            liabilityDao.update(entry.copy(updatedAt = LocalDateTime.now()))
+            entry.id
+        }
+    }
+
+    suspend fun deleteLiability(id: Long) = liabilityDao.softDelete(id, LocalDateTime.now())
+
+    // ---------------- Ushr harvests (spec 5) ----------------
+
+    fun observeUshrEntries(): Flow<List<com.ritesh.cashiro.data.database.entity.UshrEntryEntity>> =
+        ushrEntryDao.observeAll()
+
+    suspend fun getUshrEntries(): List<com.ritesh.cashiro.data.database.entity.UshrEntryEntity> =
+        ushrEntryDao.getAll()
+
+    suspend fun upsertUshrEntry(entry: com.ritesh.cashiro.data.database.entity.UshrEntryEntity): Long {
+        return if (entry.id == 0L) {
+            ushrEntryDao.insert(entry)
+        } else {
+            ushrEntryDao.update(entry.copy(updatedAt = LocalDateTime.now()))
+            entry.id
+        }
+    }
+
+    suspend fun deleteUshrEntry(id: Long) = ushrEntryDao.softDelete(id, LocalDateTime.now())
+
+    // ---------------- Livestock herds (spec 6) ----------------
+
+    fun observeLivestockEntries(): Flow<List<com.ritesh.cashiro.data.database.entity.LivestockEntryEntity>> =
+        livestockEntryDao.observeAll()
+
+    suspend fun getLivestockEntries(): List<com.ritesh.cashiro.data.database.entity.LivestockEntryEntity> =
+        livestockEntryDao.getAll()
+
+    suspend fun upsertLivestockEntry(entry: com.ritesh.cashiro.data.database.entity.LivestockEntryEntity): Long {
+        return if (entry.id == 0L) {
+            livestockEntryDao.insert(entry)
+        } else {
+            livestockEntryDao.update(entry.copy(updatedAt = LocalDateTime.now()))
+            entry.id
+        }
+    }
+
+    suspend fun deleteLivestockEntry(id: Long) =
+        livestockEntryDao.softDelete(id, LocalDateTime.now())
+
+    // ---------------- Zakatul Fitr (spec 9) ----------------
+
+    fun observeFitrEntries(): Flow<List<com.ritesh.cashiro.data.database.entity.FitrEntryEntity>> =
+        fitrEntryDao.observeAll()
+
+    suspend fun getFitrEntries(): List<com.ritesh.cashiro.data.database.entity.FitrEntryEntity> =
+        fitrEntryDao.getAll()
+
+    suspend fun upsertFitrEntry(entry: com.ritesh.cashiro.data.database.entity.FitrEntryEntity): Long {
+        return if (entry.id == 0L) {
+            fitrEntryDao.insert(entry)
+        } else {
+            fitrEntryDao.update(entry.copy(updatedAt = LocalDateTime.now()))
+            entry.id
+        }
+    }
+
+    suspend fun deleteFitrEntry(id: Long) = fitrEntryDao.softDelete(id, LocalDateTime.now())
+
+    // ---------------- Payment & sadaqah log (spec 12) ----------------
+
+    fun observePayments(): Flow<List<com.ritesh.cashiro.data.database.entity.ZakatPaymentEntity>> =
+        zakatPaymentDao.observeAll()
+
+    suspend fun getPayments(): List<com.ritesh.cashiro.data.database.entity.ZakatPaymentEntity> =
+        zakatPaymentDao.getAll()
+
+    suspend fun upsertPayment(entry: com.ritesh.cashiro.data.database.entity.ZakatPaymentEntity): Long {
+        return if (entry.id == 0L) {
+            zakatPaymentDao.insert(entry)
+        } else {
+            zakatPaymentDao.update(entry.copy(updatedAt = LocalDateTime.now()))
+            entry.id
+        }
+    }
+
+    suspend fun deletePayment(id: Long) = zakatPaymentDao.softDelete(id, LocalDateTime.now())
 }

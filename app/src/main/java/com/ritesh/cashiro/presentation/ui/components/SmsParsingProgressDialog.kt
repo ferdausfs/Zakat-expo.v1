@@ -1,5 +1,6 @@
 package com.ritesh.cashiro.presentation.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -178,6 +179,8 @@ private fun ProgressDetails(workInfo: WorkInfo) {
     val processedMessages = workInfo.progress.getInt(OptimizedSmsReaderWorker.PROGRESS_PROCESSED, 0)
     val parsedTransactions = workInfo.progress.getInt(OptimizedSmsReaderWorker.PROGRESS_PARSED, 0)
     val savedTransactions = workInfo.progress.getInt(OptimizedSmsReaderWorker.PROGRESS_SAVED, 0)
+    val skippedUnmatched = workInfo.progress.getInt(OptimizedSmsReaderWorker.PROGRESS_SKIPPED_UNMATCHED, 0)
+    val failedToParse = workInfo.progress.getInt(OptimizedSmsReaderWorker.PROGRESS_FAILED_PARSE, 0)
     val timeElapsed = workInfo.progress.getLong(OptimizedSmsReaderWorker.PROGRESS_TIME_ELAPSED, 0L)
     val estimatedTimeRemaining = workInfo.progress.getLong(OptimizedSmsReaderWorker.PROGRESS_ESTIMATED_TIME_REMAINING, 0L)
     val currentBatch = workInfo.progress.getInt(OptimizedSmsReaderWorker.PROGRESS_CURRENT_BATCH, 0)
@@ -229,6 +232,45 @@ private fun ProgressDetails(workInfo: WorkInfo) {
                 color = MaterialTheme.colorScheme.primary,
                 textAlign = TextAlign.Center
             )
+        }
+
+        // End-of-scan summary (spec 13.4): scanned vs matched vs skipped vs
+        // failed, so the user always sees what happened to every message.
+        if (workInfo.state == WorkInfo.State.SUCCEEDED && totalMessages > 0) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
+                    .padding(12.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                SummaryRow(
+                    label = stringResource(R.string.scan_summary_scanned),
+                    value = totalMessages.toString()
+                )
+                SummaryRow(
+                    label = stringResource(R.string.scan_summary_matched),
+                    value = parsedTransactions.toString(),
+                    valueColor = MaterialTheme.colorScheme.primary
+                )
+                SummaryRow(
+                    label = stringResource(R.string.scan_summary_saved),
+                    value = savedTransactions.toString(),
+                    valueColor = MaterialTheme.colorScheme.primary
+                )
+                SummaryRow(
+                    label = stringResource(R.string.scan_summary_skipped),
+                    value = skippedUnmatched.toString()
+                )
+                if (failedToParse > 0) {
+                    SummaryRow(
+                        label = stringResource(R.string.scan_summary_failed),
+                        value = failedToParse.toString(),
+                        valueColor = MaterialTheme.colorScheme.error
+                    )
+                }
+            }
         }
 
         // Time information
@@ -396,5 +438,29 @@ fun SmsParsingProgressIndicator(
                 )
             }
         }
+    }
+}
+@Composable
+private fun SummaryRow(
+    label: String,
+    value: String,
+    valueColor: Color = MaterialTheme.colorScheme.onSurface
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Text(
+            text = value,
+            style = MaterialTheme.typography.bodySmall,
+            fontWeight = FontWeight.Medium,
+            color = valueColor
+        )
     }
 }

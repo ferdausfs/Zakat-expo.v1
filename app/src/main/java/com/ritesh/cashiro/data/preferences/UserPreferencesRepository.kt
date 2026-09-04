@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -51,6 +52,13 @@ constructor(@ApplicationContext private val context: Context) {
         val ZAKAT_GOLD_PRICE_PER_GRAM = stringPreferencesKey("zakat_gold_price_per_gram")
         val ZAKAT_SILVER_PRICE_PER_GRAM = stringPreferencesKey("zakat_silver_price_per_gram")
         val ZAKAT_HAWL_MODE = stringPreferencesKey("zakat_hawl_mode")
+
+        // Zakat A-Z spec: calendar convention (LUNAR default / SOLAR
+        // convenience — rate and hawl length switch together), madhhab
+        // profile, and accounts holding Amanat money (excluded from pool).
+        val ZAKAT_CALENDAR_MODE = stringPreferencesKey("zakat_calendar_mode")
+        val ZAKAT_MADHHAB = stringPreferencesKey("zakat_madhab")
+        val ZAKAT_AMANAT_ACCOUNTS = stringSetPreferencesKey("zakat_amanat_accounts")
 
         // Currency Settings preferences
         val UNIFIED_CURRENCY_ENABLED = booleanPreferencesKey("unified_currency_enabled")
@@ -311,6 +319,42 @@ constructor(@ApplicationContext private val context: Context) {
     suspend fun setZakatHawlMode(mode: String) {
         context.dataStore.edit { preferences ->
             preferences[PreferencesKeys.ZAKAT_HAWL_MODE] = mode
+        }
+    }
+
+    /** LUNAR (default) or SOLAR — see [ZakatCalculator.CalendarMode]. */
+    val zakatCalendarMode: Flow<String> =
+        context.dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.ZAKAT_CALENDAR_MODE] ?: "LUNAR"
+        }
+
+    suspend fun setZakatCalendarMode(mode: String) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.ZAKAT_CALENDAR_MODE] = mode
+        }
+    }
+
+    /** MAINSTREAM (default), HANAFI, SHAFII, MALIKI, HANBALI. */
+    val zakatMadhhab: Flow<String> =
+        context.dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.ZAKAT_MADHHAB] ?: "MAINSTREAM"
+        }
+
+    suspend fun setZakatMadhhab(madhhab: String) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.ZAKAT_MADHHAB] = madhhab
+        }
+    }
+
+    /** Account keys ("bankName|last4") whose balance is Amanat (held in trust). */
+    val zakatAmanatAccounts: Flow<Set<String>> =
+        context.dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.ZAKAT_AMANAT_ACCOUNTS] ?: emptySet()
+        }
+
+    suspend fun setZakatAmanatAccounts(keys: Set<String>) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.ZAKAT_AMANAT_ACCOUNTS] = keys
         }
     }
 

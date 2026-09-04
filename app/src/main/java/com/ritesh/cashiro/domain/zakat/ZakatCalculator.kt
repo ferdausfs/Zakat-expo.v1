@@ -16,33 +16,52 @@ import java.time.temporal.ChronoUnit
  * any currency without internal conversion.
  *
  * Rules implemented (deliberately minimal, no fiqh extrapolation):
- * - Nisab: 85 g of gold OR 595 g of silver, valued at the supplied gram
- *   prices. The caller selects which standard to apply.
+ * - Nisab: 87.48 g of pure gold (20 mithqal) OR 612.36 g of pure silver
+ *   (200 dirhams), valued at the supplied gram prices. The caller selects
+ *   which standard to apply.
  * - Zakatable wealth: cash + gold value + silver value + investments,
- *   minus debts the user owes to others.
+ *   minus deductible debts the user owes to others. The NET figure — not
+ *   the gross figure — is compared against nisab and taxed.
  * - Zakat due: 2.5% of net zakatable wealth when the wealth meets or
- *   exceeds the applied nisab AND the hawl (one lunar year) is complete.
- * - Hawl: measured on the Hijrah (Islamic) calendar. The anniversary of
- *   the hawl start date one lunar year later marks completion; the length
- *   of that specific lunar year (354 or 355 days) is reported for progress
- *   display.
+ *   exceeds the applied nisab AND the hawl is complete.
+ * - Hawl: one LUNAR year by default, measured on the Hijrah calendar
+ *   (354/355 days). When the user selects the solar-year convenience mode
+ *   the hawl length becomes ~365 days AND the rate adjusts to 2.577% so the
+ *   effective obligation over time matches the lunar standard — the two
+ *   always switch together, never mixed.
  */
 object ZakatCalculator {
 
-    /** Zakat rate: 2.5% of net zakatable wealth. */
+    /** Lunar-year rate: 2.5% of net zakatable wealth. */
     val ZAKAT_RATE: BigDecimal = BigDecimal("0.025")
 
-    /** Nisab in grams of pure gold (20 mithqal). */
-    const val GOLD_NISAB_GRAMS: Double = 85.0
+    /** Solar-year convenience rate: 2.5% × (354.367/365) ≈ 2.577%. */
+    val SOLAR_ZAKAT_RATE: BigDecimal = BigDecimal("0.02577")
 
-    /** Nisab in grams of pure silver (200 dirhams). */
-    const val SILVER_NISAB_GRAMS: Double = 595.0
+    /** Nisab in grams of pure gold (20 mithqal ≈ 87.48 g). */
+    const val GOLD_NISAB_GRAMS: Double = 87.48
+
+    /** Nisab in grams of pure silver (200 dirhams ≈ 612.36 g). */
+    const val SILVER_NISAB_GRAMS: Double = 612.36
 
     /** Fallback lunar-year length in days (mean Islamic year). */
     const val MEAN_LUNAR_YEAR_DAYS: Long = 355L
 
+    /** Solar-year hawl length in days (Gregorian year). */
+    const val SOLAR_YEAR_DAYS: Long = 365L
+
     /** Which metal's nisab standard is applied. */
     enum class NisabMethod { GOLD, SILVER }
+
+    /**
+     * Calendar convention for the hawl and the rate. LUNAR is the fiqh
+     * default (354/355-day hawl, 2.5%); SOLAR is a convenience mode
+     * (365-day hawl, 2.577%). They always switch TOGETHER (spec 4.3/8.2).
+     */
+    enum class CalendarMode(val rate: BigDecimal, val fallbackYearDays: Long) {
+        LUNAR(ZAKAT_RATE, MEAN_LUNAR_YEAR_DAYS),
+        SOLAR(SOLAR_ZAKAT_RATE, SOLAR_YEAR_DAYS)
+    }
 
     /** Zakatable assets and liabilities, all in the user's currency unit. */
     data class Wealth(
@@ -89,7 +108,11 @@ object ZakatCalculator {
         val hawlDaysElapsed: Long,
         val hawlDaysInYear: Long,
         val eligible: Boolean,
-        val zakatDue: BigDecimal
+        val zakatDue: BigDecimal,
+        /** Rate applied (2.5% lunar or 2.577% solar convenience mode). */
+        val appliedRate: BigDecimal = ZAKAT_RATE,
+        /** Calendar convention used for the hawl. */
+        val calendarMode: CalendarMode = CalendarMode.LUNAR
     )
 
     fun calculate(
@@ -97,6 +120,14 @@ object ZakatCalculator {
         prices: MetalPrices,
         method: NisabMethod,
         hawl: Hawl
+    ): Assessment = calculate(wealth, prices, method, hawl, CalendarMode.LUNAR)
+
+    fun calculate(
+        wealth: Wealth,
+        prices: MetalPrices,
+        method: NisabMethod,
+        hawl: Hawl,
+        calendarMode: CalendarMode
     ): Assessment {
         val goldValue = wealth.goldGrams.multiply(prices.goldPerGram)
         val silverValue = wealth.silverGrams.multiply(prices.silverPerGram)
@@ -110,12 +141,13 @@ object ZakatCalculator {
             NisabMethod.SILVER -> silverNisabValue
         }
 
-        val status = hawlStatus(hawl.startDate, hawl.today)
+        val status = hawlStatus(hawl.startDate, hawl.today, calendarMode)
 
         val meetsNisab = netWealth >= appliedNisab
         val eligible = meetsNisab && status.complete
+        val rate = calendarMode.rate
         val zakatDue = if (eligible) {
-            netWealth.multiply(ZAKAT_RATE).setScale(2, RoundingMode.HALF_UP)
+            netWealth.multiply(rate).setScale(2, RoundingMode.HALF_UP)
         } else {
             BigDecimal.ZERO.setScale(2)
         }
@@ -133,7 +165,9 @@ object ZakatCalculator {
             hawlDaysElapsed = status.daysElapsed,
             hawlDaysInYear = status.daysInYear,
             eligible = eligible,
-            zakatDue = zakatDue
+            zakatDue = zakatDue,
+            appliedRate = rate,
+            calendarMode = calendarMode
         )
     }
 
@@ -143,17 +177,31 @@ object ZakatCalculator {
     }
 
     /**
-     * Measures hawl progress on the Hijrah calendar.
+     * Measures hawl progress on the Hijrah calendar (lunar mode).
      *
      * The hawl completes on the Hijrah anniversary of the start date (one
      * lunar year later). Because lunar years alternate between 354 and 355
      * days, the exact day count of the current hawl year is derived from the
      * calendar itself. Dates outside the representable Hijrah range fall back
      * to the mean lunar-year approximation.
+     *
+     * In SOLAR mode the hawl is a fixed 365-day Gregorian year — the paired
+     * convenience rate (2.577%) is applied by the caller.
      */
-    fun hawlStatus(startDate: LocalDate, today: LocalDate): HawlStatus {
+    fun hawlStatus(startDate: LocalDate, today: LocalDate): HawlStatus =
+        hawlStatus(startDate, today, CalendarMode.LUNAR)
+
+    fun hawlStatus(startDate: LocalDate, today: LocalDate, mode: CalendarMode): HawlStatus {
         val effectiveToday = if (today.isBefore(startDate)) startDate else today
         val daysElapsed = ChronoUnit.DAYS.between(startDate, effectiveToday)
+
+        if (mode == CalendarMode.SOLAR) {
+            return HawlStatus(
+                complete = daysElapsed >= SOLAR_YEAR_DAYS,
+                daysElapsed = daysElapsed,
+                daysInYear = SOLAR_YEAR_DAYS
+            )
+        }
 
         return try {
             val startHijri = HijrahDate.from(startDate)

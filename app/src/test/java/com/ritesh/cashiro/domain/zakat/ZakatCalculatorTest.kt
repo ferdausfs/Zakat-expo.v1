@@ -40,24 +40,24 @@ class ZakatCalculatorTest {
     // ---------- Nisab thresholds ----------
 
     @Test
-    fun `gold nisab equals 85 grams times gold price`() {
-        val expected = goldPrice.multiply(BigDecimal.valueOf(85.0)).setScale(2)
+    fun `gold nisab equals 87_48 grams times gold price`() {
+        val expected = goldPrice.multiply(BigDecimal.valueOf(ZakatCalculator.GOLD_NISAB_GRAMS)).setScale(2)
         assertEquals(expected, ZakatCalculator.nisabValue(goldPrice, ZakatCalculator.GOLD_NISAB_GRAMS))
-        assertEquals(0, expected.compareTo(BigDecimal("204000.00")))
+        assertEquals(0, expected.compareTo(BigDecimal("209952.00")))
     }
 
     @Test
-    fun `silver nisab equals 595 grams times silver price`() {
-        val expected = silverPrice.multiply(BigDecimal.valueOf(595.0)).setScale(2)
+    fun `silver nisab equals 612_36 grams times silver price`() {
+        val expected = silverPrice.multiply(BigDecimal.valueOf(ZakatCalculator.SILVER_NISAB_GRAMS)).setScale(2)
         assertEquals(expected, ZakatCalculator.nisabValue(silverPrice, ZakatCalculator.SILVER_NISAB_GRAMS))
-        assertEquals(0, expected.compareTo(BigDecimal("17850.00")))
+        assertEquals(0, expected.compareTo(BigDecimal("18370.80")))
     }
 
     // ---------- Eligibility and zakat due ----------
 
     @Test
     fun `wealth above silver nisab with complete hawl yields 2_5 percent`() {
-        // Net wealth 20000 > silver nisab 17850, below gold nisab 204000.
+        // Net wealth 20000 > silver nisab 18370.80, below gold nisab 209952.
         val result = ZakatCalculator.calculate(
             wealth = wealth(cash = "20000"),
             prices = ZakatCalculator.MetalPrices(goldPrice, silverPrice),
@@ -97,7 +97,7 @@ class ZakatCalculatorTest {
 
     @Test
     fun `debts owed are deducted before eligibility check`() {
-        // Gross 20000, debts 4000 -> net 16000 < silver nisab 17850.
+        // Gross 20000, debts 4000 -> net 16000 < silver nisab 18370.80.
         val result = ZakatCalculator.calculate(
             wealth = wealth(cash = "20000", debts = "4000"),
             prices = ZakatCalculator.MetalPrices(goldPrice, silverPrice),
@@ -133,7 +133,7 @@ class ZakatCalculatorTest {
 
     @Test
     fun `gold method uses gold nisab and silver method uses silver nisab`() {
-        // Net wealth 190000: below gold nisab (204000), above silver (17850).
+        // Net wealth 190000: below gold nisab (209952), above silver (18370.80).
         val silverAssessment = ZakatCalculator.calculate(
             wealth = wealth(cash = "190000"),
             prices = ZakatCalculator.MetalPrices(goldPrice, silverPrice),

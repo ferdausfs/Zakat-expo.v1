@@ -628,8 +628,21 @@ class HomeViewModel @Inject constructor(
      *                    If false (default), performs an incremental scan for new messages only.
      */
     fun scanSmsMessages(forceResync: Boolean = false) {
+        scanSmsMessages(fromMs = 0L, toMs = 0L, forceResync = forceResync)
+    }
+
+    /**
+     * Scans SMS messages over an explicit user-selected range (spec 13.1/13.2).
+     * The [fromMs]/[toMs] epoch-millis window is forwarded to the worker and
+     * applied at the SMS provider query level, so only messages inside the
+     * window are fetched. [fromMs] == 0 falls back to the preference-based
+     * range logic (incremental scan since the last scan timestamp).
+     */
+    fun scanSmsMessages(fromMs: Long, toMs: Long, forceResync: Boolean = false) {
         val inputData = workDataOf(
-            OptimizedSmsReaderWorker.INPUT_FORCE_RESYNC to forceResync
+            OptimizedSmsReaderWorker.INPUT_FORCE_RESYNC to forceResync,
+            OptimizedSmsReaderWorker.INPUT_SCAN_FROM_MS to fromMs,
+            OptimizedSmsReaderWorker.INPUT_SCAN_TO_MS to toMs
         )
 
         val workRequest = OneTimeWorkRequestBuilder<OptimizedSmsReaderWorker>()

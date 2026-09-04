@@ -1415,4 +1415,132 @@
         <item quantity="other">Delete %1$d records?</item>
     </plurals>
 
+    <!-- SMS scan range picker (before every manual scan) -->
+    <string name="scan_range_title">Scan SMS transactions</string>
+    <string name="scan_range_7_days">Last 7 days</string>
+    <string name="scan_range_7_days_sub">Messages from the past week</string>
+    <string name="scan_range_1_month">Last 1 month</string>
+    <string name="scan_range_1_month_sub">Recommended for a quick refresh</string>
+    <string name="scan_range_3_months">Last 3 months</string>
+    <string name="scan_range_3_months_sub">Messages from the past quarter</string>
+    <string name="scan_range_custom">Custom date range</string>
+    <string name="scan_range_custom_sub">Pick the exact start and end dates</string>
+    <string name="scan_range_all_time">All time (full history)</string>
+    <string name="scan_range_all_time_sub">Scans every message in your inbox</string>
+    <string name="scan_range_all_time_warning">This may take a while and use more battery/memory on large inboxes</string>
+    <string name="scan_range_start_date">Start: %1$s</string>
+    <string name="scan_range_end_date">End: %1$s</string>
+    <string name="scan_range_confirm">Scan</string>
+
+    <!-- End-of-scan summary -->
+    <string name="scan_summary_scanned">Messages scanned</string>
+    <string name="scan_summary_matched">Matched a bank/wallet pattern</string>
+    <string name="scan_summary_saved">Transactions saved</string>
+    <string name="scan_summary_skipped">Skipped / unmatched</string>
+    <string name="scan_summary_failed">Failed to parse</string>
+
+    <!-- Zakat A-Z spec: asset flags -->
+    <string name="zakat_asset_type_receivable">Receivable (owed to you)</string>
+    <string name="zakat_asset_type_personal">Personal use (not zakatable)</string>
+    <string name="zakat_asset_purpose">Property purpose</string>
+    <string name="zakat_purpose_personal">Personal home</string>
+    <string name="zakat_purpose_rental">Rental income</string>
+    <string name="zakat_purpose_resale">For resale</string>
+    <string name="zakat_asset_intent">Investment intent</string>
+    <string name="zakat_intent_trading">Trading</string>
+    <string name="zakat_intent_long_term">Long-term holding</string>
+    <string name="zakat_intent_long_term_hint">Long-term dividend holdings are excluded from the pool (documented simplification; no look-through calculation is forced)</string>
+    <string name="zakat_asset_personal_use">Personal-use jewelry</string>
+    <string name="zakat_asset_personal_use_hint">Exempt under Shafi\'i/Maliki/Hanbali when the madhhab profile is set; always zakatable under Hanafi</string>
+    <string name="zakat_asset_amanat">Amanat (held in trust)</string>
+    <string name="zakat_asset_amanat_hint">Money or assets held for someone else — excluded from all zakat calculations</string>
+
+    <!-- Zakat settings: calendar mode + madhhab -->
+    <string name="zakat_calendar_mode">Hawl calendar</string>
+    <string name="zakat_calendar_lunar">Lunar year (354 days, 2.5%)</string>
+    <string name="zakat_calendar_solar">Solar year (365 days, 2.577%)</string>
+    <string name="zakat_calendar_hint">Rate and hawl length always switch together</string>
+    <string name="zakat_madhhab_label">Madhhab profile</string>
+    <string name="zakat_madhhab_mainstream">Mainstream (default)</string>
+    <string name="zakat_madhhab_hanafi">Hanafi</string>
+    <string name="zakat_madhhab_shafii">Shafi\'i</string>
+    <string name="zakat_madhhab_maliki">Maliki</string>
+    <string name="zakat_madhhab_hanbali">Hanbali</string>
+
+    <!-- Dashboard: deductions + modules -->
+    <string name="zakat_deductions_line">Less: debts due within 12 months</string>
+    <string name="zakat_net_line">Net zakatable wealth</string>
+    <string name="zakat_excluded_line">Excluded (amanat / non-zakatable)</string>
+    <string name="zakat_rate_line">Rate applied</string>
+    <string name="zakat_modules_title">Other zakat duties</string>
+    <string name="zakat_modules_ushr">Ushr (crops)</string>
+    <string name="zakat_modules_livestock">Livestock</string>
+    <string name="zakat_modules_fitr">Zakatul Fitr</string>
+    <string name="zakat_modules_payments">Payments &amp; Sadaqah</string>
+    <string name="zakat_modules_liabilities">Debts (deductions)</string>
+
+    <!-- Liabilities editor -->
+    <string name="zakat_liability_add">Add debt</string>
+    <string name="zakat_liability_name">Debt name</string>
+    <string name="zakat_liability_amount">Amount outstanding</string>
+    <string name="zakat_liability_due_date">Due date</string>
+    <string name="zakat_liability_hint">Only debts due within the next 12 months are deducted. For long-term debts, enter the portion due this year.</string>
+    <string name="zakat_liability_empty">No debts recorded. Add short-term liabilities so they are deducted from your zakatable wealth.</string>
+
+    <!-- Ushr module -->
+    <string name="ushr_title">Ushr — agricultural produce</string>
+    <string name="ushr_add">Add harvest</string>
+    <string name="ushr_crop">Crop name</string>
+    <string name="ushr_quantity">Harvested quantity (kg)</string>
+    <string name="ushr_value">Market value of harvest</string>
+    <string name="ushr_irrigation">Irrigation type</string>
+    <string name="ushr_irrigation_natural">Natural/rain (10%)</string>
+    <string name="ushr_irrigation_artificial">Artificial (5%)</string>
+    <string name="ushr_irrigation_mixed">Mixed (7.5% — minority option)</string>
+    <string name="ushr_due_format">Ushr due: %1$s</string>
+    <string name="ushr_below_threshold">Below 720 kg threshold — nothing due</string>
+    <string name="ushr_empty">No harvests recorded. Ushr is due at harvest time — no hawl required.</string>
+    <string name="ushr_paid">Paid</string>
+
+    <!-- Livestock module -->
+    <string name="livestock_title">Livestock (Sa\'ima)</string>
+    <string name="livestock_add">Add herd</string>
+    <string name="livestock_name">Herd name</string>
+    <string name="livestock_type">Animal type</string>
+    <string name="livestock_type_camel">Camels</string>
+    <string name="livestock_type_cattle">Cattle</string>
+    <string name="livestock_type_sheep">Sheep/Goats</string>
+    <string name="livestock_count">Number of animals</string>
+    <string name="livestock_grazing">Grazing on natural pasture (Sa\'ima)</string>
+    <string name="livestock_commercial_hint">Livestock raised for trade is business stock — add it as a Business asset instead.</string>
+    <string name="livestock_due_format">Zakat due: %1$s</string>
+    <string name="livestock_below_nisab">Below nisab — nothing due</string>
+    <string name="livestock_empty">No herds recorded. Commercial livestock belongs under Business assets.</string>
+
+    <!-- Fitr module -->
+    <string name="fitr_title">Zakatul Fitr</string>
+    <string name="fitr_add">Add Fitr record</string>
+    <string name="fitr_year">Year label</string>
+    <string name="fitr_staple">Staple food</string>
+    <string name="fitr_price_per_kg">Price per kg</string>
+    <string name="fitr_kg_per_person">Kg per person</string>
+    <string name="fitr_household">Household members</string>
+    <string name="fitr_due_format">Total due: %1$s</string>
+    <string name="fitr_per_person_format">%1$s per person</string>
+    <string name="fitr_empty">Not tied to wealth or hawl — owed for every household member before Eid prayer.</string>
+    <string name="fitr_mark_paid">Mark paid</string>
+    <string name="fitr_paid_on">Paid on %1$s</string>
+
+    <!-- Payments log -->
+    <string name="payments_title">Payments &amp; Sadaqah</string>
+    <string name="payments_add">Add record</string>
+    <string name="payments_kind">Type</string>
+    <string name="payments_kind_zakat">Zakat</string>
+    <string name="payments_kind_sadaqah">Sadaqah</string>
+    <string name="payments_amount">Amount paid</string>
+    <string name="payments_recipient">Recipient (optional)</string>
+    <string name="payments_category">Category note (optional)</string>
+    <string name="payments_empty">Log of actual zakat and sadaqah payments — record-keeping only, never feeds the calculation.</string>
+    <string name="payments_total_format">Total given: %1$s</string>
+
 </resources>

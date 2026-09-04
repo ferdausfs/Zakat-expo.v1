@@ -59,7 +59,15 @@ class ZakatWealthPoolIntegrationTest {
             .allowMainThreadQueries()
             .build()
         val accountBalanceRepository = AccountBalanceRepository(db.accountBalanceDao(), context)
-        zakatRepository = ZakatRepository(db.zakatAssetDao(), accountBalanceRepository)
+        zakatRepository = ZakatRepository(
+            db.zakatAssetDao(),
+            accountBalanceRepository,
+            db.zakatLiabilityDao(),
+            db.ushrEntryDao(),
+            db.livestockEntryDao(),
+            db.fitrEntryDao(),
+            db.zakatPaymentDao()
+        )
         preferences = UserPreferencesRepository(context)
         viewModel = ZakatDashboardViewModel(zakatRepository, preferences)
     }
@@ -84,7 +92,7 @@ class ZakatWealthPoolIntegrationTest {
 
     @Test
     fun `dashboard auto-detects known nisab crossing date from cash history`() = runTest {
-        // Nisab default: silver standard with unset price -> 595 x 1 = 595.
+        // Nisab default: silver standard with unset price -> 612.36 x 1 = 612.36.
         // Cash 60000 inserted 400 days ago crosses nisab that very day and
         // stays above => crossing date must be exactly that date, hawl
         // (354/355 days) already complete, zakat due = 2.5%.
@@ -179,10 +187,10 @@ class ZakatWealthPoolIntegrationTest {
         preferences.setZakatGoldPricePerGram("10000")
 
         val state = awaitState { s -> s.breakdown.gold.signum() > 0 }
-        // 1 vori 22k at 10000/g => 11.664 x 0.916667 x 10000 = 106920.04
-        assertEquals(0, BigDecimal("106920.04").compareTo(state.breakdown.gold))
+        // 1 vori 22k at 10000/g => 11.664 x (22/24) x 10000 = exactly 106920.00
+        assertEquals(0, BigDecimal("106920.00").compareTo(state.breakdown.gold))
         // Pool = cash + gold.
-        assertEquals(0, BigDecimal("206920.04").compareTo(state.breakdown.total))
+        assertEquals(0, BigDecimal("206920.00").compareTo(state.breakdown.total))
 
         // Update the asset (edit path) and confirm the pool follows.
         val stored = zakatRepository.getAsset(id)!!

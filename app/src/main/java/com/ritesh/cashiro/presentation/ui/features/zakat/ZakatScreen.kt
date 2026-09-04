@@ -158,7 +158,8 @@ fun ZakatScreen(
                     state = state,
                     onGoldPriceChange = viewModel::onGoldPriceChange,
                     onSilverPriceChange = viewModel::onSilverPriceChange,
-                    onNisabMethodChange = viewModel::onNisabMethodChange
+                    onNisabMethodChange = viewModel::onNisabMethodChange,
+                    onCalendarModeChange = viewModel::onCalendarModeChange
                 )
             }
 
@@ -338,7 +339,8 @@ private fun PricesCard(
     state: ZakatViewModel.UiState,
     onGoldPriceChange: (String) -> Unit,
     onSilverPriceChange: (String) -> Unit,
-    onNisabMethodChange: (ZakatCalculator.NisabMethod) -> Unit
+    onNisabMethodChange: (ZakatCalculator.NisabMethod) -> Unit,
+    onCalendarModeChange: (ZakatCalculator.CalendarMode) -> Unit = {}
 ) {
     SectionCard {
         Text(
@@ -379,6 +381,29 @@ private fun PricesCard(
                 selected = state.nisabMethod == ZakatCalculator.NisabMethod.SILVER,
                 onClick = { onNisabMethodChange(ZakatCalculator.NisabMethod.SILVER) },
                 label = { Text(stringResource(R.string.zakat_nisab_silver)) }
+            )
+        }
+
+        // Calendar convention (spec 4.3/8.2): LUNAR default; SOLAR switches
+        // the hawl length AND the rate together — never mixed.
+        Spacer(modifier = Modifier.height(Spacing.md))
+        Text(
+            text = stringResource(R.string.zakat_calendar_mode),
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.onSurface
+        )
+        Spacer(modifier = Modifier.height(Spacing.xs))
+        Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
+            FilterChip(
+                selected = state.calendarMode == ZakatCalculator.CalendarMode.LUNAR,
+                onClick = { onCalendarModeChange(ZakatCalculator.CalendarMode.LUNAR) },
+                label = { Text(stringResource(R.string.zakat_calendar_lunar)) }
+            )
+            FilterChip(
+                selected = state.calendarMode == ZakatCalculator.CalendarMode.SOLAR,
+                onClick = { onCalendarModeChange(ZakatCalculator.CalendarMode.SOLAR) },
+                label = { Text(stringResource(R.string.zakat_calendar_solar)) }
             )
         }
 

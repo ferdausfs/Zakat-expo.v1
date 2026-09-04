@@ -9,6 +9,7 @@ import com.ritesh.cashiro.data.preferences.UserPreferencesRepository
 import com.ritesh.cashiro.data.repository.ZakatRepository
 import com.ritesh.cashiro.domain.zakat.WealthPoolCalculator
 import com.ritesh.cashiro.domain.zakat.ZakatCalculator
+import com.ritesh.cashiro.domain.zakat.ZakatMadhhab
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -18,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -83,20 +85,36 @@ class ZakatDashboardViewModel @Inject constructor(
         val cashHawlStart: LocalDate? = null,
         val dueLines: List<DueLine> = emptyList(),
         val zakatDue: BigDecimal = BigDecimal.ZERO,
-        val hasAnyData: Boolean = false
+        val hasAnyData: Boolean = false,
+        /** Calendar convention: LUNAR (2.5%, Hijrah hawl) or SOLAR (2.577%, 365d). */
+        val calendarMode: ZakatCalculator.CalendarMode = ZakatCalculator.CalendarMode.LUNAR,
+        /** Madhhab profile (affects personal-use jewelry handling). */
+        val madhhab: ZakatMadhhab = ZakatMadhhab.MAINSTREAM,
+        /** Rate applied this assessment: 2.5% or 2.577%. */
+        val appliedRate: BigDecimal = ZakatCalculator.ZAKAT_RATE,
+        /** Near-term deductible debts (gross − deductions = net, spec 2.2). */
+        val deductions: BigDecimal = BigDecimal.ZERO,
+        /** Accounts tagged as holding Amanat money (excluded from pool). */
+        val amanatAccountKeys: Set<String> = emptySet(),
+        /** All known accounts, so Amanat tagging UI can list them. */
+        val knownAccounts: List<Pair<String, String>> = emptyList()
     )
 
     private data class PoolInputs(
         val balances: List<AccountBalanceEntity>,
         val assets: List<ZakatAssetEntity>,
         val baseCurrency: String,
-        val nisabMethod: String
+        val nisabMethod: String,
+        val liabilities: List<com.ritesh.cashiro.data.database.entity.ZakatLiabilityEntity>
     )
 
     private data class PriceInputs(
         val goldPrice: String,
         val silverPrice: String,
-        val hawlMode: String
+        val hawlMode: String,
+        val calendarMode: String,
+        val madhhab: String,
+        val amanatAccounts: Set<String>
     )
 
     private val combined = combine(
@@ -104,22 +122,29 @@ class ZakatDashboardViewModel @Inject constructor(
             zakatRepository.observeAllBalanceHistory(),
             zakatRepository.observeAssets(),
             userPreferencesRepository.baseCurrency,
-            userPreferencesRepository.zakatNisabMethod
-        ) { balances, assets, baseCurrency, nisabMethod ->
-            PoolInputs(balances, assets, baseCurrency, nisabMethod)
+            userPreferencesRepository.zakatNisabMethod,
+            zakatRepository.observeLiabilities()
+        ) { balances, assets, baseCurrency, nisabMethod, liabilities ->
+            PoolInputs(balances, assets, baseCurrency, nisabMethod, liabilities)
         },
         combine(
             userPreferencesRepository.zakatGoldPricePerGram,
             userPreferencesRepository.zakatSilverPricePerGram,
-            userPreferencesRepository.zakatHawlMode
-        ) { goldPrice, silverPrice, hawlMode ->
-            PriceInputs(goldPrice, silverPrice, hawlMode)
-        }
-    ) { inputs, prices ->
+            userPreferencesRepository.zakatHawlMode,
+            userPreferencesRepository.zakatCalendarMode,
+            userPreferencesRepository.zakatAmanatAccounts
+        ) { goldPrice, silverPrice, hawlMode, calendarMode, amanatAccounts ->
+            PriceInputs(goldPrice, silverPrice, hawlMode, calendarMode, "", amanatAccounts)
+        },
+        userPreferencesRepository.zakatMadhhab
+    ) { inputs, prices, madhhabRaw ->
         buildState(
             inputs.balances, inputs.assets, inputs.baseCurrency,
             parseMethod(inputs.nisabMethod), prices.goldPrice, prices.silverPrice,
-            parseMode(prices.hawlMode)
+            parseMode(prices.hawlMode), inputs.liabilities,
+            parseCalendar(prices.calendarMode),
+            parseMadhhab(madhhabRaw),
+            prices.amanatAccounts
         )
     }
 
@@ -147,6 +172,27 @@ class ZakatDashboardViewModel @Inject constructor(
         }
     }
 
+    /** LUNAR/SOLAR — rate and hawl length switch together (spec 4.3/8.2). */
+    fun setCalendarMode(mode: ZakatCalculator.CalendarMode) {
+        viewModelScope.launch {
+            userPreferencesRepository.setZakatCalendarMode(mode.name)
+        }
+    }
+
+    fun setMadhhab(madhhab: ZakatMadhhab) {
+        viewModelScope.launch {
+            userPreferencesRepository.setZakatMadhhab(madhhab.name)
+        }
+    }
+
+    fun toggleAmanatAccount(key: String) {
+        viewModelScope.launch {
+            val current = userPreferencesRepository.zakatAmanatAccounts.first()
+            val updated = if (key in current) current - key else current + key
+            userPreferencesRepository.setZakatAmanatAccounts(updated)
+        }
+    }
+
     // ----------------------------- Derivation ------------------------------
 
     private fun buildState(
@@ -156,7 +202,11 @@ class ZakatDashboardViewModel @Inject constructor(
         method: ZakatCalculator.NisabMethod,
         goldPriceRaw: String,
         silverPriceRaw: String,
-        hawlMode: HawlMode
+        hawlMode: HawlMode,
+        liabilities: List<com.ritesh.cashiro.data.database.entity.ZakatLiabilityEntity>,
+        calendarMode: ZakatCalculator.CalendarMode,
+        madhhab: ZakatMadhhab,
+        amanatAccountKeys: Set<String>
     ): UiState {
         val goldPrice = parseAmount(goldPriceRaw)
         val silverPrice = parseAmount(silverPriceRaw)
@@ -166,7 +216,10 @@ class ZakatDashboardViewModel @Inject constructor(
             latestBalances = latestPerAccount(balances),
             assets = assets,
             goldPricePerGram = goldPrice,
-            silverPricePerGram = silverPrice
+            silverPricePerGram = silverPrice,
+            amanatAccountKeys = amanatAccountKeys,
+            madhhab = madhhab,
+            liabilities = liabilities
         )
 
         val goldNisab = ZakatCalculator.nisabValue(
@@ -196,47 +249,78 @@ class ZakatDashboardViewModel @Inject constructor(
             goldPricePerGram = goldPrice,
             silverPricePerGram = silverPrice,
             from = windowStart,
-            to = today
+            to = today,
+            amanatAccountKeys = amanatAccountKeys,
+            madhhab = madhhab,
+            dailyDeduction = breakdown.deductions
         )
         val crossing = WealthPoolCalculator.detectNisabCrossing(series, appliedNisab)
 
         val hawlStart = crossing.activeHawlStart
-        val status = hawlStart?.let { ZakatCalculator.hawlStatus(it, today) }
-        val projected = hawlStart?.let { WealthPoolCalculator.projectedCompletionDate(it) }
+        val status = hawlStart?.let { ZakatCalculator.hawlStatus(it, today, calendarMode) }
+        val projected = hawlStart?.let {
+            if (calendarMode == ZakatCalculator.CalendarMode.SOLAR) {
+                it.plusDays(ZakatCalculator.SOLAR_YEAR_DAYS)
+            } else {
+                WealthPoolCalculator.projectedCompletionDate(it)
+            }
+        }
 
-        // Zakat due with a transparent per-category derivation.
-        val eligible = crossing.currentlyAboveNisab && (status?.complete == true)
+        // NET zakatable wealth (spec 2.2) is what is compared to nisab and
+        // taxed. Eligibility: currently at/above nisab on the net series,
+        // hawl complete, and net wealth ≥ applied nisab right now.
+        val netAboveNisab = breakdown.netWealth >= appliedNisab
+        val rate = calendarMode.rate
+        val eligible = crossing.currentlyAboveNisab &&
+            (status?.complete == true) && netAboveNisab
+
+        // Transparent derivation (spec 11.1): every included category, the
+        // deduction, and the net figure the rate is applied to.
         val dueLines = if (eligible) {
-            listOf(
-                DueLine("cash", breakdown.cash, share(breakdown.cash)),
-                DueLine("gold", breakdown.gold, share(breakdown.gold)),
-                DueLine("silver", breakdown.silver, share(breakdown.silver)),
-                DueLine("other", breakdown.otherAssets, share(breakdown.otherAssets))
-            ).filter { it.amount.signum() > 0 }
+            val lines = mutableListOf(
+                DueLine("cash", breakdown.cash, share(breakdown.cash, rate)),
+                DueLine("gold", breakdown.gold, share(breakdown.gold, rate)),
+                DueLine("silver", breakdown.silver, share(breakdown.silver, rate)),
+                DueLine("other", breakdown.otherAssets, share(breakdown.otherAssets, rate)),
+                DueLine("deductions", breakdown.deductions.negate(),
+                    share(breakdown.deductions, rate).negate()),
+                DueLine("net", breakdown.netWealth, breakdown.netWealth.multiply(rate)
+                    .setScale(2, RoundingMode.HALF_UP))
+            )
+            lines
         } else {
             emptyList()
         }
         val totalDue = if (eligible) {
-            breakdown.total.multiply(ZakatCalculator.ZAKAT_RATE)
-                .setScale(2, RoundingMode.HALF_UP)
+            breakdown.netWealth.multiply(rate).setScale(2, RoundingMode.HALF_UP)
         } else {
             BigDecimal.ZERO.setScale(2)
         }
 
-        // Per-asset hawl statuses (per-asset mode).
-        val perAsset = assets.map {
-            WealthPoolCalculator.perAssetHawl(it, goldPrice, silverPrice, today)
-        }
+        // Per-asset hawl statuses (per-asset mode). Excluded assets
+        // (amanat, personal residence, long-term holdings, exempt jewelry)
+        // carry no zakat due in this mode either.
+        val perAsset = assets.filter { WealthPoolCalculator.isIncluded(it, madhhab) }
+            .map { asset ->
+                val base = WealthPoolCalculator.perAssetHawl(asset, goldPrice, silverPrice, today)
+                val due = if (base.hawlComplete && base.value.signum() > 0) {
+                    base.value.multiply(rate).setScale(2, RoundingMode.HALF_UP)
+                } else {
+                    BigDecimal.ZERO.setScale(2)
+                }
+                base.copy(zakatDue = due)
+            }
 
         // Cash pseudo-row for per-asset mode: hawl starts on the earliest
-        // day any account balance is recorded (data-driven, not manual).
+        // day any (non-Amanat) account balance is recorded (data-driven).
         val cashStart = balances
             .filter { !it.isCreditCard }
+            .filter { "${it.bankName}|${it.accountLast4}" !in amanatAccountKeys }
             .minOfOrNull { it.timestamp.toLocalDate() }
         val cashHawl = cashStart?.let {
-            val s = ZakatCalculator.hawlStatus(it, today)
+            val s = ZakatCalculator.hawlStatus(it, today, calendarMode)
             val due = if (s.complete && breakdown.cash.signum() > 0) {
-                breakdown.cash.multiply(ZakatCalculator.ZAKAT_RATE)
+                breakdown.cash.multiply(rate)
                     .setScale(2, RoundingMode.HALF_UP)
             } else BigDecimal.ZERO.setScale(2)
             WealthPoolCalculator.AssetHawlStatus(
@@ -254,6 +338,12 @@ class ZakatDashboardViewModel @Inject constructor(
             )
         }
 
+        val knownAccounts = balances
+            .filter { !it.isCreditCard }
+            .map { it.bankName to it.accountLast4 }
+            .distinct()
+            .sortedWith(compareBy({ it.first }, { it.second }))
+
         return UiState(
             currencyCode = baseCurrency,
             loading = false,
@@ -269,14 +359,21 @@ class ZakatDashboardViewModel @Inject constructor(
             firstEverCrossingDate = crossing.firstEverCrossing,
             hawlComplete = status?.complete == true,
             hawlDaysElapsed = status?.daysElapsed ?: 0,
-            hawlDaysInYear = status?.daysInYear ?: ZakatCalculator.MEAN_LUNAR_YEAR_DAYS,
+            hawlDaysInYear = status?.daysInYear
+                ?: calendarMode.fallbackYearDays,
             projectedCompletionDate = projected,
             hawlMode = hawlMode,
             perAssetStatuses = if (cashHawl != null) listOf(cashHawl) + perAsset else perAsset,
             cashHawlStart = cashStart,
             dueLines = dueLines,
             zakatDue = totalDue,
-            hasAnyData = balances.isNotEmpty() || assets.isNotEmpty()
+            hasAnyData = balances.isNotEmpty() || assets.isNotEmpty(),
+            calendarMode = calendarMode,
+            madhhab = madhhab,
+            appliedRate = rate,
+            deductions = breakdown.deductions,
+            amanatAccountKeys = amanatAccountKeys,
+            knownAccounts = knownAccounts
         )
     }
 
@@ -289,8 +386,8 @@ class ZakatDashboardViewModel @Inject constructor(
             .map { (_, rows) -> rows.maxByOrNull { it.timestamp }!! }
     }
 
-    private fun share(amount: BigDecimal): BigDecimal {
-        return amount.multiply(ZakatCalculator.ZAKAT_RATE).setScale(2, RoundingMode.HALF_UP)
+    private fun share(amount: BigDecimal, rate: BigDecimal = ZakatCalculator.ZAKAT_RATE): BigDecimal {
+        return amount.multiply(rate).setScale(2, RoundingMode.HALF_UP)
     }
 
     private fun pseudoCashAsset(currency: String, start: LocalDate): ZakatAssetEntity {
@@ -314,6 +411,20 @@ class ZakatDashboardViewModel @Inject constructor(
             HawlMode.valueOf(raw.trim().uppercase())
         } catch (e: IllegalArgumentException) {
             HawlMode.POOL
+        }
+
+    private fun parseCalendar(raw: String): ZakatCalculator.CalendarMode =
+        try {
+            ZakatCalculator.CalendarMode.valueOf(raw.trim().uppercase())
+        } catch (e: IllegalArgumentException) {
+            ZakatCalculator.CalendarMode.LUNAR
+        }
+
+    private fun parseMadhhab(raw: String): ZakatMadhhab =
+        try {
+            ZakatMadhhab.valueOf(raw.trim().uppercase())
+        } catch (e: IllegalArgumentException) {
+            ZakatMadhhab.MAINSTREAM
         }
 
     private fun parseAmount(raw: String): BigDecimal {
