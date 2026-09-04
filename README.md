@@ -228,6 +228,23 @@ Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before participating.
 
 Please review our [Security Policy](SECURITY.md) for how to report vulnerabilities.
 
+### Release Signing
+
+Release APKs are signed with a single, stable release keystore so every
+release installs as an update over the previous one (no uninstall/reinstall).
+
+- The keystore file is **never committed** to the repository. CI receives it
+  through GitHub Actions secrets (`KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`,
+  `KEY_ALIAS`, `KEY_PASSWORD`, stored at repository level — the release
+  workflow's `KEYSTORE` environment falls back to repository secrets).
+- During a release build the workflow decodes the keystore and exports
+  `KEYSTORE_FILE` / `KEYSTORE_PASSWORD` / `KEY_ALIAS` / `KEY_PASSWORD`; the
+  Gradle release signing config (`app/build.gradle.kts`) picks these up.
+- Local development: put `RELEASE_STORE_FILE` / `RELEASE_STORE_PASSWORD` /
+  `RELEASE_KEY_ALIAS` / `RELEASE_KEY_PASSWORD` in `local.properties` to sign
+  locally, or set nothing and release builds fall back to debug signing
+  (clearly separate from CI release builds; for local testing only).
+
 ## Acknowledgements
 
 Special thanks to the following projects and resources:

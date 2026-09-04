@@ -218,6 +218,16 @@ jobs:
             KEY_PASSWORD_VALUE="$KEY_PASSWORD"
           fi
 
+          # Export the stable signing identity for the Gradle release
+          # signingConfig (KEYSTORE_FILE/KEYSTORE_PASSWORD/KEY_ALIAS/
+          # KEY_PASSWORD in app/build.gradle.kts). Every CI release build is
+          # signed with THIS key, so release APKs upgrade in place instead of
+          # forcing uninstall/reinstall.
+          export KEYSTORE_FILE="$STORE_FILE"
+          export KEYSTORE_PASSWORD="$STORE_PASSWORD"
+          export KEY_ALIAS="$KEY_ALIAS_NAME"
+          export KEY_PASSWORD="$KEY_PASSWORD_VALUE"
+
           # Build standard flavor (for Play Store)
           echo "Building signed standard release APK..."
           ./gradlew assembleStandardRelease \

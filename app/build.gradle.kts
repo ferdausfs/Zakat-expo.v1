@@ -22,8 +22,8 @@ android {
         applicationId = "com.ritesh.cashiro"
         minSdk = 26
         targetSdk = 36
-        versionCode = 98
-        versionName = "2.1.65-beta"
+        versionCode = 99
+        versionName = "2.1.66-beta"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         
@@ -46,19 +46,49 @@ android {
 
     signingConfigs {
         create("release") {
-            // Default to values from local.properties if available
+            // Resolution order for the release keystore:
+            //   1. Environment variables (CI — GitHub Actions release secrets:
+            //      KEYSTORE_FILE / KEYSTORE_PASSWORD / KEY_ALIAS / KEY_PASSWORD)
+            //   2. local.properties (local dev: RELEASE_STORE_FILE / etc.)
+            //   3. Neither present -> storeFile stays null and the release
+            //      build type falls back to DEBUG signing so local builds
+            //      still produce an installable APK. CI release builds always
+            //      use the stable keystore via (1), so every release APK is
+            //      signed with the same key and upgrades in place.
+            val envStoreFile = System.getenv("KEYSTORE_FILE")
+            val envStorePassword = System.getenv("KEYSTORE_PASSWORD")
+            val envKeyAlias = System.getenv("KEY_ALIAS")
+            val envKeyPassword = System.getenv("KEY_PASSWORD")
+
             val localPropertiesFile = rootProject.file("local.properties")
+            var localStoreFile = ""
+            var localStorePassword = ""
+            var localKeyAlias = ""
+            var localKeyPassword = ""
             if (localPropertiesFile.exists()) {
                 val localProperties = Properties()
                 localProperties.load(localPropertiesFile.inputStream())
-                
-                val keystorePath = localProperties.getProperty("RELEASE_STORE_FILE", "")
-                if (keystorePath.isNotEmpty()) {
-                    storeFile = file(keystorePath)
-                    storePassword = localProperties.getProperty("RELEASE_STORE_PASSWORD", "")
-                    keyAlias = localProperties.getProperty("RELEASE_KEY_ALIAS", "")
-                    keyPassword = localProperties.getProperty("RELEASE_KEY_PASSWORD", "")
+                localStoreFile = localProperties.getProperty("RELEASE_STORE_FILE", "")
+                localStorePassword = localProperties.getProperty("RELEASE_STORE_PASSWORD", "")
+                localKeyAlias = localProperties.getProperty("RELEASE_KEY_ALIAS", "")
+                localKeyPassword = localProperties.getProperty("RELEASE_KEY_PASSWORD", "")
+            }
+
+            when {
+                !envStoreFile.isNullOrEmpty() && !envStorePassword.isNullOrEmpty() &&
+                        !envKeyAlias.isNullOrEmpty() && !envKeyPassword.isNullOrEmpty() -> {
+                    storeFile = file(envStoreFile)
+                    storePassword = envStorePassword
+                    keyAlias = envKeyAlias
+                    keyPassword = envKeyPassword
                 }
+                localStoreFile.isNotEmpty() -> {
+                    storeFile = file(localStoreFile)
+                    storePassword = localStorePassword
+                    keyAlias = localKeyAlias
+                    keyPassword = localKeyPassword
+                }
+                // else: leave unset -> debug-signing fallback in buildTypes
             }
         }
     }
@@ -108,7 +138,13 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("release")
+            // Use the real release keystore when configured (CI secrets or
+            // local.properties); otherwise fall back to debug signing so a
+            // local dev build is still installable. CI release builds must
+            // always be keystore-signed for consistent, upgrade-in-place APKs.
+            val releaseConfig = signingConfigs.getByName("release")
+            signingConfig = if (releaseConfig.storeFile != null) releaseConfig
+            else signingConfigs.getByName("debug")
             
             // Include debug symbols for native crashes
             ndk {
