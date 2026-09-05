@@ -245,6 +245,24 @@ release installs as an update over the previous one (no uninstall/reinstall).
   locally, or set nothing and release builds fall back to debug signing
   (clearly separate from CI release builds; for local testing only).
 
+## Database Migrations (Standing Rule)
+
+The Room schema history is user data: every installed phone carries real
+transactions, balances and zakat assets, so schema upgrades must always be
+preserving, explicit migrations. The project therefore enforces:
+
+- **Never** use `fallbackToDestructiveMigration()`.
+- Every entity change (new field, new table, changed column) must, **in the
+  same commit**: bump `@Database(version)`, add a `MIGRATION_(N)_(N+1)` object
+  with real SQL, and append it to `CashiroDatabase.ALL_MIGRATIONS` — the single
+  canonical list registered by **both** database builders (the Hilt
+  `DatabaseModule` and `CashiroDatabase.getInstance()`), so they can never
+  diverge again.
+- Schemas are exported (`exportSchema = true`) and committed under
+  `app/schemas/`; `DatabaseMigrationTest` replays the real version paths
+  (e.g. 62→65, 64→65) against these snapshots and validates the final schema,
+  so a broken migration fails in CI instead of crashing users on update.
+
 ## Acknowledgements
 
 Special thanks to the following projects and resources:

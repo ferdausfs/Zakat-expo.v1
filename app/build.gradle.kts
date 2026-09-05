@@ -22,8 +22,8 @@ android {
         applicationId = "com.ritesh.cashiro"
         minSdk = 26
         targetSdk = 36
-        versionCode = 101
-        versionName = "2.1.68-beta"
+        versionCode = 102
+        versionName = "2.1.69-beta"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         
@@ -184,6 +184,18 @@ android {
             all { test ->
                 test.maxHeapSize = "1792m"
             }
+        }
+    }
+
+    // Expose the committed Room schema history (app/schemas/) to JVM
+    // migration tests. Robolectric reads assets from the APP's merged
+    // debug assets (see test_config.properties -> android_merged_assets),
+    // so the schemas must be a debug-variant asset for MigrationTestHelper
+    // to find schemas/<db-class>/<version>.json. Debug-only: release APKs
+    // do not include these.
+    sourceSets {
+        getByName("debug") {
+            assets.srcDir("$projectDir/schemas")
         }
     }
 }

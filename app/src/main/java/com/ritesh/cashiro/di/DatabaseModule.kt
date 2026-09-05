@@ -5,12 +5,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ritesh.cashiro.data.database.CashiroDatabase
-import com.ritesh.cashiro.data.database.MIGRATION_48_49
-import com.ritesh.cashiro.data.database.MIGRATION_49_50
-import com.ritesh.cashiro.data.database.MIGRATION_50_51
-import com.ritesh.cashiro.data.database.MIGRATION_51_52
-import com.ritesh.cashiro.data.database.MIGRATION_52_53
-import com.ritesh.cashiro.data.database.MIGRATION_53_54
 
 import com.ritesh.cashiro.data.database.dao.AccountBalanceDao
 import com.ritesh.cashiro.data.database.dao.BankNotificationDao
@@ -61,29 +55,12 @@ object DatabaseModule {
                 CashiroDatabase::class.java,
                 CashiroDatabase.DATABASE_NAME
             )
-                // Add manual migrations here when needed
-                .addMigrations(
-                    CashiroDatabase.MIGRATION_12_14,
-                    CashiroDatabase.MIGRATION_13_14,
-                    CashiroDatabase.MIGRATION_14_15,
-                    CashiroDatabase.MIGRATION_20_21,
-                    CashiroDatabase.MIGRATION_21_22,
-                    CashiroDatabase.MIGRATION_22_23,
-                    MIGRATION_48_49,
-                    MIGRATION_49_50,
-                    MIGRATION_50_51,
-                    MIGRATION_51_52,
-                    MIGRATION_52_53,
-                    MIGRATION_53_54,
-                    CashiroDatabase.MIGRATION_54_55,
-                    CashiroDatabase.MIGRATION_55_56,
-                    CashiroDatabase.MIGRATION_56_57,
-                    CashiroDatabase.MIGRATION_57_58,
-                    CashiroDatabase.MIGRATION_58_59,
-                    CashiroDatabase.MIGRATION_59_60,
-                    CashiroDatabase.MIGRATION_60_61,
-                    CashiroDatabase.MIGRATION_61_62
-                )
+                // CRITICAL: register the canonical ALL_MIGRATIONS list. This used to
+                // stop at 61->62 while getInstance() had 62->65, so every user with a
+                // v62/64 database crashed on open after updating (v2.1.68-beta
+                // "A migration from 64 to 65 was required but not found"). Both
+                // builders now share ONE list and can never diverge again.
+                .addMigrations(*CashiroDatabase.ALL_MIGRATIONS)
 
                 // Enable auto-migrations
                 // Room will automatically detect schema changes between versions

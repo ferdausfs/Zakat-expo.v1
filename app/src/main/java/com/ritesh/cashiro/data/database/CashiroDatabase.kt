@@ -166,32 +166,7 @@ abstract class CashiroDatabase : RoomDatabase() {
                             CashiroDatabase::class.java,
                             DATABASE_NAME
                         )
-                            .addMigrations(
-                                MIGRATION_12_14,
-                                MIGRATION_13_14,
-                                MIGRATION_14_15,
-                                MIGRATION_20_21,
-                                MIGRATION_21_22,
-                                MIGRATION_22_23,
-                                MIGRATION_29_30,
-            MIGRATION_48_49,
-            MIGRATION_49_50,
-            MIGRATION_50_51,
-            MIGRATION_51_52,
-            MIGRATION_52_53,
-            MIGRATION_53_54,
-            MIGRATION_54_55,
-MIGRATION_55_56,
-                                MIGRATION_56_57,
-                                MIGRATION_57_58,
-                                MIGRATION_58_59,
-                                MIGRATION_59_60,
-                                MIGRATION_60_61,
-                                MIGRATION_61_62,
-                                MIGRATION_62_63,
-                                MIGRATION_63_64,
-                                MIGRATION_64_65
-                            )
+                            .addMigrations(*ALL_MIGRATIONS)
                             .build()
                     INSTANCE = instance
                     instance
@@ -857,6 +832,53 @@ MIGRATION_55_56,
                     )
                 }
             }
+
+        /**
+         * CANONICAL migration list — the single source of truth for every manual
+         * migration. BOTH database builders (Hilt [com.ritesh.cashiro.di.DatabaseModule]
+         * and [getInstance] used by BroadcastReceivers) register exactly this array,
+         * so they can never diverge again (the v2.1.68-beta crash was precisely such a
+         * divergence: getInstance had 62->65 registered, the Hilt module did not).
+         *
+         * STANDING RULE — every future change to a Room entity (new field, new table,
+         * changed column type) MUST, in the same commit:
+         *  1. bump @Database(version = N -> N+1),
+         *  2. add a `MIGRATION_(N)_(N+1)` object with real, data-preserving SQL
+         *     (ALTER TABLE / CREATE TABLE / data back-fill — never destructive),
+         *  3. append it to this array (both builders then pick it up automatically),
+         *  4. extend DatabaseMigrationTest with the new step (schemas are exported to
+         *     app/schemas/ and committed, so each step is diffable and testable).
+         *
+         * NEVER add fallbackToDestructiveMigration() — silently wiping a user's
+         * transaction/asset history in a zakat app is unacceptable.
+         */
+        val ALL_MIGRATIONS: Array<Migration> =
+            arrayOf(
+                MIGRATION_12_14,
+                MIGRATION_13_14,
+                MIGRATION_14_15,
+                MIGRATION_20_21,
+                MIGRATION_21_22,
+                MIGRATION_22_23,
+                MIGRATION_29_30,
+                MIGRATION_48_49,
+                MIGRATION_49_50,
+                MIGRATION_50_51,
+                MIGRATION_51_52,
+                MIGRATION_52_53,
+                MIGRATION_53_54,
+                MIGRATION_54_55,
+                MIGRATION_55_56,
+                MIGRATION_56_57,
+                MIGRATION_57_58,
+                MIGRATION_58_59,
+                MIGRATION_59_60,
+                MIGRATION_60_61,
+                MIGRATION_61_62,
+                MIGRATION_62_63,
+                MIGRATION_63_64,
+                MIGRATION_64_65,
+            )
     }
 
     /**
