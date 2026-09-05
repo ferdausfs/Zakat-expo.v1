@@ -235,9 +235,9 @@ class NavigationStressTest {
             println("[NavStress] rapid round ${round + 1}/6 done; ${heapSnapshot()}")
         }
 
-        // ---------- Phase D: Phase 2b zakat screens (dashboard/assets/calculator) ----------
+        // ---------- Phase D: Phase 2b zakat screens (dashboard/assets/breakdown) ----------
         // The Zakat tab was the last tab tapped in Phase C, so the dashboard
-        // should be showing. Drive: dashboard -> assets -> back -> calculator
+        // should be showing. Drive: dashboard -> assets -> back -> breakdown
         // -> back, repeatedly, asserting the app survives every step.
         /**
          * Swipes the visible scrollable (the screen's LazyColumn) until a
@@ -335,14 +335,15 @@ class NavigationStressTest {
             pressBackOnce("round $round: back from assets")
             awaitDashboardHome("Total zakatable wealth", "round $round: back on dashboard")
 
-            // Dashboard -> Calculator (Phase 2a screen) via quick-link chip.
-            tapTextAnywhere("Calculator", "round $round dashboard")
+            // Dashboard -> Zakat Breakdown (read-only drill-down; the former
+            // manual calculator was retired) via quick-link chip.
+            tapTextAnywhere("Breakdown", "round $round dashboard")
             composeRule.waitForIdle()
-            assertAppAlive("round $round: calculator screen")
-            awaitText("Hawl (lunar year)", "round $round: zakat calculator")
+            assertAppAlive("round $round: breakdown screen")
+            awaitText("Hawl progress", "round $round: zakat breakdown")
 
-            // Calculator -> back to dashboard.
-            pressBackOnce("round $round: back from calculator")
+            // Breakdown -> back to dashboard.
+            pressBackOnce("round $round: back from breakdown")
             awaitDashboardHome("Total zakatable wealth", "round $round: back on dashboard again")
             println("[NavStress] phase-2b round ${round + 1}/3 done; ${heapSnapshot()}")
         }
