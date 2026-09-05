@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
 import com.ritesh.cashiro.data.database.entity.ZakatAssetEntity
+import com.ritesh.cashiro.data.metals.MetalRateService
 import com.ritesh.cashiro.data.model.Currency
 import com.ritesh.cashiro.data.preferences.UserPreferencesRepository
 import com.ritesh.cashiro.data.repository.ZakatRepository
@@ -16,8 +17,10 @@ import java.math.RoundingMode
 import java.time.LocalDate
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
@@ -42,10 +45,21 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class ZakatDashboardViewModel @Inject constructor(
     private val zakatRepository: ZakatRepository,
-    private val userPreferencesRepository: UserPreferencesRepository
+    private val userPreferencesRepository: UserPreferencesRepository,
+    private val metalRateService: MetalRateService
 ) : ViewModel() {
 
     enum class HawlMode { POOL, PER_ASSET }
+
+    /** Lifecycle of a manual "Refresh rates" action (UI feedback only). */
+    sealed interface MetalRateRefreshStatus {
+        data object Idle : MetalRateRefreshStatus
+        data object Refreshing : MetalRateRefreshStatus
+        /** Fetch succeeded and live prices were written (manual overrides cleared). */
+        data object Succeeded : MetalRateRefreshStatus
+        /** Network/provider failure — cached prices remain in effect. */
+        data object Failed : MetalRateRefreshStatus
+    }
 
     /** One line of the transparent zakat-due derivation. */
     data class DueLine(
@@ -71,6 +85,12 @@ class ZakatDashboardViewModel @Inject constructor(
         val silverNisabValue: BigDecimal = BigDecimal.ZERO,
         val goldPricePerGram: String = "",
         val silverPricePerGram: String = "",
+        /** When the stored gold/silver price was written (epoch ms; 0 = never). */
+        val goldPriceUpdatedAt: Long = 0,
+        val silverPriceUpdatedAt: Long = 0,
+        /** True when the price is a manual user override, not a live rate. */
+        val goldPriceIsManual: Boolean = false,
+        val silverPriceIsManual: Boolean = false,
         val aboveNisab: Boolean = false,
         /** Auto-detected start of the current hawl (pool mode); null when below nisab. */
         val crossingDate: LocalDate? = null,
@@ -117,6 +137,13 @@ class ZakatDashboardViewModel @Inject constructor(
         val amanatAccounts: Set<String>
     )
 
+    private data class MetalPriceMeta(
+        val goldUpdatedAt: Long,
+        val silverUpdatedAt: Long,
+        val goldIsManual: Boolean,
+        val silverIsManual: Boolean
+    )
+
     private val combined = combine(
         combine(
             zakatRepository.observeAllBalanceHistory(),
@@ -136,15 +163,24 @@ class ZakatDashboardViewModel @Inject constructor(
         ) { goldPrice, silverPrice, hawlMode, calendarMode, amanatAccounts ->
             PriceInputs(goldPrice, silverPrice, hawlMode, calendarMode, "", amanatAccounts)
         },
+        combine(
+            userPreferencesRepository.zakatGoldPriceUpdatedAt,
+            userPreferencesRepository.zakatSilverPriceUpdatedAt,
+            userPreferencesRepository.zakatGoldPriceIsManual,
+            userPreferencesRepository.zakatSilverPriceIsManual
+        ) { goldUpdatedAt, silverUpdatedAt, goldManual, silverManual ->
+            MetalPriceMeta(goldUpdatedAt, silverUpdatedAt, goldManual, silverManual)
+        },
         userPreferencesRepository.zakatMadhhab
-    ) { inputs, prices, madhhabRaw ->
+    ) { inputs, prices, meta, madhhabRaw ->
         buildState(
             inputs.balances, inputs.assets, inputs.baseCurrency,
             parseMethod(inputs.nisabMethod), prices.goldPrice, prices.silverPrice,
             parseMode(prices.hawlMode), inputs.liabilities,
             parseCalendar(prices.calendarMode),
             parseMadhhab(madhhabRaw),
-            prices.amanatAccounts
+            prices.amanatAccounts,
+            meta
         )
     }
 
@@ -157,6 +193,63 @@ class ZakatDashboardViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = UiState()
         )
+
+    /** Status of the explicit "Refresh rates" action (separate from the pool state). */
+    private val _metalRateRefreshStatus =
+        MutableStateFlow<MetalRateRefreshStatus>(MetalRateRefreshStatus.Idle)
+    val metalRateRefreshStatus: StateFlow<MetalRateRefreshStatus> =
+        _metalRateRefreshStatus.asStateFlow()
+
+    init {
+        // Once-per-day background live-rate refresh. Fire-and-forget: the
+        // service catches every failure internally, so a network outage
+        // can never block or crash the dashboard — cached prices stay.
+        viewModelScope.launch {
+            try {
+                val base = userPreferencesRepository.baseCurrency.first()
+                metalRateService.maybeAutoRefresh(base)
+            } catch (e: Exception) {
+                // Never let a rate fetch failure surface as a crash.
+            }
+        }
+    }
+
+    /** Explicit user-triggered refresh: overrides manual prices and re-enables live rates. */
+    fun refreshMetalRates() {
+        viewModelScope.launch {
+            _metalRateRefreshStatus.value = MetalRateRefreshStatus.Refreshing
+            val status = try {
+                val base = userPreferencesRepository.baseCurrency.first()
+                val result = metalRateService.refresh(force = true, baseCurrency = base)
+                if (result.fetched) {
+                    MetalRateRefreshStatus.Succeeded
+                } else {
+                    MetalRateRefreshStatus.Failed
+                }
+            } catch (e: Exception) {
+                MetalRateRefreshStatus.Failed
+            }
+            _metalRateRefreshStatus.value = status
+        }
+    }
+
+    /** User edits the gold price — becomes a manual override until the next explicit refresh. */
+    fun setGoldPriceManual(value: String) {
+        viewModelScope.launch {
+            userPreferencesRepository.setZakatGoldPriceManual(
+                value, System.currentTimeMillis()
+            )
+        }
+    }
+
+    /** User edits the silver price — becomes a manual override until the next explicit refresh. */
+    fun setSilverPriceManual(value: String) {
+        viewModelScope.launch {
+            userPreferencesRepository.setZakatSilverPriceManual(
+                value, System.currentTimeMillis()
+            )
+        }
+    }
 
     // ------------- Settings mutations (shared with the calculator) -------------
 
@@ -206,7 +299,8 @@ class ZakatDashboardViewModel @Inject constructor(
         liabilities: List<com.ritesh.cashiro.data.database.entity.ZakatLiabilityEntity>,
         calendarMode: ZakatCalculator.CalendarMode,
         madhhab: ZakatMadhhab,
-        amanatAccountKeys: Set<String>
+        amanatAccountKeys: Set<String>,
+        priceMeta: MetalPriceMeta
     ): UiState {
         val goldPrice = parseAmount(goldPriceRaw)
         val silverPrice = parseAmount(silverPriceRaw)
@@ -354,6 +448,10 @@ class ZakatDashboardViewModel @Inject constructor(
             silverNisabValue = silverNisab,
             goldPricePerGram = goldPriceRaw,
             silverPricePerGram = silverPriceRaw,
+            goldPriceUpdatedAt = priceMeta.goldUpdatedAt,
+            silverPriceUpdatedAt = priceMeta.silverUpdatedAt,
+            goldPriceIsManual = priceMeta.goldIsManual,
+            silverPriceIsManual = priceMeta.silverIsManual,
             aboveNisab = crossing.currentlyAboveNisab,
             crossingDate = hawlStart,
             firstEverCrossingDate = crossing.firstEverCrossing,

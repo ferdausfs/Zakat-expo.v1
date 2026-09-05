@@ -319,7 +319,9 @@ fun CashiroNavHost(
                     )
                 }
 
-                // Zakat Calculator (Phase 2a manual assessment)
+                // Zakat Breakdown (read-only drill-down of the dashboard's
+                // figures; the former manual-entry calculator was retired so
+                // there is exactly one source of truth for zakat numbers)
                 composable<ZakatCalculator>(
                     enterTransition = CashiroTransitions.horizontalSlideEnter,
                     exitTransition = CashiroTransitions.horizontalSlideExit,

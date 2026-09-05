@@ -4,6 +4,10 @@ import com.ritesh.cashiro.data.currency.CurrencyConversionService
 import com.ritesh.cashiro.data.currency.ExchangeRateProvider
 import com.ritesh.cashiro.data.currency.ExchangeRateProviderFactory
 import com.ritesh.cashiro.data.database.dao.ExchangeRateDao
+import com.ritesh.cashiro.data.metals.DefaultMetalCurrencyConverter
+import com.ritesh.cashiro.data.metals.MetalCurrencyConverter
+import com.ritesh.cashiro.data.metals.MetalRateProvider
+import com.ritesh.cashiro.data.metals.MetalRateProviderFactory
 import com.ritesh.cashiro.data.preferences.UserPreferencesRepository
 import dagger.Module
 import dagger.Provides
@@ -40,6 +44,27 @@ object ApplicationModule {
     @Singleton
     fun provideExchangeRateProvider(): ExchangeRateProvider {
         return ExchangeRateProviderFactory.createProvider()
+    }
+
+    /**
+     * Provides the live gold/silver spot-rate provider (swappable).
+     */
+    @Provides
+    @Singleton
+    fun provideMetalRateProvider(): MetalRateProvider {
+        return MetalRateProviderFactory.createProvider()
+    }
+
+    /**
+     * Converts fetched USD metal prices into the user's base currency via
+     * the existing exchange-rate pipeline (custom rates > cached > live).
+     */
+    @Provides
+    @Singleton
+    fun provideMetalCurrencyConverter(
+        conversionService: CurrencyConversionService
+    ): MetalCurrencyConverter {
+        return DefaultMetalCurrencyConverter(conversionService)
     }
 
     /**

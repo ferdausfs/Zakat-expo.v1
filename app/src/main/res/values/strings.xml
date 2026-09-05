@@ -64,9 +64,26 @@
     <string name="zakat_dash_per_asset_due">Hawl complete — zakat due: %1$s</string>
     <string name="zakat_dash_quick_links">Quick links</string>
     <string name="zakat_dash_link_assets">Assets</string>
-    <string name="zakat_dash_link_calculator">Calculator</string>
+    <string name="zakat_dash_link_calculator">Breakdown</string>
     <string name="zakat_dash_link_currency">Currency</string>
     <string name="zakat_dash_manage_assets">Manage assets</string>
+
+    <!-- Zakat breakdown (read-only drill-down — single source of truth is the dashboard) -->
+    <string name="zakat_breakdown_title">Zakat breakdown</string>
+    <string name="zakat_breakdown_note">A read-only drill-down of the wealth the dashboard already tracks — cash from your accounts plus your asset ledger. Nothing is typed here, so these numbers always match the dashboard.</string>
+    <string name="zakat_breakdown_deductions">Deductible debts (next 12 months)</string>
+    <string name="zakat_breakdown_rate">Applied rate: %1$s</string>
+    <string name="zakat_breakdown_no_data">Nothing tracked yet — add accounts and assets to see the breakdown.</string>
+
+    <!-- Live gold/silver rates -->
+    <string name="zakat_refresh_rates">Refresh rates</string>
+    <string name="zakat_rates_last_updated">Updated %1$s</string>
+    <string name="zakat_rates_never_updated">Not fetched yet</string>
+    <string name="zakat_rates_live">Live rate</string>
+    <string name="zakat_rates_manual">Manual override</string>
+    <string name="zakat_rates_refreshing">Updating rates…</string>
+    <string name="zakat_rates_refresh_failed">Couldn\'t reach the rate provider — saved prices kept</string>
+    <string name="zakat_rates_refreshed">Live rates applied</string>
     <!-- Phase 2b: Zakat assets -->
     <string name="zakat_assets_title">Zakat assets</string>
     <string name="zakat_assets_total">Total assets value</string>

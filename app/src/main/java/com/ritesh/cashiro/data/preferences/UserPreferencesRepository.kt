@@ -51,6 +51,13 @@ constructor(@ApplicationContext private val context: Context) {
         val ZAKAT_NISAB_METHOD = stringPreferencesKey("zakat_nisab_method")
         val ZAKAT_GOLD_PRICE_PER_GRAM = stringPreferencesKey("zakat_gold_price_per_gram")
         val ZAKAT_SILVER_PRICE_PER_GRAM = stringPreferencesKey("zakat_silver_price_per_gram")
+        // Live metal-rate metadata (auto-fetch vs manual override):
+        // epoch-millis strings + manual flags + last successful fetch time.
+        val ZAKAT_GOLD_PRICE_UPDATED_AT = stringPreferencesKey("zakat_gold_price_updated_at")
+        val ZAKAT_SILVER_PRICE_UPDATED_AT = stringPreferencesKey("zakat_silver_price_updated_at")
+        val ZAKAT_GOLD_PRICE_IS_MANUAL = booleanPreferencesKey("zakat_gold_price_is_manual")
+        val ZAKAT_SILVER_PRICE_IS_MANUAL = booleanPreferencesKey("zakat_silver_price_is_manual")
+        val ZAKAT_METAL_LAST_FETCH_AT = stringPreferencesKey("zakat_metal_last_fetch_at")
         val ZAKAT_HAWL_MODE = stringPreferencesKey("zakat_hawl_mode")
 
         // Zakat A-Z spec: calendar convention (LUNAR default / SOLAR
@@ -293,6 +300,36 @@ constructor(@ApplicationContext private val context: Context) {
             preferences[PreferencesKeys.ZAKAT_SILVER_PRICE_PER_GRAM] ?: ""
         }
 
+    /** When the currently stored gold price was written (epoch ms), 0 if never. */
+    val zakatGoldPriceUpdatedAt: Flow<Long> =
+        context.dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.ZAKAT_GOLD_PRICE_UPDATED_AT]?.toLongOrNull() ?: 0L
+        }
+
+    /** When the currently stored silver price was written (epoch ms), 0 if never. */
+    val zakatSilverPriceUpdatedAt: Flow<Long> =
+        context.dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.ZAKAT_SILVER_PRICE_UPDATED_AT]?.toLongOrNull() ?: 0L
+        }
+
+    /** True when the gold price is a manual user override (auto-fetch must not clobber it). */
+    val zakatGoldPriceIsManual: Flow<Boolean> =
+        context.dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.ZAKAT_GOLD_PRICE_IS_MANUAL] ?: false
+        }
+
+    /** True when the silver price is a manual user override (auto-fetch must not clobber it). */
+    val zakatSilverPriceIsManual: Flow<Boolean> =
+        context.dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.ZAKAT_SILVER_PRICE_IS_MANUAL] ?: false
+        }
+
+    /** Last successful live-rate fetch (epoch ms), 0 if never. */
+    val zakatMetalLastFetchAt: Flow<Long> =
+        context.dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.ZAKAT_METAL_LAST_FETCH_AT]?.toLongOrNull() ?: 0L
+        }
+
     val zakatHawlMode: Flow<String> =
         context.dataStore.data.map { preferences ->
             preferences[PreferencesKeys.ZAKAT_HAWL_MODE] ?: "POOL"
@@ -313,6 +350,51 @@ constructor(@ApplicationContext private val context: Context) {
     suspend fun setZakatSilverPricePerGram(price: String) {
         context.dataStore.edit { preferences ->
             preferences[PreferencesKeys.ZAKAT_SILVER_PRICE_PER_GRAM] = price
+        }
+    }
+
+    /** Writes a live-fetched gold price and marks it non-manual. */
+    suspend fun setZakatGoldPriceAuto(price: String, fetchedAtMs: Long) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.ZAKAT_GOLD_PRICE_PER_GRAM] = price
+            preferences[PreferencesKeys.ZAKAT_GOLD_PRICE_UPDATED_AT] = fetchedAtMs.toString()
+            preferences[PreferencesKeys.ZAKAT_GOLD_PRICE_IS_MANUAL] = false
+            preferences[PreferencesKeys.ZAKAT_METAL_LAST_FETCH_AT] = fetchedAtMs.toString()
+        }
+    }
+
+    /** Writes a live-fetched silver price and marks it non-manual. */
+    suspend fun setZakatSilverPriceAuto(price: String, fetchedAtMs: Long) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.ZAKAT_SILVER_PRICE_PER_GRAM] = price
+            preferences[PreferencesKeys.ZAKAT_SILVER_PRICE_UPDATED_AT] = fetchedAtMs.toString()
+            preferences[PreferencesKeys.ZAKAT_SILVER_PRICE_IS_MANUAL] = false
+            preferences[PreferencesKeys.ZAKAT_METAL_LAST_FETCH_AT] = fetchedAtMs.toString()
+        }
+    }
+
+    /** Records when the last successful live-rate provider fetch happened. */
+    suspend fun setZakatMetalLastFetchAt(fetchedAtMs: Long) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.ZAKAT_METAL_LAST_FETCH_AT] = fetchedAtMs.toString()
+        }
+    }
+
+    /** Writes a user-edited gold price and marks it as a manual override. */
+    suspend fun setZakatGoldPriceManual(price: String, editedAtMs: Long) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.ZAKAT_GOLD_PRICE_PER_GRAM] = price
+            preferences[PreferencesKeys.ZAKAT_GOLD_PRICE_UPDATED_AT] = editedAtMs.toString()
+            preferences[PreferencesKeys.ZAKAT_GOLD_PRICE_IS_MANUAL] = true
+        }
+    }
+
+    /** Writes a user-edited silver price and marks it as a manual override. */
+    suspend fun setZakatSilverPriceManual(price: String, editedAtMs: Long) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.ZAKAT_SILVER_PRICE_PER_GRAM] = price
+            preferences[PreferencesKeys.ZAKAT_SILVER_PRICE_UPDATED_AT] = editedAtMs.toString()
+            preferences[PreferencesKeys.ZAKAT_SILVER_PRICE_IS_MANUAL] = true
         }
     }
 

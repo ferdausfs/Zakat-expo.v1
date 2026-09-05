@@ -4,6 +4,10 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.ritesh.cashiro.data.database.CashiroDatabase
+import com.ritesh.cashiro.data.metals.MetalCurrencyConverter
+import com.ritesh.cashiro.data.metals.MetalRateProvider
+import com.ritesh.cashiro.data.metals.MetalRateService
+import com.ritesh.cashiro.data.metals.MetalSpotPrices
 import com.ritesh.cashiro.data.database.entity.AccountBalanceEntity
 import com.ritesh.cashiro.data.database.entity.ZakatAssetEntity
 import com.ritesh.cashiro.data.database.entity.ZakatAssetType
@@ -69,7 +73,18 @@ class ZakatWealthPoolIntegrationTest {
             db.zakatPaymentDao()
         )
         preferences = UserPreferencesRepository(context)
-        viewModel = ZakatDashboardViewModel(zakatRepository, preferences)
+        // Live-rate service with a provider that always fails (no network in
+        // tests): auto-refresh then no-ops gracefully and never touches the
+        // price preferences under test.
+        val metalRateService = MetalRateService(
+            metalRateProvider = object : MetalRateProvider {
+                override suspend fun fetchSpotPrices(): MetalSpotPrices? = null
+                override fun getProviderName(): String = "test-offline"
+            },
+            currencyConverter = MetalCurrencyConverter { _, _, _ -> null },
+            userPreferencesRepository = preferences
+        )
+        viewModel = ZakatDashboardViewModel(zakatRepository, preferences, metalRateService)
     }
 
     @After

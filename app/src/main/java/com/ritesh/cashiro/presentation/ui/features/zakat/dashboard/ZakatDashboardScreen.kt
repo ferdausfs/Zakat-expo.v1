@@ -259,8 +259,50 @@ fun ZakatDashboardScreen(
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    TextButton(onClick = onNavigateToCalculator) {
-                        Text(stringResource(R.string.zakat_dash_edit_prices))
+                    // Rate freshness: when the newest stored price was written
+                    // (live fetch or manual edit), so stale data is visible.
+                    val latestUpdate = maxOf(
+                        state.goldPriceUpdatedAt, state.silverPriceUpdatedAt
+                    )
+                    Text(
+                        text = if (latestUpdate != 0L) {
+                            stringResource(
+                                R.string.zakat_rates_last_updated,
+                                java.time.Instant.ofEpochMilli(latestUpdate)
+                                    .atZone(java.time.ZoneId.systemDefault())
+                                    .format(java.time.format.DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
+                            )
+                        } else {
+                            stringResource(R.string.zakat_rates_never_updated)
+                        },
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+                        TextButton(onClick = viewModel::refreshMetalRates) {
+                            Text(stringResource(R.string.zakat_refresh_rates))
+                        }
+                        TextButton(onClick = onNavigateToCalculator) {
+                            Text(stringResource(R.string.zakat_dash_edit_prices))
+                        }
+                    }
+                    when (viewModel.metalRateRefreshStatus.collectAsStateWithLifecycle().value) {
+                        ZakatDashboardViewModel.MetalRateRefreshStatus.Refreshing -> Text(
+                            text = stringResource(R.string.zakat_rates_refreshing),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        ZakatDashboardViewModel.MetalRateRefreshStatus.Failed -> Text(
+                            text = stringResource(R.string.zakat_rates_refresh_failed),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                        ZakatDashboardViewModel.MetalRateRefreshStatus.Succeeded -> Text(
+                            text = stringResource(R.string.zakat_rates_refreshed),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        ZakatDashboardViewModel.MetalRateRefreshStatus.Idle -> {}
                     }
                 }
             }

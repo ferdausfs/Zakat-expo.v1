@@ -16,11 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
+import androidx.compose.material3.AssistChip
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -32,12 +29,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -50,36 +43,40 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ritesh.cashiro.R
 import com.ritesh.cashiro.domain.zakat.ZakatCalculator
+import com.ritesh.cashiro.presentation.ui.features.zakat.dashboard.ZakatDashboardViewModel
 import com.ritesh.cashiro.presentation.ui.components.CustomTitleTopAppBar
 import com.ritesh.cashiro.presentation.ui.components.CashiroCard
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
 import com.ritesh.cashiro.utils.CurrencyFormatter
+import java.math.BigDecimal
 import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneOffset
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
 /**
- * Zakat calculator screen (Phase 2a).
+ * Zakat breakdown (Option A — replaces the old manual-entry calculator).
  *
- * Lets the user enter zakatable wealth (cash, gold, silver, investments,
- * debts), current gold/silver gram prices and the hawl start date, then
- * shows the nisab threshold, eligibility and the 2.5% zakat due — all in
- * the user's base currency unit (e.g. SAR or BDT).
+ * This screen computes NOTHING of its own: it is a read-only drill-down
+ * of the exact state the Zakat dashboard derived from the user's real
+ * Accounts + Assets ledger, so there is exactly one source of truth for
+ * the zakat figures. The only editable values here are the gold/silver
+ * gram prices (with live-fetch support and a manual-override badge) and
+ * the shared nisab-standard / calendar-convention settings.
  *
- * Since Phase 2b this screen is reached from the Zakat dashboard via the
- * [onNavigateBack] callback; the method and metal-price fields stay in
- * sync with the dashboard through the persisted zakat settings.
+ * The wealth inputs of the former standalone calculator were removed on
+ * purpose: re-typed cash/gold/silver/investment/debt figures could drift
+ * from the tracked data and produce a conflicting "zakat due" answer.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ZakatScreen(
     onNavigateBack: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
-    viewModel: ZakatViewModel = hiltViewModel()
+    viewModel: ZakatDashboardViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val refreshStatus by viewModel.metalRateRefreshStatus.collectAsStateWithLifecycle()
     val currencyCode = state.currencyCode
 
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
@@ -89,7 +86,7 @@ fun ZakatScreen(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CustomTitleTopAppBar(
-                title = stringResource(R.string.zakat_title),
+                title = stringResource(R.string.zakat_breakdown_title),
                 scrollBehaviorSmall = scrollBehaviorSmall,
                 scrollBehaviorLarge = scrollBehavior,
                 hasBackButton = onNavigateBack != null,
@@ -121,10 +118,9 @@ fun ZakatScreen(
             item {
                 Column {
                     Text(
-                        text = stringResource(R.string.zakat_tagline),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.onSurface
+                        text = stringResource(R.string.zakat_breakdown_note),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Spacer(modifier = Modifier.height(Spacing.xs))
                     Text(
@@ -135,89 +131,174 @@ fun ZakatScreen(
                 }
             }
 
+            // ----- Wealth pool breakdown (read-only, mirrors the dashboard) -----
             item {
-                HawlCard(
-                    state = state,
-                    onStartDateChange = viewModel::onHawlStartDateChange
-                )
+                BreakdownCard(state)
             }
 
+            // ----- Nisab comparison -----
             item {
-                WealthCard(
-                    state = state,
-                    onCashChange = viewModel::onCashChange,
-                    onGoldGramsChange = viewModel::onGoldGramsChange,
-                    onSilverGramsChange = viewModel::onSilverGramsChange,
-                    onInvestmentsChange = viewModel::onInvestmentsChange,
-                    onDebtsOwedChange = viewModel::onDebtsOwedChange
-                )
+                NisabCard(state)
             }
 
+            // ----- Hawl progress (pool mode detail) -----
+            item {
+                HawlCard(state)
+            }
+
+            // ----- Metal prices: live fetch + manual override -----
             item {
                 PricesCard(
                     state = state,
-                    onGoldPriceChange = viewModel::onGoldPriceChange,
-                    onSilverPriceChange = viewModel::onSilverPriceChange,
-                    onNisabMethodChange = viewModel::onNisabMethodChange,
-                    onCalendarModeChange = viewModel::onCalendarModeChange
+                    refreshStatus = refreshStatus,
+                    onGoldPriceChange = viewModel::setGoldPriceManual,
+                    onSilverPriceChange = viewModel::setSilverPriceManual,
+                    onRefreshRates = viewModel::refreshMetalRates,
+                    onNisabMethodChange = viewModel::setNisabMethod,
+                    onCalendarModeChange = viewModel::setCalendarMode
                 )
-            }
-
-            item {
-                ResultCard(state = state)
             }
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun HawlCard(
-    state: ZakatViewModel.UiState,
-    onStartDateChange: (LocalDate) -> Unit
-) {
-    var showDatePicker by remember { mutableStateOf(false) }
-    val dateFormatter = remember {
-        DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
-    }
-    val assessment = state.assessment
-
+private fun BreakdownCard(state: ZakatDashboardViewModel.UiState) {
     SectionCard {
         Text(
-            text = stringResource(R.string.zakat_hawl_section),
+            text = stringResource(R.string.zakat_wealth_section),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onSurface
         )
         Spacer(modifier = Modifier.height(Spacing.sm))
 
+        val breakdown = state.breakdown
+        if (!state.hasAnyData) {
+            Text(
+                text = stringResource(R.string.zakat_breakdown_no_data),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        } else {
+            BreakdownRow(
+                stringResource(R.string.zakat_dash_cash),
+                CurrencyFormatter.formatCurrency(breakdown.cash, state.currencyCode)
+            )
+            BreakdownRow(
+                stringResource(R.string.zakat_dash_gold),
+                CurrencyFormatter.formatCurrency(breakdown.gold, state.currencyCode)
+            )
+            BreakdownRow(
+                stringResource(R.string.zakat_dash_silver),
+                CurrencyFormatter.formatCurrency(breakdown.silver, state.currencyCode)
+            )
+            BreakdownRow(
+                stringResource(R.string.zakat_dash_other_assets),
+                CurrencyFormatter.formatCurrency(breakdown.otherAssets, state.currencyCode)
+            )
+            BreakdownRow(
+                stringResource(R.string.zakat_breakdown_deductions),
+                CurrencyFormatter.formatCurrency(breakdown.deductions, state.currencyCode)
+            )
+            BreakdownRow(
+                stringResource(R.string.zakat_net_wealth),
+                CurrencyFormatter.formatCurrency(breakdown.netWealth, state.currencyCode),
+                emphasized = true
+            )
+            Spacer(modifier = Modifier.height(Spacing.xs))
+            Text(
+                text = stringResource(
+                    R.string.zakat_breakdown_rate,
+                    state.appliedRate.toPlainString() + "%"
+                ),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            if (state.zakatDue.signum() > 0) {
+                Spacer(modifier = Modifier.height(Spacing.sm))
+                Text(
+                    text = stringResource(R.string.zakat_due),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Text(
+                    text = CurrencyFormatter.formatCurrency(state.zakatDue, state.currencyCode),
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun NisabCard(state: ZakatDashboardViewModel.UiState) {
+    SectionCard {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = stringResource(R.string.zakat_hawl_start),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Text(
-                    text = state.hawlStartDate.format(dateFormatter),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-            }
-            Spacer(modifier = Modifier.width(Spacing.sm))
-            Button(onClick = { showDatePicker = true }) {
-                Text(text = stringResource(R.string.zakat_select_date))
-            }
+            Text(
+                text = stringResource(R.string.zakat_dash_nisab_title),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            AssistChip(
+                onClick = {},
+                enabled = false,
+                label = {
+                    Text(
+                        stringResource(
+                            if (state.aboveNisab) {
+                                R.string.zakat_dash_above_nisab
+                            } else {
+                                R.string.zakat_dash_below_nisab
+                            }
+                        )
+                    )
+                }
+            )
         }
+        Spacer(modifier = Modifier.height(Spacing.sm))
+        BreakdownRow(
+            stringResource(R.string.zakat_nisab_value),
+            CurrencyFormatter.formatCurrency(state.appliedNisabValue, state.currencyCode)
+        )
+        BreakdownRow(
+            stringResource(R.string.zakat_nisab_gold),
+            CurrencyFormatter.formatCurrency(state.goldNisabValue, state.currencyCode)
+        )
+        BreakdownRow(
+            stringResource(R.string.zakat_nisab_silver),
+            CurrencyFormatter.formatCurrency(state.silverNisabValue, state.currencyCode)
+        )
+    }
+}
 
-        assessment?.let { result ->
-            Spacer(modifier = Modifier.height(Spacing.md))
-            val fraction = if (result.hawlDaysInYear > 0) {
-                (result.hawlDaysElapsed.toFloat() / result.hawlDaysInYear).coerceIn(0f, 1f)
+@Composable
+private fun HawlCard(state: ZakatDashboardViewModel.UiState) {
+    SectionCard {
+        Text(
+            text = stringResource(R.string.zakat_dash_hawl_title),
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onSurface
+        )
+        Spacer(modifier = Modifier.height(Spacing.sm))
+
+        if (state.crossingDate == null) {
+            Text(
+                text = stringResource(R.string.zakat_dash_no_active_hawl),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        } else {
+            val fraction = if (state.hawlDaysInYear > 0) {
+                (state.hawlDaysElapsed.toFloat() / state.hawlDaysInYear).coerceIn(0f, 1f)
             } else 0f
             LinearProgressIndicator(
                 progress = { fraction },
@@ -227,121 +308,65 @@ private fun HawlCard(
             Text(
                 text = stringResource(
                     R.string.zakat_hawl_progress,
-                    result.hawlDaysElapsed,
-                    result.hawlDaysInYear
+                    state.hawlDaysElapsed,
+                    state.hawlDaysInYear
                 ),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Spacer(modifier = Modifier.height(Spacing.xs))
             Text(
-                text = if (result.hawlComplete) {
+                text = if (state.hawlComplete) {
                     stringResource(R.string.zakat_hawl_complete)
                 } else {
                     stringResource(R.string.zakat_hawl_in_progress)
                 },
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.SemiBold,
-                color = if (result.hawlComplete) {
+                color = if (state.hawlComplete) {
                     MaterialTheme.colorScheme.primary
                 } else {
                     MaterialTheme.colorScheme.onSurfaceVariant
                 }
             )
-        }
-    }
-
-    if (showDatePicker) {
-        val datePickerState = rememberDatePickerState(
-            initialSelectedDateMillis = state.hawlStartDate
-                .atStartOfDay(ZoneOffset.UTC)
-                .toInstant()
-                .toEpochMilli()
-        )
-        DatePickerDialog(
-            onDismissRequest = { showDatePicker = false },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        datePickerState.selectedDateMillis?.let { millis ->
-                            val picked = Instant.ofEpochMilli(millis)
-                                .atZone(ZoneOffset.UTC)
-                                .toLocalDate()
-                            onStartDateChange(picked)
-                        }
-                        showDatePicker = false
-                    }
-                ) {
-                    Text(text = stringResource(android.R.string.ok))
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showDatePicker = false }) {
-                    Text(text = stringResource(android.R.string.cancel))
-                }
+            Spacer(modifier = Modifier.height(Spacing.xs))
+            Text(
+                text = stringResource(
+                    R.string.zakat_dash_crossing_date,
+                    state.crossingDate.format(
+                        DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+                    )
+                ),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            state.projectedCompletionDate?.let { projected ->
+                Text(
+                    text = stringResource(
+                        R.string.zakat_dash_projected_completion,
+                        projected.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
+                    ),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
-        ) {
-            DatePicker(state = datePickerState)
         }
     }
 }
 
-@Composable
-private fun WealthCard(
-    state: ZakatViewModel.UiState,
-    onCashChange: (String) -> Unit,
-    onGoldGramsChange: (String) -> Unit,
-    onSilverGramsChange: (String) -> Unit,
-    onInvestmentsChange: (String) -> Unit,
-    onDebtsOwedChange: (String) -> Unit
-) {
-    SectionCard {
-        Text(
-            text = stringResource(R.string.zakat_wealth_section),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onSurface
-        )
-        Spacer(modifier = Modifier.height(Spacing.sm))
-        Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
-            AmountField(
-                label = stringResource(R.string.zakat_cash),
-                value = state.cash,
-                onValueChange = onCashChange
-            )
-            AmountField(
-                label = stringResource(R.string.zakat_gold_grams),
-                value = state.goldGrams,
-                onValueChange = onGoldGramsChange
-            )
-            AmountField(
-                label = stringResource(R.string.zakat_silver_grams),
-                value = state.silverGrams,
-                onValueChange = onSilverGramsChange
-            )
-            AmountField(
-                label = stringResource(R.string.zakat_investments),
-                value = state.investments,
-                onValueChange = onInvestmentsChange
-            )
-            AmountField(
-                label = stringResource(R.string.zakat_debts),
-                value = state.debtsOwed,
-                onValueChange = onDebtsOwedChange
-            )
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun PricesCard(
-    state: ZakatViewModel.UiState,
+    state: ZakatDashboardViewModel.UiState,
+    refreshStatus: ZakatDashboardViewModel.MetalRateRefreshStatus,
     onGoldPriceChange: (String) -> Unit,
     onSilverPriceChange: (String) -> Unit,
+    onRefreshRates: () -> Unit,
     onNisabMethodChange: (ZakatCalculator.NisabMethod) -> Unit,
-    onCalendarModeChange: (ZakatCalculator.CalendarMode) -> Unit = {}
+    onCalendarModeChange: (ZakatCalculator.CalendarMode) -> Unit
 ) {
+    val timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
+    val zone = ZoneId.systemDefault()
+
     SectionCard {
         Text(
             text = stringResource(R.string.zakat_prices_section),
@@ -351,16 +376,57 @@ private fun PricesCard(
         )
         Spacer(modifier = Modifier.height(Spacing.sm))
         Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
-            AmountField(
+            PriceField(
                 label = stringResource(R.string.zakat_gold_price),
                 value = state.goldPricePerGram,
+                updatedAt = state.goldPriceUpdatedAt,
+                isManual = state.goldPriceIsManual,
+                timeFormatter = timeFormatter,
+                zone = zone,
                 onValueChange = onGoldPriceChange
             )
-            AmountField(
+            PriceField(
                 label = stringResource(R.string.zakat_silver_price),
                 value = state.silverPricePerGram,
+                updatedAt = state.silverPriceUpdatedAt,
+                isManual = state.silverPriceIsManual,
+                timeFormatter = timeFormatter,
+                zone = zone,
                 onValueChange = onSilverPriceChange
             )
+        }
+
+        Spacer(modifier = Modifier.height(Spacing.xs))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            when (refreshStatus) {
+                ZakatDashboardViewModel.MetalRateRefreshStatus.Idle -> {}
+                ZakatDashboardViewModel.MetalRateRefreshStatus.Refreshing -> Text(
+                    text = stringResource(R.string.zakat_rates_refreshing),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                ZakatDashboardViewModel.MetalRateRefreshStatus.Succeeded -> Text(
+                    text = stringResource(R.string.zakat_rates_refreshed),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                ZakatDashboardViewModel.MetalRateRefreshStatus.Failed -> Text(
+                    text = stringResource(R.string.zakat_rates_refresh_failed),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+            TextButton(
+                onClick = onRefreshRates,
+                enabled = refreshStatus !=
+                    ZakatDashboardViewModel.MetalRateRefreshStatus.Refreshing
+            ) {
+                Text(stringResource(R.string.zakat_refresh_rates))
+            }
         }
 
         Spacer(modifier = Modifier.height(Spacing.md))
@@ -406,95 +472,71 @@ private fun PricesCard(
                 label = { Text(stringResource(R.string.zakat_calendar_solar)) }
             )
         }
-
-        state.assessment?.let { result ->
-            Spacer(modifier = Modifier.height(Spacing.sm))
-            Text(
-                text = stringResource(
-                    R.string.zakat_gold_nisab_value,
-                    CurrencyFormatter.formatCurrency(result.goldNisabValue, state.currencyCode)
-                ),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            Text(
-                text = stringResource(
-                    R.string.zakat_silver_nisab_value,
-                    CurrencyFormatter.formatCurrency(result.silverNisabValue, state.currencyCode)
-                ),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
     }
 }
 
 @Composable
-private fun ResultCard(state: ZakatViewModel.UiState) {
-    val result = state.assessment ?: return
-    val currencyCode = state.currencyCode
-
-    SectionCard(
-        containerColor = MaterialTheme.colorScheme.primaryContainer
-    ) {
-        Text(
-            text = stringResource(R.string.zakat_result_section),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onPrimaryContainer
-        )
-        Spacer(modifier = Modifier.height(Spacing.sm))
-
-        ResultRow(
-            label = stringResource(R.string.zakat_nisab_value),
-            value = CurrencyFormatter.formatCurrency(result.appliedNisabValue, currencyCode),
-            onContainer = true
-        )
-        ResultRow(
-            label = stringResource(R.string.zakat_net_wealth),
-            value = CurrencyFormatter.formatCurrency(result.netWealth, currencyCode),
-            onContainer = true
-        )
-
-        Spacer(modifier = Modifier.height(Spacing.md))
-        when {
-            result.eligible -> {
-                Text(
-                    text = stringResource(R.string.zakat_due),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
-                )
-                Spacer(modifier = Modifier.height(Spacing.xs))
-                Text(
-                    text = CurrencyFormatter.formatCurrency(result.zakatDue, currencyCode),
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
-                )
-            }
-            result.netWealth < result.appliedNisabValue -> {
-                Text(
-                    text = stringResource(R.string.zakat_below_nisab),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
-                )
-            }
-            else -> {
-                Text(
-                    text = stringResource(R.string.zakat_hawl_in_progress),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun ResultRow(
+private fun PriceField(
     label: String,
     value: String,
-    onContainer: Boolean
+    updatedAt: Long,
+    isManual: Boolean,
+    timeFormatter: DateTimeFormatter,
+    zone: ZoneId,
+    onValueChange: (String) -> Unit
+) {
+    Column {
+        OutlinedTextField(
+            value = value,
+            onValueChange = { input ->
+                if (input.matches(Regex("^\\d*[.,]?\\d*$"))) {
+                    onValueChange(input)
+                }
+            },
+            label = { Text(label) },
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+            modifier = Modifier.fillMaxWidth()
+        )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = if (isManual) {
+                    stringResource(R.string.zakat_rates_manual)
+                } else {
+                    stringResource(R.string.zakat_rates_live)
+                },
+                style = MaterialTheme.typography.labelSmall,
+                fontWeight = FontWeight.SemiBold,
+                color = if (isManual) {
+                    MaterialTheme.colorScheme.tertiary
+                } else {
+                    MaterialTheme.colorScheme.primary
+                }
+            )
+            Spacer(modifier = Modifier.width(Spacing.sm))
+            Text(
+                text = if (updatedAt != 0L) {
+                    stringResource(
+                        R.string.zakat_rates_last_updated,
+                        Instant.ofEpochMilli(updatedAt)
+                            .atZone(zone)
+                            .format(timeFormatter)
+                    )
+                } else {
+                    stringResource(R.string.zakat_rates_never_updated)
+                },
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    }
+}
+
+@Composable
+private fun BreakdownRow(
+    label: String,
+    value: String,
+    emphasized: Boolean = false
 ) {
     Row(
         modifier = Modifier
@@ -505,8 +547,9 @@ private fun ResultRow(
         Text(
             text = label,
             style = MaterialTheme.typography.bodyMedium,
-            color = if (onContainer) {
-                MaterialTheme.colorScheme.onPrimaryContainer
+            fontWeight = if (emphasized) FontWeight.SemiBold else FontWeight.Normal,
+            color = if (emphasized) {
+                MaterialTheme.colorScheme.onSurface
             } else {
                 MaterialTheme.colorScheme.onSurfaceVariant
             }
@@ -515,12 +558,8 @@ private fun ResultRow(
         Text(
             text = value,
             style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.SemiBold,
-            color = if (onContainer) {
-                MaterialTheme.colorScheme.onPrimaryContainer
-            } else {
-                MaterialTheme.colorScheme.onSurface
-            }
+            fontWeight = if (emphasized) FontWeight.Bold else FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.onSurface
         )
     }
 }
@@ -531,7 +570,7 @@ private fun SectionCard(
     content: @Composable ColumnScope.() -> Unit
 ) {
     // Uses the shared CashiroCard language (theme shape + surfaceContainerLow)
-    // so the Zakat calculator matches the rest of the app.
+    // so the Zakat breakdown matches the rest of the app.
     CashiroCard(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = containerColor)
@@ -542,24 +581,4 @@ private fun SectionCard(
             content()
         }
     }
-}
-
-@Composable
-private fun AmountField(
-    label: String,
-    value: String,
-    onValueChange: (String) -> Unit
-) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = { input ->
-            if (input.matches(Regex("^\\d*[.,]?\\d*$"))) {
-                onValueChange(input)
-            }
-        },
-        label = { Text(label) },
-        singleLine = true,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-        modifier = Modifier.fillMaxWidth()
-    )
 }
