@@ -27,6 +27,15 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
+      # The setup action's license acceptance can hit EOF on newer
+      # cmdline-tools, leaving 7 of 8 licenses unaccepted — Gradle's
+      # auto-install of platforms;android-36 then fails. Accept
+      # explicitly and pre-install the components compileSdk 36 needs.
+      - name: Accept SDK licenses and install components
+        run: |
+          yes | sdkmanager --licenses > /dev/null || true
+          sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+
       - name: Cache Gradle packages
         uses: actions/cache@v4
         with:
