@@ -1,0 +1,60 @@
+name: Build APK (debug-signed artifact)
+
+# Manual, per-branch APK build for testing. This does NOT create a GitHub
+# Release or a tag — use the existing `release.yml` flow for real releases
+# (it must run on main). With no keystore secrets present, the app module's
+# signing config falls back to debug signing, producing an installable APK.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  apk:
+    name: Assemble standard release APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build standard release APK (debug-sign fallback)
+        env:
+          GRADLE_OPTS: -Dorg.gradle.jvmargs="-Xmx6G"
+        run: ./gradlew assembleStandardRelease --no-daemon
+
+      - name: Upload universal APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Cashiro-standard-release-universal
+          path: app/build/outputs/apk/standard/release/app-standard-universal-release.apk
+          if-no-files-found: error
+
+      - name: Upload arm64 APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Cashiro-standard-release-arm64-v8a
+          path: app/build/outputs/apk/standard/release/app-standard-arm64-v8a-release.apk
+          if-no-files-found: ignore
