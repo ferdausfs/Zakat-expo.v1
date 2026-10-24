@@ -66,6 +66,7 @@ import com.ritesh.cashiro.presentation.ui.components.CustomTitleTopAppBar
 import com.ritesh.cashiro.presentation.ui.components.CashiroCard
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
 import com.ritesh.cashiro.utils.CurrencyFormatter
+import com.ritesh.cashiro.utils.DecimalParsing
 import java.math.BigDecimal
 import java.time.Instant
 import java.time.LocalDate
@@ -450,7 +451,8 @@ private fun AssetEditorSheet(
             OutlinedTextField(
                 value = quantity,
                 onValueChange = { input ->
-                    if (input.matches(Regex("^\\d*[.,]?\\d*$"))) quantity = input
+                    // Z-17: strict amount shape (blocks "1,500"-style input).
+                    if (DecimalParsing.isValidAmountInput(input)) quantity = input
                 },
                 label = { Text(stringResource(R.string.zakat_asset_quantity)) },
                 singleLine = true,
@@ -509,7 +511,8 @@ private fun AssetEditorSheet(
             OutlinedTextField(
                 value = estimatedValue,
                 onValueChange = { input ->
-                    if (input.matches(Regex("^\\d*[.,]?\\d*$"))) estimatedValue = input
+                    // Z-17: strict amount shape (blocks "1,500"-style input).
+                    if (DecimalParsing.isValidAmountInput(input)) estimatedValue = input
                 },
                 label = {
                     Text(
@@ -692,9 +695,14 @@ private fun AssetEditorSheet(
             }
             Button(
                 onClick = {
-                    val qty = quantity.toBigDecimalOrNull()?.max(BigDecimal.ZERO)
-                        ?: BigDecimal.ONE
-                    val value = estimatedValue.toBigDecimalOrNull()
+                    // Z-17: strict parsing — an invalid quantity can never
+                    // silently become ONE (the old fallback fabricated an
+                    // asset out of unparseable input); the save button is
+                    // disabled unless the field parses, so ZERO here is a
+                    // defensive floor only.
+                    val qty = DecimalParsing.parseUserDecimal(quantity)
+                        ?: BigDecimal.ZERO
+                    val value = DecimalParsing.parseUserDecimal(estimatedValue)
                     val entity = (initial ?: ZakatAssetEntity()).copy(
                         type = type,
                         name = name.trim(),
@@ -713,7 +721,11 @@ private fun AssetEditorSheet(
                     onSave(entity)
                 },
                 enabled = name.isNotBlank() &&
-                    (isMetal || (estimatedValue.toBigDecimalOrNull() != null))
+                    (if (isMetal) {
+                        DecimalParsing.parseUserDecimal(quantity) != null
+                    } else {
+                        DecimalParsing.parseUserDecimal(estimatedValue) != null
+                    })
             ) {
                 Text(stringResource(R.string.zakat_asset_save))
             }

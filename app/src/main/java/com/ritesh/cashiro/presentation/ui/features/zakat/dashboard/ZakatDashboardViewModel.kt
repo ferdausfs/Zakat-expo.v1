@@ -11,6 +11,7 @@ import com.ritesh.cashiro.data.repository.ZakatRepository
 import com.ritesh.cashiro.domain.zakat.WealthPoolCalculator
 import com.ritesh.cashiro.domain.zakat.ZakatCalculator
 import com.ritesh.cashiro.domain.zakat.ZakatMadhhab
+import com.ritesh.cashiro.utils.DecimalParsing
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -117,7 +118,14 @@ class ZakatDashboardViewModel @Inject constructor(
         /** Accounts tagged as holding Amanat money (excluded from pool). */
         val amanatAccountKeys: Set<String> = emptySet(),
         /** All known accounts, so Amanat tagging UI can list them. */
-        val knownAccounts: List<Pair<String, String>> = emptyList()
+        val knownAccounts: List<Pair<String, String>> = emptyList(),
+        /**
+         * Z-02: true when the nisab method's metal price is blank/zero.
+         * The dashboard must show a "set price" prompt and hold back
+         * eligibility, hawl and zakat-due instead of computing them from
+         * a fake nisab (the old code coerced a zero price to 1).
+         */
+        val metalPriceMissing: Boolean = false
     )
 
     private data class PoolInputs(
@@ -306,6 +314,19 @@ class ZakatDashboardViewModel @Inject constructor(
         val silverPrice = parseAmount(silverPriceRaw)
         val today = LocalDate.now()
 
+        // Z-02: a blank/zero price for the applied nisab metal must never
+        // become a fake nisab (the old code coerced the price to 1, which
+        // reported a nisab of ~87 currency units, made every balance look
+        // above-nisab and silently started a hawl). Detect the gap
+        // explicitly and pause all nisab-derived conclusions until the
+        // user sets a price.
+        val goldPriceMissing = goldPrice.signum() <= 0
+        val silverPriceMissing = silverPrice.signum() <= 0
+        val metalPriceMissing = when (method) {
+            ZakatCalculator.NisabMethod.GOLD -> goldPriceMissing
+            ZakatCalculator.NisabMethod.SILVER -> silverPriceMissing
+        }
+
         val breakdown = WealthPoolCalculator.currentBreakdown(
             latestBalances = latestPerAccount(balances),
             assets = assets,
@@ -316,12 +337,20 @@ class ZakatDashboardViewModel @Inject constructor(
             liabilities = liabilities
         )
 
-        val goldNisab = ZakatCalculator.nisabValue(
-            goldPrice.coerceAtLeast(BigDecimal.ONE), ZakatCalculator.GOLD_NISAB_GRAMS
-        )
-        val silverNisab = ZakatCalculator.nisabValue(
-            silverPrice.coerceAtLeast(BigDecimal.ONE), ZakatCalculator.SILVER_NISAB_GRAMS
-        )
+        // Z-02: a missing price yields a ZERO nisab (rendered as "not set"
+        // by the UI) instead of a fake nisab computed from a coerced
+        // price of 1. The non-applied metal's nisab is display-only but
+        // gets the same honest treatment.
+        val goldNisab = if (goldPriceMissing) {
+            BigDecimal.ZERO
+        } else {
+            ZakatCalculator.nisabValue(goldPrice, ZakatCalculator.GOLD_NISAB_GRAMS)
+        }
+        val silverNisab = if (silverPriceMissing) {
+            BigDecimal.ZERO
+        } else {
+            ZakatCalculator.nisabValue(silverPrice, ZakatCalculator.SILVER_NISAB_GRAMS)
+        }
         val appliedNisab = when (method) {
             ZakatCalculator.NisabMethod.GOLD -> goldNisab
             ZakatCalculator.NisabMethod.SILVER -> silverNisab
@@ -348,7 +377,19 @@ class ZakatDashboardViewModel @Inject constructor(
             madhhab = madhhab,
             dailyDeduction = breakdown.deductions
         )
-        val crossing = WealthPoolCalculator.detectNisabCrossing(series, appliedNisab)
+        // Z-02: without a real price there is no meaningful nisab to scan
+        // against — report "no crossing" instead of scanning against the
+        // fake coerced nisab (which started hawls out of thin air).
+        val crossing = if (metalPriceMissing) {
+            WealthPoolCalculator.NisabCrossing(
+                activeHawlStart = null,
+                currentlyAboveNisab = false,
+                firstEverCrossing = null,
+                segments = emptyList()
+            )
+        } else {
+            WealthPoolCalculator.detectNisabCrossing(series, appliedNisab)
+        }
 
         val hawlStart = crossing.activeHawlStart
         val status = hawlStart?.let { ZakatCalculator.hawlStatus(it, today, calendarMode) }
@@ -365,7 +406,8 @@ class ZakatDashboardViewModel @Inject constructor(
         // hawl complete, and net wealth ≥ applied nisab right now.
         val netAboveNisab = breakdown.netWealth >= appliedNisab
         val rate = calendarMode.rate
-        val eligible = crossing.currentlyAboveNisab &&
+        val eligible = !metalPriceMissing &&
+            crossing.currentlyAboveNisab &&
             (status?.complete == true) && netAboveNisab
 
         // Transparent derivation (spec 11.1): every included category, the
@@ -471,7 +513,8 @@ class ZakatDashboardViewModel @Inject constructor(
             appliedRate = rate,
             deductions = breakdown.deductions,
             amanatAccountKeys = amanatAccountKeys,
-            knownAccounts = knownAccounts
+            knownAccounts = knownAccounts,
+            metalPriceMissing = metalPriceMissing
         )
     }
 
@@ -525,20 +568,21 @@ class ZakatDashboardViewModel @Inject constructor(
             ZakatMadhhab.MAINSTREAM
         }
 
-    private fun parseAmount(raw: String): BigDecimal {
-        if (raw.isBlank()) return BigDecimal.ZERO
-        return try {
-            BigDecimal(raw.trim()).max(BigDecimal.ZERO)
-        } catch (e: NumberFormatException) {
-            BigDecimal.ZERO
-        }
-    }
-
     companion object {
         /** Row id used for the synthetic cash row in per-asset mode. */
         const val CASH_PSEUDO_ID = -1L
 
         /** History window: two years covers hawl resets comfortably. */
         const val HISTORY_WINDOW_DAYS = 730L
+
+        /**
+         * Z-17: strict user-amount parsing for stored price strings.
+         * "2,5" parses as 2.5 (trailing decimal comma); ambiguous inputs
+         * ("1,500", "1,50,000") are INVALID and map to ZERO — never to a
+         * silently different value. buildState treats ZERO as "price not
+         * set" (see [UiState.metalPriceMissing]).
+         */
+        fun parseAmount(raw: String): BigDecimal =
+            DecimalParsing.parseUserDecimal(raw) ?: BigDecimal.ZERO
     }
 }

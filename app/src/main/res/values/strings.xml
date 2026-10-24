@@ -47,6 +47,8 @@
     <string name="zakat_dash_gap_below">Wealth is below nisab by %1$s</string>
     <string name="zakat_dash_prices_line">Prices per gram — gold: %1$s, silver: %2$s</string>
     <string name="zakat_dash_price_not_set">not set</string>
+    <string name="zakat_dash_nisab_price_missing_line">Nisab threshold: not set — metal price missing</string>
+    <string name="zakat_dash_price_missing_prompt">Set the gold/silver prices to compute nisab. Eligibility, hawl and zakat due stay paused until a price is set.</string>
     <string name="zakat_dash_edit_prices">Edit prices &amp; method</string>
     <string name="zakat_dash_hawl_title">Hawl progress</string>
     <string name="zakat_dash_mode_pool">Combined pool</string>

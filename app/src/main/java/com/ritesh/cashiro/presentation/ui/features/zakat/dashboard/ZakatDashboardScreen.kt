@@ -206,7 +206,11 @@ fun ZakatDashboardScreen(
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold
                         )
-                        NisabBadge(above = state.aboveNisab)
+                        if (!state.metalPriceMissing) {
+                            // Z-02: with no price the badge would read
+                            // "below nisab" — hide it while paused.
+                            NisabBadge(above = state.aboveNisab)
+                        }
                     }
                     Spacer(modifier = Modifier.height(Spacing.sm))
                     Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
@@ -223,28 +227,44 @@ fun ZakatDashboardScreen(
                     }
                     Spacer(modifier = Modifier.height(Spacing.sm))
                     Text(
-                        text = stringResource(
-                            R.string.zakat_dash_nisab_value_line,
-                            CurrencyFormatter.formatCurrency(state.appliedNisabValue, currencyCode)
-                        ),
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    val gap = state.breakdown.total - state.appliedNisabValue
-                    Text(
-                        text = if (state.aboveNisab) {
-                            stringResource(
-                                R.string.zakat_dash_gap_above,
-                                CurrencyFormatter.formatCurrency(gap, currencyCode)
-                            )
+                        text = if (state.metalPriceMissing) {
+                            // Z-02: no honest nisab exists without a price.
+                            stringResource(R.string.zakat_dash_nisab_price_missing_line)
                         } else {
                             stringResource(
-                                R.string.zakat_dash_gap_below,
-                                CurrencyFormatter.formatCurrency(gap.abs(), currencyCode)
+                                R.string.zakat_dash_nisab_value_line,
+                                CurrencyFormatter.formatCurrency(state.appliedNisabValue, currencyCode)
                             )
                         },
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        style = MaterialTheme.typography.bodyMedium
                     )
+                    if (state.metalPriceMissing) {
+                        // Z-02: hold back the gap line and tell the user why
+                        // eligibility / hawl / zakat-due are paused.
+                        Text(
+                            text = stringResource(R.string.zakat_dash_price_missing_prompt),
+                            style = MaterialTheme.typography.bodySmall,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    } else {
+                        val gap = state.breakdown.total - state.appliedNisabValue
+                        Text(
+                            text = if (state.aboveNisab) {
+                                stringResource(
+                                    R.string.zakat_dash_gap_above,
+                                    CurrencyFormatter.formatCurrency(gap, currencyCode)
+                                )
+                            } else {
+                                stringResource(
+                                    R.string.zakat_dash_gap_below,
+                                    CurrencyFormatter.formatCurrency(gap.abs(), currencyCode)
+                                )
+                            },
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                     Spacer(modifier = Modifier.height(Spacing.xs))
                     Text(
                         text = stringResource(

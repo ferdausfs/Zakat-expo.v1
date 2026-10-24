@@ -65,6 +65,7 @@ import com.ritesh.cashiro.data.repository.ZakatRepository
 import com.ritesh.cashiro.domain.zakat.LivestockCalculator
 import com.ritesh.cashiro.domain.zakat.UshrCalculator
 import com.ritesh.cashiro.domain.zakat.ZakatulFitrCalculator
+import com.ritesh.cashiro.utils.DecimalParsing
 import com.ritesh.cashiro.presentation.ui.components.CustomTitleTopAppBar
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
 import com.ritesh.cashiro.utils.CurrencyFormatter
@@ -200,7 +201,9 @@ internal fun ModuleEmptyHint(text: String) {
 }
 
 private fun amountFilter(input: String, onChange: (String) -> Unit) {
-    if (input.matches(Regex("^\\d*[.,]?\\d*$"))) onChange(input)
+    // Z-17: strict amount shape — blocks "1,500"-style grouped input while
+    // typing; trailing decimal commas ("2,5", "85,50") remain possible.
+    if (DecimalParsing.isValidAmountInput(input)) onChange(input)
 }
 
 // =====================================================================
@@ -996,9 +999,9 @@ fun FitrScreen(
                                 FitrEntryEntity(
                                     yearLabel = yearLabel.trim(),
                                     stapleName = staple.trim(),
-                                    pricePerKg = price.toBigDecimalOrNull()
-                                        ?.max(BigDecimal.ZERO) ?: BigDecimal.ZERO,
-                                    kgPerPerson = kgPerPerson.toBigDecimalOrNull()
+                                    pricePerKg = DecimalParsing.parseUserDecimal(price)
+                                        ?: BigDecimal.ZERO,
+                                    kgPerPerson = DecimalParsing.parseUserDecimal(kgPerPerson)
                                         ?.max(BigDecimal("0.1"))
                                         ?: ZakatulFitrCalculator.DEFAULT_KG_PER_PERSON,
                                     householdCount = household.toIntOrNull()
@@ -1007,7 +1010,7 @@ fun FitrScreen(
                             )
                             showEditor = false
                         },
-                        enabled = price.toBigDecimalOrNull() != null &&
+                        enabled = DecimalParsing.parseUserDecimal(price) != null &&
                             (household.toIntOrNull() ?: 0) > 0
                     ) {
                         Text(stringResource(R.string.zakat_asset_save))

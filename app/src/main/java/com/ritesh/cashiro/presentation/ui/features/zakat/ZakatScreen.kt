@@ -48,6 +48,7 @@ import com.ritesh.cashiro.presentation.ui.components.CustomTitleTopAppBar
 import com.ritesh.cashiro.presentation.ui.components.CashiroCard
 import com.ritesh.cashiro.presentation.ui.theme.Spacing
 import com.ritesh.cashiro.utils.CurrencyFormatter
+import com.ritesh.cashiro.utils.DecimalParsing
 import java.math.BigDecimal
 import java.time.Instant
 import java.time.ZoneId
@@ -489,7 +490,10 @@ private fun PriceField(
         OutlinedTextField(
             value = value,
             onValueChange = { input ->
-                if (input.matches(Regex("^\\d*[.,]?\\d*$"))) {
+                // Z-17: block a second separator / a third decimal digit
+                // while typing so ambiguous amounts ("1,500") can never be
+                // entered; trailing decimal commas ("2,5") remain possible.
+                if (DecimalParsing.isValidAmountInput(input)) {
                     onValueChange(input)
                 }
             },
