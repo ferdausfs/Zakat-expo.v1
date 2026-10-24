@@ -88,10 +88,6 @@ class MetalRateService @Inject constructor(
             null
         } ?: return MetalRateRefreshResult(fetched = false, applied = false)
 
-        // The provider fetch succeeded — record it so the auto cadence
-        // stays at most once per day (independent of per-metal writes).
-        userPreferencesRepository.setZakatMetalLastFetchAt(spot.fetchedAtMs)
-
         val goldManual = userPreferencesRepository.zakatGoldPriceIsManual.first()
         val silverManual = userPreferencesRepository.zakatSilverPriceIsManual.first()
 
@@ -130,6 +126,19 @@ class MetalRateService @Inject constructor(
             } else {
                 silverConversionFailed = true
             }
+        }
+
+        // Z-09: the once-per-day last-fetch stamp is recorded ONLY when
+        // the provider fetch succeeded AND every attempted conversion
+        // succeeded. A manual skip is not an attempt — it counts as OK, so
+        // a refresh where both metals are skipped still stamps the fetch
+        // and the dashboard does not re-hit the network on every open.
+        // A FAILED attempted conversion leaves the stamp untouched so the
+        // next dashboard open retries the fetch until real prices land
+        // (the old code stamped right after the fetch, freezing a
+        // failed/missing conversion for a full day).
+        if (!goldConversionFailed && !silverConversionFailed) {
+            userPreferencesRepository.setZakatMetalLastFetchAt(spot.fetchedAtMs)
         }
 
         return MetalRateRefreshResult(
