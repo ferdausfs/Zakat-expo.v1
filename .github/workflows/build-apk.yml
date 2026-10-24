@@ -24,15 +24,16 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      # The setup action's license acceptance can hit EOF on newer
-      # cmdline-tools, leaving 7 of 8 licenses unaccepted — Gradle's
-      # auto-install of platforms;android-36 then fails. Accept
-      # explicitly and pre-install the components compileSdk 36 needs.
+      # NOTE: android-actions/setup-android@v3 currently breaks on newer
+      # runner images (it force-installs the obsolete "tools" package and
+      # exits 1). The ubuntu-latest image already ships the Android SDK
+      # under ANDROID_HOME, so we only need licenses + the compileSdk 36
+      # components — no setup action required.
       - name: Accept SDK licenses and install components
         run: |
+          if ! command -v sdkmanager > /dev/null; then
+            export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
+          fi
           yes | sdkmanager --licenses > /dev/null || true
           sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
 
