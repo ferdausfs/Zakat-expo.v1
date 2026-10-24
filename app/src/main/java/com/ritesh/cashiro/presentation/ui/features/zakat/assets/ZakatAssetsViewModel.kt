@@ -9,6 +9,7 @@ import com.ritesh.cashiro.data.preferences.UserPreferencesRepository
 import com.ritesh.cashiro.data.repository.ZakatRepository
 import com.ritesh.cashiro.domain.zakat.WealthPoolCalculator
 import com.ritesh.cashiro.domain.zakat.ZakatCalculator
+import com.ritesh.cashiro.utils.DecimalParsing
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.math.BigDecimal
 import java.time.LocalDate
@@ -95,12 +96,9 @@ class ZakatAssetsViewModel @Inject constructor(
         viewModelScope.launch { zakatRepository.deleteAsset(id) }
     }
 
-    private fun parseAmount(raw: String): BigDecimal {
-        if (raw.isBlank()) return BigDecimal.ZERO
-        return try {
-            BigDecimal(raw.trim()).max(BigDecimal.ZERO)
-        } catch (e: NumberFormatException) {
-            BigDecimal.ZERO
-        }
-    }
+    // Z-17: strict parsing — ambiguous input ("1,500") maps to ZERO (metal
+    // assets then value at zero and the dashboard shows its price-missing
+    // prompt) instead of a silently different number.
+    private fun parseAmount(raw: String): BigDecimal =
+        DecimalParsing.parseUserDecimal(raw) ?: BigDecimal.ZERO
 }

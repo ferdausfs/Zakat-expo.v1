@@ -84,6 +84,8 @@ class MetalRateServiceTest {
 
         // User types a manual gold price (e.g. their local bazaar rate).
         preferences.setZakatGoldPriceManual("7777", base - 1000)
+        // Stale cadence stamp so the auto refresh deterministically runs.
+        preferences.setZakatMetalLastFetchAt(base - 2 * MetalRateService.AUTO_REFRESH_INTERVAL_MS)
 
         // Later, the once-per-day auto refresh runs:
         val auto = service.maybeAutoRefresh(baseCurrency = "USD", nowMs = base)
@@ -96,6 +98,9 @@ class MetalRateServiceTest {
         assertEquals("7777", preferences.zakatGoldPricePerGram.first())
         assertTrue(preferences.zakatGoldPriceIsManual.first())
         assertEquals("1", preferences.zakatSilverPricePerGram.first())
+        // Z-09: gold was skipped (manual), silver was stored — no attempted
+        // conversion failed, so the fetch timestamp MUST be recorded.
+        assertEquals(NOW, preferences.zakatMetalLastFetchAt.first())
 
         // User taps "Refresh rates" — the explicit action DOES overwrite.
         val forced = service.refresh(force = true, baseCurrency = "USD")
@@ -124,6 +129,10 @@ class MetalRateServiceTest {
         val base = T4
 
         preferences.setZakatGoldPriceAuto("9999", base - 5000)
+        // Z-09: seed a stale fetch stamp — a failed refresh must leave it
+        // untouched (the old code overwrote it right after the fetch).
+        val staleStamp = base - 12345
+        preferences.setZakatMetalLastFetchAt(staleStamp)
         val result = service.refresh(force = true, baseCurrency = "BDT")
 
         assertTrue(result.fetched)
@@ -132,6 +141,63 @@ class MetalRateServiceTest {
         // The gold value that could not be converted is untouched.
         assertEquals("9999", preferences.zakatGoldPricePerGram.first())
         assertEquals(base - 5000, preferences.zakatGoldPriceUpdatedAt.first())
+        // Z-09: attempted conversions failed and nothing was stored — the
+        // last-fetch stamp must NOT be written, so the next dashboard open
+        // retries instead of freezing the failure for a day.
+        assertEquals(staleStamp, preferences.zakatMetalLastFetchAt.first())
+    }
+
+    @Test
+    fun `both metals manual skipped still records the fetch timestamp`() = runBlocking {
+        // Z-09 regression guard: with both metals under manual override the
+        // auto refresh attempts NO conversion. Manual skips are OK, so the
+        // timestamp MUST be written — otherwise every dashboard open would
+        // re-trigger the network fetch until the overrides are cleared.
+        val service = MetalRateService(onlineProvider, failingConverter, preferences)
+        val base = T6
+
+        preferences.setZakatGoldPriceManual("7777", base - 1000)
+        preferences.setZakatSilverPriceManual("88", base - 1000)
+        // Stale cadence stamp so the auto refresh deterministically runs;
+        // the successful (skip-OK) refresh must overwrite it with NOW.
+        preferences.setZakatMetalLastFetchAt(base - 2 * MetalRateService.AUTO_REFRESH_INTERVAL_MS)
+
+        val auto = service.maybeAutoRefresh(baseCurrency = "USD", nowMs = base)
+
+        assertNotNull(auto)
+        assertTrue(auto!!.fetched)
+        assertTrue(auto.goldSkippedManual)
+        assertTrue(auto.silverSkippedManual)
+        assertFalse(auto.goldConversionFailed)
+        assertFalse(auto.silverConversionFailed)
+        assertEquals(NOW, preferences.zakatMetalLastFetchAt.first())
+        // Manual prices survive untouched.
+        assertEquals("7777", preferences.zakatGoldPricePerGram.first())
+        assertEquals("88", preferences.zakatSilverPricePerGram.first())
+    }
+
+    @Test
+    fun `one metal skipped and the other conversion failed does not record timestamp`() = runBlocking {
+        // Z-09: silver conversion was attempted and failed, gold was skipped.
+        // Nothing was stored, so the last-fetch stamp must stay untouched.
+        val service = MetalRateService(onlineProvider, failingConverter, preferences)
+        val base = T7
+
+        preferences.setZakatGoldPriceManual("7777", base - 1000)
+        // Seed a stale stamp so the auto refresh runs AND so the assertion
+        // proves the failed refresh did not overwrite it.
+        val staleStamp = base - 2 * MetalRateService.AUTO_REFRESH_INTERVAL_MS
+        preferences.setZakatMetalLastFetchAt(staleStamp)
+
+        val auto = service.maybeAutoRefresh(baseCurrency = "USD", nowMs = base)
+
+        assertNotNull(auto)
+        assertTrue(auto!!.fetched)
+        assertTrue(auto.goldSkippedManual)
+        assertFalse(auto.silverSkippedManual)
+        assertTrue(auto.silverConversionFailed)
+        assertEquals(staleStamp, preferences.zakatMetalLastFetchAt.first())
+        assertEquals("7777", preferences.zakatGoldPricePerGram.first())
     }
 
     @Test
@@ -178,5 +244,7 @@ class MetalRateServiceTest {
         const val T3 = NOW + 20 * MetalRateService.AUTO_REFRESH_INTERVAL_MS
         const val T4 = NOW + 30 * MetalRateService.AUTO_REFRESH_INTERVAL_MS
         const val T5 = NOW + 40 * MetalRateService.AUTO_REFRESH_INTERVAL_MS
+        const val T6 = NOW + 50 * MetalRateService.AUTO_REFRESH_INTERVAL_MS
+        const val T7 = NOW + 60 * MetalRateService.AUTO_REFRESH_INTERVAL_MS
     }
 }
